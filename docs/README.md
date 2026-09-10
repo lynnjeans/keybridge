@@ -21,8 +21,10 @@ its String Catalog — that is product content, not project language.
 | Opportunity Map | Brainstorm of what Windows users miss on macOS, ranked by value against feasibility |
 | Development Plan | v1.0 broken into 12 modules and 55 issues, with critical path and estimates |
 
-> These currently live as private Claude Artifacts. Export them to Markdown or HTML into
-> this directory if you want them versioned alongside the code.
+> These currently live as private Claude Artifacts. They are internal planning material:
+> the Development Plan is in English, the other four are in Chinese. Everything that ships
+> in this repository follows the English convention above. Export them to Markdown or HTML
+> into this directory if you want them versioned alongside the code.
 
 ## Key decisions
 
