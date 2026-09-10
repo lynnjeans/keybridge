@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */; };
+		69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B595E1D78A10E425D9D48C34 /* PermissionService.swift */; };
 		DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */; };
 		F3282C27664078C37C79E61E /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */; };
 /* End PBXBuildFile section */
@@ -17,6 +18,7 @@
 		2561BA66378F4145D8A0F360 /* KeyBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
 		4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		B595E1D78A10E425D9D48C34 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -35,6 +37,14 @@
 				2561BA66378F4145D8A0F360 /* KeyBridge.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		37D4A23CC47E5FB690CCE8E9 /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				B595E1D78A10E425D9D48C34 /* PermissionService.swift */,
+			);
+			path = Permissions;
 			sourceTree = "<group>";
 		};
 		384049265F511E39DB8FFDF9 /* App */ = {
@@ -67,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				384049265F511E39DB8FFDF9 /* App */,
+				37D4A23CC47E5FB690CCE8E9 /* Permissions */,
 				4F1BE0D5D81EAAB04295FC03 /* UI */,
 			);
 			path = KeyBridge;
@@ -134,6 +145,7 @@
 				0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */,
 				F3282C27664078C37C79E61E /* MainWindow.swift in Sources */,
 				DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */,
+				69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,7 +1,20 @@
+import OSLog
 import SwiftUI
 
 @main
 struct KeyBridgeApp: App {
+    init() {
+        // Record permission state at launch so it can be read back from the
+        // system log when diagnosing a user's setup.
+        let permissions = PermissionService()
+        for permission in Permission.allCases {
+            let status = permissions.status(of: permission)
+            Logger.permissions.notice(
+                "\(permission.rawValue, privacy: .public): \(status.rawValue, privacy: .public)"
+            )
+        }
+    }
+
     var body: some Scene {
         // With LSUIElement set there is no Dock icon, so the menu bar item is
         // the app's only permanent presence and the way into everything else.
