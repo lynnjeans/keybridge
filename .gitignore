@@ -39,6 +39,7 @@ Pods/
 Carthage/Build/
 
 # Signing / secrets — never commit
+Config/Local.xcconfig
 *.p12
 *.mobileprovision
 *.cer

@@ -53,9 +53,10 @@ targets:
         # identity, so ad-hoc development builds run without it.
         ENABLE_APP_SANDBOX: NO
         ENABLE_HARDENED_RUNTIME: YES
-        # Ad-hoc "Sign to Run Locally" until a stable signing identity is set
-        # up. Side effect: macOS forgets granted permissions on every rebuild.
-        CODE_SIGN_STYLE: Manual
-        CODE_SIGN_IDENTITY: "-"
+    # Signing is configured in xcconfig files, not here: target settings in
+    # this file would override them. See Config/Signing.xcconfig.
+    configFiles:
+      Debug: Config/Signing.xcconfig
+      Release: Config/Signing.xcconfig
     # Shared scheme, committed so command-line builds and CI can find it.
     scheme: {}

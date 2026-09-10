@@ -1,0 +1,16 @@
+// Code signing for KeyBridge.
+//
+// macOS remembers Accessibility and Input Monitoring grants by the app's code
+// signature. Ad-hoc signing produces a new identity on every build, so the
+// grants are lost each time; signing with a real certificate keeps the
+// identity stable across rebuilds.
+//
+// Each developer's certificate and team live in Local.xcconfig, which is
+// git-ignored so no one's Team ID ends up in the repository. Create it from
+// Local.xcconfig.template. Without it, builds fall back to ad-hoc signing.
+
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = -
+DEVELOPMENT_TEAM =
+
+#include? "Local.xcconfig"

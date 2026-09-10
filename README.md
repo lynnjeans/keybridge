@@ -74,9 +74,24 @@ brew install xcodegen
 xcodegen generate
 ```
 
-Development builds are currently signed ad hoc. Once KeyBridge starts requesting system
-permissions, that means macOS will forget the Accessibility and Input Monitoring grants
-every time the app is rebuilt, until a stable signing identity is configured.
+### Code signing
+
+KeyBridge needs Accessibility and Input Monitoring permissions, and macOS ties those grants
+to the app's code signature. An ad-hoc signed build gets a new identity every time it is
+rebuilt, so the grants are lost on each build. To keep them, sign development builds with
+your own certificate — a free Apple ID is enough:
+
+1. In Xcode › Settings › Accounts, add your Apple ID, select its Personal Team, choose
+   **Manage Certificates…** and create an **Apple Development** certificate.
+2. Copy the template and fill in your Team ID (instructions are inside it):
+
+   ```bash
+   cp Config/Local.xcconfig.template Config/Local.xcconfig
+   ```
+
+`Config/Local.xcconfig` is git-ignored, so your Team ID never enters the repository.
+Without it the build falls back to ad-hoc signing: everything still runs, but you will
+have to re-grant permissions after every build.
 
 ## Project docs
 

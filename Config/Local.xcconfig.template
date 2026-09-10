@@ -1,0 +1,12 @@
+// Personal signing settings. Copy this file to Local.xcconfig in the same
+// directory — that copy is git-ignored — and replace YOUR_TEAM_ID.
+//
+// Your Team ID is the 10-character OU field of your Apple Development
+// certificate:
+//
+//   security find-certificate -c "Apple Development" -p | openssl x509 -noout -subject
+//
+// It is also shown in Xcode › Settings › Accounts. A free Apple ID is enough.
+
+CODE_SIGN_IDENTITY = Apple Development
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
