@@ -1,0 +1,61 @@
+# KeyBridge project definition for XcodeGen.
+#
+# This file is the source of truth for the Xcode project. KeyBridge.xcodeproj is
+# generated from it and committed so a fresh clone builds with no extra tools,
+# but hand edits to the .xcodeproj are lost on the next regeneration. Change
+# settings here, then run:
+#
+#   xcodegen generate
+
+name: KeyBridge
+
+options:
+  bundleIdPrefix: io.github.lynnjeans
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  KeyBridge:
+    type: application
+    platform: macOS
+    sources:
+      - path: KeyBridge
+        excludes:
+          - Resources/Info.plist
+    info:
+      path: KeyBridge/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: KeyBridge
+        # Read versions from build settings so MARKETING_VERSION and
+        # CURRENT_PROJECT_VERSION are the single place to bump them. Left to
+        # itself XcodeGen writes a hard-coded "1.0", and Sparkle compares these.
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        # Menu bar utility: no Dock icon and no app menu. The main window is
+        # opened on demand from the menu bar item.
+        LSUIElement: true
+        LSApplicationCategoryType: public.app-category.utilities
+        NSHumanReadableCopyright: "Copyright © 2026 KeyBridge contributors. Licensed under GPL-3.0."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge
+        PRODUCT_NAME: KeyBridge
+        # Global input interception cannot run inside the App Sandbox, so the
+        # sandbox stays off permanently. Hardened runtime is required for
+        # notarization; Xcode only applies it when signing with a real
+        # identity, so ad-hoc development builds run without it.
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: YES
+        # Ad-hoc "Sign to Run Locally" until a stable signing identity is set
+        # up. Side effect: macOS forgets granted permissions on every rebuild.
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+    # Shared scheme, committed so command-line builds and CI can find it.
+    scheme: {}

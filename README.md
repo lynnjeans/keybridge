@@ -56,13 +56,27 @@ Releases and Homebrew Cask.
 
 ## Building
 
-Requires Xcode (full install, not just Command Line Tools).
+Requires Xcode 16 or later — the full install, not just the Command Line Tools.
 
 ```bash
-git clone https://github.com/<owner>/keybridge.git
+git clone https://github.com/lynnjeans/keybridge.git
 cd keybridge
 open KeyBridge.xcodeproj
 ```
+
+The Xcode project is generated from [`project.yml`](project.yml) by
+[XcodeGen](https://github.com/yonaskolb/XcodeGen). The generated project is committed so a
+fresh clone builds with no extra tools, but to change build settings, edit `project.yml`
+and regenerate rather than editing the project in Xcode:
+
+```bash
+brew install xcodegen
+xcodegen generate
+```
+
+Development builds are currently signed ad hoc. Once KeyBridge starts requesting system
+permissions, that means macOS will forget the Accessibility and Input Monitoring grants
+every time the app is rebuilt, until a stable signing identity is configured.
 
 ## Project docs
 
