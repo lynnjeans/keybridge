@@ -1,36 +1,64 @@
-# KeyBridge 项目文档
+# KeyBridge Project Documentation
 
-产品定义阶段的五份文档，是开发的依据。开发进度以 GitHub Issues 为准，这些文档描述
-「做什么、为什么、长什么样」，不记录进度。
+These documents define **what** we are building and **why**. They are the basis for
+development; they do not track progress. Progress lives in
+[GitHub Issues](https://github.com/lynnjeans/keybridge/issues).
 
-| 文档 | 作用 |
+## Language convention
+
+KeyBridge targets an international audience, so **everything in this project is written in
+English**: documentation, issues, commit messages, code comments, and identifiers. The
+shipped application is localized separately (English, Simplified Chinese, Japanese) through
+its String Catalog — that is product content, not project language.
+
+## Documents
+
+| Document | Purpose |
 |---|---|
-| 市场调研 | 11 款竞品能力矩阵、架构裂缝分析、产品范围与市场空白 |
-| 设计规范 | 视觉/布局/交互/权限/剪贴板/多语言/许可分发的完整规范 |
-| 界面样稿 | 可点击的高保真原型（三语切换） |
-| 机会地图 | Windows→Mac 缺失功能头脑风暴，按价值×可行性排序 |
-| 开发计划 | v1.0 拆解为 12 模块 55 张工单，含关键路径与估时 |
+| Market Research | Capability matrix of 11 competing tools, the architectural gap they leave, and where this product fits |
+| Design Spec | Visual language, layout, interaction, permissions, clipboard, localization, licensing and distribution |
+| UI Mockup | Clickable high-fidelity prototype with live language switching |
+| Opportunity Map | Brainstorm of what Windows users miss on macOS, ranked by value against feasibility |
+| Development Plan | v1.0 broken into 12 modules and 55 issues, with critical path and estimates |
 
-> 文档目前托管为 Claude Artifacts（私有链接）。若需随仓库版本化，可导出为
-> Markdown/HTML 放入本目录。
+> These currently live as private Claude Artifacts. Export them to Markdown or HTML into
+> this directory if you want them versioned alongside the code.
 
-## 核心决策速查
+## Key decisions
 
-- **定位**：面向 Windows → Mac 迁徙者的快捷键桥，不是通用键鼠调校器
-- **许可**：GPL-3.0 开源 + 捐助，不做闭源商业化
-- **分发**：**不上 Mac App Store**（全局输入拦截无法在沙盒内运行），走 Developer ID
-  签名 + 公证 + GitHub Releases + Homebrew Cask
-- **架构**：v1.0 单 CGEventTap 引擎；深度键盘改键（tap/hold、层）留到 v2 再引入
-  DriverKit
-- **核心交互**：预设层 ⊕ 用户覆盖层，重新套用方案**不覆盖**用户已自定义条目
-- **差异化**：修饰键 + 滚轮 → `⌘±` 页面缩放，是免费工具里唯一具备的能力
+- **Positioning** — a shortcut bridge for people migrating from Windows to macOS, not a
+  general-purpose input tweaker.
+- **License** — GPL-3.0, funded by donations. No closed-source commercial edition.
+- **Distribution** — **not on the Mac App Store.** Global input interception cannot run
+  inside the App Store sandbox, so we ship a Developer ID signed and notarized build via
+  GitHub Releases and Homebrew Cask.
+- **Architecture** — v1.0 runs on a single CGEventTap engine. Deep keyboard remapping
+  (tap/hold, layers) waits for v2 and a second DriverKit engine.
+- **Core interaction** — effective rules are the preset layer merged with a user override
+  layer. Re-applying a preset **never** overwrites what the user has customized.
+- **Differentiator** — modifier + scroll wheel to `⌘+` / `⌘−` page zoom, which no other
+  free tool offers.
 
-## 里程碑
+## Milestone order
 
-`M0 地基 → M1 引擎 → M3 规则 → M4 键盘 → M6 预设 → M7 UI → M9 多语言 → M10 发布`
+```
+M0 Foundation → M1 Engine → M3 Rules → M4 Keyboard → M6 Presets → M7 UI → M9 i18n → M10 Release
+```
 
-并行：M2 设备识别、M5 鼠标滚轮、M8 剪贴板（完全独立）、M11 质量（贯穿）
+Runs in parallel: M2 Device Identification, M5 Mouse & Scroll, M8 Clipboard (fully
+independent), M11 Quality (throughout).
 
-**先做最小可跑通骨架**（约 3–4 周）：
-`KB-001 002 003 006 010 011 012 030 013 040 050 052`
-→ 打通「授权引导 → Ctrl+C 变 ⌘C → 侧键前进后退 → 修饰键+滚轮缩放」
+## Start with the walking skeleton (~3–4 weeks)
+
+`KB-001 · 002 · 003 · 006 · 010 · 011 · 012 · 030 · 013 · 040 · 050 · 052`
+
+That narrow end-to-end path proves the product's core value before anything is built out
+sideways: **permission onboarding → Ctrl+C becomes ⌘C → side buttons navigate →
+modifier+scroll zooms the page.**
+
+## Scripts
+
+| Script | What it does |
+|---|---|
+| `scripts/bootstrap-github.sh` | Creates the repository, labels, 14 milestones and the full 62-issue backlog |
+| `scripts/reset-github.sh` | Deletes every issue and milestone so the backlog can be rebuilt. **Permanent — no undo.** |
