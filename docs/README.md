@@ -34,8 +34,11 @@ its String Catalog — that is product content, not project language.
 - **Distribution** — **not on the Mac App Store.** Global input interception cannot run
   inside the App Store sandbox, so we ship a Developer ID signed and notarized build via
   GitHub Releases and Homebrew Cask.
-- **Architecture** — v1.0 runs on a single CGEventTap engine. Deep keyboard remapping
-  (tap/hold, layers) waits for v2 and a second DriverKit engine.
+- **Architecture** — a single CGEventTap engine, now and later. Deep keyboard remapping
+  (tap/hold, layers, chords) is **out of scope**: it needs a root daemon that seizes the
+  keyboard plus a DriverKit virtual keyboard to re-emit input, which would trade two
+  permission toggles for an admin-password install and a driver-extension approval.
+  KeyBridge only maps combinations to combinations, such as `Ctrl+C` or `fn+C` to `⌘C`.
 - **Core interaction** — effective rules are the preset layer merged with a user override
   layer. Re-applying a preset **never** overwrites what the user has customized.
 - **Differentiator** — modifier + scroll wheel to `⌘+` / `⌘−` page zoom, which no other

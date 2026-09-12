@@ -42,8 +42,13 @@ KeyBridge aims at the one audience none of them targets directly: **the migrant*
 - **Per-device** (VID/PID) and **per-app** scoping
 - English / 简体中文 / 日本語
 
-Planned: window snapping (`Win+←/→/↑`) in v1.1; deep keyboard remapping (tap/hold, layers)
-via DriverKit in v2.
+Planned: window snapping (`Win+←/→/↑`) in v1.1.
+
+**Out of scope:** deep keyboard remapping — tap/hold dual-role keys, layers, chords. KeyBridge
+maps combinations to combinations (`Ctrl+C` → `⌘C`, `fn+C` → `⌘C`) and nothing more. That
+keeps it on a single event tap with two permission toggles, instead of the root daemon and
+virtual keyboard driver that deep remapping requires. If you need those, use
+Karabiner-Elements.
 
 ## Requirements
 
