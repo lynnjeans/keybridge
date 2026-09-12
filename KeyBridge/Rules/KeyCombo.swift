@@ -68,6 +68,12 @@ extension KeyCode {
     static let f12 = KeyCode(kVK_F12)
     /// PC keyboards send Print Screen as F13 on macOS.
     static let f13 = KeyCode(kVK_F13)
+    // No Mac or PC keyboard function assigned by default; used by the debug
+    // self-test.
+    static let f17 = KeyCode(kVK_F17)
+    static let f18 = KeyCode(kVK_F18)
+    static let f19 = KeyCode(kVK_F19)
+    static let f20 = KeyCode(kVK_F20)
 }
 
 /// The modifier keys a combination is made of. Left and right variants are

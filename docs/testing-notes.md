@@ -61,7 +61,9 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
   /usr/bin/log show --predicate 'subsystem == "io.github.lynnjeans.KeyBridge"' --last 10m --style compact
   ```
 
-- Filter by `processID == <pid>` to separate one launch from the previous one.
+- Filter by `processID == <pid>` to separate one launch from the previous one, or pass
+  `--start "YYYY-MM-DD HH:MM:SS"`. `--start` takes whole seconds only; a fractional value fails
+  with a date conversion error instead of showing anything.
 - Log categories: `permissions` (state at launch) and `eventtap` (lifecycle, recoveries, and in
   Debug builds per-category event counts every 3 seconds).
 - The counters record **counts only, never event contents** — logging keystrokes would turn
@@ -77,6 +79,13 @@ Debug builds read these environment variables at launch. Pass them with `open --
 |---|---|
 | `KB_DEBUG_SELFTEST` | KeyBridge posts zero-delta scroll events itself: five stamped as its own, then plain ones |
 | `KB_DEBUG_STALL_ONCE` | The next event blocks the tap callback for 2 s, so macOS disables the tap and recovery can be observed |
+| `KB_DEBUG_MATCHTEST` | Installs two test rules on F19 (one everywhere, one Finder-only), brings Finder to the front and presses F19, switches back to the previous app and presses F19 again, then presses F20, which has no rule |
+
+Expected log for `KB_DEBUG_MATCHTEST` (category `engine`): `Matched rules: selftest.finder=3`,
+then `selftest.any=3`, and no match for F20. The `eventtap` category reports per-event
+processing time as `Processing: n=… avg=…µs max=…µs`; each call is also a signpost interval
+named `process`, so Instruments can chart it in any build. Matching only records for now, so the
+F19 and F20 presses do reach the frontmost app.
 
 ```bash
 open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Build/Products/Debug/KeyBridge.app

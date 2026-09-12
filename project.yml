@@ -72,6 +72,8 @@ targets:
     sources:
       - path: KeyBridgeTests
       - path: KeyBridge/Rules
+      - path: KeyBridge/Engine/RuleMatcher.swift
+      - path: KeyBridge/Engine/EventTrigger.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests

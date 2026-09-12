@@ -6,8 +6,8 @@ import OSLog
 /// main run loop, keeps it alive, and tears it down.
 ///
 /// The tap is active rather than listen-only, because remapping has to modify
-/// and swallow events. For now every event is passed through untouched;
-/// matching and rewriting arrive with the dispatch pipeline.
+/// and swallow events. Each event is handed to the `Dispatcher`, which decides
+/// whether it continues.
 @MainActor
 final class EventTap {
     enum Category: String, CaseIterable, Sendable {
@@ -22,6 +22,7 @@ final class EventTap {
         case scroll
     }
 
+    private let dispatcher: Dispatcher
     private var port: CFMachPort?
     private var source: CFRunLoopSource?
 
@@ -29,6 +30,10 @@ final class EventTap {
     private(set) var recoveryCount = 0
 
     var isRunning: Bool { port != nil }
+
+    init(dispatcher: Dispatcher) {
+        self.dispatcher = dispatcher
+    }
 
     /// Creates and enables the tap. Returns false if the system refuses, which
     /// is what happens when Accessibility has not been granted.
@@ -79,10 +84,12 @@ final class EventTap {
         Logger.eventTap.notice("Event tap stopped")
     }
 
-    fileprivate func handle(_ type: CGEventType) {
+    /// Returns false if the event should be removed from the stream.
+    fileprivate func handle(_ event: CGEvent, type: CGEventType) -> Bool {
         switch type {
         case .tapDisabledByTimeout, .tapDisabledByUserInput:
             recover(from: type)
+            return true
         default:
             #if DEBUG
             stallIfArmed()
@@ -90,7 +97,29 @@ final class EventTap {
                 counts[category, default: 0] += 1
             }
             #endif
+            return process(event, type: type) == .passThrough
         }
+    }
+
+    /// Runs the dispatcher and measures how long it takes. Each call is a
+    /// signpost interval, so Instruments can chart processing time in any
+    /// build; debug builds also report an average and maximum in the log.
+    private func process(_ event: CGEvent, type: CGEventType) -> Dispatcher.Disposition {
+        let state = Self.signposter.beginInterval("process")
+        #if DEBUG
+        let start = DispatchTime.now().uptimeNanoseconds
+        #endif
+
+        let disposition = dispatcher.process(event, type: type)
+
+        #if DEBUG
+        let elapsed = DispatchTime.now().uptimeNanoseconds - start
+        processedCount += 1
+        processingTotal += elapsed
+        processingMax = max(processingMax, elapsed)
+        #endif
+        Self.signposter.endInterval("process", state)
+        return disposition
     }
 
     /// Called for events KeyBridge posted itself, which are passed through
@@ -129,6 +158,8 @@ final class EventTap {
         }
     }
 
+    private static let signposter = OSSignposter(logger: .eventTap)
+
     // Mouse movement is deliberately left out: it is by far the noisiest event
     // stream and nothing KeyBridge does needs it.
     private static let eventMask: CGEventMask = {
@@ -143,11 +174,15 @@ final class EventTap {
     }()
 
     #if DEBUG
-    // Development aid: how many events of each category arrived, reported every
-    // few seconds. Counts only, never contents — logging keystrokes would turn
-    // the system log into a keylogger.
+    // Development aid: how many events of each category arrived, how long
+    // processing took, and which rules matched, reported every few seconds.
+    // Counts only, never contents — logging keystrokes would turn the system
+    // log into a keylogger.
     private var counts: [Category: Int] = [:]
     private var ownCount = 0
+    private var processedCount = 0
+    private var processingTotal: UInt64 = 0
+    private var processingMax: UInt64 = 0
     private var reportTimer: Timer?
 
     /// Set by launching with KB_DEBUG_STALL_ONCE in the environment: the next
@@ -166,16 +201,39 @@ final class EventTap {
         reportTimer = nil
         counts = [:]
         ownCount = 0
+        resetProcessingStats()
+    }
+
+    private func resetProcessingStats() {
+        processedCount = 0
+        processingTotal = 0
+        processingMax = 0
     }
 
     private func reportCounts() {
+        let matches = dispatcher.takeMatchCounts()
         guard !counts.isEmpty || ownCount > 0 else { return }
+
         let summary = (Category.allCases.map { "\($0.rawValue)=\(counts[$0, default: 0])" }
             + ["own=\(ownCount)"])
             .joined(separator: " ")
         Logger.eventTap.notice("Events in the last 3s: \(summary, privacy: .public)")
+
+        if processedCount > 0 {
+            let average = Double(processingTotal) / Double(processedCount) / 1000
+            let maximum = Double(processingMax) / 1000
+            Logger.eventTap.notice(
+                "Processing: n=\(self.processedCount, privacy: .public) avg=\(average, format: .fixed(precision: 1), privacy: .public)µs max=\(maximum, format: .fixed(precision: 1), privacy: .public)µs"
+            )
+        }
+        if !matches.isEmpty {
+            let list = matches.sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: " ")
+            Logger.engine.notice("Matched rules: \(list, privacy: .public)")
+        }
+
         counts = [:]
         ownCount = 0
+        resetProcessingStats()
     }
 
     private func armStallIfRequested() {
@@ -213,9 +271,11 @@ private func eventTapCallback(
         return Unmanaged.passUnretained(event)
     }
 
-    // The run loop source is on the main run loop, so this is the main thread.
-    MainActor.assumeIsolated { tap.handle(type) }
-    return Unmanaged.passUnretained(event)
+    // The run loop source is on the main run loop, so this is the main thread,
+    // and the event never leaves it.
+    nonisolated(unsafe) let event = event
+    let keep = MainActor.assumeIsolated { tap.handle(event, type: type) }
+    return keep ? Unmanaged.passUnretained(event) : nil
 }
 
 extension Logger {

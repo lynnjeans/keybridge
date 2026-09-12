@@ -1,0 +1,42 @@
+import AppKit
+import OSLog
+
+/// Tracks the bundle identifier of the frontmost application, which decides
+/// whether app-scoped rules apply.
+///
+/// Updated from workspace notifications rather than queried per event, so the
+/// event tap callback only reads a stored value.
+@MainActor
+final class FrontmostApplication {
+    private(set) var bundleID: String?
+
+    // Kept for the app's lifetime, so the observer is never removed.
+    private var observer: NSObjectProtocol?
+
+    init() {
+        bundleID = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        observer = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didActivateApplicationNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication
+            let bundleID = app?.bundleIdentifier
+            MainActor.assumeIsolated { self?.update(bundleID) }
+        }
+    }
+
+    private func update(_ bundleID: String?) {
+        self.bundleID = bundleID
+        #if DEBUG
+        Logger.engine.notice("Frontmost application: \(bundleID ?? "none", privacy: .public)")
+        #endif
+    }
+}
+
+extension Logger {
+    static let engine = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "KeyBridge",
+        category: "engine"
+    )
+}

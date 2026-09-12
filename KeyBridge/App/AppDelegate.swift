@@ -5,7 +5,9 @@ import OSLog
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissions = PermissionService()
-    let eventTap = EventTap()
+    let frontmost = FrontmostApplication()
+    lazy var dispatcher = Dispatcher(frontmost: frontmost)
+    lazy var eventTap = EventTap(dispatcher: dispatcher)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logPermissionState()
@@ -16,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if permissions.status(of: .accessibility) == .granted {
             eventTap.start()
             #if DEBUG
-            EventTapSelfTest.runIfRequested()
+            EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
             #endif
         }
     }
