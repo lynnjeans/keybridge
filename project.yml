@@ -59,4 +59,22 @@ targets:
       Debug: Config/Signing.xcconfig
       Release: Config/Signing.xcconfig
     # Shared scheme, committed so command-line builds and CI can find it.
-    scheme: {}
+    scheme:
+      testTargets:
+        - KeyBridgeTests
+
+  # Unit tests for logic that does not need a running app. The bundle compiles
+  # the sources it tests itself instead of loading them from a host app, so a
+  # test run never launches KeyBridge or starts its event tap.
+  KeyBridgeTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: KeyBridgeTests
+      - path: KeyBridge/Rules
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"

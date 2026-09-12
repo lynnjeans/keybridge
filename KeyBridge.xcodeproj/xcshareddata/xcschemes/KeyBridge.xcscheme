@@ -39,6 +39,17 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1D9CFADB10E37E660561730E"
+               BuildableName = "KeyBridgeTests.xctest"
+               BlueprintName = "KeyBridgeTests"
+               ReferencedContainer = "container:KeyBridge.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

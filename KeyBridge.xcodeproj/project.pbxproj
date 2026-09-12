@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02D4C4ADD903A8EBD9249CC9 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */; };
+		1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
+		19E2BC68837D322095AC2C1F /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
+		435FFFBB497EF6A209F57480 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
+		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687E05B9F8DE493CF14920E7 /* AppDelegate.swift */; };
 		69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B595E1D78A10E425D9D48C34 /* PermissionService.swift */; };
+		719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
 		83B098FBCF43B11D0B662B0C /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */; };
 		EC3B2B052803EF4829977E79 /* EventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */; };
+		F27CC71FC308A9397A51DFA4 /* RuleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */; };
 		F3282C27664078C37C79E61E /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */; };
+		F3FAD7FF929CF2E00E863237 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
+		FC7E759BB0F8A02DA983FC22 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +32,17 @@
 		20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTapSelfTest.swift; sourceTree = "<group>"; };
 		2561BA66378F4145D8A0F360 /* KeyBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
+		380C3DCFF3175605C83D7B44 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		542F7297D61F8E6943745351 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
 		687E05B9F8DE493CF14920E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		848719F069115F286CC12A7B /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
+		ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModelTests.swift; sourceTree = "<group>"; };
 		B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticEvent.swift; sourceTree = "<group>"; };
 		B595E1D78A10E425D9D48C34 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		D41BF86A97C1D2936EC49111 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
+		E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -53,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				2561BA66378F4145D8A0F360 /* KeyBridge.app */,
+				E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,6 +90,17 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		40C3A24990956D206AEE8E1D /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				542F7297D61F8E6943745351 /* KeyCombo.swift */,
+				848719F069115F286CC12A7B /* Preset.swift */,
+				D41BF86A97C1D2936EC49111 /* Rule.swift */,
+				380C3DCFF3175605C83D7B44 /* Scope.swift */,
+			);
+			path = Rules;
+			sourceTree = "<group>";
+		};
 		4F1BE0D5D81EAAB04295FC03 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,11 +110,20 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		9DA46AA64E58480D9D06E1D9 /* KeyBridgeTests */ = {
+			isa = PBXGroup;
+			children = (
+				ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */,
+			);
+			path = KeyBridgeTests;
+			sourceTree = "<group>";
+		};
 		BBD418FC1D32831A5D73D727 = {
 			isa = PBXGroup;
 			children = (
 				04A00916F313786DE8C0542B /* Config */,
 				CA7535D48B037F462485F5C2 /* KeyBridge */,
+				9DA46AA64E58480D9D06E1D9 /* KeyBridgeTests */,
 				33AC87FEA3ACA7C8082657B0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,6 +134,7 @@
 				384049265F511E39DB8FFDF9 /* App */,
 				0C459A1A8C76E5F1DC9F098C /* Engine */,
 				37D4A23CC47E5FB690CCE8E9 /* Permissions */,
+				40C3A24990956D206AEE8E1D /* Rules */,
 				4F1BE0D5D81EAAB04295FC03 /* UI */,
 			);
 			path = KeyBridge;
@@ -106,6 +143,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1D9CFADB10E37E660561730E /* KeyBridgeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF6CFFA7F868D1801281971A /* Build configuration list for PBXNativeTarget "KeyBridgeTests" */;
+			buildPhases = (
+				14EF8F7A318CA591E01603FE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KeyBridgeTests;
+			packageProductDependencies = (
+			);
+			productName = KeyBridgeTests;
+			productReference = E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A79FFE2A86A884EA1FE5777E /* KeyBridge */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9B8137C9D61824FA7DBBDCF /* Build configuration list for PBXNativeTarget "KeyBridge" */;
@@ -132,6 +186,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					1D9CFADB10E37E660561730E = {
+						ProvisioningStyle = Manual;
+					};
 					A79FFE2A86A884EA1FE5777E = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
@@ -153,11 +210,24 @@
 			projectRoot = "";
 			targets = (
 				A79FFE2A86A884EA1FE5777E /* KeyBridge */,
+				1D9CFADB10E37E660561730E /* KeyBridgeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		14EF8F7A318CA591E01603FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
+				02D4C4ADD903A8EBD9249CC9 /* Preset.swift in Sources */,
+				435FFFBB497EF6A209F57480 /* Rule.swift in Sources */,
+				F27CC71FC308A9397A51DFA4 /* RuleModelTests.swift in Sources */,
+				F3FAD7FF929CF2E00E863237 /* Scope.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F7E39108CDE33012D59CEBE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -166,9 +236,13 @@
 				EC3B2B052803EF4829977E79 /* EventTap.swift in Sources */,
 				41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */,
 				0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */,
+				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,
 				F3282C27664078C37C79E61E /* MainWindow.swift in Sources */,
 				DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */,
 				69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */,
+				4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */,
+				FC7E759BB0F8A02DA983FC22 /* Rule.swift in Sources */,
+				19E2BC68837D322095AC2C1F /* Scope.swift in Sources */,
 				83B098FBCF43B11D0B662B0C /* SyntheticEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +268,24 @@
 				SDKROOT = macosx;
 			};
 			name = Release;
+		};
+		638DBA37BBD54F4C482AD4A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.lynnjeans.KeyBridgeTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
 		};
 		6C8575C84069F7732D9704A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -337,6 +429,24 @@
 			};
 			name = Release;
 		};
+		B301E806599E6DD0CFDD7226 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.lynnjeans.KeyBridgeTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -345,6 +455,15 @@
 			buildConfigurations = (
 				9444DBDD6178C09CA8AB5FBD /* Debug */,
 				AEA56C58418B2ACE62D51728 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BF6CFFA7F868D1801281971A /* Build configuration list for PBXNativeTarget "KeyBridgeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				638DBA37BBD54F4C482AD4A1 /* Debug */,
+				B301E806599E6DD0CFDD7226 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

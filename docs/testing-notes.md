@@ -9,6 +9,20 @@ check before the code.
 
 ---
 
+## Unit tests
+
+Logic that needs no running app (the rule model so far) is covered by the `KeyBridgeTests`
+bundle, written with Swift Testing. The bundle compiles the sources it tests itself rather than
+loading them from the app, so a test run never launches KeyBridge or starts its event tap.
+
+```bash
+xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Debug \
+  -derivedDataPath build/DerivedData test
+```
+
+When adding a folder whose code is tested, add it to the `KeyBridgeTests` sources in
+`project.yml` and run `xcodegen generate`.
+
 ## Launching the app
 
 - **Launch with `open`**, never by running the binary from a terminal. macOS attributes
@@ -121,3 +135,6 @@ recovery #1`, then the later plain events still counted.
 - **zsh does not word-split unquoted variables.** A command stored in a variable
   (`XB="xcodebuild -project …"; $XB build`) runs as a single, nonexistent command name. Use a
   shell function instead.
+- **zsh expands a word starting with `=`** into the path of the command it names.
+  `echo =====` fails with `==== not found`, and the failed expansion aborts the whole command
+  line, so none of the commands chained with `;` run at all. Quote such words: `echo '====='`.
