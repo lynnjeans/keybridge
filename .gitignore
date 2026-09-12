@@ -51,3 +51,6 @@ notarize-credentials*
 *.dmg
 *.zip
 dist/
+
+# Internal planning documents — kept on the maintainer's machine only
+planning/
