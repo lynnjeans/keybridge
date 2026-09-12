@@ -96,8 +96,20 @@ creates, as the hardware does for F-keys; the self-test's own F20 is posted with
    `[option+fn]`, and no F19.
 2. Ctrl released while F19 repeats: `F18 down`, `F18 up` — the repeat without Ctrl is swallowed.
 3. F20, which has no rule: `F20 down []`, `F20 up []`, unchanged.
+4. Mouse button 4, mapped to ⌥F17: `F17 down`, `F17 up`, and no `button 4` line — the click
+   never reaches an application.
+5. Mouse button 6, which has no rule: `button 6 down`, `button 6 up`.
 
-The F18 and F20 presses reach the frontmost app; nothing uses those keys by default.
+The F17, F18 and F20 presses reach the frontmost app, and button 6 clicks at the pointer; nothing
+uses those by default.
+
+## Karabiner-Elements and other HID-level remappers
+
+Tools that remap at the HID level, such as Karabiner-Elements, act before KeyBridge's event tap,
+so KeyBridge only ever sees their output. When checking a KeyBridge mapping by hand, make sure no
+such tool maps the same input — a Karabiner rule for the side buttons, for example, means
+KeyBridge never receives them, and a passing test would be Karabiner's. Events posted by the
+self-tests bypass these tools.
 
 ```bash
 open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Build/Products/Debug/KeyBridge.app

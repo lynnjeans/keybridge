@@ -37,8 +37,21 @@ final class Dispatcher {
         let output: KeyCombo?
     }
 
-    init(frontmostBundleID: @escaping @MainActor () -> String?) {
+    /// Mouse buttons whose press was turned into an action and that are still
+    /// held. Their release is swallowed too, so applications never see half
+    /// a click.
+    private var heldButtons: Set<Int> = []
+
+    /// Sends events that are not replacements, such as the keystroke a side
+    /// button stands for. Replaceable so tests can capture them instead.
+    private let post: @MainActor (CGEvent) -> Void
+
+    init(
+        frontmostBundleID: @escaping @MainActor () -> String?,
+        post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) }
+    ) {
         self.frontmostBundleID = frontmostBundleID
+        self.post = post
     }
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
@@ -47,9 +60,13 @@ final class Dispatcher {
             return keyDown(event)
         case .keyUp:
             return keyUp(event)
+        case .otherMouseDown:
+            return mouseDown(event)
+        case .otherMouseUp:
+            return heldButtons.remove(event.mouseButtonNumber) == nil ? .passThrough : .consume
         default:
-            // Mouse button (KB-050) and scroll (KB-052) actions are not carried
-            // out yet; a match is only recorded.
+            // Scroll actions (KB-052) are not carried out yet; a match is only
+            // recorded.
             if let rule = match(event, type: type) { record(rule) }
             return .passThrough
         }
@@ -60,10 +77,29 @@ final class Dispatcher {
     func releaseHeldKeys() {
         for held in heldKeys.values {
             if let output = held.output, let release = SyntheticEvent.key(output, down: false) {
-                SyntheticEvent.post(release)
+                post(release)
             }
         }
         heldKeys = [:]
+        heldButtons = []
+    }
+
+    /// A mouse button press triggers its action once, as a complete
+    /// keystroke; holding the button does not repeat it.
+    private func mouseDown(_ event: CGEvent) -> Disposition {
+        guard let rule = match(event, type: .otherMouseDown) else { return .passThrough }
+        record(rule)
+        heldButtons.insert(event.mouseButtonNumber)
+
+        switch rule.action {
+        case .key(let combo):
+            for down in [true, false] {
+                if let keystroke = SyntheticEvent.key(combo, down: down) { post(keystroke) }
+            }
+        case .openApplication(let bundleID):
+            openApplication(bundleID)
+        }
+        return .consume
     }
 
     private func keyDown(_ event: CGEvent) -> Disposition {

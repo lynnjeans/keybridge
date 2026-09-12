@@ -16,9 +16,7 @@ extension Trigger {
             self = .key(combo: KeyCombo(keyModifiers, key))
 
         case .otherMouseDown:
-            // CGEvent counts buttons from 0; users and rules count from 1.
-            let number = Int(event.getIntegerValueField(.mouseEventButtonNumber)) + 1
-            self = .mouseButton(number: number, modifiers: modifiers)
+            self = .mouseButton(number: event.mouseButtonNumber, modifiers: modifiers)
 
         case .scrollWheel:
             let vertical = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
@@ -66,6 +64,12 @@ extension CGEventFlags {
 extension CGEvent {
     var keyCode: KeyCode {
         KeyCode(rawValue: UInt16(getIntegerValueField(.keyboardEventKeycode)))
+    }
+
+    /// The mouse button, numbered the way users see it: CGEvent counts from 0,
+    /// users and rules from 1, so the side buttons are 4 and 5.
+    var mouseButtonNumber: Int {
+        Int(getIntegerValueField(.mouseEventButtonNumber)) + 1
     }
 
     /// True for the repeated key-downs macOS generates while a key is held.

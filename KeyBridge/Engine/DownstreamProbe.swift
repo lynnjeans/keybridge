@@ -3,18 +3,19 @@ import CoreGraphics
 import OSLog
 
 /// Debug-only listen-only tap placed after every other session tap, so it sees
-/// key events the way applications receive them: after KeyBridge's own tap
-/// has rewritten them. Used by the remap self-test.
+/// events the way applications receive them: after KeyBridge's own tap has
+/// rewritten them. Used by the remap self-test.
 ///
-/// It reports only F17–F20, the keys the self-test uses, so ordinary typing
-/// never reaches the log.
+/// It reports only F17–F20 and mouse buttons 4 and up, which the self-test
+/// uses, so ordinary typing and clicking never reach the log.
 @MainActor
 enum DownstreamProbe {
     private static var port: CFMachPort?
 
     static func start() {
         guard port == nil else { return }
-        let mask = (CGEventMask(1) << CGEventType.keyDown.rawValue) | (CGEventMask(1) << CGEventType.keyUp.rawValue)
+        let types: [CGEventType] = [.keyDown, .keyUp, .otherMouseDown, .otherMouseUp]
+        let mask = types.reduce(CGEventMask(0)) { $0 | (CGEventMask(1) << $1.rawValue) }
         guard let port = CGEvent.tapCreate(
             tap: .cgSessionEventTap,
             place: .tailAppendEventTap,
@@ -40,10 +41,21 @@ private func probeCallback(
     event: CGEvent,
     userInfo: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
-    if let name = reportedKeys[event.keyCode] {
-        let phase = type == .keyDown ? (event.isAutorepeat ? "repeat" : "down") : "up"
-        let modifiers = Modifiers(flags: event.flags).names.joined(separator: "+")
-        Logger.engine.notice("Downstream: \(name, privacy: .public) \(phase, privacy: .public) [\(modifiers, privacy: .public)]")
+    let modifiers = Modifiers(flags: event.flags).names.joined(separator: "+")
+    switch type {
+    case .keyDown, .keyUp:
+        if let name = reportedKeys[event.keyCode] {
+            let phase = type == .keyDown ? (event.isAutorepeat ? "repeat" : "down") : "up"
+            Logger.engine.notice("Downstream: \(name, privacy: .public) \(phase, privacy: .public) [\(modifiers, privacy: .public)]")
+        }
+    case .otherMouseDown, .otherMouseUp:
+        let number = event.mouseButtonNumber
+        if number >= 4 {
+            let phase = type == .otherMouseDown ? "down" : "up"
+            Logger.engine.notice("Downstream: button \(number, privacy: .public) \(phase, privacy: .public)")
+        }
+    default:
+        break
     }
     return Unmanaged.passUnretained(event)
 }

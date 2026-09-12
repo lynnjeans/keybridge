@@ -25,10 +25,17 @@ enum EventTapSelfTest {
     /// 2. ⌃F19 held, Ctrl released, F19 still repeating, then released:
     ///    F18 down and up only; the repeat without Ctrl is swallowed.
     /// 3. F20, which no rule matches: F20 down and up, unchanged.
+    /// 4. Mouse button 4, mapped to ⌥F17: F17 down and up, and no button 4.
+    /// 5. Mouse button 6, which no rule matches: button 6 down and up.
+    /// Steps 4 and 5 click at the pointer's position with those buttons;
+    /// nothing reacts to buttons 4 or 6 unless a tool like Karabiner is set up
+    /// to, and posted events bypass Karabiner.
     private static func runRemapTest(_ dispatcher: Dispatcher) {
         dispatcher.rules = [
             Rule(id: "selftest.remap", trigger: .key(combo: KeyCombo([.control], .f19)),
                  action: .key(combo: KeyCombo([.option], .f18))),
+            Rule(id: "selftest.button", trigger: .mouseButton(number: 4),
+                 action: .key(combo: KeyCombo([.option], .f17))),
         ]
         DownstreamProbe.start()
 
@@ -50,6 +57,26 @@ enum EventTapSelfTest {
             Logger.engine.notice("Remap test 3: F20, no rule")
             post(.f20, down: true)
             post(.f20, down: false)
+
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Remap test 4: mouse button 4, mapped")
+            click(button: 4)
+
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Remap test 5: mouse button 6, no rule")
+            click(button: 6)
+        }
+    }
+
+    private static func click(button number: Int) {
+        let location = CGEvent(source: nil)?.location ?? .zero
+        for type in [CGEventType.otherMouseDown, .otherMouseUp] {
+            guard let event = CGEvent(
+                mouseEventSource: nil, mouseType: type,
+                mouseCursorPosition: location, mouseButton: .center
+            ) else { continue }
+            event.setIntegerValueField(.mouseEventButtonNumber, value: Int64(number - 1))
+            event.post(tap: .cgSessionEventTap)
         }
     }
 

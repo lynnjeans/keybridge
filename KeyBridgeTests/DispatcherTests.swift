@@ -100,6 +100,51 @@ import Testing
         #expect(Modifiers(flags: down.flags) == [.shift, .command, .function])
     }
 
+    func button(_ number: Int, down: Bool, _ flags: CGEventFlags = []) throws -> CGEvent {
+        let event = try #require(CGEvent(
+            mouseEventSource: nil, mouseType: down ? .otherMouseDown : .otherMouseUp,
+            mouseCursorPosition: .zero, mouseButton: .center
+        ))
+        event.setIntegerValueField(.mouseEventButtonNumber, value: Int64(number - 1))
+        event.flags = flags
+        return event
+    }
+
+    @Test func sideButtonBecomesACompleteKeystroke() throws {
+        var posted: [CGEvent] = []
+        let dispatcher = Dispatcher(frontmostBundleID: { "com.apple.Safari" }, post: { posted.append($0) })
+        dispatcher.rules = BuiltInRules.all
+
+        #expect(isConsumed(dispatcher.process(try button(4, down: true), type: .otherMouseDown)))
+        #expect(posted.map(\.type) == [.keyDown, .keyUp])
+        #expect(posted.allSatisfy { $0.keyCode == .leftBracket && Modifiers(flags: $0.flags) == [.command] })
+        #expect(posted.allSatisfy(SyntheticEvent.isOurs))
+
+        // The release is swallowed and triggers nothing more.
+        #expect(isConsumed(dispatcher.process(try button(4, down: false), type: .otherMouseUp)))
+        #expect(posted.count == 2)
+    }
+
+    @Test func forwardButtonMapsToCommandRightBracket() throws {
+        var posted: [CGEvent] = []
+        let dispatcher = Dispatcher(frontmostBundleID: { nil }, post: { posted.append($0) })
+        dispatcher.rules = BuiltInRules.all
+        _ = dispatcher.process(try button(5, down: true), type: .otherMouseDown)
+        #expect(posted.first?.keyCode == .rightBracket)
+    }
+
+    @Test func unmappedButtonsPassThrough() throws {
+        var posted: [CGEvent] = []
+        let dispatcher = Dispatcher(frontmostBundleID: { nil }, post: { posted.append($0) })
+        dispatcher.rules = BuiltInRules.all
+        #expect(isPassThrough(dispatcher.process(try button(3, down: true), type: .otherMouseDown)))
+        #expect(isPassThrough(dispatcher.process(try button(3, down: false), type: .otherMouseUp)))
+        // A modified side button is a different trigger.
+        #expect(isPassThrough(dispatcher.process(try button(4, down: true, [.maskShift]), type: .otherMouseDown)))
+        #expect(isPassThrough(dispatcher.process(try button(4, down: false), type: .otherMouseUp)))
+        #expect(posted.isEmpty)
+    }
+
     @Test func modifierFlagsRoundTrip() {
         let all: Modifiers = [.control, .option, .shift, .command, .function]
         #expect(Modifiers(flags: CGEventFlags(all)) == all)

@@ -23,6 +23,12 @@ enum BuiltInRules {
         rule("nav.lineEnd", KeyCombo(.end), KeyCombo([.command], .rightArrow)),
         rule("nav.selectLineStart", KeyCombo([.shift], .home), KeyCombo([.shift, .command], .leftArrow)),
         rule("nav.selectLineEnd", KeyCombo([.shift], .end), KeyCombo([.shift, .command], .rightArrow)),
+        // Back and forward in browsers and Finder. Not limited by app: the
+        // side buttons mean nothing to a terminal either.
+        Rule(id: "mouse.back", trigger: .mouseButton(number: 4),
+             action: .key(combo: KeyCombo([.command], .leftBracket))),
+        Rule(id: "mouse.forward", trigger: .mouseButton(number: 5),
+             action: .key(combo: KeyCombo([.command], .rightBracket))),
     ]
 
     private static func rule(_ id: String, _ from: KeyCombo, _ to: KeyCombo) -> Rule {
