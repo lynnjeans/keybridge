@@ -1,3 +1,4 @@
+import AppKit
 import Carbon.HIToolbox
 import CoreGraphics
 
@@ -21,17 +22,7 @@ extension Trigger {
         case .scrollWheel:
             // Scroll rules are for mouse wheels. A trackpad's scrolling already
             // works the way users expect and must never trigger page zoom.
-            guard event.scrollSource != .gesture else { return nil }
-            let vertical = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
-            let horizontal = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis2)
-            let direction: ScrollDirection
-            if vertical == 0 && horizontal == 0 {
-                return nil
-            } else if abs(vertical) >= abs(horizontal) {
-                direction = vertical > 0 ? .up : .down
-            } else {
-                direction = horizontal > 0 ? .left : .right
-            }
+            guard event.scrollSource != .gesture, let direction = event.scrollDirection else { return nil }
             self = .scroll(direction: direction, modifiers: modifiers)
 
         default:
@@ -88,6 +79,33 @@ extension CGEvent {
         let momentum = getIntegerValueField(.scrollWheelEventMomentumPhase)
         if phase != 0 || momentum != 0 { return .gesture }
         return getIntegerValueField(.scrollWheelEventIsContinuous) == 0 ? .notchedWheel : .smoothWheel
+    }
+
+    /// Which way the wheel physically turned, or nil for a scroll with no
+    /// movement. `up` is the wheel rolled away from the user.
+    ///
+    /// With natural scrolling on, macOS reports deltas in the direction the
+    /// content moves, which is the opposite; that is undone here, so a rule
+    /// means the same gesture whatever the user's scrolling preference.
+    var scrollDirection: ScrollDirection? {
+        let vertical = getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
+        let horizontal = getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis2)
+        guard vertical != 0 || horizontal != 0 else { return nil }
+        let inverted = NSEvent(cgEvent: self)?.isDirectionInvertedFromDevice ?? false
+        let direction: ScrollDirection
+        if abs(vertical) >= abs(horizontal) {
+            direction = (vertical > 0) != inverted ? .up : .down
+        } else {
+            direction = (horizontal > 0) != inverted ? .left : .right
+        }
+        return direction
+    }
+
+    /// How far the scroll moved along its main axis, in lines.
+    var scrollLines: Double {
+        let vertical = getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
+        let horizontal = getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis2)
+        return max(abs(vertical), abs(horizontal))
     }
 
     var keyCode: KeyCode {

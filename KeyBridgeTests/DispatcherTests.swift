@@ -145,6 +145,39 @@ import Testing
         #expect(posted.isEmpty)
     }
 
+    func scroll(lines: Int32, _ flags: CGEventFlags = [], phase: Int64 = 0) throws -> CGEvent {
+        let event = try #require(CGEvent(
+            scrollWheelEvent2Source: nil, units: .line, wheelCount: 1, wheel1: lines, wheel2: 0, wheel3: 0
+        ))
+        event.setIntegerValueField(.scrollWheelEventIsContinuous, value: 0)
+        event.setIntegerValueField(.scrollWheelEventScrollPhase, value: phase)
+        event.flags = flags
+        return event
+    }
+
+    @Test func fnScrollZoomsInAndOut() throws {
+        var posted: [CGEvent] = []
+        let dispatcher = Dispatcher(frontmostBundleID: { "com.apple.Safari" }, post: { posted.append($0) })
+        dispatcher.rules = BuiltInRules.all
+
+        #expect(isConsumed(dispatcher.process(try scroll(lines: 1, [.maskSecondaryFn]), type: .scrollWheel)))
+        #expect(posted.map(\.type) == [.keyDown, .keyUp])
+        #expect(posted.allSatisfy { $0.keyCode == .equal && Modifiers(flags: $0.flags) == [.command] })
+
+        posted = []
+        #expect(isConsumed(dispatcher.process(try scroll(lines: -1, [.maskSecondaryFn]), type: .scrollWheel)))
+        #expect(posted.first?.keyCode == .minus)
+    }
+
+    @Test func plainScrollingAndTrackpadsAreLeftAlone() throws {
+        var posted: [CGEvent] = []
+        let dispatcher = Dispatcher(frontmostBundleID: { nil }, post: { posted.append($0) })
+        dispatcher.rules = BuiltInRules.all
+        #expect(isPassThrough(dispatcher.process(try scroll(lines: 1), type: .scrollWheel)))
+        #expect(isPassThrough(dispatcher.process(try scroll(lines: 1, [.maskSecondaryFn], phase: 2), type: .scrollWheel)))
+        #expect(posted.isEmpty)
+    }
+
     @Test func modifierFlagsRoundTrip() {
         let all: Modifiers = [.control, .option, .shift, .command, .function]
         #expect(Modifiers(flags: CGEventFlags(all)) == all)

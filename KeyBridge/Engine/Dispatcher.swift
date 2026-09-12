@@ -42,6 +42,8 @@ final class Dispatcher {
     /// a click.
     private var heldButtons: Set<Int> = []
 
+    private var scrollStepper = ScrollStepper()
+
     /// Sends events that are not replacements, such as the keystroke a side
     /// button stands for. Replaceable so tests can capture them instead.
     private let post: @MainActor (CGEvent) -> Void
@@ -64,10 +66,9 @@ final class Dispatcher {
             return mouseDown(event)
         case .otherMouseUp:
             return heldButtons.remove(event.mouseButtonNumber) == nil ? .passThrough : .consume
+        case .scrollWheel:
+            return scroll(event)
         default:
-            // Scroll actions (KB-052) are not carried out yet; a match is only
-            // recorded.
-            if let rule = match(event, type: type) { record(rule) }
             return .passThrough
         }
     }
@@ -90,8 +91,32 @@ final class Dispatcher {
         guard let rule = match(event, type: .otherMouseDown) else { return .passThrough }
         record(rule)
         heldButtons.insert(event.mouseButtonNumber)
+        carryOut(rule.action)
+        return .consume
+    }
 
-        switch rule.action {
+    /// A matched scroll never reaches the application: while the modifier is
+    /// held, the page should zoom, not also scroll. The action fires once per
+    /// wheel notch, as the stepper decides.
+    private func scroll(_ event: CGEvent) -> Disposition {
+        guard let rule = match(event, type: .scrollWheel), let direction = event.scrollDirection else {
+            return .passThrough
+        }
+        record(rule)
+        if scrollStepper.step(
+            direction: direction, source: event.scrollSource,
+            lines: event.scrollLines, timestamp: event.timestamp
+        ) {
+            carryOut(rule.action)
+        }
+        return .consume
+    }
+
+    /// Carries out an action triggered by something other than a key, so
+    /// there is no original event to replace: a keystroke is posted as a
+    /// complete press and release.
+    private func carryOut(_ action: Action) {
+        switch action {
         case .key(let combo):
             for down in [true, false] {
                 if let keystroke = SyntheticEvent.key(combo, down: down) { post(keystroke) }
@@ -99,7 +124,6 @@ final class Dispatcher {
         case .openApplication(let bundleID):
             openApplication(bundleID)
         }
-        return .consume
     }
 
     private func keyDown(_ event: CGEvent) -> Disposition {

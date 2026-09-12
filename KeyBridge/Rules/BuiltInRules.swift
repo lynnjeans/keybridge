@@ -29,6 +29,13 @@ enum BuiltInRules {
              action: .key(combo: KeyCombo([.command], .leftBracket))),
         Rule(id: "mouse.forward", trigger: .mouseButton(number: 5),
              action: .key(combo: KeyCombo([.command], .rightBracket))),
+        // Page zoom, like Ctrl+wheel on Windows. fn is the default modifier
+        // because nothing else uses fn+scroll; Ctrl+scroll can be taken by
+        // the system's screen zoom. ⌘= is what apps expect for ⌘+.
+        Rule(id: "scroll.zoomIn", trigger: .scroll(direction: .up, modifiers: [.function]),
+             action: .key(combo: KeyCombo([.command], .equal))),
+        Rule(id: "scroll.zoomOut", trigger: .scroll(direction: .down, modifiers: [.function]),
+             action: .key(combo: KeyCombo([.command], .minus))),
     ]
 
     private static func rule(_ id: String, _ from: KeyCombo, _ to: KeyCombo) -> Rule {
