@@ -3,7 +3,7 @@ import Foundation
 import OSLog
 
 /// Owns KeyBridge's system-wide event tap: creates it, keeps it attached to the
-/// main run loop, and tears it down.
+/// main run loop, keeps it alive, and tears it down.
 ///
 /// The tap is active rather than listen-only, because remapping has to modify
 /// and swallow events. For now every event is passed through untouched;
@@ -24,6 +24,9 @@ final class EventTap {
 
     private var port: CFMachPort?
     private var source: CFRunLoopSource?
+
+    /// How many times the system disabled the tap and it was brought back.
+    private(set) var recoveryCount = 0
 
     var isRunning: Bool { port != nil }
 
@@ -53,6 +56,7 @@ final class EventTap {
 
         #if DEBUG
         startCounting()
+        armStallIfRequested()
         #endif
         Logger.eventTap.notice("Event tap started")
         return true
@@ -78,14 +82,35 @@ final class EventTap {
     fileprivate func handle(_ type: CGEventType) {
         switch type {
         case .tapDisabledByTimeout, .tapDisabledByUserInput:
-            Logger.eventTap.error("Event tap was disabled by the system (type \(type.rawValue, privacy: .public))")
+            recover(from: type)
         default:
             #if DEBUG
+            stallIfArmed()
             if let category = Self.category(of: type) {
                 counts[category, default: 0] += 1
             }
             #endif
         }
+    }
+
+    /// Called for events KeyBridge posted itself, which are passed through
+    /// without any processing.
+    fileprivate func handleOwnEvent() {
+        #if DEBUG
+        ownCount += 1
+        #endif
+    }
+
+    /// macOS disables a tap whose callback takes too long, and never turns it
+    /// back on. Without this the app keeps running but silently stops working.
+    private func recover(from type: CGEventType) {
+        guard let port else { return }
+        CGEvent.tapEnable(tap: port, enable: true)
+        recoveryCount += 1
+        let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"
+        Logger.eventTap.error(
+            "Event tap was disabled by the system (\(reason, privacy: .public)); re-enabled, recovery #\(self.recoveryCount, privacy: .public)"
+        )
     }
 
     private static func category(of type: CGEventType) -> Category? {
@@ -122,7 +147,13 @@ final class EventTap {
     // few seconds. Counts only, never contents — logging keystrokes would turn
     // the system log into a keylogger.
     private var counts: [Category: Int] = [:]
+    private var ownCount = 0
     private var reportTimer: Timer?
+
+    /// Set by launching with KB_DEBUG_STALL_ONCE in the environment: the next
+    /// event blocks the callback long enough for macOS to disable the tap, so
+    /// recovery can be tested on demand.
+    private var stallArmed = false
 
     private func startCounting() {
         reportTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
@@ -134,15 +165,30 @@ final class EventTap {
         reportTimer?.invalidate()
         reportTimer = nil
         counts = [:]
+        ownCount = 0
     }
 
     private func reportCounts() {
-        guard !counts.isEmpty else { return }
-        let summary = Category.allCases
-            .map { "\($0.rawValue)=\(counts[$0, default: 0])" }
+        guard !counts.isEmpty || ownCount > 0 else { return }
+        let summary = (Category.allCases.map { "\($0.rawValue)=\(counts[$0, default: 0])" }
+            + ["own=\(ownCount)"])
             .joined(separator: " ")
         Logger.eventTap.notice("Events in the last 3s: \(summary, privacy: .public)")
         counts = [:]
+        ownCount = 0
+    }
+
+    private func armStallIfRequested() {
+        guard ProcessInfo.processInfo.environment["KB_DEBUG_STALL_ONCE"] != nil else { return }
+        stallArmed = true
+        Logger.eventTap.notice("Stall armed: the next event will block the tap")
+    }
+
+    private func stallIfArmed() {
+        guard stallArmed else { return }
+        stallArmed = false
+        Logger.eventTap.notice("Simulating a stalled callback")
+        Thread.sleep(forTimeInterval: 2)
     }
     #endif
 }
@@ -155,11 +201,20 @@ private func eventTapCallback(
     event: CGEvent,
     userInfo: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
-    if let userInfo {
-        let tap = Unmanaged<EventTap>.fromOpaque(userInfo).takeUnretainedValue()
-        // The run loop source is on the main run loop, so this is the main thread.
-        MainActor.assumeIsolated { tap.handle(type) }
+    guard let userInfo else { return Unmanaged.passUnretained(event) }
+    let tap = Unmanaged<EventTap>.fromOpaque(userInfo).takeUnretainedValue()
+
+    // Events KeyBridge posted itself pass straight through: rewriting them
+    // again could loop forever. The tap-disabled notices carry no real event,
+    // so they skip this check and go on to be handled.
+    let isDisabledNotice = type == .tapDisabledByTimeout || type == .tapDisabledByUserInput
+    if !isDisabledNotice && SyntheticEvent.isOurs(event) {
+        MainActor.assumeIsolated { tap.handleOwnEvent() }
+        return Unmanaged.passUnretained(event)
     }
+
+    // The run loop source is on the main run loop, so this is the main thread.
+    MainActor.assumeIsolated { tap.handle(type) }
     return Unmanaged.passUnretained(event)
 }
 

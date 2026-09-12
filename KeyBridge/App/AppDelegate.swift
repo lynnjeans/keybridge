@@ -15,6 +15,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // refresh.
         if permissions.status(of: .accessibility) == .granted {
             eventTap.start()
+            #if DEBUG
+            EventTapSelfTest.runIfRequested()
+            #endif
         }
     }
 
