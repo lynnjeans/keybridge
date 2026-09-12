@@ -271,6 +271,8 @@ final class EventTap {
     #endif
 }
 
+extension EventTap: EventTapControlling {}
+
 /// C callback for the tap. Must not capture context, so the owning EventTap is
 /// recovered from `userInfo`.
 private func eventTapCallback(

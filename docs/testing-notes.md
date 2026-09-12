@@ -50,6 +50,17 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
   and mouse still working normally; granting it again should log `Event tap started`, and
   remapping works again without a restart. The menu bar dropdown shows the live state of both
   permissions.
+- The engine runs only while the master switch (Overview › Windows Shortcut Mode) is on **and**
+  both permissions are granted. With a permission missing, the Overview shows "Action needed",
+  the switch is greyed out with the reason below it, and the menu bar icon is faded. The switch
+  is remembered across launches (`engineEnabled` in the app's user defaults); to reset it:
+
+  ```bash
+  defaults delete io.github.lynnjeans.KeyBridge engineEnabled
+  ```
+
+- Opening KeyBridge again while it runs (double-click in Finder, or Spotlight) opens the main
+  window — the way in when the notch hides the menu bar icon.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:

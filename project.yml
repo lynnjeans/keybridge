@@ -78,6 +78,7 @@ targets:
       - path: KeyBridge/Engine/SyntheticEvent.swift
       - path: KeyBridge/Engine/ScrollStepper.swift
       - path: KeyBridge/Permissions
+      - path: KeyBridge/App/EngineController.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests

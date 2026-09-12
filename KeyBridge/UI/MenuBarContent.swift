@@ -8,7 +8,7 @@ struct MenuBarContent: View {
 
     var body: some View {
         // Live permission state. A missing permission opens its System
-        // Settings pane when chosen. The fuller status card is KB-006.
+        // Settings pane when chosen. The Overview has the fuller picture.
         Section("Permissions") {
             ForEach(Permission.allCases, id: \.self) { permission in
                 let granted = permissions.status(of: permission) == .granted
@@ -47,6 +47,14 @@ extension Permission {
         switch self {
         case .accessibility: "Accessibility"
         case .inputMonitoring: "Input Monitoring"
+        }
+    }
+
+    /// Why KeyBridge needs it, in the user's terms.
+    var purpose: String {
+        switch self {
+        case .accessibility: "Lets KeyBridge replace shortcuts, clicks and scrolling with their Mac equivalents."
+        case .inputMonitoring: "Lets KeyBridge see ordinary key presses, such as the C in Ctrl+C."
         }
     }
 }

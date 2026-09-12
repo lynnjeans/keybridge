@@ -12,41 +12,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return dispatcher
     }()
     lazy var eventTap = EventTap(dispatcher: dispatcher)
+    lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logPermissionState()
-        permissionMonitor.onChange = { [weak self] changed in self?.permissionsChanged(changed) }
         permissionMonitor.start()
+        engine.update()
 
-        // The system refuses an active tap without Accessibility. If it is
-        // missing now, the tap starts as soon as the monitor sees it granted.
-        if permissionMonitor.status(of: .accessibility) == .granted {
-            eventTap.start()
-            #if DEBUG
+        #if DEBUG
+        if engine.isActive {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
-            #endif
         }
+        #endif
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         eventTap.stop()
     }
 
-    /// Keeps the tap in line with the permissions, without a restart.
-    private func permissionsChanged(_ changed: Set<Permission>) {
-        let hasAccessibility = permissionMonitor.status(of: .accessibility) == .granted
-        if !hasAccessibility {
-            // Revoked while running. Stop cleanly, releasing any remapped key
-            // still held, rather than leave a tap the system has cut off.
-            eventTap.stop()
-        } else if !eventTap.isRunning {
-            eventTap.start()
-        } else if changed.contains(.inputMonitoring) {
-            // A tap created without Input Monitoring may go on being denied
-            // key presses after the grant, so it is recreated.
-            eventTap.stop()
-            eventTap.start()
-        }
+    /// Opening KeyBridge again while it runs, from Finder or Spotlight, shows
+    /// the main window. On a MacBook with a full menu bar the notch can hide
+    /// the status item, and this is then the only way in.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
+        NotificationCenter.default.post(name: .openMainWindow, object: nil)
+        return false
     }
 
     /// Records permission state at launch so a user's setup can be diagnosed
@@ -59,4 +48,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
     }
+}
+
+extension Notification.Name {
+    /// Asks the SwiftUI side to open the main window, which only a view can do.
+    static let openMainWindow = Notification.Name("KeyBridgeOpenMainWindow")
 }
