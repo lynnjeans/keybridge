@@ -96,6 +96,9 @@ final class EventTap {
             if let category = Self.category(of: type) {
                 counts[category, default: 0] += 1
             }
+            if type == .scrollWheel {
+                scrollSources[event.scrollSource, default: 0] += 1
+            }
             #endif
             return process(event, type: type)
         }
@@ -179,6 +182,7 @@ final class EventTap {
     // Counts only, never contents — logging keystrokes would turn the system
     // log into a keylogger.
     private var counts: [Category: Int] = [:]
+    private var scrollSources: [ScrollSource: Int] = [:]
     private var ownCount = 0
     private var processedCount = 0
     private var processingTotal: UInt64 = 0
@@ -200,6 +204,7 @@ final class EventTap {
         reportTimer?.invalidate()
         reportTimer = nil
         counts = [:]
+        scrollSources = [:]
         ownCount = 0
         resetProcessingStats()
     }
@@ -219,6 +224,13 @@ final class EventTap {
             .joined(separator: " ")
         Logger.eventTap.notice("Events in the last 3s: \(summary, privacy: .public)")
 
+        if !scrollSources.isEmpty {
+            let sources = ScrollSource.allCases
+                .map { "\($0.rawValue)=\(scrollSources[$0, default: 0])" }
+                .joined(separator: " ")
+            Logger.eventTap.notice("Scroll sources: \(sources, privacy: .public)")
+        }
+
         if processedCount > 0 {
             let average = Double(processingTotal) / Double(processedCount) / 1000
             let maximum = Double(processingMax) / 1000
@@ -232,6 +244,7 @@ final class EventTap {
         }
 
         counts = [:]
+        scrollSources = [:]
         ownCount = 0
         resetProcessingStats()
     }

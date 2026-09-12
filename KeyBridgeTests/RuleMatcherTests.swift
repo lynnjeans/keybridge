@@ -115,4 +115,36 @@ import Testing
         #expect(try scroll(0, 2) == .scroll(direction: .left, modifiers: [.function]))
         #expect(try scroll(0, 0) == nil)
     }
+
+    func scrollEvent(continuous: Bool, phase: Int64 = 0, momentum: Int64 = 0) throws -> CGEvent {
+        let event = try #require(CGEvent(
+            scrollWheelEvent2Source: nil, units: .pixel, wheelCount: 1, wheel1: 10, wheel2: 0, wheel3: 0
+        ))
+        event.setIntegerValueField(.scrollWheelEventIsContinuous, value: continuous ? 1 : 0)
+        event.setIntegerValueField(.scrollWheelEventScrollPhase, value: phase)
+        event.setIntegerValueField(.scrollWheelEventMomentumPhase, value: momentum)
+        return event
+    }
+
+    @Test func wheelsAreToldApartFromGestures() throws {
+        #expect(try scrollEvent(continuous: false).scrollSource == .notchedWheel)
+        #expect(try scrollEvent(continuous: true).scrollSource == .smoothWheel)
+        // Phase values as macOS sends them: 1 began, 2 changed, 4 ended, 128 may begin.
+        for phase: Int64 in [1, 2, 4, 128] {
+            #expect(try scrollEvent(continuous: true, phase: phase).scrollSource == .gesture)
+        }
+        // Momentum after the fingers lift: phase is 0 then, momentum is not.
+        for momentum: Int64 in [1, 2, 3] {
+            #expect(try scrollEvent(continuous: true, momentum: momentum).scrollSource == .gesture)
+        }
+    }
+
+    @Test func gesturesTriggerNothing() throws {
+        let gesture = try scrollEvent(continuous: true, phase: 2)
+        #expect(Trigger(event: gesture, type: .scrollWheel) == nil)
+        let momentum = try scrollEvent(continuous: true, momentum: 2)
+        #expect(Trigger(event: momentum, type: .scrollWheel) == nil)
+        let smoothWheel = try scrollEvent(continuous: true)
+        #expect(Trigger(event: smoothWheel, type: .scrollWheel) == .scroll(direction: .up, modifiers: []))
+    }
 }

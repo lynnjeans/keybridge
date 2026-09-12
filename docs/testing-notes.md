@@ -103,6 +103,13 @@ creates, as the hardware does for F-keys; the self-test's own F20 is posted with
 The F17, F18 and F20 presses reach the frontmost app, and button 6 clicks at the pointer; nothing
 uses those by default.
 
+`KB_DEBUG_SCROLLTEST` installs match-only rules for plain scrolling up and down, which change
+nothing on screen because scroll actions are not carried out yet. Scroll with a mouse, then on a
+trackpad, and read the log. Each 3-second report then includes `Scroll sources:
+notchedWheel=… smoothWheel=… gesture=…`, and only the mouse should produce `Matched rules:
+selftest.scrollUp=…` / `selftest.scrollDown=…`. A trackpad flick keeps producing `gesture`
+events for a while after the fingers lift; that is momentum, and it must not match either.
+
 ## Karabiner-Elements and other HID-level remappers
 
 Tools that remap at the HID level, such as Karabiner-Elements, act before KeyBridge's event tap,

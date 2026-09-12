@@ -15,6 +15,21 @@ enum EventTapSelfTest {
         if environment["KB_DEBUG_SELFTEST"] != nil { runTapTest() }
         if environment["KB_DEBUG_MATCHTEST"] != nil { runMatchTest(dispatcher) }
         if environment["KB_DEBUG_REMAPTEST"] != nil { runRemapTest(dispatcher) }
+        if environment["KB_DEBUG_SCROLLTEST"] != nil { installScrollRules(dispatcher) }
+    }
+
+    /// For checking by hand that only mouse wheels trigger scroll rules:
+    /// installs match-only rules for plain scrolling up and down. Scroll
+    /// actions are not carried out yet, so these change nothing on screen.
+    /// Scrolling with a mouse should log `Matched rules: selftest.scrollDown=…`;
+    /// scrolling on a trackpad should log scroll events but no matches.
+    private static func installScrollRules(_ dispatcher: Dispatcher) {
+        dispatcher.rules = [ScrollDirection.up, .down].map { direction in
+            Rule(id: "selftest.scroll\(direction.rawValue.capitalized)",
+                 trigger: .scroll(direction: direction, modifiers: []),
+                 action: .key(combo: KeyCombo(.f17)))
+        }
+        Logger.engine.notice("Scroll test: rules for plain scrolling up and down installed")
     }
 
     /// Checks what applications receive after remapping, through the

@@ -19,6 +19,9 @@ extension Trigger {
             self = .mouseButton(number: event.mouseButtonNumber, modifiers: modifiers)
 
         case .scrollWheel:
+            // Scroll rules are for mouse wheels. A trackpad's scrolling already
+            // works the way users expect and must never trigger page zoom.
+            guard event.scrollSource != .gesture else { return nil }
             let vertical = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1)
             let horizontal = event.getDoubleValueField(.scrollWheelEventFixedPtDeltaAxis2)
             let direction: ScrollDirection
@@ -61,7 +64,32 @@ extension CGEventFlags {
     }
 }
 
+/// Where a scroll event came from, as far as the event itself can tell.
+enum ScrollSource: String, CaseIterable, Sendable {
+    /// A classic wheel that moves in notches, one line at a time.
+    case notchedWheel
+    /// A wheel that scrolls smoothly, such as a free-spinning or
+    /// high-resolution wheel.
+    case smoothWheel
+    /// A touch gesture: a trackpad, or a Magic Mouse's touch surface.
+    case gesture
+}
+
 extension CGEvent {
+    /// Touch gestures report a scroll phase (began, changed, ended) and,
+    /// after the fingers lift, a momentum phase; wheels report neither. Being
+    /// continuous is not enough to tell them apart, since smooth wheels are
+    /// continuous too.
+    ///
+    /// Smooth-scrolling utilities (Mos, SmoothScroll and the like) re-post
+    /// wheel scrolling as synthetic gestures, which then counts as a gesture.
+    var scrollSource: ScrollSource {
+        let phase = getIntegerValueField(.scrollWheelEventScrollPhase)
+        let momentum = getIntegerValueField(.scrollWheelEventMomentumPhase)
+        if phase != 0 || momentum != 0 { return .gesture }
+        return getIntegerValueField(.scrollWheelEventIsContinuous) == 0 ? .notchedWheel : .smoothWheel
+    }
+
     var keyCode: KeyCode {
         KeyCode(rawValue: UInt16(getIntegerValueField(.keyboardEventKeycode)))
     }
