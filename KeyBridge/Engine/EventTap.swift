@@ -11,7 +11,13 @@ import OSLog
 @MainActor
 final class EventTap {
     enum Category: String, CaseIterable, Sendable {
+        /// Ordinary key presses and releases.
         case keyboard
+        /// Modifier state changes (Shift, Control, Option, Command, fn). Kept
+        /// apart from `keyboard` because the system can deliver these while
+        /// withholding ordinary keys, and the difference matters when
+        /// diagnosing permissions.
+        case modifier
         case mouseButton
         case scroll
     }
@@ -84,8 +90,10 @@ final class EventTap {
 
     private static func category(of type: CGEventType) -> Category? {
         switch type {
-        case .keyDown, .keyUp, .flagsChanged:
+        case .keyDown, .keyUp:
             return .keyboard
+        case .flagsChanged:
+            return .modifier
         case .leftMouseDown, .leftMouseUp, .rightMouseDown, .rightMouseUp,
              .otherMouseDown, .otherMouseUp:
             return .mouseButton

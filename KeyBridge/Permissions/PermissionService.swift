@@ -6,7 +6,10 @@ import OSLog
 enum Permission: String, CaseIterable, Sendable {
     /// Needed to modify events in flight and to post synthesized ones.
     case accessibility
-    /// Needed to observe keyboard, mouse and scroll events at all.
+    /// Needed to receive ordinary key presses. Without it the system still
+    /// delivers modifier changes, mouse buttons and scrolling to an active
+    /// tap but silently withholds plain keys, so a Ctrl+C remap would see
+    /// the Ctrl and never the C.
     case inputMonitoring
 }
 
