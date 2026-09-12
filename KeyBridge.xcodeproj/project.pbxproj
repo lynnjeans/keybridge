@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02D4C4ADD903A8EBD9249CC9 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
+		0BD1963115498DF37B2F34A5 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
 		0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */; };
 		10C65A2AF5B64DD68C24FC16 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9FAEF38FA76CE2D4EAA172 /* Dispatcher.swift */; };
 		16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */; };
@@ -20,6 +21,7 @@
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687E05B9F8DE493CF14920E7 /* AppDelegate.swift */; };
 		69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B595E1D78A10E425D9D48C34 /* PermissionService.swift */; };
+		6C9B7992187775D00EBE88CD /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B595E1D78A10E425D9D48C34 /* PermissionService.swift */; };
 		719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
 		7FDBE38023D696D64B59955B /* EventTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */; };
 		83B098FBCF43B11D0B662B0C /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
@@ -27,7 +29,9 @@
 		912C020783005C132B70314C /* RuleMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */; };
 		96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */; };
+		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
 		B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
+		C97335D5A5A889D06E7AE791 /* PermissionMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787259A999A89270DA15D66F /* PermissionMonitorTests.swift */; };
 		CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */; };
 		CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
@@ -56,8 +60,10 @@
 		542F7297D61F8E6943745351 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
 		687E05B9F8DE493CF14920E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E9FAEF38FA76CE2D4EAA172 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
+		787259A999A89270DA15D66F /* PermissionMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitorTests.swift; sourceTree = "<group>"; };
 		82D8E64863C57D05FECB554B /* RuleMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcher.swift; sourceTree = "<group>"; };
 		848719F069115F286CC12A7B /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
+		8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitor.swift; sourceTree = "<group>"; };
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcherTests.swift; sourceTree = "<group>"; };
 		ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModelTests.swift; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 		37D4A23CC47E5FB690CCE8E9 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */,
 				B595E1D78A10E425D9D48C34 /* PermissionService.swift */,
 			);
 			path = Permissions;
@@ -147,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
+				787259A999A89270DA15D66F /* PermissionMonitorTests.swift */,
 				A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */,
 				ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */,
 				15087DE16390140942799307 /* ScrollStepperTests.swift */,
@@ -261,6 +269,9 @@
 				9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */,
 				16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */,
 				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
+				0BD1963115498DF37B2F34A5 /* PermissionMonitor.swift in Sources */,
+				C97335D5A5A889D06E7AE791 /* PermissionMonitorTests.swift in Sources */,
+				6C9B7992187775D00EBE88CD /* PermissionService.swift in Sources */,
 				02D4C4ADD903A8EBD9249CC9 /* Preset.swift in Sources */,
 				435FFFBB497EF6A209F57480 /* Rule.swift in Sources */,
 				E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */,
@@ -289,6 +300,7 @@
 				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,
 				F3282C27664078C37C79E61E /* MainWindow.swift in Sources */,
 				DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */,
+				9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */,
 				69B3A4AE340165294160DCD7 /* PermissionService.swift in Sources */,
 				4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */,
 				FC7E759BB0F8A02DA983FC22 /* Rule.swift in Sources */,

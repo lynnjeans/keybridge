@@ -1,3 +1,4 @@
+import ApplicationServices
 import CoreGraphics
 import Foundation
 import OSLog
@@ -137,6 +138,12 @@ final class EventTap {
     /// back on. Without this the app keeps running but silently stops working.
     private func recover(from type: CGEventType) {
         guard let port else { return }
+        // Revoking Accessibility also disables the tap. Re-enabling it then
+        // is pointless; the permission monitor stops the tap instead.
+        guard AXIsProcessTrusted() else {
+            Logger.eventTap.error("Event tap was disabled and Accessibility is no longer granted; not re-enabling")
+            return
+        }
         CGEvent.tapEnable(tap: port, enable: true)
         recoveryCount += 1
         let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"

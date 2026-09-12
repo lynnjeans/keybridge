@@ -43,6 +43,13 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
   but **ordinary key presses are silently withheld**. A run of Shift presses therefore looks
   like working keyboard input. That is why the debug counters report `keyboard` (key down/up)
   and `modifier` (flag changes) separately. Details in #69.
+- Permission changes are picked up while the app runs, by a check every 2 seconds and whenever
+  KeyBridge becomes active; each change is logged in the `permissions` category as
+  `accessibility: granted → denied`. To test, toggle KeyBridge in System Settings › Privacy &
+  Security while it runs. Revoking Accessibility should log `Event tap stopped` with the keyboard
+  and mouse still working normally; granting it again should log `Event tap started`, and
+  remapping works again without a restart. The menu bar dropdown shows the live state of both
+  permissions.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:
@@ -169,6 +176,11 @@ recovery #1`, then the later plain events still counted.
   the same number whether KeyBridge is running or not, with a brief extra one during the swap.
 - To check for the icon programmatically, list windows at layer 25 owned by Control Center and
   look for an on-screen one at KeyBridge's position. The reliable check is still to look.
+- **On a MacBook with a notch, a full menu bar silently hides the items that do not fit.** The
+  newest item is the leftmost, so a freshly launched KeyBridge is the first to vanish behind the
+  notch while running normally. Listing the layer-25 windows shows it with `onscreen=no` at an
+  x position inside the notch (`NSScreen.auxiliaryTopLeftArea` / `auxiliaryTopRightArea` give
+  its edges). Quit an app or turn off an item in System Settings › Menu Bar to make room.
 
 ## Shell scripting
 

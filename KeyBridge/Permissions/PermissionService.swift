@@ -1,4 +1,5 @@
 import ApplicationServices
+import Foundation
 import IOKit.hid
 import OSLog
 
@@ -11,6 +12,17 @@ enum Permission: String, CaseIterable, Sendable {
     /// tap but silently withholds plain keys, so a Ctrl+C remap would see
     /// the Ctrl and never the C.
     case inputMonitoring
+}
+
+extension Permission {
+    /// The System Settings pane where the user grants this permission.
+    var settingsURL: URL {
+        let anchor = switch self {
+        case .accessibility: "Privacy_Accessibility"
+        case .inputMonitoring: "Privacy_ListenEvent"
+        }
+        return URL(string: "x-apple.systempreferences:com.apple.preference.security?\(anchor)")!
+    }
 }
 
 enum PermissionStatus: String, Sendable {
