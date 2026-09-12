@@ -67,3 +67,14 @@ modifier+scroll zooms the page.**
 |---|---|
 | `scripts/bootstrap-github.sh` | Creates the repository, labels, 14 milestones and the full 62-issue backlog |
 | `scripts/reset-github.sh` | Deletes every issue and milestone so the backlog can be rebuilt. **Permanent — no undo.** |
+
+## Progress
+
+Each milestone's completion is shown on the
+[milestones page](https://github.com/lynnjeans/keybridge/milestones).
+
+## Testing
+
+Verification techniques, debug switches, and the traps that produce misleading results are
+collected in [testing-notes.md](testing-notes.md). Read it before trusting a check that
+reports zero events, no log lines, or no change.
