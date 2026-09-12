@@ -8,7 +8,7 @@ extension Trigger {
         let modifiers = Modifiers(flags: event.flags)
         switch type {
         case .keyDown:
-            let key = KeyCode(rawValue: UInt16(event.getIntegerValueField(.keyboardEventKeycode)))
+            let key = event.keyCode
             var keyModifiers = modifiers
             if key.carriesImplicitFunctionFlag {
                 keyModifiers.remove(.function)
@@ -52,7 +52,33 @@ extension Modifiers {
     }
 }
 
+extension CGEventFlags {
+    init(_ modifiers: Modifiers) {
+        self = []
+        if modifiers.contains(.control) { insert(.maskControl) }
+        if modifiers.contains(.option) { insert(.maskAlternate) }
+        if modifiers.contains(.shift) { insert(.maskShift) }
+        if modifiers.contains(.command) { insert(.maskCommand) }
+        if modifiers.contains(.function) { insert(.maskSecondaryFn) }
+    }
+}
+
+extension CGEvent {
+    var keyCode: KeyCode {
+        KeyCode(rawValue: UInt16(getIntegerValueField(.keyboardEventKeycode)))
+    }
+
+    /// True for the repeated key-downs macOS generates while a key is held.
+    var isAutorepeat: Bool {
+        getIntegerValueField(.keyboardEventAutorepeat) != 0
+    }
+}
+
 extension KeyCode {
+    var isArrow: Bool {
+        [.leftArrow, .rightArrow, .upArrow, .downArrow].contains(self)
+    }
+
     /// macOS sets the fn flag on every press of these keys, whether or not fn
     /// is held, and a MacBook produces some of them only through fn (fn+← is
     /// Home). The flag says nothing about the user's intent, so matching

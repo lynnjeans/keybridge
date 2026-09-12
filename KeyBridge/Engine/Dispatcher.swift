@@ -1,45 +1,130 @@
+import AppKit
 import CoreGraphics
 import OSLog
 
 /// The path every event takes through KeyBridge: work out what it triggers,
-/// find the rule that applies in the current context, and act on it.
+/// find the rule that applies in the current context, and carry it out.
 @MainActor
 final class Dispatcher {
-    enum Disposition {
+    // Carries a CGEvent, which is not Sendable; a disposition never leaves
+    // the main thread, where the tap callback runs.
+    enum Disposition: @unchecked Sendable {
         /// Let the original event continue to its destination.
         case passThrough
-        /// Remove the original event; the rule's action replaces it.
+        /// Remove the original event.
         case consume
+        /// Send this event on in place of the original.
+        case replace(CGEvent)
     }
 
-    /// The effective rules. Until configuration and presets exist this stays
-    /// empty outside the debug self-test.
+    /// The effective rules.
     var rules: [Rule] = [] {
         didSet { matcher = RuleMatcher(rules: rules) }
     }
 
     private var matcher = RuleMatcher(rules: [])
-    private let frontmost: FrontmostApplication
+    private let frontmostBundleID: @MainActor () -> String?
 
-    init(frontmost: FrontmostApplication) {
-        self.frontmost = frontmost
+    /// Keys whose press was remapped and that are still held. Their repeats
+    /// and release are rewritten to match the press, whatever modifiers are
+    /// held by then: the user may let go of Ctrl before C.
+    private var heldKeys: [KeyCode: HeldKey] = [:]
+
+    private struct HeldKey {
+        let ruleID: String
+        /// What the press became; nil when the action was not a keystroke, in
+        /// which case repeats and the release are swallowed.
+        let output: KeyCombo?
+    }
+
+    init(frontmostBundleID: @escaping @MainActor () -> String?) {
+        self.frontmostBundleID = frontmostBundleID
     }
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
-        guard let trigger = Trigger(event: event, type: type) else { return .passThrough }
-        let context = MatchContext(frontmostBundleID: frontmost.bundleID)
-        guard let rule = matcher.match(trigger, in: context) else { return .passThrough }
-        return perform(rule)
+        switch type {
+        case .keyDown:
+            return keyDown(event)
+        case .keyUp:
+            return keyUp(event)
+        default:
+            // Mouse button (KB-050) and scroll (KB-052) actions are not carried
+            // out yet; a match is only recorded.
+            if let rule = match(event, type: type) { record(rule) }
+            return .passThrough
+        }
     }
 
-    /// Carrying out actions arrives with the remap executor (KB-040). Until
-    /// then a match is only recorded and the original event continues, so
-    /// KeyBridge never swallows input it cannot yet replace.
-    private func perform(_ rule: Rule) -> Disposition {
+    /// Releases every remapped key still held, so nothing is left pressed
+    /// when the tap stops in the middle of a keystroke.
+    func releaseHeldKeys() {
+        for held in heldKeys.values {
+            if let output = held.output, let release = SyntheticEvent.key(output, down: false) {
+                SyntheticEvent.post(release)
+            }
+        }
+        heldKeys = [:]
+    }
+
+    private func keyDown(_ event: CGEvent) -> Disposition {
+        let key = event.keyCode
+        let rule = match(event, type: .keyDown)
+
+        if let held = heldKeys[key] {
+            // Auto-repeat of a remapped key. If the modifiers changed mid-hold
+            // the combination no longer applies; swallowing the rest of the
+            // repeats beats suddenly typing the plain key.
+            guard rule?.id == held.ruleID, let output = held.output else { return .consume }
+            return replacement(output, down: true, for: event)
+        }
+
+        // A repeat that matches only now, because a modifier was pressed while
+        // the key was already held, belongs to a press that went out unchanged.
+        guard let rule, !event.isAutorepeat else { return .passThrough }
+        record(rule)
+
+        switch rule.action {
+        case .key(let combo):
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: combo)
+            return replacement(combo, down: true, for: event)
+        case .openApplication(let bundleID):
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            openApplication(bundleID)
+            return .consume
+        }
+    }
+
+    private func keyUp(_ event: CGEvent) -> Disposition {
+        guard let held = heldKeys.removeValue(forKey: event.keyCode) else { return .passThrough }
+        guard let output = held.output else { return .consume }
+        return replacement(output, down: false, for: event)
+    }
+
+    private func replacement(_ combo: KeyCombo, down: Bool, for original: CGEvent) -> Disposition {
+        guard let event = SyntheticEvent.key(combo, down: down, replacing: original) else {
+            Logger.engine.error("Could not create a replacement key event")
+            return .passThrough
+        }
+        return .replace(event)
+    }
+
+    private func match(_ event: CGEvent, type: CGEventType) -> Rule? {
+        guard let trigger = Trigger(event: event, type: type) else { return nil }
+        return matcher.match(trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()))
+    }
+
+    private func openApplication(_ bundleID: String) {
+        guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
+            Logger.engine.error("No application with bundle identifier \(bundleID, privacy: .public)")
+            return
+        }
+        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
+    }
+
+    private func record(_ rule: Rule) {
         #if DEBUG
         matchCounts[rule.id, default: 0] += 1
         #endif
-        return .passThrough
     }
 
     #if DEBUG
@@ -52,4 +137,11 @@ final class Dispatcher {
         return matchCounts
     }
     #endif
+}
+
+extension Logger {
+    static let engine = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "KeyBridge",
+        category: "engine"
+    )
 }

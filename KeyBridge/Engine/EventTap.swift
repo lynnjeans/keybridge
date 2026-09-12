@@ -7,7 +7,7 @@ import OSLog
 ///
 /// The tap is active rather than listen-only, because remapping has to modify
 /// and swallow events. Each event is handed to the `Dispatcher`, which decides
-/// whether it continues.
+/// whether it continues, is removed, or is replaced.
 @MainActor
 final class EventTap {
     enum Category: String, CaseIterable, Sendable {
@@ -71,6 +71,7 @@ final class EventTap {
         guard let port else { return }
 
         CGEvent.tapEnable(tap: port, enable: false)
+        dispatcher.releaseHeldKeys()
         if let source {
             CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .commonModes)
         }
@@ -84,12 +85,11 @@ final class EventTap {
         Logger.eventTap.notice("Event tap stopped")
     }
 
-    /// Returns false if the event should be removed from the stream.
-    fileprivate func handle(_ event: CGEvent, type: CGEventType) -> Bool {
+    fileprivate func handle(_ event: CGEvent, type: CGEventType) -> Dispatcher.Disposition {
         switch type {
         case .tapDisabledByTimeout, .tapDisabledByUserInput:
             recover(from: type)
-            return true
+            return .passThrough
         default:
             #if DEBUG
             stallIfArmed()
@@ -97,7 +97,7 @@ final class EventTap {
                 counts[category, default: 0] += 1
             }
             #endif
-            return process(event, type: type) == .passThrough
+            return process(event, type: type)
         }
     }
 
@@ -274,8 +274,16 @@ private func eventTapCallback(
     // The run loop source is on the main run loop, so this is the main thread,
     // and the event never leaves it.
     nonisolated(unsafe) let event = event
-    let keep = MainActor.assumeIsolated { tap.handle(event, type: type) }
-    return keep ? Unmanaged.passUnretained(event) : nil
+    switch MainActor.assumeIsolated({ tap.handle(event, type: type) }) {
+    case .passThrough:
+        return Unmanaged.passUnretained(event)
+    case .consume:
+        return nil
+    case .replace(let replacement):
+        // The system releases a replacement event once it has taken it over,
+        // so it is handed over with a retain of its own.
+        return Unmanaged.passRetained(replacement)
+    }
 }
 
 extension Logger {

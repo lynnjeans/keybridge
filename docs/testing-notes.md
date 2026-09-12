@@ -84,8 +84,20 @@ Debug builds read these environment variables at launch. Pass them with `open --
 Expected log for `KB_DEBUG_MATCHTEST` (category `engine`): `Matched rules: selftest.finder=3`,
 then `selftest.any=3`, and no match for F20. The `eventtap` category reports per-event
 processing time as `Processing: n=… avg=…µs max=…µs`; each call is also a signpost interval
-named `process`, so Instruments can chart it in any build. Matching only records for now, so the
-F19 and F20 presses do reach the frontmost app.
+named `process`, so Instruments can chart it in any build. The self-test rules replace the
+built-in ones for that launch.
+
+`KB_DEBUG_REMAPTEST` checks what applications actually receive. It starts a debug-only
+listen-only tap placed after every other tap (the *downstream probe*), which logs only F17–F20,
+and remaps ⌃F19 → ⌥F18. Expected `Downstream:` lines (KeyBridge adds fn to the F18 it
+creates, as the hardware does for F-keys; the self-test's own F20 is posted without it):
+
+1. ⌃F19 with two repeats, Ctrl released before F19: `F18 down`, `repeat`, `repeat`, `up`, each
+   `[option+fn]`, and no F19.
+2. Ctrl released while F19 repeats: `F18 down`, `F18 up` — the repeat without Ctrl is swallowed.
+3. F20, which has no rule: `F20 down []`, `F20 up []`, unchanged.
+
+The F18 and F20 presses reach the frontmost app; nothing uses those keys by default.
 
 ```bash
 open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Build/Products/Debug/KeyBridge.app

@@ -14,6 +14,50 @@ enum EventTapSelfTest {
         let environment = ProcessInfo.processInfo.environment
         if environment["KB_DEBUG_SELFTEST"] != nil { runTapTest() }
         if environment["KB_DEBUG_MATCHTEST"] != nil { runMatchTest(dispatcher) }
+        if environment["KB_DEBUG_REMAPTEST"] != nil { runRemapTest(dispatcher) }
+    }
+
+    /// Checks what applications receive after remapping, through the
+    /// downstream probe, with the test rule ⌃F19 → ⌥F18. Expected probe log
+    /// (F18 also carries fn, as F-keys from the hardware do):
+    /// 1. ⌃F19 held with two repeats, Ctrl released before F19:
+    ///    F18 down, repeat, repeat, up, all [option+fn]. No F19 at all.
+    /// 2. ⌃F19 held, Ctrl released, F19 still repeating, then released:
+    ///    F18 down and up only; the repeat without Ctrl is swallowed.
+    /// 3. F20, which no rule matches: F20 down and up, unchanged.
+    private static func runRemapTest(_ dispatcher: Dispatcher) {
+        dispatcher.rules = [
+            Rule(id: "selftest.remap", trigger: .key(combo: KeyCombo([.control], .f19)),
+                 action: .key(combo: KeyCombo([.option], .f18))),
+        ]
+        DownstreamProbe.start()
+
+        Task {
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Remap test 1: ⌃F19 with repeats, Ctrl released first")
+            post(.f19, down: true, [.maskControl])
+            post(.f19, down: true, [.maskControl], repeat: true)
+            post(.f19, down: true, [.maskControl], repeat: true)
+            post(.f19, down: false)
+
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Remap test 2: Ctrl released while F19 repeats")
+            post(.f19, down: true, [.maskControl])
+            post(.f19, down: true, repeat: true)
+            post(.f19, down: false)
+
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Remap test 3: F20, no rule")
+            post(.f20, down: true)
+            post(.f20, down: false)
+        }
+    }
+
+    private static func post(_ key: KeyCode, down: Bool, _ flags: CGEventFlags = [], repeat isRepeat: Bool = false) {
+        guard let event = CGEvent(keyboardEventSource: nil, virtualKey: key.rawValue, keyDown: down) else { return }
+        event.flags = flags
+        if isRepeat { event.setIntegerValueField(.keyboardEventAutorepeat, value: 1) }
+        event.post(tap: .cgSessionEventTap)
     }
 
     /// Checks the tap's robustness features with zero-delta scrolls, so

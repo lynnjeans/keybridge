@@ -91,8 +91,13 @@ struct Modifiers: OptionSet, Hashable, Sendable {
     static let command = Modifiers(rawValue: 1 << 3)
     static let function = Modifiers(rawValue: 1 << 4)
 
+    /// The names of the modifiers in this set, in canonical order.
+    var names: [String] {
+        Self.names.filter { contains($0.0) }.map(\.1)
+    }
+
     /// Stable names used in the configuration file, in canonical order.
-    fileprivate static let names: [(Modifiers, String)] = [
+    private static let names: [(Modifiers, String)] = [
         (.control, "control"),
         (.option, "option"),
         (.shift, "shift"),
@@ -120,7 +125,7 @@ extension Modifiers: Codable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(Self.names.filter { contains($0.0) }.map(\.1))
+        try container.encode(names)
     }
 }
 

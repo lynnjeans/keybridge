@@ -33,10 +33,3 @@ final class FrontmostApplication {
         #endif
     }
 }
-
-extension Logger {
-    static let engine = Logger(
-        subsystem: Bundle.main.bundleIdentifier ?? "KeyBridge",
-        category: "engine"
-    )
-}

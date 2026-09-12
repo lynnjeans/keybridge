@@ -6,7 +6,11 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissions = PermissionService()
     let frontmost = FrontmostApplication()
-    lazy var dispatcher = Dispatcher(frontmost: frontmost)
+    lazy var dispatcher: Dispatcher = {
+        let dispatcher = Dispatcher { [frontmost] in frontmost.bundleID }
+        dispatcher.rules = BuiltInRules.all
+        return dispatcher
+    }()
     lazy var eventTap = EventTap(dispatcher: dispatcher)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
