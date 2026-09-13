@@ -21,7 +21,9 @@ xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Debug \
 ```
 
 When adding a folder whose code is tested, add it to the `KeyBridgeTests` sources in
-`project.yml` and run `xcodegen generate`.
+`project.yml` and run `xcodegen generate`. Do the same after adding any file: entries added to
+`project.pbxproj` by hand build fine but carry made-up object IDs, so the next `xcodegen generate`
+rewrites them and shows up as an unrelated diff.
 
 ## Launching the app
 
@@ -33,8 +35,9 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
   open build/DerivedData/Build/Products/Debug/KeyBridge.app
   ```
 
-- KeyBridge is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch. Its
-  only visible presence is the ⌘ icon in the menu bar.
+- KeyBridge is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch —
+  except on a first run that still needs a permission, which opens the guide below. Its only
+  permanent visible presence is the ⌘ icon in the menu bar.
 
 ## Permissions
 
@@ -61,6 +64,67 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
 
 - Opening KeyBridge again while it runs (double-click in Finder, or Spotlight) opens the main
   window — the way in when the notch hides the menu bar icon.
+- The first-run guide (Set Up KeyBridge) opens by itself on a first launch that is still missing
+  a permission, and walks Accessibility → Input Monitoring → Ready. Its step follows the live
+  permission state, so granting one in System Settings moves the window on within the 2-second
+  poll, with nothing to click. Once finished it does not return; the menu bar item and the
+  Overview both lead back to it while a permission is missing. To replay it, forget both the
+  grants and the fact that the guide has been seen, then relaunch:
+
+  ```bash
+  tccutil reset Accessibility io.github.lynnjeans.KeyBridge
+  tccutil reset ListenEvent io.github.lynnjeans.KeyBridge
+  defaults delete io.github.lynnjeans.KeyBridge onboardingCompleted
+  ```
+
+  `tccutil reset` kills the running app, and `defaults` writes are cached per process, so quit
+  KeyBridge before running these or the old value is written back on quit.
+- The guide never shows a system permission alert. For Accessibility, the plain
+  `AXIsProcessTrusted()` check made at launch is enough to list KeyBridge in the pane; the
+  prompting variant was dropped because its alert opened on top of the deep-linked pane and then
+  lingered behind System Settings with a Deny button. Input Monitoring is different: checking
+  (`IOHIDCheckAccess`) leaves its list empty, so the guide calls `IOHIDRequestAccess` itself as
+  soon as it reaches step 2 while the status is `notDetermined` (once per run), and again from
+  the step's button. Expected log: `Onboarding requested inputMonitoring on reaching its step`
+  right after `accessibility: denied → granted`, then `inputMonitoring: notDetermined → granted`
+  in the same instant — step 2 passes without the user doing anything.
+- **With Accessibility already granted, macOS may grant Input Monitoring silently.** Observed on
+  macOS 26: `IOHIDRequestAccess` returned granted within about 1.5 s with no alert and no row in
+  the Input Monitoring list, and the tap received ordinary key presses (`keyboard=` counts above
+  zero). So "Granted" in KeyBridge with "No Items" in System Settings is not a detection bug, but
+  the grant cannot be switched off there either — reset it with `tccutil reset ListenEvent`.
+  The `tccd` log shows why: with Accessibility granted, the `kTCCServiceListenEvent` request is
+  answered "allowed" within milliseconds, without asking anyone — and KeyBridge never gets a row
+  of its own (a row seen in one run had been added by hand with "+"). Judge the grant by the
+  `keyboard=` counter, not by the list.
+- **Once Input Monitoring reads `denied`, step 2 is a dead end.** `IOHIDRequestAccess` then does
+  nothing — no alert, no row — so the pane stays at "No Items" however often the button is
+  pressed. Seen in a process that had read `denied` while Accessibility was still missing and
+  kept that value after Accessibility was granted — likely the same in-process staleness as
+  revocation below. After `tccutil reset ListenEvent io.github.lynnjeans.KeyBridge` and a
+  relaunch, the fresh process read `granted` straight away, with no request, because
+  Accessibility was granted — and the guide skipped itself. The launch log line
+  `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
+- **An explicit Input Monitoring "off" wins over Accessibility.** The silent grant above applies
+  only while Input Monitoring is undecided. Add KeyBridge to the list with "+" and switch it off,
+  and a fresh launch reads `inputMonitoring: denied` with Accessibility still on, so the engine
+  does not start the tap.
+- **Changing an Input Monitoring switch relaunches KeyBridge.** System Settings offers to quit
+  and reopen the app; runningboard logs the relaunch with `com.apple.coreservices.uiagent` as the
+  originator, and each change shows in the `tccd` log as
+  `TCCDEvent: type=Modify, service=kTCCServiceListenEvent`. The new process reads the real
+  state. Only if the user postpones that relaunch can the running process report a stale
+  status — still to be checked (#126). Accessibility changes are picked up by the 2-second poll
+  without a relaunch.
+- **System Settings' privacy lists refresh late.** Right after a grant, or after a deep link,
+  a pane can show "No Items" for a few seconds before KeyBridge's row appears. Wait, or reopen
+  the pane, before concluding the row is missing.
+- **KeyBridge is not frontmost at launch, even when started from Finder**, and
+  `NSApplication.activate()` is refused while another app is frontmost. The guide therefore
+  orders its own window front (`orderFrontRegardless`) when it appears and on every step change,
+  so it is in view without being the active app. To check, list on-screen windows front to back
+  with `CGWindowListCopyWindowInfo` and look for `Set Up KeyBridge` first; the frontmost
+  *application* stays whatever the user had before.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:

@@ -41,15 +41,20 @@ enum PermissionStatus: String, Sendable {
 struct PermissionService: Sendable {
     private let isAccessibilityTrusted: @Sendable () -> Bool
     private let inputMonitoringAccess: @Sendable () -> IOHIDAccessType
+    private let requestInputMonitoring: @Sendable () -> Bool
 
     init(
         isAccessibilityTrusted: @escaping @Sendable () -> Bool = { AXIsProcessTrusted() },
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
+        },
+        requestInputMonitoring: @escaping @Sendable () -> Bool = {
+            IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
         }
     ) {
         self.isAccessibilityTrusted = isAccessibilityTrusted
         self.inputMonitoringAccess = inputMonitoringAccess
+        self.requestInputMonitoring = requestInputMonitoring
     }
 
     func status(of permission: Permission) -> PermissionStatus {
@@ -62,6 +67,23 @@ struct PermissionService: Sendable {
             case kIOHIDAccessTypeDenied: return .denied
             default: return .notDetermined
             }
+        }
+    }
+
+    /// Makes sure KeyBridge has a row in the permission's System Settings
+    /// list, so the user has something to switch on. Grants nothing itself;
+    /// the onboarding flow sends the user to the pane as well.
+    ///
+    /// Accessibility needs nothing here: the plain `AXIsProcessTrusted()`
+    /// check made at launch already adds the row. Its prompting variant is
+    /// deliberately not used — its alert opens on top of the pane the guide
+    /// has just opened, and lingers behind System Settings afterwards.
+    /// Input Monitoring is different: checking does not add the row, only
+    /// requesting does.
+    func request(_ permission: Permission) {
+        switch permission {
+        case .accessibility: break
+        case .inputMonitoring: _ = requestInputMonitoring()
         }
     }
 

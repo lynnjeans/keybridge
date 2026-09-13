@@ -4,6 +4,7 @@ import SwiftUI
 /// The dropdown shown from the menu bar item.
 struct MenuBarContent: View {
     let permissions: PermissionMonitor
+    let onboarding: OnboardingController
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
@@ -21,6 +22,10 @@ struct MenuBarContent: View {
                     )
                 }
             }
+        }
+
+        if !permissions.allGranted {
+            Button("Set Up Permissions…") { onboarding.open() }
         }
 
         Divider()
@@ -55,6 +60,20 @@ extension Permission {
         switch self {
         case .accessibility: "Lets KeyBridge replace shortcuts, clicks and scrolling with their Mac equivalents."
         case .inputMonitoring: "Lets KeyBridge see ordinary key presses, such as the C in Ctrl+C."
+        }
+    }
+
+    /// What to expect in System Settings, where the pane may not show
+    /// KeyBridge at all: once Accessibility is granted, macOS allows Input
+    /// Monitoring without storing a decision, so there is no row.
+    func settingsHint(granted: Bool) -> String? {
+        switch self {
+        case .accessibility:
+            nil
+        case .inputMonitoring:
+            granted
+                ? "macOS grants this together with Accessibility and may not list KeyBridge under Input Monitoring."
+                : "If KeyBridge is not in the Input Monitoring list, click + and choose KeyBridge."
         }
     }
 }

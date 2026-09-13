@@ -4,6 +4,7 @@ import SwiftUI
 /// pages arrive with KB-070.
 struct MainWindow: View {
     let engine: EngineController
+    let onboarding: OnboardingController
 
     var body: some View {
         ScrollView {
@@ -11,7 +12,7 @@ struct MainWindow: View {
                 Text("Overview")
                     .font(.largeTitle.bold())
                 ModeCard(engine: engine)
-                PermissionsCard(permissions: engine.permissions)
+                PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
             }
             .padding(28)
             .frame(maxWidth: 680, alignment: .leading)
@@ -66,6 +67,7 @@ private struct ModeCard: View {
 /// Whether KeyBridge has what it needs from macOS, and where to grant it.
 private struct PermissionsCard: View {
     let permissions: PermissionMonitor
+    let onboarding: OnboardingController
 
     var body: some View {
         Card {
@@ -87,6 +89,12 @@ private struct PermissionsCard: View {
                 ForEach(Permission.allCases, id: \.self) { permission in
                     PermissionRow(permission: permission, granted: permissions.status(of: permission) == .granted)
                 }
+
+                // The guided way through, for anyone who closed it on the
+                // first run or lost a permission later.
+                if !permissions.allGranted {
+                    Button("Set Up Permissions…") { onboarding.open() }
+                }
             }
         }
     }
@@ -106,6 +114,12 @@ private struct PermissionRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                if let hint = permission.settingsHint(granted: granted) {
+                    Text(hint)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             Spacer()
             if granted {

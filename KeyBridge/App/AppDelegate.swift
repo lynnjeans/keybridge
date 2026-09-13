@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }()
     lazy var eventTap = EventTap(dispatcher: dispatcher)
     lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
+    lazy var onboarding = OnboardingController(permissions: permissionMonitor)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logPermissionState()
