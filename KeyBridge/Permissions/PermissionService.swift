@@ -41,15 +41,26 @@ enum PermissionStatus: String, Sendable {
 struct PermissionService: Sendable {
     private let isAccessibilityTrusted: @Sendable () -> Bool
     private let inputMonitoringAccess: @Sendable () -> IOHIDAccessType
+    private let promptForAccessibility: @Sendable () -> Void
+    private let requestInputMonitoring: @Sendable () -> Bool
 
     init(
         isAccessibilityTrusted: @escaping @Sendable () -> Bool = { AXIsProcessTrusted() },
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
+        },
+        promptForAccessibility: @escaping @Sendable () -> Void = {
+            let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+            _ = AXIsProcessTrustedWithOptions([prompt: true] as CFDictionary)
+        },
+        requestInputMonitoring: @escaping @Sendable () -> Bool = {
+            IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
         }
     ) {
         self.isAccessibilityTrusted = isAccessibilityTrusted
         self.inputMonitoringAccess = inputMonitoringAccess
+        self.promptForAccessibility = promptForAccessibility
+        self.requestInputMonitoring = requestInputMonitoring
     }
 
     func status(of permission: Permission) -> PermissionStatus {
@@ -62,6 +73,21 @@ struct PermissionService: Sendable {
             case kIOHIDAccessTypeDenied: return .denied
             default: return .notDetermined
             }
+        }
+    }
+
+    /// Asks the system for a permission.
+    ///
+    /// This is what puts KeyBridge into the System Settings list in the first
+    /// place: until an app has asked, its row is not there for the user to
+    /// switch on. Neither call grants anything by itself — Accessibility only
+    /// shows the system's "open Settings" alert, and Input Monitoring shows
+    /// its own alert once and afterwards does nothing — so the onboarding
+    /// flow always sends the user to the pane as well.
+    func request(_ permission: Permission) {
+        switch permission {
+        case .accessibility: promptForAccessibility()
+        case .inputMonitoring: _ = requestInputMonitoring()
         }
     }
 

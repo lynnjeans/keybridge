@@ -5,11 +5,18 @@ import Testing
 final class FakePermissions: @unchecked Sendable {
     var accessibility = false
     var inputMonitoring = kIOHIDAccessTypeUnknown
+    /// The permissions the code under test asked the system for, in order.
+    var requests: [Permission] = []
 
     var service: PermissionService {
         PermissionService(
             isAccessibilityTrusted: { self.accessibility },
-            inputMonitoringAccess: { self.inputMonitoring }
+            inputMonitoringAccess: { self.inputMonitoring },
+            promptForAccessibility: { self.requests.append(.accessibility) },
+            requestInputMonitoring: {
+                self.requests.append(.inputMonitoring)
+                return self.inputMonitoring == kIOHIDAccessTypeGranted
+            }
         )
     }
 }

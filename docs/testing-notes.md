@@ -33,8 +33,9 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
   open build/DerivedData/Build/Products/Debug/KeyBridge.app
   ```
 
-- KeyBridge is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch. Its
-  only visible presence is the ⌘ icon in the menu bar.
+- KeyBridge is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch —
+  except on a first run that still needs a permission, which opens the guide below. Its only
+  permanent visible presence is the ⌘ icon in the menu bar.
 
 ## Permissions
 
@@ -61,6 +62,25 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
 
 - Opening KeyBridge again while it runs (double-click in Finder, or Spotlight) opens the main
   window — the way in when the notch hides the menu bar icon.
+- The first-run guide (Set Up KeyBridge) opens by itself on a first launch that is still missing
+  a permission, and walks Accessibility → Input Monitoring → Ready. Its step follows the live
+  permission state, so granting one in System Settings moves the window on within the 2-second
+  poll, with nothing to click. Once finished it does not return; the menu bar item and the
+  Overview both lead back to it while a permission is missing. To replay it, forget both the
+  grants and the fact that the guide has been seen, then relaunch:
+
+  ```bash
+  tccutil reset Accessibility io.github.lynnjeans.KeyBridge
+  tccutil reset ListenEvent io.github.lynnjeans.KeyBridge
+  defaults delete io.github.lynnjeans.KeyBridge onboardingCompleted
+  ```
+
+  `tccutil reset` kills the running app, and `defaults` writes are cached per process, so quit
+  KeyBridge before running these or the old value is written back on quit.
+- Each step asks the system for its permission before opening the pane. That request is what
+  puts KeyBridge in the System Settings list at all — an app that has never asked has no row to
+  switch on — but it prompts only once per app, so from the second time on only the deep link
+  does anything visible.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:

@@ -6,17 +6,34 @@ import SwiftUI
 /// without opening anything.
 ///
 /// As the one view that lives as long as the app, it also opens the main
-/// window when asked through `.openMainWindow`.
+/// window and the first-run guide when asked through `.openMainWindow` and
+/// `.openOnboarding`.
 struct MenuBarIcon: View {
     let isActive: Bool
+    let onboarding: OnboardingController
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         Image(nsImage: isActive ? Self.active : Self.muted)
-            .onReceive(NotificationCenter.default.publisher(for: .openMainWindow)) { _ in
-                openWindow(id: WindowID.main)
-                NSApplication.shared.activate()
+            // The first thing the app puts on screen, and the earliest point
+            // at which a window can be opened: `applicationDidFinishLaunching`
+            // runs before SwiftUI has installed any of this.
+            .onAppear {
+                if onboarding.shouldOpenAtLaunch() { open(WindowID.onboarding) }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .openMainWindow)) { _ in
+                open(WindowID.main)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openOnboarding)) { _ in
+                open(WindowID.onboarding)
+            }
+    }
+
+    private func open(_ id: String) {
+        openWindow(id: id)
+        // A menu bar app is never frontmost on its own, so without this the
+        // window opens behind whatever the user was working in.
+        NSApplication.shared.activate()
     }
 
     // Menu bar icons are template images: macOS colors them to match the menu

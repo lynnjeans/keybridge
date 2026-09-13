@@ -4,6 +4,7 @@ import SwiftUI
 /// The dropdown shown from the menu bar item.
 struct MenuBarContent: View {
     let permissions: PermissionMonitor
+    let onboarding: OnboardingController
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
@@ -21,6 +22,10 @@ struct MenuBarContent: View {
                     )
                 }
             }
+        }
+
+        if !permissions.allGranted {
+            Button("Set Up Permissions…") { onboarding.open() }
         }
 
         Divider()
