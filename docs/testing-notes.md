@@ -21,7 +21,9 @@ xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Debug \
 ```
 
 When adding a folder whose code is tested, add it to the `KeyBridgeTests` sources in
-`project.yml` and run `xcodegen generate`.
+`project.yml` and run `xcodegen generate`. Do the same after adding any file: entries added to
+`project.pbxproj` by hand build fine but carry made-up object IDs, so the next `xcodegen generate`
+rewrites them and shows up as an unrelated diff.
 
 ## Launching the app
 
@@ -77,10 +79,40 @@ When adding a folder whose code is tested, add it to the `KeyBridgeTests` source
 
   `tccutil reset` kills the running app, and `defaults` writes are cached per process, so quit
   KeyBridge before running these or the old value is written back on quit.
-- Each step asks the system for its permission before opening the pane. That request is what
-  puts KeyBridge in the System Settings list at all — an app that has never asked has no row to
-  switch on — but it prompts only once per app, so from the second time on only the deep link
-  does anything visible.
+- The guide never shows a system permission alert. For Accessibility, the plain
+  `AXIsProcessTrusted()` check made at launch is enough to list KeyBridge in the pane; the
+  prompting variant was dropped because its alert opened on top of the deep-linked pane and then
+  lingered behind System Settings with a Deny button. Input Monitoring is different: checking
+  (`IOHIDCheckAccess`) leaves its list empty, so step 2 calls `IOHIDRequestAccess` before opening
+  the pane.
+- **With Accessibility already granted, macOS may grant Input Monitoring silently.** Observed on
+  macOS 26: `IOHIDRequestAccess` returned granted within about 1.5 s with no alert and no row in
+  the Input Monitoring list, and the tap received ordinary key presses (`keyboard=` counts above
+  zero). So "Granted" in KeyBridge with "No Items" in System Settings is not a detection bug, but
+  the grant cannot be switched off there either — reset it with `tccutil reset ListenEvent`.
+  In another run the row did appear, switched on. Judge the grant by the `keyboard=` counter,
+  not by the list.
+- **Once Input Monitoring reads `denied`, step 2 is a dead end.** `IOHIDRequestAccess` then does
+  nothing — no alert, no row — so the pane stays at "No Items" however often the button is
+  pressed. Seen in a process that had read `denied` while Accessibility was still missing and
+  kept that value after Accessibility was granted — likely the same in-process staleness as
+  revocation below. After `tccutil reset ListenEvent io.github.lynnjeans.KeyBridge` and a
+  relaunch, the fresh process read `granted` straight away, with no request, because
+  Accessibility was granted — and the guide skipped itself. The launch log line
+  `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
+- **Revoking Input Monitoring is not noticed while KeyBridge runs.** `IOHIDCheckAccess` keeps
+  reporting granted in the same process after the switch is turned off; a relaunch reads
+  `denied`. Revoking Accessibility is noticed within the 2-second poll. After revoking Input
+  Monitoring, relaunch before checking what KeyBridge reports.
+- **System Settings' privacy lists refresh late.** Right after a grant, or after a deep link,
+  a pane can show "No Items" for a few seconds before KeyBridge's row appears. Wait, or reopen
+  the pane, before concluding the row is missing.
+- **KeyBridge is not frontmost at launch, even when started from Finder**, and
+  `NSApplication.activate()` is refused while another app is frontmost. The guide therefore
+  orders its own window front (`orderFrontRegardless`) when it appears and on every step change,
+  so it is in view without being the active app. To check, list on-screen windows front to back
+  with `CGWindowListCopyWindowInfo` and look for `Set Up KeyBridge` first; the frontmost
+  *application* stays whatever the user had before.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:
