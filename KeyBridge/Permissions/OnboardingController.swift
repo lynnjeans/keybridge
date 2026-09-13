@@ -105,9 +105,9 @@ final class OnboardingController {
         presentGuide()
     }
 
-    /// Asks the system for the current step's permission and opens the pane
-    /// where it is granted. Both are needed: the request puts KeyBridge in
-    /// the list, and the deep link takes the user to it.
+    /// Makes sure KeyBridge is in the current step's System Settings list and
+    /// opens the pane where it is granted. The deep link is what the user
+    /// sees; `PermissionService.request(_:)` only adds the row where needed.
     func openSettings() {
         guard let permission = step.permission else { return }
         service.request(permission)

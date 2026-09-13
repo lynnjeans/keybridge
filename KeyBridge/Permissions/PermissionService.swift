@@ -41,7 +41,6 @@ enum PermissionStatus: String, Sendable {
 struct PermissionService: Sendable {
     private let isAccessibilityTrusted: @Sendable () -> Bool
     private let inputMonitoringAccess: @Sendable () -> IOHIDAccessType
-    private let promptForAccessibility: @Sendable () -> Void
     private let requestInputMonitoring: @Sendable () -> Bool
 
     init(
@@ -49,19 +48,12 @@ struct PermissionService: Sendable {
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
         },
-        promptForAccessibility: @escaping @Sendable () -> Void = {
-            // The value of `kAXTrustedCheckOptionPrompt`, spelled out: the
-            // SDK imports that constant as a mutable global, which strict
-            // concurrency refuses to read from a `@Sendable` closure.
-            _ = AXIsProcessTrustedWithOptions(["AXTrustedCheckOptionPrompt": true] as CFDictionary)
-        },
         requestInputMonitoring: @escaping @Sendable () -> Bool = {
             IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
         }
     ) {
         self.isAccessibilityTrusted = isAccessibilityTrusted
         self.inputMonitoringAccess = inputMonitoringAccess
-        self.promptForAccessibility = promptForAccessibility
         self.requestInputMonitoring = requestInputMonitoring
     }
 
@@ -78,17 +70,19 @@ struct PermissionService: Sendable {
         }
     }
 
-    /// Asks the system for a permission.
+    /// Makes sure KeyBridge has a row in the permission's System Settings
+    /// list, so the user has something to switch on. Grants nothing itself;
+    /// the onboarding flow sends the user to the pane as well.
     ///
-    /// This is what puts KeyBridge into the System Settings list in the first
-    /// place: until an app has asked, its row is not there for the user to
-    /// switch on. Neither call grants anything by itself — Accessibility only
-    /// shows the system's "open Settings" alert, and Input Monitoring shows
-    /// its own alert once and afterwards does nothing — so the onboarding
-    /// flow always sends the user to the pane as well.
+    /// Accessibility needs nothing here: the plain `AXIsProcessTrusted()`
+    /// check made at launch already adds the row. Its prompting variant is
+    /// deliberately not used — its alert opens on top of the pane the guide
+    /// has just opened, and lingers behind System Settings afterwards.
+    /// Input Monitoring is different: checking does not add the row, only
+    /// requesting does.
     func request(_ permission: Permission) {
         switch permission {
-        case .accessibility: promptForAccessibility()
+        case .accessibility: break
         case .inputMonitoring: _ = requestInputMonitoring()
         }
     }

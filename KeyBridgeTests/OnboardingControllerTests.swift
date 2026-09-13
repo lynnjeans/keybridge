@@ -77,14 +77,14 @@ import Testing
     @Test func opensTheAuthorizationPaneForTheCurrentStep() {
         let (controller, monitor) = makeController()
         controller.openSettings()
-        #expect(fake.requests == [.accessibility], "Asking is what puts KeyBridge in the list")
+        #expect(fake.requests.isEmpty, "Accessibility is never prompted for; the launch check lists KeyBridge")
         #expect(record.urls == [Permission.accessibility.settingsURL])
         #expect(record.urls.last?.absoluteString.contains("Privacy_Accessibility") == true)
 
         fake.accessibility = true
         monitor.refresh()
         controller.openSettings()
-        #expect(fake.requests == [.accessibility, .inputMonitoring])
+        #expect(fake.requests == [.inputMonitoring], "Requesting is what puts KeyBridge in this list")
         #expect(record.urls.last == Permission.inputMonitoring.settingsURL)
         #expect(record.urls.last?.absoluteString.contains("Privacy_ListenEvent") == true)
     }

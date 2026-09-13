@@ -12,7 +12,6 @@ final class FakePermissions: @unchecked Sendable {
         PermissionService(
             isAccessibilityTrusted: { self.accessibility },
             inputMonitoringAccess: { self.inputMonitoring },
-            promptForAccessibility: { self.requests.append(.accessibility) },
             requestInputMonitoring: {
                 self.requests.append(.inputMonitoring)
                 return self.inputMonitoring == kIOHIDAccessTypeGranted
