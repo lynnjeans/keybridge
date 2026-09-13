@@ -62,4 +62,18 @@ extension Permission {
         case .inputMonitoring: "Lets KeyBridge see ordinary key presses, such as the C in Ctrl+C."
         }
     }
+
+    /// What to expect in System Settings, where the pane may not show
+    /// KeyBridge at all: once Accessibility is granted, macOS allows Input
+    /// Monitoring without storing a decision, so there is no row.
+    func settingsHint(granted: Bool) -> String? {
+        switch self {
+        case .accessibility:
+            nil
+        case .inputMonitoring:
+            granted
+                ? "macOS grants this together with Accessibility and may not list KeyBridge under Input Monitoring."
+                : "If KeyBridge is not in the Input Monitoring list, click + and choose KeyBridge."
+        }
+    }
 }

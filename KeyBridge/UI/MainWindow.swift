@@ -114,6 +114,12 @@ private struct PermissionRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                if let hint = permission.settingsHint(granted: granted) {
+                    Text(hint)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             Spacer()
             if granted {

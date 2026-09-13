@@ -136,7 +136,15 @@ private struct PermissionStep: View {
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {
                     Label("Open System Settings below — KeyBridge takes you to the right pane.", systemImage: "1.circle")
-                    Label("Find **KeyBridge** in the list and switch it on.", systemImage: "2.circle")
+                    // Once Accessibility is granted, macOS usually allows
+                    // Input Monitoring without listing KeyBridge; when this
+                    // step does show, the row may be missing and + is the
+                    // only way in.
+                    if step.permission == .inputMonitoring {
+                        Label("Switch **KeyBridge** on. If it is not in the list, click **+** and choose it.", systemImage: "2.circle")
+                    } else {
+                        Label("Find **KeyBridge** in the list and switch it on.", systemImage: "2.circle")
+                    }
                     Label("Come back here. This window moves on by itself.", systemImage: "3.circle")
                 }
                 .font(.callout)
