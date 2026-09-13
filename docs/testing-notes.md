@@ -105,11 +105,17 @@ rewrites them and shows up as an unrelated diff.
   relaunch, the fresh process read `granted` straight away, with no request, because
   Accessibility was granted — and the guide skipped itself. The launch log line
   `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
-- **Revoking Input Monitoring: not yet understood.** Turning off a hand-added Input Monitoring
-  row left KeyBridge reporting granted while it ran. That may be correct rather than stale —
-  with Accessibility on, Input Monitoring is allowed anyway (above). The relaunch that then read
-  `denied` also had Accessibility revoked, so it proves nothing. Revoking Accessibility is
-  noticed within the 2-second poll. Tracked in #126.
+- **An explicit Input Monitoring "off" wins over Accessibility.** The silent grant above applies
+  only while Input Monitoring is undecided. Add KeyBridge to the list with "+" and switch it off,
+  and a fresh launch reads `inputMonitoring: denied` with Accessibility still on, so the engine
+  does not start the tap.
+- **Changing an Input Monitoring switch relaunches KeyBridge.** System Settings offers to quit
+  and reopen the app; runningboard logs the relaunch with `com.apple.coreservices.uiagent` as the
+  originator, and each change shows in the `tccd` log as
+  `TCCDEvent: type=Modify, service=kTCCServiceListenEvent`. The new process reads the real
+  state. Only if the user postpones that relaunch can the running process report a stale
+  status — still to be checked (#126). Accessibility changes are picked up by the 2-second poll
+  without a relaunch.
 - **System Settings' privacy lists refresh late.** Right after a grant, or after a deep link,
   a pane can show "No Items" for a few seconds before KeyBridge's row appears. Wait, or reopen
   the pane, before concluding the row is missing.
