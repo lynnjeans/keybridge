@@ -33,7 +33,11 @@ struct OnboardingWindow: View {
         // is behind it. Bring it forward so the next step is in view without
         // a trip to the menu bar. `activate()` would be refused while another
         // app is frontmost; ordering the window front is not.
-        .onChange(of: step) { window?.orderFrontRegardless() }
+        .onChange(of: step) {
+            window?.orderFrontRegardless()
+            onboarding.requestInputMonitoringIfNeeded()
+        }
+        .onAppear { onboarding.requestInputMonitoringIfNeeded() }
         // Likewise when the guide first appears: at launch the app is not
         // frontmost — even when started from Finder — so the activation that
         // follows `openWindow` is refused and the guide would open behind.

@@ -57,6 +57,11 @@ final class OnboardingController {
     /// after the user has put it aside.
     @ObservationIgnored private var hasConsideredLaunch = false
 
+    /// Input Monitoring is requested on its own at most once per run: if the
+    /// system answers with an alert rather than a silent grant, it should not
+    /// come back every time the step is shown.
+    @ObservationIgnored private var hasRequestedInputMonitoring = false
+
     @ObservationIgnored private let service: PermissionService
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let openURL: @MainActor (URL) -> Void
@@ -113,6 +118,30 @@ final class OnboardingController {
         service.request(permission)
         Logger.permissions.notice("Onboarding opened settings for \(permission.rawValue, privacy: .public)")
         openURL(permission.settingsURL)
+    }
+
+    /// Requests Input Monitoring as soon as the guide reaches that step,
+    /// without waiting for the button.
+    ///
+    /// Once Accessibility is granted, macOS typically approves the request
+    /// silently — no alert, often no row in System Settings — so the step
+    /// completes by itself. Where it asks instead, the alert appears while
+    /// the guide is on the matching step. Nothing is opened: the pane is
+    /// still one click away for when the request does not settle it.
+    ///
+    /// Only a status that has never been decided is requested; for `denied`
+    /// the system would do nothing.
+    func requestInputMonitoringIfNeeded() {
+        guard step == .inputMonitoring,
+              permissions.status(of: .inputMonitoring) == .notDetermined,
+              !hasRequestedInputMonitoring
+        else { return }
+        hasRequestedInputMonitoring = true
+        service.request(.inputMonitoring)
+        Logger.permissions.notice("Onboarding requested inputMonitoring on reaching its step")
+        // A silent grant is already in place; show it now rather than on the
+        // next poll.
+        permissions.refresh()
     }
 
     /// Marks the guide done so it does not come back on the next launch.

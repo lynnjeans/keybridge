@@ -83,8 +83,11 @@ rewrites them and shows up as an unrelated diff.
   `AXIsProcessTrusted()` check made at launch is enough to list KeyBridge in the pane; the
   prompting variant was dropped because its alert opened on top of the deep-linked pane and then
   lingered behind System Settings with a Deny button. Input Monitoring is different: checking
-  (`IOHIDCheckAccess`) leaves its list empty, so step 2 calls `IOHIDRequestAccess` before opening
-  the pane.
+  (`IOHIDCheckAccess`) leaves its list empty, so the guide calls `IOHIDRequestAccess` itself as
+  soon as it reaches step 2 while the status is `notDetermined` (once per run), and again from
+  the step's button. Expected log: `Onboarding requested inputMonitoring on reaching its step`
+  right after `accessibility: denied → granted`, then `inputMonitoring: notDetermined → granted`
+  in the same instant — step 2 passes without the user doing anything.
 - **With Accessibility already granted, macOS may grant Input Monitoring silently.** Observed on
   macOS 26: `IOHIDRequestAccess` returned granted within about 1.5 s with no alert and no row in
   the Input Monitoring list, and the tap received ordinary key presses (`keyboard=` counts above

@@ -89,6 +89,34 @@ import Testing
         #expect(record.urls.last?.absoluteString.contains("Privacy_ListenEvent") == true)
     }
 
+    @Test func requestsInputMonitoringOnReachingItsStep() {
+        let (controller, monitor) = makeController()
+        controller.requestInputMonitoringIfNeeded()
+        #expect(fake.requests.isEmpty, "Nothing is requested on the Accessibility step")
+
+        fake.accessibility = true
+        monitor.refresh()
+        // The system grants it silently while the request is made.
+        fake.inputMonitoring = kIOHIDAccessTypeGranted
+        controller.requestInputMonitoringIfNeeded()
+        #expect(fake.requests == [.inputMonitoring])
+        #expect(record.urls.isEmpty, "Requesting on its own opens no pane")
+        #expect(controller.step == .ready, "A silent grant shows at once, not on the next poll")
+    }
+
+    @Test func requestsInputMonitoringOnlyOnceAndOnlyWhenUndecided() {
+        fake.accessibility = true
+        let (controller, _) = makeController()
+        controller.requestInputMonitoringIfNeeded()
+        controller.requestInputMonitoringIfNeeded()
+        #expect(fake.requests == [.inputMonitoring], "An alert must not come back every time the step shows")
+
+        fake.inputMonitoring = kIOHIDAccessTypeDenied
+        let (denied, _) = makeController()
+        denied.requestInputMonitoringIfNeeded()
+        #expect(fake.requests == [.inputMonitoring], "The system ignores a request once denied")
+    }
+
     @Test func theClosingStepHasNothingToOpen() {
         grantAll()
         let (controller, _) = makeController()
