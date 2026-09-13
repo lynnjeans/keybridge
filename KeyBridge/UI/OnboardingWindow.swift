@@ -28,7 +28,15 @@ struct OnboardingWindow: View {
                 .padding(.vertical, 16)
         }
         .frame(width: 560, height: 480)
+        .background(WindowReader(window: $window))
+        // The user is in System Settings when a step completes, so the guide
+        // is behind it. Bring it forward so the next step is in view without
+        // a trip to the menu bar. `activate()` would be refused while another
+        // app is frontmost; ordering the window front is not.
+        .onChange(of: step) { window?.orderFrontRegardless() }
     }
+
+    @State private var window: NSWindow?
 
     @ViewBuilder private var content: some View {
         switch step {
@@ -59,6 +67,20 @@ struct OnboardingWindow: View {
             }
         }
     }
+}
+
+/// Hands a SwiftUI view the `NSWindow` it is shown in.
+private struct WindowReader: NSViewRepresentable {
+    @Binding var window: NSWindow?
+
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        // The view has no window until it is inserted into the hierarchy.
+        DispatchQueue.main.async { window = view.window }
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
 }
 
 /// The three steps across the top, with the ones already done ticked off.
