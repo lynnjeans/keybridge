@@ -93,8 +93,10 @@ rewrites them and shows up as an unrelated diff.
   the Input Monitoring list, and the tap received ordinary key presses (`keyboard=` counts above
   zero). So "Granted" in KeyBridge with "No Items" in System Settings is not a detection bug, but
   the grant cannot be switched off there either — reset it with `tccutil reset ListenEvent`.
-  In another run the row did appear, switched on. Judge the grant by the `keyboard=` counter,
-  not by the list.
+  The `tccd` log shows why: with Accessibility granted, the `kTCCServiceListenEvent` request is
+  answered "allowed" within milliseconds, without asking anyone — and KeyBridge never gets a row
+  of its own (a row seen in one run had been added by hand with "+"). Judge the grant by the
+  `keyboard=` counter, not by the list.
 - **Once Input Monitoring reads `denied`, step 2 is a dead end.** `IOHIDRequestAccess` then does
   nothing — no alert, no row — so the pane stays at "No Items" however often the button is
   pressed. Seen in a process that had read `denied` while Accessibility was still missing and
@@ -103,10 +105,11 @@ rewrites them and shows up as an unrelated diff.
   relaunch, the fresh process read `granted` straight away, with no request, because
   Accessibility was granted — and the guide skipped itself. The launch log line
   `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
-- **Revoking Input Monitoring is not noticed while KeyBridge runs.** `IOHIDCheckAccess` keeps
-  reporting granted in the same process after the switch is turned off; a relaunch reads
-  `denied`. Revoking Accessibility is noticed within the 2-second poll. After revoking Input
-  Monitoring, relaunch before checking what KeyBridge reports.
+- **Revoking Input Monitoring: not yet understood.** Turning off a hand-added Input Monitoring
+  row left KeyBridge reporting granted while it ran. That may be correct rather than stale —
+  with Accessibility on, Input Monitoring is allowed anyway (above). The relaunch that then read
+  `denied` also had Accessibility revoked, so it proves nothing. Revoking Accessibility is
+  noticed within the 2-second poll. Tracked in #126.
 - **System Settings' privacy lists refresh late.** Right after a grant, or after a deep link,
   a pane can show "No Items" for a few seconds before KeyBridge's row appears. Wait, or reopen
   the pane, before concluding the row is missing.
