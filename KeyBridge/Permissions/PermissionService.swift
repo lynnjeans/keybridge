@@ -50,8 +50,10 @@ struct PermissionService: Sendable {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
         },
         promptForAccessibility: @escaping @Sendable () -> Void = {
-            let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
-            _ = AXIsProcessTrustedWithOptions([prompt: true] as CFDictionary)
+            // The value of `kAXTrustedCheckOptionPrompt`, spelled out: the
+            // SDK imports that constant as a mutable global, which strict
+            // concurrency refuses to read from a `@Sendable` closure.
+            _ = AXIsProcessTrustedWithOptions(["AXTrustedCheckOptionPrompt": true] as CFDictionary)
         },
         requestInputMonitoring: @escaping @Sendable () -> Bool = {
             IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
