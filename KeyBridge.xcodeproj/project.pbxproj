@@ -15,6 +15,7 @@
 		1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
 		19E2BC68837D322095AC2C1F /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
+		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
 		435FFFBB497EF6A209F57480 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
@@ -34,8 +35,11 @@
 		96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */; };
 		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
+		A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
+		A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */; };
 		B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
+		C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */; };
 		C5F5A08982C8AA13574F80DA /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
 		C97335D5A5A889D06E7AE791 /* PermissionMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787259A999A89270DA15D66F /* PermissionMonitorTests.swift */; };
 		CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */; };
@@ -46,6 +50,7 @@
 		E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		E6085F0D9E8793B81AACAE80 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
 		EC3B2B052803EF4829977E79 /* EventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */; };
+		ED941C18625ED6E5D4D246D6 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		F27CC71FC308A9397A51DFA4 /* RuleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */; };
 		F3282C27664078C37C79E61E /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */; };
 		F3FAD7FF929CF2E00E863237 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
@@ -55,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		15087DE16390140942799307 /* ScrollStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepperTests.swift; sourceTree = "<group>"; };
 		197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBridgeApp.swift; sourceTree = "<group>"; };
 		1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTap.swift; sourceTree = "<group>"; };
@@ -78,9 +84,11 @@
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
 		A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcherTests.swift; sourceTree = "<group>"; };
+		AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModelTests.swift; sourceTree = "<group>"; };
 		B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticEvent.swift; sourceTree = "<group>"; };
 		B595E1D78A10E425D9D48C34 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
+		BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationStore.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		C5E81D2D3DE6A2849BB8DEFA /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInRules.swift; sourceTree = "<group>"; };
@@ -149,6 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */,
+				128B9CB689364A424B8F3640 /* Configuration.swift */,
+				BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */,
 				542F7297D61F8E6943745351 /* KeyCombo.swift */,
 				848719F069115F286CC12A7B /* Preset.swift */,
 				D41BF86A97C1D2936EC49111 /* Rule.swift */,
@@ -171,6 +181,7 @@
 		9DA46AA64E58480D9D06E1D9 /* KeyBridgeTests */ = {
 			isa = PBXGroup;
 			children = (
+				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
 				9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */,
@@ -285,6 +296,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */,
+				ED941C18625ED6E5D4D246D6 /* Configuration.swift in Sources */,
+				A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */,
+				C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */,
 				FE54A3657D1101357A0D2A75 /* Dispatcher.swift in Sources */,
 				9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */,
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
@@ -314,6 +328,8 @@
 			files = (
 				67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */,
 				B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */,
+				2027926C27C6697B960913D0 /* Configuration.swift in Sources */,
+				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
 				10C65A2AF5B64DD68C24FC16 /* Dispatcher.swift in Sources */,
 				CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */,
 				E6085F0D9E8793B81AACAE80 /* EngineController.swift in Sources */,

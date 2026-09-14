@@ -1,6 +1,6 @@
-/// The rules KeyBridge runs with until presets (KB-060) and saved
-/// configuration (KB-032) exist: the editing and line-navigation basics of the
-/// walking skeleton.
+/// The rules KeyBridge runs with until presets (KB-060) exist: the editing and
+/// line-navigation basics of the walking skeleton. The user's saved overrides
+/// (`Configuration`) apply on top of them by rule ID.
 enum BuiltInRules {
     /// Terminals, where Ctrl combinations are control characters for the
     /// shell (Ctrl+C interrupts, Ctrl+Z suspends) and must arrive unchanged.

@@ -6,9 +6,12 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
     let frontmost = FrontmostApplication()
+    /// What the user has changed, read once at launch. Nothing edits it while
+    /// the app runs yet, so a change to the file takes effect on relaunch.
+    lazy var configuration = ConfigurationStore().load().configuration
     lazy var dispatcher: Dispatcher = {
         let dispatcher = Dispatcher { [frontmost] in frontmost.bundleID }
-        dispatcher.rules = BuiltInRules.all
+        dispatcher.rules = configuration.effectiveRules(base: BuiltInRules.all)
         return dispatcher
     }()
     lazy var eventTap = EventTap(dispatcher: dispatcher)

@@ -134,6 +134,23 @@ rewrites them and shows up as an unrelated diff.
     -derivedDataPath build/DerivedData CURRENT_PROJECT_VERSION=99 build
   ```
 
+## Configuration file
+
+- The user's changes to the built-in rules live in
+  `~/Library/Application Support/KeyBridge/config.json`: a `schemaVersion` and a list of
+  `overrides`. No file means nothing has been changed. It is read once at launch, so after
+  editing it by hand, relaunch KeyBridge. The launch logs one line in the `configuration`
+  category: `No configuration file…`, `Configuration loaded: n override(s)`, or a migration or
+  error message.
+- An override holds a **complete** rule — the synthesized decoder does not fill in missing
+  fields — so copy a rule's encoded form rather than writing one from memory. A `modified`
+  rule replaces the built-in rule with the same `id` (`edit.copy`, `mouse.back`, …; see
+  `BuiltInRules.swift`); `"isEnabled": false` switches it off. A `custom` rule is added.
+- A file KeyBridge cannot use is renamed `config.unreadable-<date>.json` and the built-in rules
+  are used; a file from an older version is upgraded in place with the original kept as
+  `config.v<n>.json`; a file from a newer version is read but never overwritten. To start
+  clean, quit KeyBridge and delete the folder.
+
 ## Reading the log
 
 - **In zsh, `log` is a shell builtin** that shadows `/usr/bin/log`. `log show …` returns
