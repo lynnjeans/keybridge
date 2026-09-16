@@ -64,6 +64,8 @@ private struct ShortcutsPage: View {
     let rules: RulesController
     @State private var search = ""
     @State private var expanded: Set<String> = ["editing"]
+    /// The entry open in the editor sheet.
+    @State private var editing: Rule?
 
     var body: some View {
         PresetBar(preset: rules.preset)
@@ -103,10 +105,17 @@ private struct ShortcutsPage: View {
                     toggleExpanded: {
                         if expanded.contains(group.id) { expanded.remove(group.id) } else { expanded.insert(group.id) }
                     },
-                    setOn: { rules.setGroup(group.id, enabled: $0) }
+                    setOn: { rules.setGroup(group.id, enabled: $0) },
+                    isCustomized: rules.isCustomized,
+                    edit: { editing = $0 }
                 )
             }
         }
+
+        Color.clear.frame(height: 0)
+            .sheet(item: $editing) { rule in
+                RuleEditor(rules: rules, rule: rule)
+            }
 
         if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search).isEmpty }) {
             ContentUnavailableView.search(text: search)
@@ -160,6 +169,8 @@ private struct GroupCard: View {
     let canCollapse: Bool
     let toggleExpanded: () -> Void
     let setOn: (Bool) -> Void
+    let isCustomized: (String) -> Bool
+    let edit: (Rule) -> Void
 
     var body: some View {
         Card {
@@ -211,18 +222,45 @@ private struct GroupCard: View {
         VStack(spacing: 0) {
             ForEach(Array(entries.enumerated()), id: \.element.id) { index, rule in
                 if index > 0 { Divider() }
-                HStack(alignment: .firstTextBaseline, spacing: 12) {
-                    MappingView(rule: rule)
-                    Spacer(minLength: 12)
-                    Text(RuleNames.name(of: rule))
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                }
-                .padding(.vertical, 9)
+                EntryRow(rule: rule, isCustomized: isCustomized(rule.id)) { edit(rule) }
             }
         }
         // A switched-off group still shows what it would do, greyed out.
         .opacity(isOn ? 1 : 0.45)
+    }
+}
+
+/// One entry of a group. Clicking it opens the editor.
+private struct EntryRow: View {
+    let rule: Rule
+    let isCustomized: Bool
+    let edit: () -> Void
+    @State private var isHovered = false
+
+    var body: some View {
+        Button(action: edit) {
+            HStack(alignment: .center, spacing: 12) {
+                MappingView(rule: rule)
+                    .opacity(rule.isEnabled ? 1 : 0.45)
+                Spacer(minLength: 12)
+                if isCustomized {
+                    CustomizedBadge()
+                }
+                Text(RuleNames.name(of: rule))
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .strikethrough(!rule.isEnabled)
+                Image(systemName: "pencil")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .opacity(isHovered ? 1 : 0)
+            }
+            .padding(.vertical, 9)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .onHover { isHovered = $0 }
+        .accessibilityHint("Edit")
     }
 }
 

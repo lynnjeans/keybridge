@@ -60,6 +60,53 @@ final class RulesController {
         return configuration.effectiveRules(base: group.rules)
     }
 
+    /// The preset's version of an entry, before any change by the user.
+    func original(of id: String) -> Rule? {
+        preset.rules.first { $0.id == id }
+    }
+
+    func isCustomized(_ id: String) -> Bool {
+        configuration.isCustomized(id)
+    }
+
+    /// Saves the user's version of a preset entry and puts it into effect.
+    func update(_ rule: Rule) {
+        guard let original = original(of: rule.id) else { return }
+        let before = configuration
+        configuration.setRule(rule, original: original)
+        guard configuration != before else { return }
+        Logger.configuration.notice(
+            "Rule \(rule.id, privacy: .public) \(self.isCustomized(rule.id) ? "customized" : "back to default", privacy: .public)"
+        )
+        commit()
+    }
+
+    /// Brings back the preset's version of an entry.
+    func reset(_ id: String) {
+        guard isCustomized(id) else { return }
+        configuration.resetRule(id)
+        Logger.configuration.notice("Rule \(id, privacy: .public) reset")
+        commit()
+    }
+
+    /// Other entries that react to the same trigger as `rule`, wherever they
+    /// are and whether or not they are on: only one of them can win.
+    func conflicts(with rule: Rule) -> [Rule] {
+        configuration.effectiveRules(base: preset.rules)
+            .filter { $0.id != rule.id && $0.trigger == rule.trigger }
+    }
+
+    /// While a shortcut is being recorded the engine stands aside, so the
+    /// recorder sees what the user pressed rather than what it maps to:
+    /// recording Ctrl+C must not arrive as ⌘C.
+    var isRecording = false {
+        didSet {
+            guard isRecording != oldValue else { return }
+            Logger.configuration.notice("Recording \(self.isRecording ? "started" : "ended", privacy: .public)")
+            apply(isRecording ? [] : effectiveRules)
+        }
+    }
+
     private func commit() {
         effectiveRules = configuration.effectiveRules(of: preset)
         do {
@@ -70,6 +117,8 @@ final class RulesController {
                 "Could not save the configuration: \(String(describing: error), privacy: .public)"
             )
         }
-        apply(effectiveRules)
+        if !isRecording {
+            apply(effectiveRules)
+        }
     }
 }

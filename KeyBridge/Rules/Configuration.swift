@@ -39,6 +39,27 @@ struct Configuration: Hashable, Sendable {
         }
     }
 
+    /// Whether the user has changed the preset rule with this ID.
+    func isCustomized(_ id: String) -> Bool {
+        overrides.contains { if case .modified(let rule) = $0 { rule.id == id } else { false } }
+    }
+
+    /// Makes `rule` the user's version of the preset's `original`. Saving
+    /// the preset's own version drops the override instead, so an entry
+    /// edited back to what it was no longer counts as customized.
+    mutating func setRule(_ rule: Rule, original: Rule) {
+        precondition(rule.id == original.id, "An edit keeps the entry's ID")
+        resetRule(rule.id)
+        if rule != original {
+            overrides.append(.modified(rule: rule))
+        }
+    }
+
+    /// Drops the user's version of a preset rule, bringing the preset's back.
+    mutating func resetRule(_ id: String) {
+        overrides.removeAll { if case .modified(let rule) = $0 { rule.id == id } else { false } }
+    }
+
     /// The rules in effect: `base` with the user's overrides on top.
     ///
     /// A modified rule takes the place of the base rule with the same ID, so
