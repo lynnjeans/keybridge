@@ -1,24 +1,102 @@
 import SwiftUI
 
-/// The settings window. Shows the Overview for now; the sidebar and the other
-/// pages arrive with KB-070.
+/// The settings window: a sidebar of pages and the selected page beside it.
 struct MainWindow: View {
     let engine: EngineController
     let onboarding: OnboardingController
+    /// Remembered across launches, so the window reopens where it was left.
+    @SceneStorage("mainWindow.page") private var page: Page = .overview
+
+    var body: some View {
+        NavigationSplitView {
+            Sidebar(selection: $page)
+                .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
+        } detail: {
+            PageContent(page: page) {
+                switch page {
+                case .overview:
+                    ModeCard(engine: engine)
+                    PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
+                case .about:
+                    AboutCard()
+                default:
+                    ComingSoon(page: page)
+                }
+            }
+            .id(page)
+        }
+        .frame(minWidth: 780, minHeight: 520)
+    }
+}
+
+/// A page's title and subtitle above its content, scrolling as one.
+private struct PageContent<Content: View>: View {
+    let page: Page
+    @ViewBuilder let content: Content
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Overview")
-                    .font(.largeTitle.bold())
-                ModeCard(engine: engine)
-                PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(page.title)
+                        .font(.largeTitle.bold())
+                    Text(page.subtitle)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.bottom, 6)
+                content
             }
             .padding(28)
             .frame(maxWidth: 680, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(minWidth: 720, minHeight: 480)
+        .navigationTitle(page.title)
+    }
+}
+
+/// Stands in for a page that a later release fills in.
+private struct ComingSoon: View {
+    let page: Page
+
+    var body: some View {
+        ContentUnavailableView {
+            Label {
+                Text("Coming soon")
+            } icon: {
+                IconTile(symbol: page.symbol, tint: page.tint, size: 44)
+            }
+        } description: {
+            Text("This page is not built yet. What KeyBridge does today is on the Overview.")
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 40)
+    }
+}
+
+/// The app's version and license.
+private struct AboutCard: View {
+    private var version: String {
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return "Version \(short) (\(build))"
+    }
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "command", tint: .accentColor, size: 40)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("KeyBridge")
+                        .font(.headline)
+                    Text(version)
+                        .foregroundStyle(.secondary)
+                    Text("Built for people moving from Windows to the Mac.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
     }
 }
 
@@ -117,7 +195,9 @@ private struct PermissionRow: View {
                 if let hint = permission.settingsHint(granted: granted) {
                     Text(hint)
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        // Secondary, not tertiary: tertiary is too faint to
+                        // read in the dark appearance.
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
