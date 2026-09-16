@@ -19,6 +19,8 @@
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
 		435FFFBB497EF6A209F57480 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
+		48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
+		4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */; };
 		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
@@ -44,6 +46,8 @@
 		C5F5A08982C8AA13574F80DA /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
 		C97335D5A5A889D06E7AE791 /* PermissionMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787259A999A89270DA15D66F /* PermissionMonitorTests.swift */; };
 		CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */; };
+		CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
+		CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0A9C5EAC893363675EAF /* Keycap.swift */; };
 		CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
 		D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
@@ -76,6 +80,7 @@
 		542F7297D61F8E6943745351 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
 		687E05B9F8DE493CF14920E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E9FAEF38FA76CE2D4EAA172 /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
+		708C0A9C5EAC893363675EAF /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
 		787259A999A89270DA15D66F /* PermissionMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitorTests.swift; sourceTree = "<group>"; };
 		794A137375CBE08E7894FE76 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		82D8E64863C57D05FECB554B /* RuleMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcher.swift; sourceTree = "<group>"; };
@@ -93,9 +98,11 @@
 		BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationStore.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		C5E81D2D3DE6A2849BB8DEFA /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
+		C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabel.swift; sourceTree = "<group>"; };
 		D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInRules.swift; sourceTree = "<group>"; };
 		D41BF86A97C1D2936EC49111 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineControllerTests.swift; sourceTree = "<group>"; };
+		DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabelTests.swift; sourceTree = "<group>"; };
 		DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatcherTests.swift; sourceTree = "<group>"; };
 		E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrigger.swift; sourceTree = "<group>"; };
@@ -161,6 +168,7 @@
 				D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */,
 				128B9CB689364A424B8F3640 /* Configuration.swift */,
 				BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */,
+				C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */,
 				542F7297D61F8E6943745351 /* KeyCombo.swift */,
 				848719F069115F286CC12A7B /* Preset.swift */,
 				D41BF86A97C1D2936EC49111 /* Rule.swift */,
@@ -172,6 +180,7 @@
 		4F1BE0D5D81EAAB04295FC03 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				708C0A9C5EAC893363675EAF /* Keycap.swift */,
 				4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */,
 				32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */,
 				A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */,
@@ -187,6 +196,7 @@
 				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
+				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
 				9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */,
 				787259A999A89270DA15D66F /* PermissionMonitorTests.swift */,
 				A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */,
@@ -307,6 +317,8 @@
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
 				D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */,
 				16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */,
+				CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */,
+				4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */,
 				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
 				C5F5A08982C8AA13574F80DA /* OnboardingController.swift in Sources */,
 				3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */,
@@ -341,7 +353,9 @@
 				7FDBE38023D696D64B59955B /* EventTrigger.swift in Sources */,
 				F788BD5F97662264DF992188 /* FrontmostApplication.swift in Sources */,
 				0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */,
+				48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */,
 				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,
+				CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */,
 				F3282C27664078C37C79E61E /* MainWindow.swift in Sources */,
 				DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */,
 				A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */,

@@ -4,6 +4,8 @@ import SwiftUI
 struct MainWindow: View {
     let engine: EngineController
     let onboarding: OnboardingController
+    /// The rules in effect, shown on the Shortcuts page.
+    let rules: [Rule]
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -17,6 +19,8 @@ struct MainWindow: View {
                 case .overview:
                     ModeCard(engine: engine)
                     PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
+                case .shortcuts:
+                    ShortcutsList(rules: rules)
                 case .about:
                     AboutCard()
                 default:
@@ -51,6 +55,46 @@ private struct PageContent<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .navigationTitle(page.title)
+    }
+}
+
+/// Every rule in effect, as "what you press → what the Mac gets".
+///
+/// A flat list for now: the preset groups, their switches, search and the
+/// per-entry editor arrive with KB-072 and KB-074.
+private struct ShortcutsList: View {
+    let rules: [Rule]
+
+    var body: some View {
+        Card {
+            VStack(spacing: 0) {
+                ForEach(Array(rules.enumerated()), id: \.element.id) { index, rule in
+                    if index > 0 { Divider() }
+                    HStack(alignment: .firstTextBaseline, spacing: 12) {
+                        MappingView(rule: rule)
+                        Spacer(minLength: 12)
+                        Text(Self.name(of: rule))
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 9)
+                    .opacity(rule.isEnabled ? 1 : 0.5)
+                }
+            }
+        }
+    }
+
+    /// What the mapping is for, in the user's terms. Placeholder names until
+    /// the preset packs (KB-060) carry their own.
+    private static func name(of rule: Rule) -> String {
+        let names = [
+            "edit.copy": "Copy", "edit.cut": "Cut", "edit.paste": "Paste", "edit.undo": "Undo",
+            "nav.lineStart": "Line start", "nav.lineEnd": "Line end",
+            "nav.selectLineStart": "Select to line start", "nav.selectLineEnd": "Select to line end",
+            "mouse.back": "Back", "mouse.forward": "Forward",
+            "scroll.zoomIn": "Zoom in", "scroll.zoomOut": "Zoom out",
+        ]
+        return names[rule.id] ?? rule.id
     }
 }
 

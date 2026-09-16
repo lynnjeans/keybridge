@@ -14,7 +14,11 @@ struct KeyBridgeApp: App {
         }
 
         Window("KeyBridge", id: WindowID.main) {
-            MainWindow(engine: appDelegate.engine, onboarding: appDelegate.onboarding)
+            MainWindow(
+                engine: appDelegate.engine,
+                onboarding: appDelegate.onboarding,
+                rules: appDelegate.dispatcher.rules
+            )
         }
         .defaultSize(width: 880, height: 600)
         .windowResizability(.contentMinSize)
