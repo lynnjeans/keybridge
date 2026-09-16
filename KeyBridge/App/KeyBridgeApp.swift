@@ -17,7 +17,7 @@ struct KeyBridgeApp: App {
             MainWindow(
                 engine: appDelegate.engine,
                 onboarding: appDelegate.onboarding,
-                rules: appDelegate.dispatcher.rules
+                rules: appDelegate.rules
             )
         }
         .defaultSize(width: 880, height: 600)

@@ -6,20 +6,19 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
     let frontmost = FrontmostApplication()
-    /// What the user has changed, read once at launch. Nothing edits it while
-    /// the app runs yet, so a change to the file takes effect on relaunch.
-    lazy var configuration = ConfigurationStore().load().configuration
-    lazy var dispatcher: Dispatcher = {
-        let dispatcher = Dispatcher { [frontmost] in frontmost.bundleID }
-        dispatcher.rules = configuration.effectiveRules(base: BuiltInRules.all)
-        return dispatcher
-    }()
+    lazy var dispatcher = Dispatcher { [frontmost] in frontmost.bundleID }
+    /// The preset, the user's changes to it, and the rules that result. It
+    /// hands each new set straight to the dispatcher, so a switch flipped in
+    /// the window takes effect on the next key press.
+    lazy var rules = RulesController { [dispatcher] rules in dispatcher.rules = rules }
     lazy var eventTap = EventTap(dispatcher: dispatcher)
     lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
     lazy var onboarding = OnboardingController(permissions: permissionMonitor)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logPermissionState()
+        // Reading the configuration installs the first set of rules.
+        _ = rules.effectiveRules
         permissionMonitor.start()
         engine.update()
 

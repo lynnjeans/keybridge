@@ -151,6 +151,21 @@ rewrites them and shows up as an unrelated diff.
   `config.v<n>.json`; a file from a newer version is read but never overwritten. To start
   clean, quit KeyBridge and delete the folder.
 
+## Shortcuts page and group switches
+
+- The Shortcuts page shows the preset as group cards. Switching a group off writes
+  `disabledGroups` into `config.json` **and** hands the engine the new rules in the same step, so
+  the effect is immediate: switch off Editing and Ctrl+C stops being turned into ⌘C, while the
+  group's entries stay listed but greyed out. Each change logs
+  `Group <id> switched off` / `on` in the `configuration` category — check that, and the file,
+  rather than the switch's colour: **in an inactive window macOS draws an "on" switch grey**, so a
+  screenshot of a background window says nothing about switch state.
+- Search filters to individual entries and hides groups with no match; a filtered group header
+  reads "2 of 4 mappings".
+- **The main window always reopens on Overview**: the selected page is `@SceneStorage`, which
+  `open` does not restore for this app. Any screenshot of another page therefore needs the page
+  clicked first — and Claude's shell cannot click (see "Posting test events").
+
 ## Reading the log
 
 - **In zsh, `log` is a shell builtin** that shadows `/usr/bin/log`. `log show …` returns

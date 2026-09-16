@@ -14,6 +14,16 @@ enum BuiltInRules {
         "com.github.wez.wezterm",
     ]
 
+    /// The built-in rules as a preset, which is how the Shortcuts page shows
+    /// them: switchable groups the user can expand. The shipped preset packs
+    /// (KB-060) replace this with the full six groups.
+    static let preset = Preset(id: "windows-standard", groups: [
+        .init(id: "editing", rules: Array(all[0..<4])),
+        .init(id: "navigation", rules: Array(all[4..<8])),
+        .init(id: "mouse", rules: Array(all[8..<10])),
+        .init(id: "scroll", rules: Array(all[10..<12])),
+    ])
+
     static let all: [Rule] = [
         rule("edit.copy", KeyCombo([.control], .c), KeyCombo([.command], .c)),
         rule("edit.cut", KeyCombo([.control], .x), KeyCombo([.command], .x)),

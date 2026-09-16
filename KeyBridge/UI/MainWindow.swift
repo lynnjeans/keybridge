@@ -4,8 +4,8 @@ import SwiftUI
 struct MainWindow: View {
     let engine: EngineController
     let onboarding: OnboardingController
-    /// The rules in effect, shown on the Shortcuts page.
-    let rules: [Rule]
+    /// The preset and the user's changes to it, shown on the Shortcuts page.
+    let rules: RulesController
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -20,7 +20,7 @@ struct MainWindow: View {
                     ModeCard(engine: engine)
                     PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
                 case .shortcuts:
-                    ShortcutsList(rules: rules)
+                    ShortcutsPage(rules: rules)
                 case .about:
                     AboutCard()
                 default:
@@ -58,35 +58,212 @@ private struct PageContent<Content: View>: View {
     }
 }
 
-/// Every rule in effect, as "what you press → what the Mac gets".
-///
-/// A flat list for now: the preset groups, their switches, search and the
-/// per-entry editor arrive with KB-072 and KB-074.
-private struct ShortcutsList: View {
-    let rules: [Rule]
+/// The preset, group by group: a switch and an expander per group, each
+/// entry as "what you press → what the Mac gets", and a search field.
+private struct ShortcutsPage: View {
+    let rules: RulesController
+    @State private var search = ""
+    @State private var expanded: Set<String> = ["editing"]
+
+    var body: some View {
+        PresetBar(preset: rules.preset)
+
+        HStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.secondary)
+            TextField("Search shortcuts…", text: $search)
+                .textFieldStyle(.plain)
+            if !search.isEmpty {
+                Button {
+                    search = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+        .background(.background.secondary, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(.separator))
+
+        ForEach(rules.preset.groups) { group in
+            let matches = Self.matching(rules.rules(inGroup: group.id), search)
+            // A search hides the groups it found nothing in, so what is left
+            // on screen is only what matched.
+            if search.isEmpty || !matches.isEmpty {
+                GroupCard(
+                    group: group,
+                    entries: matches,
+                    isOn: rules.isEnabled(group: group.id),
+                    // While searching, matches stay open: collapsing them
+                    // would hide the very thing that was looked for.
+                    isExpanded: !search.isEmpty || expanded.contains(group.id),
+                    canCollapse: search.isEmpty,
+                    toggleExpanded: {
+                        if expanded.contains(group.id) { expanded.remove(group.id) } else { expanded.insert(group.id) }
+                    },
+                    setOn: { rules.setGroup(group.id, enabled: $0) }
+                )
+            }
+        }
+
+        if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search).isEmpty }) {
+            ContentUnavailableView.search(text: search)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 20)
+        }
+    }
+
+    /// Entries whose name, or either side of the mapping, contains the text.
+    static func matching(_ rules: [Rule], _ search: String) -> [Rule] {
+        let query = search.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !query.isEmpty else { return rules }
+        return rules.filter { rule in
+            var haystack = [RuleNames.name(of: rule), rule.id]
+            if case .key(let combo) = rule.trigger { haystack += combo.caps(.windows) }
+            if case .key(let combo) = rule.action { haystack += combo.caps(.mac) }
+            return haystack.contains { $0.lowercased().contains(query) }
+        }
+    }
+}
+
+/// Which preset is in use. Switching between presets and re-applying one
+/// arrive with the preset packs (KB-060) and the apply action (KB-061).
+private struct PresetBar: View {
+    let preset: Preset
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "list.bullet.rectangle", tint: .accentColor, size: 34)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Preset: \(RuleNames.presetName(preset.id))")
+                        .font(.headline)
+                    Text("^[\(preset.rules.count) mapping](inflect: true) in \(preset.groups.count) groups. More presets, and re-applying one, are still to come.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+            }
+        }
+    }
+}
+
+/// One group: its switch, and its entries when expanded.
+private struct GroupCard: View {
+    let group: Preset.Group
+    let entries: [Rule]
+    let isOn: Bool
+    let isExpanded: Bool
+    let canCollapse: Bool
+    let toggleExpanded: () -> Void
+    let setOn: (Bool) -> Void
 
     var body: some View {
         Card {
             VStack(spacing: 0) {
-                ForEach(Array(rules.enumerated()), id: \.element.id) { index, rule in
-                    if index > 0 { Divider() }
-                    HStack(alignment: .firstTextBaseline, spacing: 12) {
-                        MappingView(rule: rule)
-                        Spacer(minLength: 12)
-                        Text(Self.name(of: rule))
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(.vertical, 9)
-                    .opacity(rule.isEnabled ? 1 : 0.5)
+                header
+                if isExpanded {
+                    Divider().padding(.top, 12)
+                    entryList
                 }
             }
         }
     }
 
-    /// What the mapping is for, in the user's terms. Placeholder names until
-    /// the preset packs (KB-060) carry their own.
-    private static func name(of rule: Rule) -> String {
+    /// While a search narrows the group, the header says how much of it is
+    /// showing, so the entries left out do not look lost.
+    private var countText: LocalizedStringKey {
+        entries.count < group.rules.count
+            ? "\(entries.count) of ^[\(group.rules.count) mapping](inflect: true)"
+            : "^[\(group.rules.count) mapping](inflect: true)"
+    }
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            IconTile(symbol: RuleNames.symbol(ofGroup: group.id), tint: RuleNames.tint(ofGroup: group.id), size: 30)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(RuleNames.name(ofGroup: group.id))
+                    .font(.headline)
+                Text(countText)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 8)
+            Toggle("", isOn: Binding(get: { isOn }, set: setOn))
+                .toggleStyle(.switch)
+                .labelsHidden()
+                .accessibilityLabel(RuleNames.name(ofGroup: group.id))
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                .opacity(canCollapse ? 1 : 0.3)
+        }
+        // The whole header expands, except the switch itself.
+        .contentShape(.rect)
+        .onTapGesture { if canCollapse { toggleExpanded() } }
+    }
+
+    private var entryList: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(entries.enumerated()), id: \.element.id) { index, rule in
+                if index > 0 { Divider() }
+                HStack(alignment: .firstTextBaseline, spacing: 12) {
+                    MappingView(rule: rule)
+                    Spacer(minLength: 12)
+                    Text(RuleNames.name(of: rule))
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.vertical, 9)
+            }
+        }
+        // A switched-off group still shows what it would do, greyed out.
+        .opacity(isOn ? 1 : 0.45)
+    }
+}
+
+/// Names for what the model only knows by identifier. The preset packs
+/// (KB-060) will carry their own, and localization is KB-090.
+enum RuleNames {
+    static func presetName(_ id: String) -> String {
+        id == "windows-standard" ? "Windows Standard" : id
+    }
+
+    static func name(ofGroup id: String) -> String {
+        switch id {
+        case "editing": "Editing"
+        case "navigation": "Text Navigation"
+        case "mouse": "Mouse"
+        case "scroll": "Scroll"
+        default: id
+        }
+    }
+
+    static func symbol(ofGroup id: String) -> String {
+        switch id {
+        case "editing": "pencil"
+        case "navigation": "arrow.left.and.right.text.vertical"
+        case "mouse": "computermouse.fill"
+        case "scroll": "arrow.up.and.down"
+        default: "square.grid.2x2.fill"
+        }
+    }
+
+    static func tint(ofGroup id: String) -> Color {
+        switch id {
+        case "editing": .indigo
+        case "navigation": .teal
+        case "mouse": .orange
+        case "scroll": .cyan
+        default: .gray
+        }
+    }
+
+    static func name(of rule: Rule) -> String {
         let names = [
             "edit.copy": "Copy", "edit.cut": "Cut", "edit.paste": "Paste", "edit.undo": "Undo",
             "nav.lineStart": "Line start", "nav.lineEnd": "Line end",

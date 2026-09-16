@@ -11,6 +11,34 @@ struct Configuration: Hashable, Sendable {
 
     var overrides: [Override] = []
 
+    /// Preset groups the user has switched off. Absent from an older file
+    /// means every group is on, so this needs no migration.
+    var disabledGroups: Set<String> = []
+
+    /// The rules in effect: the preset's groups the user has left on, with
+    /// the overrides on top. A switched-off group contributes nothing, even
+    /// where the user has customised one of its entries — the group switch is
+    /// the broader, later decision.
+    func effectiveRules(of preset: Preset) -> [Rule] {
+        let enabled = preset.groups
+            .filter { !disabledGroups.contains($0.id) }
+            .flatMap(\.rules)
+        return effectiveRules(base: enabled)
+    }
+
+    /// Whether a group is switched on. Unknown groups count as on.
+    func isEnabled(group: String) -> Bool {
+        !disabledGroups.contains(group)
+    }
+
+    mutating func setGroup(_ group: String, enabled: Bool) {
+        if enabled {
+            disabledGroups.remove(group)
+        } else {
+            disabledGroups.insert(group)
+        }
+    }
+
     /// The rules in effect: `base` with the user's overrides on top.
     ///
     /// A modified rule takes the place of the base rule with the same ID, so
@@ -34,17 +62,20 @@ struct Configuration: Hashable, Sendable {
 // `Configuration` exists, `ConfigurationStore` has already migrated it.
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, overrides
+        case schemaVersion, overrides, disabledGroups
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         overrides = try container.decodeIfPresent([Override].self, forKey: .overrides) ?? []
+        disabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .disabledGroups) ?? []
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(Self.currentVersion, forKey: .schemaVersion)
         try container.encode(overrides, forKey: .overrides)
+        // Written in a stable order, so the file does not churn between saves.
+        try container.encode(disabledGroups.sorted(), forKey: .disabledGroups)
     }
 }

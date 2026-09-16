@@ -14,6 +14,7 @@
 		16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */; };
 		1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
 		19E2BC68837D322095AC2C1F /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
+		1B97BFB873708FD8EB3B7764 /* RulesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */; };
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
@@ -22,6 +23,7 @@
 		48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
 		4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */; };
 		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
+		573EFCCDB359AFCF1016673D /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
 		67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687E05B9F8DE493CF14920E7 /* AppDelegate.swift */; };
@@ -49,6 +51,7 @@
 		CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
 		CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0A9C5EAC893363675EAF /* Keycap.swift */; };
 		CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
+		D3B7AEE697CDBDCF64EF7DED /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
 		DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */; };
@@ -65,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		15087DE16390140942799307 /* ScrollStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepperTests.swift; sourceTree = "<group>"; };
 		197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBridgeApp.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
 		A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcherTests.swift; sourceTree = "<group>"; };
+		A754B68EC7A37AE26CECC5C6 /* RulesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesController.swift; sourceTree = "<group>"; };
 		AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModelTests.swift; sourceTree = "<group>"; };
 		B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticEvent.swift; sourceTree = "<group>"; };
@@ -172,6 +177,7 @@
 				542F7297D61F8E6943745351 /* KeyCombo.swift */,
 				848719F069115F286CC12A7B /* Preset.swift */,
 				D41BF86A97C1D2936EC49111 /* Rule.swift */,
+				A754B68EC7A37AE26CECC5C6 /* RulesController.swift */,
 				380C3DCFF3175605C83D7B44 /* Scope.swift */,
 			);
 			path = Rules;
@@ -201,6 +207,7 @@
 				787259A999A89270DA15D66F /* PermissionMonitorTests.swift */,
 				A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */,
 				ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */,
+				0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */,
 				15087DE16390140942799307 /* ScrollStepperTests.swift */,
 			);
 			path = KeyBridgeTests;
@@ -330,6 +337,8 @@
 				E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */,
 				912C020783005C132B70314C /* RuleMatcherTests.swift in Sources */,
 				F27CC71FC308A9397A51DFA4 /* RuleModelTests.swift in Sources */,
+				573EFCCDB359AFCF1016673D /* RulesController.swift in Sources */,
+				1B97BFB873708FD8EB3B7764 /* RulesControllerTests.swift in Sources */,
 				F3FAD7FF929CF2E00E863237 /* Scope.swift in Sources */,
 				D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */,
 				8858D898B53F84D42CBFB269 /* ScrollStepperTests.swift in Sources */,
@@ -366,6 +375,7 @@
 				4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */,
 				FC7E759BB0F8A02DA983FC22 /* Rule.swift in Sources */,
 				96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */,
+				D3B7AEE697CDBDCF64EF7DED /* RulesController.swift in Sources */,
 				19E2BC68837D322095AC2C1F /* Scope.swift in Sources */,
 				CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */,
 				685FDE358D13454414DC243A /* Sidebar.swift in Sources */,
