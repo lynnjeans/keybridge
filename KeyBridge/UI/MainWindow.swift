@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// The settings window: a sidebar of pages and the selected page beside it.
@@ -66,6 +67,7 @@ private struct ShortcutsPage: View {
     @State private var expanded: Set<String> = ["editing"]
     /// The entry open in the editor sheet.
     @State private var editing: Rule?
+    @State private var confirmingWinKey = false
 
     var body: some View {
         PresetBar(preset: rules.preset)
@@ -105,7 +107,13 @@ private struct ShortcutsPage: View {
                     toggleExpanded: {
                         if expanded.contains(group.id) { expanded.remove(group.id) } else { expanded.insert(group.id) }
                     },
-                    setOn: { rules.setGroup(group.id, enabled: $0) },
+                    setOn: { isOn in
+                        if isOn && group.id == "winKey" {
+                            confirmingWinKey = true
+                        } else {
+                            rules.setGroup(group.id, enabled: isOn)
+                        }
+                    },
                     isCustomized: rules.isCustomized,
                     edit: { editing = $0 }
                 )
@@ -115,6 +123,12 @@ private struct ShortcutsPage: View {
         Color.clear.frame(height: 0)
             .sheet(item: $editing) { rule in
                 RuleEditor(rules: rules, rule: rule)
+            }
+            .alert("Turn on Windows key shortcuts?", isPresented: $confirmingWinKey) {
+                Button("Turn On") { rules.setGroup("winKey", enabled: true) }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Leave this off if you use a Mac keyboard.")
             }
 
         if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search).isEmpty }) {
@@ -179,6 +193,10 @@ private struct GroupCard: View {
                 if isExpanded {
                     Divider().padding(.top, 12)
                     entryList
+                    if group.id == "system" {
+                        Divider()
+                        FunctionKeysRow()
+                    }
                 }
             }
         }
@@ -201,6 +219,11 @@ private struct GroupCard: View {
                 Text(countText)
                     .font(.callout)
                     .foregroundStyle(.secondary)
+                if let note = RuleNames.note(ofGroup: group.id) {
+                    Text(note)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer(minLength: 8)
             Toggle("", isOn: Binding(get: { isOn }, set: setOn))
@@ -227,6 +250,29 @@ private struct GroupCard: View {
         }
         // A switched-off group still shows what it would do, greyed out.
         .opacity(isOn ? 1 : 0.45)
+    }
+}
+
+/// F1–F12 as standard function keys is a system setting, not a mapping: an
+/// Apple keyboard's top row sends brightness and volume events, not F-keys.
+private struct FunctionKeysRow: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("F1–F12 as standard function keys")
+                Text("Set in System Settings › Keyboard › Keyboard Shortcuts › Function Keys. A PC keyboard's F-keys already work.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 12)
+            Button("Open Keyboard Settings") {
+                if let url = URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+        }
+        .padding(.vertical, 9)
     }
 }
 
@@ -275,9 +321,23 @@ enum RuleNames {
         switch id {
         case "editing": "Editing"
         case "navigation": "Text Navigation"
+        case "finder": "File Management"
+        case "windows": "Windows & Apps"
+        case "browser": "Browser"
+        case "system": "System"
+        case "winKey": "Windows Key"
         case "mouse": "Mouse"
         case "scroll": "Scroll"
         default: id
+        }
+    }
+
+    /// A line under the group's name, for groups that need explaining.
+    static func note(ofGroup id: String) -> String? {
+        switch id {
+        case "finder": "Only in Finder, and not while renaming or searching"
+        case "winKey": "Off by default: also takes over ⌘ shortcuts on a Mac keyboard"
+        default: nil
         }
     }
 
@@ -285,6 +345,11 @@ enum RuleNames {
         switch id {
         case "editing": "pencil"
         case "navigation": "arrow.left.and.right.text.vertical"
+        case "finder": "folder.fill"
+        case "windows": "macwindow.on.rectangle"
+        case "browser": "globe"
+        case "system": "gearshape.fill"
+        case "winKey": "command"
         case "mouse": "computermouse.fill"
         case "scroll": "arrow.up.and.down"
         default: "square.grid.2x2.fill"
@@ -295,6 +360,11 @@ enum RuleNames {
         switch id {
         case "editing": .indigo
         case "navigation": .teal
+        case "finder": .blue
+        case "windows": .purple
+        case "browser": .green
+        case "system": .gray
+        case "winKey": .pink
         case "mouse": .orange
         case "scroll": .cyan
         default: .gray
@@ -302,15 +372,33 @@ enum RuleNames {
     }
 
     static func name(of rule: Rule) -> String {
-        let names = [
-            "edit.copy": "Copy", "edit.cut": "Cut", "edit.paste": "Paste", "edit.undo": "Undo",
-            "nav.lineStart": "Line start", "nav.lineEnd": "Line end",
-            "nav.selectLineStart": "Select to line start", "nav.selectLineEnd": "Select to line end",
-            "mouse.back": "Back", "mouse.forward": "Forward",
-            "scroll.zoomIn": "Zoom in", "scroll.zoomOut": "Zoom out",
-        ]
-        return names[rule.id] ?? rule.id
+        names[rule.id] ?? rule.id
     }
+
+    private static let names = [
+        "edit.copy": "Copy", "edit.cut": "Cut", "edit.paste": "Paste", "edit.undo": "Undo",
+        "edit.redo": "Redo", "edit.selectAll": "Select all", "edit.save": "Save", "edit.find": "Find",
+        "edit.new": "New", "edit.open": "Open", "edit.print": "Print",
+        "nav.lineStart": "Line start", "nav.lineEnd": "Line end",
+        "nav.selectLineStart": "Select to line start", "nav.selectLineEnd": "Select to line end",
+        "nav.docStart": "Document start", "nav.docEnd": "Document end",
+        "nav.selectDocStart": "Select to document start", "nav.selectDocEnd": "Select to document end",
+        "nav.wordLeft": "Previous word", "nav.wordRight": "Next word",
+        "nav.selectWordLeft": "Select previous word", "nav.selectWordRight": "Select next word",
+        "nav.deleteWord": "Delete previous word",
+        "finder.trash": "Move to Trash", "finder.rename": "Rename", "finder.open": "Open",
+        "finder.cut": "Cut (mark to move)", "finder.move": "Move here", "finder.parent": "Enclosing folder",
+        "win.switchApp": "Switch apps", "win.quit": "Quit app", "win.screenshot": "Screenshot",
+        "win.taskManager": "Task Manager (Activity Monitor)",
+        "browser.newTab": "New tab", "browser.closeTab": "Close tab", "browser.reopenTab": "Reopen closed tab",
+        "browser.address": "Address bar", "browser.reload": "Reload",
+        "sys.forceQuit": "Force Quit",
+        "winKey.lock": "Lock screen", "winKey.explorer": "File Explorer (Finder)",
+        "winKey.showDesktop": "Show desktop", "winKey.emoji": "Emoji & symbols",
+        "winKey.screenshotArea": "Screenshot of an area",
+        "mouse.back": "Back", "mouse.forward": "Forward",
+        "scroll.zoomIn": "Zoom in", "scroll.zoomOut": "Zoom out",
+    ]
 }
 
 /// Stands in for a page that a later release fills in.

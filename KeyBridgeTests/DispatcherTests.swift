@@ -75,8 +75,8 @@ import Testing
 
     @Test func unmatchedKeysPassThrough() throws {
         let dispatcher = makeDispatcher()
-        #expect(isPassThrough(dispatcher.process(try key(.a, down: true, [.maskControl]), type: .keyDown)))
-        #expect(isPassThrough(dispatcher.process(try key(.a, down: false, [.maskControl]), type: .keyUp)))
+        #expect(isPassThrough(dispatcher.process(try key(.q, down: true, [.maskControl]), type: .keyDown)))
+        #expect(isPassThrough(dispatcher.process(try key(.q, down: false, [.maskControl]), type: .keyUp)))
     }
 
     @Test func terminalsKeepControlC() throws {

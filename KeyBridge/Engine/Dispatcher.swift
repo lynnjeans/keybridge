@@ -24,6 +24,7 @@ final class Dispatcher {
 
     private var matcher = RuleMatcher(rules: [])
     private let frontmostBundleID: @MainActor () -> String?
+    private let isEditingText: @MainActor () -> Bool
 
     /// Keys whose press was remapped and that are still held. Their repeats
     /// and release are rewritten to match the press, whatever modifiers are
@@ -50,9 +51,11 @@ final class Dispatcher {
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
+        isEditingText: @escaping @MainActor () -> Bool = { false },
         post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) }
     ) {
         self.frontmostBundleID = frontmostBundleID
+        self.isEditingText = isEditingText
         self.post = post
     }
 
@@ -170,7 +173,9 @@ final class Dispatcher {
 
     private func match(_ event: CGEvent, type: CGEventType) -> Rule? {
         guard let trigger = Trigger(event: event, type: type) else { return nil }
-        return matcher.match(trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()))
+        return matcher.match(
+            trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()), isEditingText: isEditingText
+        )
     }
 
     private func openApplication(_ bundleID: String) {

@@ -16,12 +16,42 @@ import Testing
         RulesController(store: store) { [applied] in applied.sets.append($0) }
     }
 
-    @Test func everyGroupIsOnToStartWith() {
+    /// The rules of every group that starts on.
+    var defaultRules: [Rule] {
+        BuiltInRules.preset.groups.filter(\.isEnabledByDefault).flatMap(\.rules)
+    }
+
+    @Test func groupsStartAtTheirDefaults() {
         let applied = Applied()
         let controller = makeController(applied)
-        #expect(controller.effectiveRules.map(\.id) == BuiltInRules.all.map(\.id))
-        #expect(applied.latest.count == BuiltInRules.all.count, "The engine gets them at once")
-        #expect(BuiltInRules.preset.groups.allSatisfy { controller.isEnabled(group: $0.id) })
+        #expect(controller.effectiveRules.map(\.id) == defaultRules.map(\.id))
+        #expect(applied.latest.count == defaultRules.count, "The engine gets them at once")
+        for group in BuiltInRules.preset.groups {
+            #expect(controller.isEnabled(group: group.id) == group.isEnabledByDefault)
+        }
+        #expect(!controller.isEnabled(group: "winKey"), "Would take over ⌘ shortcuts on a Mac keyboard")
+    }
+
+    @Test func aGroupThatStartsOffCanBeSwitchedOn() {
+        let controller = makeController(Applied())
+        controller.setGroup("winKey", enabled: true)
+        #expect(controller.effectiveRules.contains { $0.id == "winKey.lock" })
+        #expect(controller.configuration.enabledGroups == ["winKey"])
+        #expect(makeController(Applied()).isEnabled(group: "winKey"), "Saved")
+
+        controller.setGroup("winKey", enabled: false)
+        #expect(controller.configuration.enabledGroups.isEmpty, "Back at the default, nothing to remember")
+        #expect(controller.configuration.disabledGroups.isEmpty)
+    }
+
+    @Test func anOlderFileWithoutEnabledGroupsStillLoads() throws {
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        let json = #"{"schemaVersion": 1, "overrides": [], "disabledGroups": ["mouse"]}"#
+        try Data(json.utf8).write(to: store.fileURL)
+        let controller = makeController(Applied())
+        #expect(!controller.isEnabled(group: "mouse"))
+        #expect(!controller.isEnabled(group: "winKey"))
+        #expect(controller.isEnabled(group: "editing"))
     }
 
     @Test func switchingAGroupOffTakesItOutOfEffect() {
@@ -55,7 +85,7 @@ import Testing
         let controller = makeController(Applied())
         controller.setGroup("editing", enabled: false)
         controller.setGroup("editing", enabled: true)
-        #expect(controller.effectiveRules.map(\.id) == BuiltInRules.all.map(\.id))
+        #expect(controller.effectiveRules.map(\.id) == defaultRules.map(\.id))
         #expect(controller.configuration.disabledGroups.isEmpty)
     }
 

@@ -12,6 +12,10 @@ struct Preset: Codable, Hashable, Identifiable, Sendable {
     struct Group: Codable, Hashable, Identifiable, Sendable {
         var id: String
         var rules: [Rule]
+        /// Whether the group is on until the user decides. The Win-key group
+        /// starts off: its shortcuts would also take over ⌘ combinations on
+        /// a Mac keyboard.
+        var isEnabledByDefault = true
     }
 
     var rules: [Rule] { groups.flatMap(\.rules) }

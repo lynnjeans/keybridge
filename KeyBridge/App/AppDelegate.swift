@@ -6,7 +6,10 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
     let frontmost = FrontmostApplication()
-    lazy var dispatcher = Dispatcher { [frontmost] in frontmost.bundleID }
+    lazy var dispatcher = Dispatcher(
+        frontmostBundleID: { [frontmost] in frontmost.bundleID },
+        isEditingText: FocusedElement.isEditingText
+    )
     /// The preset, the user's changes to it, and the rules that result. It
     /// hands each new set straight to the dispatcher, so a switch flipped in
     /// the window takes effect on the next key press.

@@ -30,8 +30,16 @@ struct RuleMatcher: Sendable {
         }
     }
 
-    func match(_ trigger: Trigger, in context: MatchContext) -> Rule? {
-        candidates[trigger]?.first { $0.scope.admits(context) }
+    /// - Parameter isEditingText: asked only when a candidate rule skips text
+    ///   input, since finding out means asking the frontmost application.
+    func match(_ trigger: Trigger, in context: MatchContext, isEditingText: () -> Bool = { false }) -> Rule? {
+        var editing: Bool?
+        return candidates[trigger]?.first { rule in
+            guard rule.scope.admits(context) else { return false }
+            guard rule.scope.skipsTextInput else { return true }
+            if editing == nil { editing = isEditingText() }
+            return editing == false
+        }
     }
 }
 

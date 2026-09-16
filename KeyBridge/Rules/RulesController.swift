@@ -40,15 +40,17 @@ final class RulesController {
     }
 
     func isEnabled(group: String) -> Bool {
-        configuration.isEnabled(group: group)
+        guard let group = preset.groups.first(where: { $0.id == group }) else { return false }
+        return configuration.isEnabled(group: group)
     }
 
     /// Switches a whole group on or off, saving and taking effect at once.
-    func setGroup(_ group: String, enabled: Bool) {
-        guard configuration.isEnabled(group: group) != enabled else { return }
+    func setGroup(_ id: String, enabled: Bool) {
+        guard let group = preset.groups.first(where: { $0.id == id }),
+              configuration.isEnabled(group: group) != enabled else { return }
         configuration.setGroup(group, enabled: enabled)
         Logger.configuration.notice(
-            "Group \(group, privacy: .public) switched \(enabled ? "on" : "off", privacy: .public)"
+            "Group \(id, privacy: .public) switched \(enabled ? "on" : "off", privacy: .public)"
         )
         commit()
     }
@@ -89,11 +91,15 @@ final class RulesController {
         commit()
     }
 
-    /// Other entries that react to the same trigger as `rule`, wherever they
-    /// are and whether or not they are on: only one of them can win.
+    /// Other entries that react to the same trigger in the same apps, whether
+    /// or not they are on: only one of them can win. A narrower app scope is
+    /// no conflict — Ctrl+V moving files in Finder and pasting elsewhere is
+    /// the point.
     func conflicts(with rule: Rule) -> [Rule] {
-        configuration.effectiveRules(base: preset.rules)
-            .filter { $0.id != rule.id && $0.trigger == rule.trigger }
+        configuration.effectiveRules(base: preset.rules).filter {
+            $0.id != rule.id && $0.trigger == rule.trigger
+                && $0.scope.applications == rule.scope.applications
+        }
     }
 
     /// While a shortcut is being recorded the engine stands aside, so the

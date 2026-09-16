@@ -1,11 +1,39 @@
 /// Where a rule applies: which applications, and which input devices.
 ///
 /// A rule applies only when both filters let it through.
-struct Scope: Codable, Hashable, Sendable {
+struct Scope: Hashable, Sendable {
     var applications: ApplicationFilter = .all
     var devices: DeviceFilter = .all
+    /// Stands aside while the user types in a text field or answers a dialog.
+    /// Finder's Enter-opens and Backspace-goes-up would otherwise break
+    /// renaming a file or typing in the search field.
+    var skipsTextInput = false
 
     static let everywhere = Scope()
+}
+
+// Written by hand so `skipsTextInput` is optional in the file: absent in older
+// files, and left out when false, so existing rules encode as before.
+extension Scope: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case applications, devices, skipsTextInput
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        applications = try container.decode(ApplicationFilter.self, forKey: .applications)
+        devices = try container.decode(DeviceFilter.self, forKey: .devices)
+        skipsTextInput = try container.decodeIfPresent(Bool.self, forKey: .skipsTextInput) ?? false
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(applications, forKey: .applications)
+        try container.encode(devices, forKey: .devices)
+        if skipsTextInput {
+            try container.encode(true, forKey: .skipsTextInput)
+        }
+    }
 }
 
 /// Filters by the bundle identifier of the frontmost application.

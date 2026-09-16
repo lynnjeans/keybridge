@@ -15,27 +15,39 @@ struct Configuration: Hashable, Sendable {
     /// means every group is on, so this needs no migration.
     var disabledGroups: Set<String> = []
 
-    /// The rules in effect: the preset's groups the user has left on, with
-    /// the overrides on top. A switched-off group contributes nothing, even
-    /// where the user has customised one of its entries — the group switch is
-    /// the broader, later decision.
+    /// Preset groups that start off and the user has switched on. Absent
+    /// from an older file means none, so this needs no migration either.
+    var enabledGroups: Set<String> = []
+
+    /// The rules in effect: the preset's groups that are on, with the
+    /// overrides on top. A switched-off group contributes nothing, even where
+    /// the user has customised one of its entries — the group switch is the
+    /// broader, later decision.
     func effectiveRules(of preset: Preset) -> [Rule] {
         let enabled = preset.groups
-            .filter { !disabledGroups.contains($0.id) }
+            .filter(isEnabled(group:))
             .flatMap(\.rules)
         return effectiveRules(base: enabled)
     }
 
-    /// Whether a group is switched on. Unknown groups count as on.
-    func isEnabled(group: String) -> Bool {
-        !disabledGroups.contains(group)
+    /// Whether a group is switched on: the user's choice, or else the
+    /// group's default.
+    func isEnabled(group: Preset.Group) -> Bool {
+        if enabledGroups.contains(group.id) { return true }
+        if disabledGroups.contains(group.id) { return false }
+        return group.isEnabledByDefault
     }
 
-    mutating func setGroup(_ group: String, enabled: Bool) {
+    /// Records the user's choice. Choosing a group's default forgets the
+    /// choice, so a later release can change what the default is.
+    mutating func setGroup(_ group: Preset.Group, enabled: Bool) {
+        enabledGroups.remove(group.id)
+        disabledGroups.remove(group.id)
+        guard enabled != group.isEnabledByDefault else { return }
         if enabled {
-            disabledGroups.remove(group)
+            enabledGroups.insert(group.id)
         } else {
-            disabledGroups.insert(group)
+            disabledGroups.insert(group.id)
         }
     }
 
@@ -83,13 +95,14 @@ struct Configuration: Hashable, Sendable {
 // `Configuration` exists, `ConfigurationStore` has already migrated it.
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, overrides, disabledGroups
+        case schemaVersion, overrides, disabledGroups, enabledGroups
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         overrides = try container.decodeIfPresent([Override].self, forKey: .overrides) ?? []
         disabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .disabledGroups) ?? []
+        enabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .enabledGroups) ?? []
     }
 
     func encode(to encoder: Encoder) throws {
@@ -98,5 +111,6 @@ extension Configuration: Codable {
         try container.encode(overrides, forKey: .overrides)
         // Written in a stable order, so the file does not churn between saves.
         try container.encode(disabledGroups.sorted(), forKey: .disabledGroups)
+        try container.encode(enabledGroups.sorted(), forKey: .enabledGroups)
     }
 }

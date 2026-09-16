@@ -84,12 +84,17 @@ struct RuleEditor: View {
 
     /// Scopes are not editable yet; the editor only says what they are.
     private var scopeNote: String? {
-        switch draft.scope.applications {
+        var note: String? = switch draft.scope.applications {
         case .all: nil
         case .except(let ids) where ids == BuiltInRules.terminals: "Everywhere except terminals"
         case .except: "Everywhere except some apps"
+        case .only(let ids) where ids == [BuiltInRules.finderID]: "Only in Finder"
         case .only: "Only in some apps"
         }
+        if draft.scope.skipsTextInput {
+            note = (note ?? "Everywhere") + ", not while typing"
+        }
+        return note
     }
 
     @ViewBuilder private var trigger: some View {
