@@ -1,8 +1,8 @@
 import AppKit
 import SwiftUI
 
-/// Edits one entry of the preset: what the user presses, what the Mac
-/// receives, and whether the entry is on. Nothing is saved until Save, and
+/// Edits one entry of the preset: what the user presses, and whether the
+/// entry is on; for a mouse button, also what it does. Nothing is saved until Save, and
 /// saving the preset's own version clears the customization.
 struct RuleEditor: View {
     let rules: RulesController
@@ -34,7 +34,7 @@ struct RuleEditor: View {
                 LabeledContent("When you press") {
                     trigger
                 }
-                LabeledContent("The Mac receives") {
+                LabeledContent("Does") {
                     action
                 }
                 Toggle("On", isOn: $draft.isEnabled)
@@ -126,8 +126,25 @@ struct RuleEditor: View {
         }
     }
 
+    /// What an entry does is what it is: Copy is ⌘C, and a Copy that sent
+    /// something else would be misnamed. Only a mouse button, which means
+    /// nothing by itself, is given a result of the user's choosing; any
+    /// other mapping is a custom rule.
+    private var resultIsEditable: Bool {
+        if case .mouseButton = original.trigger { true } else { false }
+    }
+
     @ViewBuilder private var action: some View {
-        if case .key(let combo) = draft.action {
+        if !resultIsEditable {
+            HStack(spacing: 8) {
+                switch draft.action {
+                case .key(let combo): KeyComboView(combo: combo, style: .mac)
+                case .openApplication: EmptyView()
+                }
+                Text(RuleNames.name(of: draft))
+                    .foregroundStyle(.secondary)
+            }
+        } else if case .key(let combo) = draft.action {
             RecorderField(isRecording: recording == .action, prompt: "Press a shortcut…",
                           liveModifiers: recorder.modifiers, style: .mac) {
                 KeyComboView(combo: combo, style: .mac)

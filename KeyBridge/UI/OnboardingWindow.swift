@@ -38,6 +38,7 @@ struct OnboardingWindow: View {
             onboarding.requestInputMonitoringIfNeeded()
         }
         .onAppear { onboarding.requestInputMonitoringIfNeeded() }
+        .showsInDock()
         // Likewise when the guide first appears: at launch the app is not
         // frontmost — even when started from Finder — so the activation that
         // follows `openWindow` is refused and the guide would open behind.

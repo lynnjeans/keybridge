@@ -35,6 +35,7 @@ struct MainWindow: View {
             .id(page)
         }
         .frame(minWidth: 780, minHeight: 520)
+        .showsInDock()
     }
 }
 
