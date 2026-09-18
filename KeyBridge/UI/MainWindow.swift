@@ -205,9 +205,10 @@ private struct ControlKeyCard: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 8)
+                // In the order the keys sit on a Mac keyboard: fn, then Ctrl.
                 Picker("Press Ctrl shortcuts with", selection: $choice) {
-                    Text("Ctrl").tag(ControlKey.control)
                     Text("fn").tag(ControlKey.function)
+                    Text("Ctrl").tag(ControlKey.control)
                     Text("Both").tag(ControlKey.both)
                 }
                 .pickerStyle(.segmented)
