@@ -23,6 +23,9 @@ final class Dispatcher {
     }
 
     private var matcher = RuleMatcher(rules: [])
+
+    /// Which way mouse wheels scroll.
+    var wheelDirection = WheelDirection.system
     private let frontmostBundleID: @MainActor () -> String?
     private let isEditingText: @MainActor () -> Bool
 
@@ -142,6 +145,11 @@ final class Dispatcher {
     /// wheel notch, as the stepper decides.
     private func scroll(_ event: CGEvent) -> Disposition {
         guard let rule = match(event, type: .scrollWheel), let direction = event.scrollDirection else {
+            // Not a rule's, so plain scrolling: the wheel's direction applies.
+            // The event is changed in place and goes on.
+            if wheelDirection.reverses(source: event.scrollSource, isNatural: event.isNaturalScrolling) {
+                event.reverseScroll()
+            }
             return .passThrough
         }
         record(rule)

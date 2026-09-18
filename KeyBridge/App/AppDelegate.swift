@@ -15,6 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// the window takes effect on the next key press.
     lazy var rules = RulesController(
         capture: { [dispatcher] recorder in dispatcher.recorder = recorder },
+        applyWheelDirection: { [dispatcher] direction in dispatcher.wheelDirection = direction },
         apply: { [dispatcher] rules in dispatcher.rules = rules }
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)

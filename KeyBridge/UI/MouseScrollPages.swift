@@ -72,10 +72,40 @@ struct ScrollPage: View {
             }
         }
 
+        Card {
+            HStack(spacing: 12) {
+                IconTile(symbol: "arrow.up.arrow.down", tint: .teal, size: 30)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Windows scroll direction")
+                        .font(.headline)
+                    Text(directionNote)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Toggle("Windows scroll direction", isOn: Binding(
+                    get: { rules.wheelDirection == .windows },
+                    set: { rules.setWheelDirection($0 ? .windows : .system) }
+                ))
+                .toggleStyle(.switch)
+                .labelsHidden()
+            }
+        }
+
         Text("Only mouse wheels. Trackpad and Magic Mouse scrolling are left to the system.")
             .font(.callout)
             .foregroundStyle(.secondary)
             .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+    }
+
+    /// macOS applies natural scrolling to the trackpad and every mouse at
+    /// once. With it off, wheels already scroll the Windows way.
+    private var directionNote: LocalizedStringKey {
+        let natural = UserDefaults.standard.object(forKey: "com.apple.swipescrolldirection") as? Bool ?? true
+        return natural
+            ? "Rolling the wheel towards you moves down the page. The trackpad keeps natural scrolling."
+            : "Natural scrolling is off in System Settings, so wheels already scroll this way."
     }
 
     private static let singles: [(Modifiers, LocalizedStringKey)] = [

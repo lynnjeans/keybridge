@@ -23,6 +23,10 @@ struct Configuration: Hashable, Sendable {
     /// older file means Ctrl, so this needs no migration.
     var controlKey: ControlKey = .control
 
+    /// Which way mouse wheels scroll. Absent from an older file means the
+    /// system's way, so this needs no migration.
+    var wheelDirection: WheelDirection = .system
+
     /// The rules in effect: the preset's groups that are on, with the
     /// overrides on top, pressed with the chosen control key. A switched-off group contributes nothing, even where
     /// the user has customised one of its entries — the group switch is the
@@ -99,7 +103,7 @@ struct Configuration: Hashable, Sendable {
 // `Configuration` exists, `ConfigurationStore` has already migrated it.
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey
+        case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection
     }
 
     init(from decoder: Decoder) throws {
@@ -108,6 +112,7 @@ extension Configuration: Codable {
         disabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .disabledGroups) ?? []
         enabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .enabledGroups) ?? []
         controlKey = try container.decodeIfPresent(ControlKey.self, forKey: .controlKey) ?? .control
+        wheelDirection = try container.decodeIfPresent(WheelDirection.self, forKey: .wheelDirection) ?? .system
     }
 
     func encode(to encoder: Encoder) throws {
@@ -118,5 +123,6 @@ extension Configuration: Codable {
         try container.encode(disabledGroups.sorted(), forKey: .disabledGroups)
         try container.encode(enabledGroups.sorted(), forKey: .enabledGroups)
         try container.encode(controlKey, forKey: .controlKey)
+        try container.encode(wheelDirection, forKey: .wheelDirection)
     }
 }

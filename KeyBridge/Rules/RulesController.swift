@@ -19,10 +19,12 @@ final class RulesController {
 
     @ObservationIgnored private let store: ConfigurationStore
     @ObservationIgnored private let apply: ([Rule]) -> Void
+    @ObservationIgnored private let applyWheelDirection: (WheelDirection) -> Void
     @ObservationIgnored private let capture: ((@MainActor (Trigger) -> Void)?) -> Void
 
     /// - Parameters:
     ///   - apply: hands the engine the rules it should run with.
+    ///   - applyWheelDirection: tells the engine which way wheels scroll.
     ///   - capture: points the engine's key presses at a recorder, or back
     ///     at the rules with nil.
     init(
@@ -30,11 +32,13 @@ final class RulesController {
         store: ConfigurationStore = ConfigurationStore(),
         configuration: Configuration? = nil,
         capture: @escaping ((@MainActor (Trigger) -> Void)?) -> Void = { _ in },
+        applyWheelDirection: @escaping (WheelDirection) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
         self.store = store
         self.apply = apply
+        self.applyWheelDirection = applyWheelDirection
         self.capture = capture
         // Computed into locals first: `self` is off limits until every
         // stored property has a value.
@@ -43,6 +47,7 @@ final class RulesController {
         self.configuration = loaded
         effectiveRules = rules
         apply(rules)
+        applyWheelDirection(loaded.wheelDirection)
     }
 
     func isEnabled(group: String) -> Bool {
@@ -58,6 +63,17 @@ final class RulesController {
         Logger.configuration.notice(
             "Group \(id, privacy: .public) switched \(enabled ? "on" : "off", privacy: .public)"
         )
+        commit()
+    }
+
+    var wheelDirection: WheelDirection {
+        configuration.wheelDirection
+    }
+
+    func setWheelDirection(_ direction: WheelDirection) {
+        guard configuration.wheelDirection != direction else { return }
+        configuration.wheelDirection = direction
+        Logger.configuration.notice("Wheel direction: \(direction.rawValue, privacy: .public)")
         commit()
     }
 
@@ -171,5 +187,6 @@ final class RulesController {
             )
         }
         apply(effectiveRules)
+        applyWheelDirection(configuration.wheelDirection)
     }
 }
