@@ -110,4 +110,22 @@ import Testing
         let editing = controller.rules(inGroup: "editing")
         #expect(editing.first { $0.id == "edit.copy" }?.isEnabled == false)
     }
+
+    @Test func overviewCountsFollowTheConfiguration() throws {
+        let controller = makeController(Applied())
+        #expect(controller.activeRuleCount == defaultRules.count)
+        #expect(controller.customizedCount == 0)
+        #expect(controller.exceptionApps == Set(BuiltInRules.terminals))
+
+        var copy = try #require(controller.original(of: "edit.copy"))
+        copy.isEnabled = false
+        controller.update(copy)
+        #expect(controller.activeRuleCount == defaultRules.count - 1, "A switched-off entry is not active")
+        #expect(controller.customizedCount == 1)
+
+        controller.setControlKey(.function)
+        #expect(controller.effectiveRules.first { $0.id == "edit.paste.fn" }?.scope.applications == .all,
+                "fn shortcuts apply in terminals too")
+        #expect(controller.exceptionApps == Set(BuiltInRules.terminals), "Home and End still skip them")
+    }
 }

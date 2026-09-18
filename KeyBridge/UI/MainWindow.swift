@@ -18,8 +18,7 @@ struct MainWindow: View {
             PageContent(page: page) {
                 switch page {
                 case .overview:
-                    ModeCard(engine: engine)
-                    PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
+                    OverviewPage(engine: engine, onboarding: onboarding, rules: rules) { page = $0 }
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
                 case .mouse:
@@ -514,12 +513,14 @@ private struct AboutCard: View {
 }
 
 /// The master switch.
-private struct ModeCard: View {
+struct ModeCard: View {
     let engine: EngineController
+    var controlKey: ControlKey = .control
 
     var body: some View {
         Card {
-            HStack(alignment: .top, spacing: 16) {
+            HStack(alignment: .center, spacing: 14) {
+                IconTile(symbol: "command", tint: .accentColor, size: 40)
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Windows Shortcut Mode")
                         .font(.headline)
@@ -551,12 +552,21 @@ private struct ModeCard: View {
         if !engine.isActive {
             return "On, but the event tap could not be started. Quitting and reopening KeyBridge may help."
         }
-        return "On. Ctrl+C, Home/End, the mouse side buttons and fn+scroll work the Windows way."
+        return "On. \(copyKey)+C, Home/End, Alt+Tab, the mouse side buttons and scroll zoom work the Windows way."
+    }
+
+    /// The key the user copies with, as they chose on the Shortcuts page.
+    private var copyKey: String {
+        switch controlKey {
+        case .control: "Ctrl"
+        case .function: "fn"
+        case .both: "Ctrl or fn"
+        }
     }
 }
 
 /// Whether KeyBridge has what it needs from macOS, and where to grant it.
-private struct PermissionsCard: View {
+struct PermissionsCard: View {
     let permissions: PermissionMonitor
     let onboarding: OnboardingController
 

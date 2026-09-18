@@ -109,6 +109,25 @@ final class RulesController {
         }
     }
 
+    /// How many rules are in effect and switched on.
+    var activeRuleCount: Int {
+        effectiveRules.filter(\.isEnabled).count
+    }
+
+    /// How many preset entries the user has changed.
+    var customizedCount: Int {
+        configuration.overrides.filter { if case .modified = $0 { true } else { false } }.count
+    }
+
+    /// Apps that rules in effect leave alone, such as terminals for Ctrl+C.
+    var exceptionApps: Set<String> {
+        var apps: Set<String> = []
+        for rule in effectiveRules where rule.isEnabled {
+            if case .except(let bundleIDs) = rule.scope.applications { apps.formUnion(bundleIDs) }
+        }
+        return apps
+    }
+
     /// The rules of one group, as shown under its card, whether or not the
     /// group is switched on.
     func rules(inGroup group: String) -> [Rule] {
