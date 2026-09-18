@@ -19,15 +19,19 @@ struct Configuration: Hashable, Sendable {
     /// from an older file means none, so this needs no migration either.
     var enabledGroups: Set<String> = []
 
+    /// Which key the Windows Ctrl shortcuts are pressed with. Absent from an
+    /// older file means Ctrl, so this needs no migration.
+    var controlKey: ControlKey = .control
+
     /// The rules in effect: the preset's groups that are on, with the
-    /// overrides on top. A switched-off group contributes nothing, even where
+    /// overrides on top, pressed with the chosen control key. A switched-off group contributes nothing, even where
     /// the user has customised one of its entries — the group switch is the
     /// broader, later decision.
     func effectiveRules(of preset: Preset) -> [Rule] {
         let enabled = preset.groups
             .filter(isEnabled(group:))
             .flatMap(\.rules)
-        return effectiveRules(base: enabled)
+        return controlKey.apply(to: effectiveRules(base: enabled))
     }
 
     /// Whether a group is switched on: the user's choice, or else the
@@ -95,7 +99,7 @@ struct Configuration: Hashable, Sendable {
 // `Configuration` exists, `ConfigurationStore` has already migrated it.
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, overrides, disabledGroups, enabledGroups
+        case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey
     }
 
     init(from decoder: Decoder) throws {
@@ -103,6 +107,7 @@ extension Configuration: Codable {
         overrides = try container.decodeIfPresent([Override].self, forKey: .overrides) ?? []
         disabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .disabledGroups) ?? []
         enabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .enabledGroups) ?? []
+        controlKey = try container.decodeIfPresent(ControlKey.self, forKey: .controlKey) ?? .control
     }
 
     func encode(to encoder: Encoder) throws {
@@ -112,5 +117,6 @@ extension Configuration: Codable {
         // Written in a stable order, so the file does not churn between saves.
         try container.encode(disabledGroups.sorted(), forKey: .disabledGroups)
         try container.encode(enabledGroups.sorted(), forKey: .enabledGroups)
+        try container.encode(controlKey, forKey: .controlKey)
     }
 }

@@ -71,6 +71,7 @@ private struct ShortcutsPage: View {
 
     var body: some View {
         PresetBar(preset: rules.preset)
+        ControlKeyCard(choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }))
 
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
@@ -92,7 +93,7 @@ private struct ShortcutsPage: View {
         .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(.separator))
 
         ForEach(rules.preset.groups) { group in
-            let matches = Self.matching(rules.rules(inGroup: group.id), search)
+            let matches = Self.matching(rules.rules(inGroup: group.id), search, rules.controlKey)
             // A search hides the groups it found nothing in, so what is left
             // on screen is only what matched.
             if search.isEmpty || !matches.isEmpty {
@@ -115,6 +116,7 @@ private struct ShortcutsPage: View {
                         }
                     },
                     isCustomized: rules.isCustomized,
+                    displayTrigger: rules.controlKey.trigger(of:),
                     edit: { editing = $0 }
                 )
             }
@@ -131,7 +133,7 @@ private struct ShortcutsPage: View {
                 Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Leave this off if you use a Mac keyboard.")
             }
 
-        if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search).isEmpty }) {
+        if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey).isEmpty }) {
             ContentUnavailableView.search(text: search)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 20)
@@ -139,12 +141,12 @@ private struct ShortcutsPage: View {
     }
 
     /// Entries whose name, or either side of the mapping, contains the text.
-    static func matching(_ rules: [Rule], _ search: String) -> [Rule] {
+    static func matching(_ rules: [Rule], _ search: String, _ controlKey: ControlKey) -> [Rule] {
         let query = search.trimmingCharacters(in: .whitespaces).lowercased()
         guard !query.isEmpty else { return rules }
         return rules.filter { rule in
             var haystack = [RuleNames.name(of: rule), rule.id]
-            if case .key(let combo) = rule.trigger { haystack += combo.caps(.windows) }
+            if case .key(let combo) = controlKey.trigger(of: rule) { haystack += combo.caps(.windows) }
             if case .key(let combo) = rule.action { haystack += combo.caps(.mac) }
             return haystack.contains { $0.lowercased().contains(query) }
         }
@@ -174,6 +176,47 @@ private struct PresetBar: View {
     }
 }
 
+/// Which key the Ctrl shortcuts are pressed with.
+private struct ControlKeyCard: View {
+    @Binding var choice: ControlKey
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "globe", tint: .indigo, size: 34)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Press Ctrl shortcuts with")
+                        .font(.headline)
+                    Text(description)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Picker("Press Ctrl shortcuts with", selection: $choice) {
+                    Text("Ctrl").tag(ControlKey.control)
+                    Text("fn").tag(ControlKey.function)
+                    Text("Both").tag(ControlKey.both)
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .fixedSize()
+            }
+        }
+    }
+
+    /// fn+← reaches the Mac as Home, so fn cannot stand in for Ctrl there.
+    private static let arrowNote = "Word moves stay Ctrl+← / →, since fn+← is Home on a Mac keyboard."
+
+    private var description: LocalizedStringKey {
+        switch choice {
+        case .control: "Ctrl+C copies, as on Windows."
+        case .function: "fn+C copies, also in terminals. Ctrl keeps its Mac meaning, and fn takes the place of its 🌐 shortcuts. \(Self.arrowNote)"
+        case .both: "Ctrl+C and fn+C both copy. In terminals only fn does. \(Self.arrowNote)"
+        }
+    }
+}
+
 /// One group: its switch, and its entries when expanded.
 private struct GroupCard: View {
     let group: Preset.Group
@@ -184,6 +227,9 @@ private struct GroupCard: View {
     let toggleExpanded: () -> Void
     let setOn: (Bool) -> Void
     let isCustomized: (String) -> Bool
+    /// The trigger as the user presses it, which differs from the rule's
+    /// when fn stands in for Ctrl.
+    let displayTrigger: (Rule) -> Trigger
     let edit: (Rule) -> Void
 
     var body: some View {
@@ -245,7 +291,7 @@ private struct GroupCard: View {
         VStack(spacing: 0) {
             ForEach(Array(entries.enumerated()), id: \.element.id) { index, rule in
                 if index > 0 { Divider() }
-                EntryRow(rule: rule, isCustomized: isCustomized(rule.id)) { edit(rule) }
+                EntryRow(rule: rule, trigger: displayTrigger(rule), isCustomized: isCustomized(rule.id)) { edit(rule) }
             }
         }
         // A switched-off group still shows what it would do, greyed out.
@@ -279,14 +325,21 @@ private struct FunctionKeysRow: View {
 /// One entry of a group. Clicking it opens the editor.
 private struct EntryRow: View {
     let rule: Rule
+    let trigger: Trigger
     let isCustomized: Bool
     let edit: () -> Void
     @State private var isHovered = false
 
+    private var displayed: Rule {
+        var rule = rule
+        rule.trigger = trigger
+        return rule
+    }
+
     var body: some View {
         Button(action: edit) {
             HStack(alignment: .center, spacing: 12) {
-                MappingView(rule: rule)
+                MappingView(rule: displayed)
                     .opacity(rule.isEnabled ? 1 : 0.45)
                 Spacer(minLength: 12)
                 if isCustomized {

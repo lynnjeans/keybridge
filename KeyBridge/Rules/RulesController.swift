@@ -61,6 +61,19 @@ final class RulesController {
         commit()
     }
 
+    var controlKey: ControlKey {
+        configuration.controlKey
+    }
+
+    /// Chooses the key the Ctrl shortcuts are pressed with, saving and taking
+    /// effect at once.
+    func setControlKey(_ key: ControlKey) {
+        guard configuration.controlKey != key else { return }
+        configuration.controlKey = key
+        Logger.configuration.notice("Control key: \(key.rawValue, privacy: .public)")
+        commit()
+    }
+
     /// The rules of one group, as shown under its card, whether or not the
     /// group is switched on.
     func rules(inGroup group: String) -> [Rule] {

@@ -38,6 +38,14 @@ struct RuleEditor: View {
                     action
                 }
                 Toggle("On", isOn: $draft.isEnabled)
+                // The fn setting applies on top of what is recorded here.
+                if rules.controlKey != .control, ControlKey.function.trigger(of: draft) != draft.trigger {
+                    LabeledContent("") {
+                        Text(rules.controlKey == .function ? "Pressed with fn instead of Ctrl" : "Also pressed with fn instead of Ctrl")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 if let note = scopeNote {
                     LabeledContent("Applies") {
                         Text(note).foregroundStyle(.secondary)

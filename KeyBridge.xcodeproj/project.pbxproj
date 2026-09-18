@@ -25,6 +25,7 @@
 		4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */; };
 		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		506B3F1B922AC2420E1B1062 /* KeyRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = B468133EB5D247B76FBE8965 /* KeyRecording.swift */; };
+		54E64666073B870126B46981 /* ControlKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07804BDC7C51D4B77C914313 /* ControlKey.swift */; };
 		573EFCCDB359AFCF1016673D /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
@@ -46,8 +47,10 @@
 		9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */; };
 		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
 		A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
+		A514BBCBD41FBAFD95F8CED7 /* ControlKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07804BDC7C51D4B77C914313 /* ControlKey.swift */; };
 		A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */; };
+		B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0716DA00216F64009A16E9A /* ControlKeyTests.swift */; };
 		B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */; };
 		C5F5A08982C8AA13574F80DA /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
@@ -74,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07804BDC7C51D4B77C914313 /* ControlKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlKey.swift; sourceTree = "<group>"; };
 		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		12D84228954A785CF91645EF /* RuleEditingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditingTests.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 		BC39811E866B84955FA5D4F6 /* RuleEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditor.swift; sourceTree = "<group>"; };
 		BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationStore.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		C0716DA00216F64009A16E9A /* ControlKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlKeyTests.swift; sourceTree = "<group>"; };
 		C5E81D2D3DE6A2849BB8DEFA /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabel.swift; sourceTree = "<group>"; };
 		D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInRules.swift; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 				D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */,
 				128B9CB689364A424B8F3640 /* Configuration.swift */,
 				BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */,
+				07804BDC7C51D4B77C914313 /* ControlKey.swift */,
 				C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */,
 				542F7297D61F8E6943745351 /* KeyCombo.swift */,
 				B468133EB5D247B76FBE8965 /* KeyRecording.swift */,
@@ -214,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
+				C0716DA00216F64009A16E9A /* ControlKeyTests.swift */,
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
@@ -335,6 +342,8 @@
 				ED941C18625ED6E5D4D246D6 /* Configuration.swift in Sources */,
 				A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */,
 				C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */,
+				A514BBCBD41FBAFD95F8CED7 /* ControlKey.swift in Sources */,
+				B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */,
 				FE54A3657D1101357A0D2A75 /* Dispatcher.swift in Sources */,
 				9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */,
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
@@ -373,6 +382,7 @@
 				B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */,
 				2027926C27C6697B960913D0 /* Configuration.swift in Sources */,
 				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
+				54E64666073B870126B46981 /* ControlKey.swift in Sources */,
 				10C65A2AF5B64DD68C24FC16 /* Dispatcher.swift in Sources */,
 				CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */,
 				E6085F0D9E8793B81AACAE80 /* EngineController.swift in Sources */,
