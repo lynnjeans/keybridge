@@ -13,7 +13,7 @@ import Testing
     }
 
     func makeController(_ applied: Applied) -> RulesController {
-        RulesController(store: store) { [applied] in applied.sets.append($0) }
+        RulesController(store: store, apply: { [applied] in applied.sets.append($0) })
     }
 
     /// The rules of every group that starts on.

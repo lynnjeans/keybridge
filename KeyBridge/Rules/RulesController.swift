@@ -19,17 +19,23 @@ final class RulesController {
 
     @ObservationIgnored private let store: ConfigurationStore
     @ObservationIgnored private let apply: ([Rule]) -> Void
+    @ObservationIgnored private let capture: ((@MainActor (KeyCombo) -> Void)?) -> Void
 
-    /// - Parameter apply: hands the engine the rules it should run with.
+    /// - Parameters:
+    ///   - apply: hands the engine the rules it should run with.
+    ///   - capture: points the engine's key presses at a recorder, or back
+    ///     at the rules with nil.
     init(
         preset: Preset = BuiltInRules.preset,
         store: ConfigurationStore = ConfigurationStore(),
         configuration: Configuration? = nil,
+        capture: @escaping ((@MainActor (KeyCombo) -> Void)?) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
         self.store = store
         self.apply = apply
+        self.capture = capture
         // Computed into locals first: `self` is off limits until every
         // stored property has a value.
         let loaded = configuration ?? store.load().configuration
@@ -102,15 +108,24 @@ final class RulesController {
         }
     }
 
-    /// While a shortcut is being recorded the engine stands aside, so the
-    /// recorder sees what the user pressed rather than what it maps to:
-    /// recording Ctrl+C must not arrive as ⌘C.
-    var isRecording = false {
-        didSet {
-            guard isRecording != oldValue else { return }
-            Logger.configuration.notice("Recording \(self.isRecording ? "started" : "ended", privacy: .public)")
-            apply(isRecording ? [] : effectiveRules)
-        }
+    /// Whether the rule editor is recording a shortcut.
+    private(set) var isRecording = false
+
+    /// Hands every key combination pressed to `onCombo`, read by the event
+    /// tap before the system or any window sees it, until `stopRecording`.
+    /// Recording Ctrl+C gets Ctrl+C rather than ⌘C, and fn+C gets fn+C
+    /// rather than Control Center.
+    func startRecording(_ onCombo: @escaping @MainActor (KeyCombo) -> Void) {
+        isRecording = true
+        capture(onCombo)
+        Logger.configuration.notice("Recording started")
+    }
+
+    func stopRecording() {
+        guard isRecording else { return }
+        isRecording = false
+        capture(nil)
+        Logger.configuration.notice("Recording ended")
     }
 
     private func commit() {
@@ -123,8 +138,6 @@ final class RulesController {
                 "Could not save the configuration: \(String(describing: error), privacy: .public)"
             )
         }
-        if !isRecording {
-            apply(effectiveRules)
-        }
+        apply(effectiveRules)
     }
 }

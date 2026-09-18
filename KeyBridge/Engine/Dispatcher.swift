@@ -59,7 +59,16 @@ final class Dispatcher {
         self.post = post
     }
 
+    /// While set, the rule editor is recording a shortcut: key presses are
+    /// handed here and swallowed instead of being matched. Reading them this
+    /// early catches combinations the system would take for itself before
+    /// they reach any window, such as fn+C opening Control Center.
+    var recorder: (@MainActor (KeyCombo) -> Void)?
+
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
+        if let recorder, let disposition = record(event, type: type, into: recorder) {
+            return disposition
+        }
         switch type {
         case .keyDown:
             return keyDown(event)
@@ -73,6 +82,22 @@ final class Dispatcher {
             return scroll(event)
         default:
             return .passThrough
+        }
+    }
+
+    private func record(_ event: CGEvent, type: CGEventType, into recorder: @MainActor (KeyCombo) -> Void) -> Disposition? {
+        switch type {
+        case .keyDown:
+            if !event.isAutorepeat, case .key(let combo)? = Trigger(event: event, type: type) {
+                recorder(combo)
+            }
+            return .consume
+        case .keyUp:
+            // The release of a key remapped before recording began still has
+            // to go out, or its replacement would stay pressed.
+            return heldKeys[event.keyCode] == nil ? .consume : nil
+        default:
+            return nil
         }
     }
 

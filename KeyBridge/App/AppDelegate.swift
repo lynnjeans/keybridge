@@ -13,7 +13,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// The preset, the user's changes to it, and the rules that result. It
     /// hands each new set straight to the dispatcher, so a switch flipped in
     /// the window takes effect on the next key press.
-    lazy var rules = RulesController { [dispatcher] rules in dispatcher.rules = rules }
+    lazy var rules = RulesController(
+        capture: { [dispatcher] recorder in dispatcher.recorder = recorder },
+        apply: { [dispatcher] rules in dispatcher.rules = rules }
+    )
     lazy var eventTap = EventTap(dispatcher: dispatcher)
     lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
     lazy var onboarding = OnboardingController(permissions: permissionMonitor)

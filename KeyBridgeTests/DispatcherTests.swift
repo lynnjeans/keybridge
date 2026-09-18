@@ -183,4 +183,29 @@ import Testing
         #expect(Modifiers(flags: CGEventFlags(all)) == all)
         #expect(Modifiers(flags: CGEventFlags([.option])) == [.option])
     }
+
+    @Test func whileRecordingKeysGoToTheRecorderAndNowhereElse() throws {
+        let dispatcher = makeDispatcher()
+        var recorded: [KeyCombo] = []
+        dispatcher.recorder = { recorded.append($0) }
+
+        // Ctrl+C would be ⌘C, and fn+C would open Control Center.
+        #expect(isConsumed(dispatcher.process(try key(.c, down: true, [.maskControl]), type: .keyDown)))
+        #expect(isConsumed(dispatcher.process(try key(.c, down: false, [.maskControl]), type: .keyUp)))
+        #expect(isConsumed(dispatcher.process(try key(.c, down: true, [.maskSecondaryFn]), type: .keyDown)))
+        #expect(isConsumed(dispatcher.process(try key(.c, down: true, [.maskSecondaryFn], repeat: true), type: .keyDown)))
+        #expect(recorded == [KeyCombo([.control], .c), KeyCombo([.function], .c)], "Repeats are not presses")
+
+        dispatcher.recorder = nil
+        #expect(!isPassThrough(dispatcher.process(try key(.c, down: true, [.maskControl]), type: .keyDown)),
+                "Back to remapping")
+    }
+
+    @Test func aKeyHeldWhenRecordingStartsIsStillReleased() throws {
+        let dispatcher = makeDispatcher()
+        _ = dispatcher.process(try key(.c, down: true, [.maskControl]), type: .keyDown)
+        dispatcher.recorder = { _ in }
+        let release = dispatcher.process(try key(.c, down: false, []), type: .keyUp)
+        #expect(!isConsumed(release) && !isPassThrough(release), "⌘C is released")
+    }
 }

@@ -135,8 +135,7 @@ struct RuleEditor: View {
             return
         }
         recording = side
-        rules.isRecording = true
-        recorder.start { combo in
+        recorder.start(rules: rules) { combo in
             if let combo {
                 switch side {
                 case .trigger: draft.trigger = .key(combo: combo)
@@ -150,7 +149,6 @@ struct RuleEditor: View {
     private func stopRecording() {
         recorder.stop()
         recording = nil
-        rules.isRecording = false
     }
 }
 
@@ -198,30 +196,44 @@ private struct RecorderField: View {
     }
 }
 
-/// Listens to key presses in KeyBridge's own windows and swallows them, so a
-/// recorded ⌘W does not close the window.
+/// Records one key combination. While the engine runs, presses come from its
+/// event tap, which sees them before the system does: fn+C or ⌘Space would
+/// otherwise open Control Center or Spotlight instead of being recorded.
+/// Without the tap, a monitor on KeyBridge's own windows stands in.
 ///
-/// Shortcuts the system keeps for itself, such as ⌘Tab or ⌘Space, never
-/// reach an app and cannot be recorded this way.
+/// Either way the press is swallowed, so a recorded ⌘W does not close the
+/// window.
 @MainActor
 @Observable
 final class KeyRecorder {
     /// Modifiers held right now, shown while waiting for the key.
     private(set) var modifiers: Modifiers = []
     @ObservationIgnored private var monitor: Any?
+    @ObservationIgnored private weak var rules: RulesController?
 
-    /// Calls `done` with the first combination pressed, or nil for Esc.
-    func start(_ done: @escaping (KeyCombo?) -> Void) {
+    /// Calls `done` once, with the first combination pressed, or nil for Esc.
+    /// The first of the two sources to deliver a press wins.
+    private final class Once { var isDone = false }
+
+    func start(rules: RulesController, _ done: @escaping @MainActor (KeyCombo?) -> Void) {
         stop()
+        self.rules = rules
+        let once = Once()
+        let finish: @MainActor (KeyCombo) -> Void = { combo in
+            guard !once.isDone else { return }
+            once.isDone = true
+            done(combo == KeyCombo(.escape) ? nil : combo)
+        }
+        rules.startRecording(finish)
         monitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged]) { [weak self] event in
             guard let self else { return event }
             if event.type == .flagsChanged {
                 modifiers = Modifiers(modifierFlags: event.modifierFlags)
                 return event
             }
-            guard !event.isARepeat else { return nil }
-            let combo = KeyCombo(keyCode: event.keyCode, modifierFlags: event.modifierFlags)
-            done(combo == KeyCombo(.escape) ? nil : combo)
+            if !event.isARepeat {
+                finish(KeyCombo(keyCode: event.keyCode, modifierFlags: event.modifierFlags))
+            }
             return nil
         }
     }
@@ -232,6 +244,8 @@ final class KeyRecorder {
         }
         monitor = nil
         modifiers = []
+        rules?.stopRecording()
+        rules = nil
     }
 }
 

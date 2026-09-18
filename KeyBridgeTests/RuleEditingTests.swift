@@ -13,7 +13,7 @@ import Testing
     }
 
     func makeController(_ applied: Applied = Applied()) -> RulesController {
-        RulesController(store: store) { [applied] in applied.latest = $0 }
+        RulesController(store: store, apply: { [applied] in applied.latest = $0 })
     }
 
     func copyRule(_ controller: RulesController) throws -> Rule {
@@ -77,20 +77,18 @@ import Testing
         #expect(controller.configuration.overrides == [.custom(rule: custom)])
     }
 
-    @Test func recordingPausesTheEngineAndResumesIt() throws {
-        let applied = Applied()
-        let controller = makeController(applied)
-        controller.isRecording = true
-        #expect(applied.latest.isEmpty, "Ctrl+C must reach the recorder as Ctrl+C")
+    @Test func recordingPointsTheEngineAtTheRecorder() {
+        final class Capture { var recorder: ((KeyCombo) -> Void)?; var recorded: [KeyCombo] = [] }
+        let capture = Capture()
+        let controller = RulesController(store: store, capture: { [capture] in capture.recorder = $0 })
+        controller.startRecording { [capture] in capture.recorded.append($0) }
+        #expect(controller.isRecording)
+        capture.recorder?(KeyCombo([.function], .c))
+        #expect(capture.recorded == [KeyCombo([.function], .c)])
 
-        var copy = try copyRule(controller)
-        copy.isEnabled = false
-        controller.update(copy)
-        #expect(applied.latest.isEmpty, "Still paused after a save")
-
-        controller.isRecording = false
-        #expect(applied.latest == controller.effectiveRules)
-        #expect(applied.latest.first { $0.id == "edit.copy" }?.isEnabled == false)
+        controller.stopRecording()
+        #expect(!controller.isRecording)
+        #expect(capture.recorder == nil, "Keys go back to the rules")
     }
 
     @Test func aSharedTriggerIsReportedAsAConflict() throws {
