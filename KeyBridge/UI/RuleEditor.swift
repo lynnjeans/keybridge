@@ -106,34 +106,36 @@ struct RuleEditor: View {
     }
 
     @ViewBuilder private var trigger: some View {
-        if case .key(let combo) = draft.trigger {
-            RecorderField(combo: combo, style: .windows, isRecording: recording == .trigger,
-                          liveModifiers: recorder.modifiers) {
+        switch draft.trigger {
+        case .key(let combo):
+            RecorderField(isRecording: recording == .trigger, prompt: "Press a shortcut…",
+                          liveModifiers: recorder.modifiers, style: .windows) {
+                KeyComboView(combo: combo, style: .windows)
+            } action: {
                 toggleRecording(.trigger)
             }
-        } else {
-            // Mouse buttons and scrolling cannot be recorded from the
-            // keyboard; the Mouse and Scroll pages (KB-075) take them on.
-            Text(triggerDescription).foregroundStyle(.secondary)
+        case .mouseButton(let number, let modifiers):
+            RecorderField(isRecording: recording == .trigger, prompt: "Press a mouse button…",
+                          liveModifiers: recorder.modifiers, style: .windows) {
+                MouseButtonLabel(number: number, modifiers: modifiers)
+            } action: {
+                toggleRecording(.trigger)
+            }
+        case .scroll:
+            Text("Set on the Scroll page").foregroundStyle(.secondary)
         }
     }
 
     @ViewBuilder private var action: some View {
         if case .key(let combo) = draft.action {
-            RecorderField(combo: combo, style: .mac, isRecording: recording == .action,
-                          liveModifiers: recorder.modifiers) {
+            RecorderField(isRecording: recording == .action, prompt: "Press a shortcut…",
+                          liveModifiers: recorder.modifiers, style: .mac) {
+                KeyComboView(combo: combo, style: .mac)
+            } action: {
                 toggleRecording(.action)
             }
         } else {
             Text("Not editable here").foregroundStyle(.secondary)
-        }
-    }
-
-    private var triggerDescription: String {
-        switch draft.trigger {
-        case .key(let combo): combo.caps(.windows).joined(separator: "+")
-        case .mouseButton(let number, let modifiers): (modifiers.caps(.windows) + ["Button \(number)"]).joined(separator: "+")
-        case .scroll(let direction, let modifiers): (modifiers.caps(.windows) + ["Scroll \(direction.rawValue)"]).joined(separator: "+")
         }
     }
 
@@ -143,12 +145,20 @@ struct RuleEditor: View {
             return
         }
         recording = side
-        recorder.start(rules: rules) { combo in
-            if let combo {
-                switch side {
-                case .trigger: draft.trigger = .key(combo: combo)
-                case .action: draft.action = .key(combo: combo)
-                }
+        // A trigger keeps its kind: a mouse entry records mouse buttons, a
+        // key entry key combinations. What the Mac receives is always keys.
+        let wantsButton = side == .trigger && { if case .mouseButton = draft.trigger { true } else { false } }()
+        recorder.start(rules: rules, accepting: { trigger in
+            switch trigger {
+            case .key: !wantsButton
+            case .mouseButton: wantsButton
+            case .scroll: false
+            }
+        }) { trigger in
+            switch (side, trigger) {
+            case (.trigger, let trigger?): draft.trigger = trigger
+            case (.action, .key(let combo)?): draft.action = .key(combo: combo)
+            default: break
             }
             stopRecording()
         }
@@ -160,12 +170,14 @@ struct RuleEditor: View {
     }
 }
 
-/// A combination shown as keycaps; clicking it records a new one.
-private struct RecorderField: View {
-    let combo: KeyCombo
-    let style: KeyStyle
+/// What a recorded trigger or result looks like; clicking it records a new
+/// one.
+private struct RecorderField<Content: View>: View {
     let isRecording: Bool
+    let prompt: LocalizedStringKey
     let liveModifiers: Modifiers
+    let style: KeyStyle
+    @ViewBuilder let content: Content
     let action: () -> Void
 
     var body: some View {
@@ -173,7 +185,7 @@ private struct RecorderField: View {
             HStack(spacing: 8) {
                 if isRecording {
                     if liveModifiers.isEmpty {
-                        Text("Press a shortcut…")
+                        Text(prompt)
                             .foregroundStyle(.secondary)
                     } else {
                         HStack(spacing: 3) {
@@ -181,7 +193,7 @@ private struct RecorderField: View {
                         }
                     }
                 } else {
-                    KeyComboView(combo: combo, style: style)
+                    content
                 }
                 Spacer(minLength: 8)
                 Image(systemName: isRecording ? "record.circle.fill" : "record.circle")
@@ -200,14 +212,15 @@ private struct RecorderField: View {
             )
         }
         .buttonStyle(.plain)
-        .help(isRecording ? "Press the new shortcut, or Esc to cancel" : "Click to record a new shortcut")
+        .help(isRecording ? "Press the new one, or Esc to cancel" : "Click to record a new one")
     }
 }
 
-/// Records one key combination. While the engine runs, presses come from its
-/// event tap, which sees them before the system does: fn+C or ⌘Space would
-/// otherwise open Control Center or Spotlight instead of being recorded.
-/// Without the tap, a monitor on KeyBridge's own windows stands in.
+/// Records one trigger. While the engine runs, presses come from its event
+/// tap, which sees them before the system does: fn+C or ⌘Space would
+/// otherwise open Control Center or Spotlight instead of being recorded, and
+/// a side button would go back in the browser. Without the tap, a monitor on
+/// KeyBridge's own windows stands in.
 ///
 /// Either way the press is swallowed, so a recorded ⌘W does not close the
 /// window.
@@ -219,30 +232,46 @@ final class KeyRecorder {
     @ObservationIgnored private var monitor: Any?
     @ObservationIgnored private weak var rules: RulesController?
 
-    /// Calls `done` once, with the first combination pressed, or nil for Esc.
     /// The first of the two sources to deliver a press wins.
     private final class Once { var isDone = false }
 
-    func start(rules: RulesController, _ done: @escaping @MainActor (KeyCombo?) -> Void) {
+    /// Calls `done` once, with the first accepted trigger, or nil for Esc.
+    /// Presses that are not accepted are swallowed and ignored.
+    func start(
+        rules: RulesController,
+        accepting accepts: @escaping @MainActor (Trigger) -> Bool,
+        _ done: @escaping @MainActor (Trigger?) -> Void
+    ) {
         stop()
         self.rules = rules
         let once = Once()
-        let finish: @MainActor (KeyCombo) -> Void = { combo in
+        let finish: @MainActor (Trigger) -> Void = { trigger in
             guard !once.isDone else { return }
-            once.isDone = true
-            done(combo == KeyCombo(.escape) ? nil : combo)
+            if trigger == .key(combo: KeyCombo(.escape)) {
+                once.isDone = true
+                done(nil)
+            } else if accepts(trigger) {
+                once.isDone = true
+                done(trigger)
+            }
         }
         rules.startRecording(finish)
-        monitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged]) { [weak self] event in
+        monitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged, .otherMouseDown]) { [weak self] event in
             guard let self else { return event }
-            if event.type == .flagsChanged {
+            switch event.type {
+            case .flagsChanged:
                 modifiers = Modifiers(modifierFlags: event.modifierFlags)
                 return event
+            case .otherMouseDown:
+                finish(.mouseButton(number: event.buttonNumber + 1,
+                                    modifiers: Modifiers(modifierFlags: event.modifierFlags)))
+                return nil
+            default:
+                if !event.isARepeat {
+                    finish(.key(combo: KeyCombo(keyCode: event.keyCode, modifierFlags: event.modifierFlags)))
+                }
+                return nil
             }
-            if !event.isARepeat {
-                finish(KeyCombo(keyCode: event.keyCode, modifierFlags: event.modifierFlags))
-            }
-            return nil
         }
     }
 
@@ -254,6 +283,22 @@ final class KeyRecorder {
         modifiers = []
         rules?.stopRecording()
         rules = nil
+    }
+}
+
+/// A mouse button as a trigger: its modifiers, and the button by number.
+struct MouseButtonLabel: View {
+    let number: Int
+    var modifiers: Modifiers = []
+
+    var body: some View {
+        HStack(spacing: 3) {
+            ForEach(modifiers.caps(.windows), id: \.self) { Keycap(text: $0, isModifier: true) }
+            Label("Button \(number)", systemImage: "computermouse")
+                .labelStyle(.titleAndIcon)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.secondary)
+        }
     }
 }
 

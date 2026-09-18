@@ -78,13 +78,13 @@ import Testing
     }
 
     @Test func recordingPointsTheEngineAtTheRecorder() {
-        final class Capture { var recorder: ((KeyCombo) -> Void)?; var recorded: [KeyCombo] = [] }
+        final class Capture { var recorder: ((Trigger) -> Void)?; var recorded: [Trigger] = [] }
         let capture = Capture()
         let controller = RulesController(store: store, capture: { [capture] in capture.recorder = $0 })
         controller.startRecording { [capture] in capture.recorded.append($0) }
         #expect(controller.isRecording)
-        capture.recorder?(KeyCombo([.function], .c))
-        #expect(capture.recorded == [KeyCombo([.function], .c)])
+        capture.recorder?(.key(combo: KeyCombo([.function], .c)))
+        #expect(capture.recorded == [.key(combo: KeyCombo([.function], .c))])
 
         controller.stopRecording()
         #expect(!controller.isRecording)
@@ -108,5 +108,28 @@ import Testing
 
         let fnS = KeyCombo(keyCode: UInt16(kVK_ANSI_S), modifierFlags: [.function, .command])
         #expect(fnS == KeyCombo([.function, .command], .s))
+    }
+
+    @Test func theZoomModifierChangesBothZoomRules() {
+        let applied = Applied()
+        let controller = makeController(applied)
+        #expect(controller.zoomModifiers == [.function])
+
+        controller.setZoomModifiers([.control])
+        #expect(controller.zoomModifiers == [.control])
+        let zoom = applied.latest.filter { $0.id.hasPrefix("scroll.") }.map(\.trigger)
+        #expect(zoom == [.scroll(direction: .up, modifiers: [.control]), .scroll(direction: .down, modifiers: [.control])])
+        #expect(controller.isCustomized("scroll.zoomIn") && controller.isCustomized("scroll.zoomOut"))
+
+        controller.setZoomModifiers([.function])
+        #expect(controller.configuration.overrides.isEmpty, "Back to the preset")
+    }
+
+    @Test func aSideButtonCanBeMovedToAnotherButton() throws {
+        let controller = makeController()
+        var back = try #require(controller.original(of: "mouse.back"))
+        back.trigger = .mouseButton(number: 3)
+        controller.update(back)
+        #expect(controller.effectiveRules.first { $0.id == "mouse.back" }?.trigger == .mouseButton(number: 3))
     }
 }

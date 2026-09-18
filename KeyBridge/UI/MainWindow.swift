@@ -22,6 +22,10 @@ struct MainWindow: View {
                     PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
+                case .mouse:
+                    MousePage(rules: rules)
+                case .scroll:
+                    ScrollPage(rules: rules)
                 case .about:
                     AboutCard()
                 default:
@@ -70,7 +74,7 @@ private struct ShortcutsPage: View {
     @State private var confirmingWinKey = false
 
     var body: some View {
-        PresetBar(preset: rules.preset)
+        PresetBar(preset: rules.preset, groups: Self.groups(of: rules.preset))
         ControlKeyCard(choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }))
 
         HStack(spacing: 10) {
@@ -92,7 +96,7 @@ private struct ShortcutsPage: View {
         .background(.background.secondary, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(.separator))
 
-        ForEach(rules.preset.groups) { group in
+        ForEach(Self.groups(of: rules.preset)) { group in
             let matches = Self.matching(rules.rules(inGroup: group.id), search, rules.controlKey)
             // A search hides the groups it found nothing in, so what is left
             // on screen is only what matched.
@@ -133,11 +137,17 @@ private struct ShortcutsPage: View {
                 Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Leave this off if you use a Mac keyboard.")
             }
 
-        if !search.isEmpty && rules.preset.groups.allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey).isEmpty }) {
+        if !search.isEmpty && Self.groups(of: rules.preset).allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey).isEmpty }) {
             ContentUnavailableView.search(text: search)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 20)
         }
+    }
+
+    /// The keyboard groups; mouse buttons and scrolling have pages of their
+    /// own.
+    static func groups(of preset: Preset) -> [Preset.Group] {
+        preset.groups.filter { !["mouse", "scroll"].contains($0.id) }
     }
 
     /// Entries whose name, or either side of the mapping, contains the text.
@@ -157,6 +167,7 @@ private struct ShortcutsPage: View {
 /// arrive with the preset packs (KB-060) and the apply action (KB-061).
 private struct PresetBar: View {
     let preset: Preset
+    let groups: [Preset.Group]
 
     var body: some View {
         Card {
@@ -165,7 +176,7 @@ private struct PresetBar: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Preset: \(RuleNames.presetName(preset.id))")
                         .font(.headline)
-                    Text("^[\(preset.rules.count) mapping](inflect: true) in \(preset.groups.count) groups. More presets, and re-applying one, are still to come.")
+                    Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages. More presets, and re-applying one, are still to come.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -218,7 +229,7 @@ private struct ControlKeyCard: View {
 }
 
 /// One group: its switch, and its entries when expanded.
-private struct GroupCard: View {
+struct GroupCard: View {
     let group: Preset.Group
     let entries: [Rule]
     let isOn: Bool
@@ -323,7 +334,7 @@ private struct FunctionKeysRow: View {
 }
 
 /// One entry of a group. Clicking it opens the editor.
-private struct EntryRow: View {
+struct EntryRow: View {
     let rule: Rule
     let trigger: Trigger
     let isCustomized: Bool
@@ -614,7 +625,7 @@ private struct PermissionRow: View {
     }
 }
 
-private struct Card<Content: View>: View {
+struct Card<Content: View>: View {
     @ViewBuilder let content: Content
 
     var body: some View {

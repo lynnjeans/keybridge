@@ -186,7 +186,7 @@ import Testing
 
     @Test func whileRecordingKeysGoToTheRecorderAndNowhereElse() throws {
         let dispatcher = makeDispatcher()
-        var recorded: [KeyCombo] = []
+        var recorded: [Trigger] = []
         dispatcher.recorder = { recorded.append($0) }
 
         // Ctrl+C would be ⌘C, and fn+C would open Control Center.
@@ -194,7 +194,8 @@ import Testing
         #expect(isConsumed(dispatcher.process(try key(.c, down: false, [.maskControl]), type: .keyUp)))
         #expect(isConsumed(dispatcher.process(try key(.c, down: true, [.maskSecondaryFn]), type: .keyDown)))
         #expect(isConsumed(dispatcher.process(try key(.c, down: true, [.maskSecondaryFn], repeat: true), type: .keyDown)))
-        #expect(recorded == [KeyCombo([.control], .c), KeyCombo([.function], .c)], "Repeats are not presses")
+        #expect(recorded == [.key(combo: KeyCombo([.control], .c)), .key(combo: KeyCombo([.function], .c))],
+                "Repeats are not presses")
 
         dispatcher.recorder = nil
         #expect(!isPassThrough(dispatcher.process(try key(.c, down: true, [.maskControl]), type: .keyDown)),
@@ -207,5 +208,17 @@ import Testing
         dispatcher.recorder = { _ in }
         let release = dispatcher.process(try key(.c, down: false, []), type: .keyUp)
         #expect(!isConsumed(release) && !isPassThrough(release), "⌘C is released")
+    }
+
+    @Test func whileRecordingMouseButtonsAreRecordedWithTheirNumber() throws {
+        let dispatcher = makeDispatcher()
+        var recorded: [Trigger] = []
+        dispatcher.recorder = { recorded.append($0) }
+        // Button 4 would otherwise go back in the browser.
+        #expect(isConsumed(dispatcher.process(try button(4, down: true), type: .otherMouseDown)))
+        dispatcher.recorder = nil
+        #expect(isConsumed(dispatcher.process(try button(4, down: false), type: .otherMouseUp)),
+                "The release of a recorded press never reaches the app")
+        #expect(recorded == [.mouseButton(number: 4)])
     }
 }

@@ -59,15 +59,23 @@ final class Dispatcher {
         self.post = post
     }
 
-    /// While set, the rule editor is recording a shortcut: key presses are
-    /// handed here and swallowed instead of being matched. Reading them this
-    /// early catches combinations the system would take for itself before
-    /// they reach any window, such as fn+C opening Control Center.
-    var recorder: (@MainActor (KeyCombo) -> Void)?
+    /// While set, the rule editor is recording a trigger: key presses and
+    /// extra mouse buttons are handed here and swallowed instead of being
+    /// matched. Reading them this early catches combinations the system
+    /// would take for itself before they reach any window, such as fn+C
+    /// opening Control Center.
+    var recorder: (@MainActor (Trigger) -> Void)?
+
+    /// Buttons pressed while recording, whose release is swallowed too.
+    private var recordedButtons: Set<Int> = []
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
         if let recorder, let disposition = record(event, type: type, into: recorder) {
             return disposition
+        }
+        // Recording can end while the recorded button is still down.
+        if type == .otherMouseUp, recordedButtons.remove(event.mouseButtonNumber) != nil {
+            return .consume
         }
         switch type {
         case .keyDown:
@@ -85,17 +93,23 @@ final class Dispatcher {
         }
     }
 
-    private func record(_ event: CGEvent, type: CGEventType, into recorder: @MainActor (KeyCombo) -> Void) -> Disposition? {
+    private func record(_ event: CGEvent, type: CGEventType, into recorder: @MainActor (Trigger) -> Void) -> Disposition? {
         switch type {
         case .keyDown:
-            if !event.isAutorepeat, case .key(let combo)? = Trigger(event: event, type: type) {
-                recorder(combo)
+            if !event.isAutorepeat, let trigger = Trigger(event: event, type: type) {
+                recorder(trigger)
             }
             return .consume
         case .keyUp:
             // The release of a key remapped before recording began still has
             // to go out, or its replacement would stay pressed.
             return heldKeys[event.keyCode] == nil ? .consume : nil
+        case .otherMouseDown:
+            if let trigger = Trigger(event: event, type: type) {
+                recordedButtons.insert(event.mouseButtonNumber)
+                recorder(trigger)
+            }
+            return .consume
         default:
             return nil
         }

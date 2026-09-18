@@ -19,7 +19,7 @@ final class RulesController {
 
     @ObservationIgnored private let store: ConfigurationStore
     @ObservationIgnored private let apply: ([Rule]) -> Void
-    @ObservationIgnored private let capture: ((@MainActor (KeyCombo) -> Void)?) -> Void
+    @ObservationIgnored private let capture: ((@MainActor (Trigger) -> Void)?) -> Void
 
     /// - Parameters:
     ///   - apply: hands the engine the rules it should run with.
@@ -29,7 +29,7 @@ final class RulesController {
         preset: Preset = BuiltInRules.preset,
         store: ConfigurationStore = ConfigurationStore(),
         configuration: Configuration? = nil,
-        capture: @escaping ((@MainActor (KeyCombo) -> Void)?) -> Void = { _ in },
+        capture: @escaping ((@MainActor (Trigger) -> Void)?) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
@@ -72,6 +72,25 @@ final class RulesController {
         configuration.controlKey = key
         Logger.configuration.notice("Control key: \(key.rawValue, privacy: .public)")
         commit()
+    }
+
+    /// The modifiers held while scrolling to zoom, as the zoom rules have
+    /// them.
+    var zoomModifiers: Modifiers {
+        for rule in rules(inGroup: "scroll") {
+            if case .scroll(_, let modifiers) = rule.trigger { return modifiers }
+        }
+        return []
+    }
+
+    /// Changes the zoom modifier on both zoom rules. Choosing the preset's
+    /// fn again drops the customization.
+    func setZoomModifiers(_ modifiers: Modifiers) {
+        for var rule in rules(inGroup: "scroll") {
+            guard case .scroll(let direction, _) = rule.trigger else { continue }
+            rule.trigger = .scroll(direction: direction, modifiers: modifiers)
+            update(rule)
+        }
     }
 
     /// The rules of one group, as shown under its card, whether or not the
@@ -124,13 +143,13 @@ final class RulesController {
     /// Whether the rule editor is recording a shortcut.
     private(set) var isRecording = false
 
-    /// Hands every key combination pressed to `onCombo`, read by the event
-    /// tap before the system or any window sees it, until `stopRecording`.
-    /// Recording Ctrl+C gets Ctrl+C rather than ⌘C, and fn+C gets fn+C
-    /// rather than Control Center.
-    func startRecording(_ onCombo: @escaping @MainActor (KeyCombo) -> Void) {
+    /// Hands every key combination and extra mouse button pressed to
+    /// `onTrigger`, read by the event tap before the system or any window
+    /// sees it, until `stopRecording`. Recording Ctrl+C gets Ctrl+C rather
+    /// than ⌘C, and fn+C gets fn+C rather than Control Center.
+    func startRecording(_ onTrigger: @escaping @MainActor (Trigger) -> Void) {
         isRecording = true
-        capture(onCombo)
+        capture(onTrigger)
         Logger.configuration.notice("Recording started")
     }
 
