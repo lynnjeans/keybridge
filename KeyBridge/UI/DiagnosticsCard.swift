@@ -101,6 +101,7 @@ extension DiagnosticReport {
             ("Ctrl shortcuts pressed with", rules.controlKey.rawValue),
             ("Zoom modifiers", rules.zoomModifiers.names.joined(separator: "+")),
             ("Wheel direction", rules.wheelDirection.rawValue),
+            ("Dock click minimizes", rules.dockClickMinimizes ? "on" : "off"),
             ("Active rules", "\(rules.activeRuleCount)"),
             ("Customized entries", "\(rules.customizedCount)"),
             ("Custom rules", "\(rules.customRules.count)"),

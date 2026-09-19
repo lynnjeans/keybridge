@@ -78,6 +78,11 @@ final class Dispatcher {
     /// Buttons pressed while recording, whose release is swallowed too.
     private var recordedButtons: Set<Int> = []
 
+    /// Sees every left button press and release, which always go on
+    /// unchanged: clicking the frontmost app's Dock icon minimizes its window
+    /// (`DockClick`).
+    var leftMouse: (@MainActor (CGEvent, CGEventType) -> Void)?
+
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
         if let recorder, let disposition = record(event, type: type, into: recorder) {
             return disposition
@@ -97,6 +102,9 @@ final class Dispatcher {
             return heldButtons.remove(event.mouseButtonNumber) == nil ? .passThrough : .consume
         case .scrollWheel:
             return scroll(event)
+        case .leftMouseDown, .leftMouseUp:
+            leftMouse?(event, type)
+            return .passThrough
         default:
             return .passThrough
         }

@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var clipboard = ClipboardController()
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
     let frontmost = FrontmostApplication()
+    let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
         isEditingText: FocusedElement.isEditingText
@@ -20,6 +21,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var rules = RulesController(
         capture: { [dispatcher] recorder in dispatcher.recorder = recorder },
         applyWheelDirection: { [dispatcher] direction in dispatcher.wheelDirection = direction },
+        applyDockClick: { [dockClick] minimizes in dockClick.isEnabled = minimizes },
         apply: { [dispatcher] rules in dispatcher.rules = rules }
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)
@@ -34,6 +36,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         secureInput.start()
         otherRemappers.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
+        dispatcher.leftMouse = { [dockClick] event, type in
+            let now = ProcessInfo.processInfo.systemUptime
+            if type == .leftMouseDown {
+                dockClick.mouseDown(at: event.location, flags: event.flags, time: now)
+            } else {
+                dockClick.mouseUp(at: event.location, time: now)
+            }
+        }
         engine.update()
 
         #if DEBUG
@@ -41,6 +51,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
         }
         LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
+        DockWindow.selfTest()
         // Writes the report the About page exports, without the save panel.
         if let path = ProcessInfo.processInfo.environment["KB_DEBUG_DIAGNOSTICS"] {
             Task { [self] in

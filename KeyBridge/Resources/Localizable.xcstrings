@@ -713,6 +713,22 @@
         }
       }
     },
+    "Click a Dock icon to minimize" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按程序坞图标最小化"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dock のアイコンをクリックで最小化"
+          }
+        }
+      }
+    },
     "Click an entry, then press the mouse button it should use; its number is shown. The left and right buttons cannot be remapped. A mouse's own software, or tools such as Karabiner-Elements, may remap buttons before KeyBridge sees them." : {
       "localizations" : {
         "ja" : {
@@ -757,6 +773,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "点击录制新的"
+          }
+        }
+      }
+    },
+    "Clicking the Dock icon of the app in front minimizes its window, like a taskbar button on Windows. Click it again to bring the window back." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按最前面那个应用的程序坞图标，会把它的窗口最小化，就像 Windows 的任务栏按钮。再点一次，窗口就回来了。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最前面のアプリの Dock アイコンをクリックすると、Windows のタスクバーのボタンのようにウインドウが最小化されます。もう一度クリックすると元に戻ります。"
           }
         }
       }

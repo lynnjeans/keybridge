@@ -20,11 +20,13 @@ final class RulesController {
     @ObservationIgnored private let store: ConfigurationStore
     @ObservationIgnored private let apply: ([Rule]) -> Void
     @ObservationIgnored private let applyWheelDirection: (WheelDirection) -> Void
+    @ObservationIgnored private let applyDockClick: (Bool) -> Void
     @ObservationIgnored private let capture: ((@MainActor (Trigger) -> Void)?) -> Void
 
     /// - Parameters:
     ///   - apply: hands the engine the rules it should run with.
     ///   - applyWheelDirection: tells the engine which way wheels scroll.
+    ///   - applyDockClick: tells the engine whether Dock clicks minimize.
     ///   - capture: points the engine's key presses at a recorder, or back
     ///     at the rules with nil.
     init(
@@ -33,12 +35,14 @@ final class RulesController {
         configuration: Configuration? = nil,
         capture: @escaping ((@MainActor (Trigger) -> Void)?) -> Void = { _ in },
         applyWheelDirection: @escaping (WheelDirection) -> Void = { _ in },
+        applyDockClick: @escaping (Bool) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
         self.store = store
         self.apply = apply
         self.applyWheelDirection = applyWheelDirection
+        self.applyDockClick = applyDockClick
         self.capture = capture
         // Computed into locals first: `self` is off limits until every
         // stored property has a value.
@@ -48,6 +52,7 @@ final class RulesController {
         effectiveRules = rules
         apply(rules)
         applyWheelDirection(loaded.wheelDirection)
+        applyDockClick(loaded.dockClickMinimizes)
     }
 
     /// Whether the preset is as it ships, with no group switched and no
@@ -89,6 +94,17 @@ final class RulesController {
         guard configuration.wheelDirection != direction else { return }
         configuration.wheelDirection = direction
         Logger.configuration.notice("Wheel direction: \(direction.rawValue, privacy: .public)")
+        commit()
+    }
+
+    var dockClickMinimizes: Bool {
+        configuration.dockClickMinimizes
+    }
+
+    func setDockClickMinimizes(_ minimizes: Bool) {
+        guard configuration.dockClickMinimizes != minimizes else { return }
+        configuration.dockClickMinimizes = minimizes
+        Logger.configuration.notice("Dock click minimizes: \(minimizes ? "on" : "off", privacy: .public)")
         commit()
     }
 
@@ -244,5 +260,6 @@ final class RulesController {
         }
         apply(effectiveRules)
         applyWheelDirection(configuration.wheelDirection)
+        applyDockClick(configuration.dockClickMinimizes)
     }
 }

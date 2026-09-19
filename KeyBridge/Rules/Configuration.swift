@@ -27,6 +27,11 @@ struct Configuration: Hashable, Sendable {
     /// system's way, so this needs no migration.
     var wheelDirection: WheelDirection = .system
 
+    /// Whether clicking the Dock icon of the app in front minimizes its
+    /// window, as a taskbar button does on Windows. Absent from an older file
+    /// means on, the default, so this needs no migration.
+    var dockClickMinimizes = true
+
     /// The rules in effect: the user's custom rules, then the preset's groups
     /// that are on with the user's changes, pressed with the chosen control
     /// key. A switched-off group contributes nothing, even where the user has
@@ -145,7 +150,7 @@ struct Configuration: Hashable, Sendable {
 // `Configuration` exists, `ConfigurationStore` has already migrated it.
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection
+        case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection, dockClickMinimizes
     }
 
     init(from decoder: Decoder) throws {
@@ -155,6 +160,7 @@ extension Configuration: Codable {
         enabledGroups = try container.decodeIfPresent(Set<String>.self, forKey: .enabledGroups) ?? []
         controlKey = try container.decodeIfPresent(ControlKey.self, forKey: .controlKey) ?? .control
         wheelDirection = try container.decodeIfPresent(WheelDirection.self, forKey: .wheelDirection) ?? .system
+        dockClickMinimizes = try container.decodeIfPresent(Bool.self, forKey: .dockClickMinimizes) ?? true
     }
 
     func encode(to encoder: Encoder) throws {
@@ -166,5 +172,6 @@ extension Configuration: Codable {
         try container.encode(enabledGroups.sorted(), forKey: .enabledGroups)
         try container.encode(controlKey, forKey: .controlKey)
         try container.encode(wheelDirection, forKey: .wheelDirection)
+        try container.encode(dockClickMinimizes, forKey: .dockClickMinimizes)
     }
 }

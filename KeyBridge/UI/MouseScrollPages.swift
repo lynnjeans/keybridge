@@ -30,6 +30,27 @@ struct MousePage: View {
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
             .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+
+        Card {
+            HStack(spacing: 12) {
+                IconTile(symbol: "dock.rectangle", tint: .indigo, size: 30)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Click a Dock icon to minimize")
+                        .font(.headline)
+                    Text("Clicking the Dock icon of the app in front minimizes its window, like a taskbar button on Windows. Click it again to bring the window back.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Toggle("Click a Dock icon to minimize", isOn: Binding(
+                    get: { rules.dockClickMinimizes },
+                    set: { rules.setDockClickMinimizes($0) }
+                ))
+                .toggleStyle(.switch)
+                .labelsHidden()
+            }
+        }
     }
 }
 
