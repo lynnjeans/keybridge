@@ -52,14 +52,20 @@ final class Dispatcher {
     /// button stands for. Replaceable so tests can capture them instead.
     private let post: @MainActor (CGEvent) -> Void
 
+    /// Launches or brings forward an application, for rules that open one.
+    /// Replaceable so tests do not start real apps.
+    private let openApplication: @MainActor (String) -> Void
+
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
         isEditingText: @escaping @MainActor () -> Bool = { false },
-        post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) }
+        post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) },
+        openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) }
     ) {
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
         self.post = post
+        self.openApplication = openApplication
     }
 
     /// While set, the rule editor is recording a trigger: key presses and
@@ -225,7 +231,7 @@ final class Dispatcher {
         )
     }
 
-    private func openApplication(_ bundleID: String) {
+    private static func launch(_ bundleID: String) {
         guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
             Logger.engine.error("No application with bundle identifier \(bundleID, privacy: .public)")
             return

@@ -1,0 +1,35 @@
+# Builds KeyBridge and runs the unit tests on every pull request and on main.
+#
+# The tests need no permissions and never start the event tap: the test
+# bundle compiles the sources it tests itself (see project.yml). Signing falls
+# back to ad-hoc without Config/Local.xcconfig, which is what CI gets.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md", "docs/**"]
+  pull_request:
+    paths-ignore: ["**.md", "docs/**"]
+  workflow_dispatch:
+
+# A newer push to the same branch makes an older run pointless; macOS
+# minutes are billed at ten times the Linux rate on private repositories.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: macos-26
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build and test
+        run: |
+          xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge \
+            -destination 'platform=macOS' -derivedDataPath build test
