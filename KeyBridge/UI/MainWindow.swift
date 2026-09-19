@@ -25,6 +25,8 @@ struct MainWindow: View {
                     MousePage(rules: rules)
                 case .scroll:
                     ScrollPage(rules: rules)
+                case .customRules:
+                    CustomRulesPage(rules: rules)
                 case .about:
                     AboutCard()
                 default:

@@ -27,15 +27,17 @@ struct Configuration: Hashable, Sendable {
     /// system's way, so this needs no migration.
     var wheelDirection: WheelDirection = .system
 
-    /// The rules in effect: the preset's groups that are on, with the
-    /// overrides on top, pressed with the chosen control key. A switched-off group contributes nothing, even where
-    /// the user has customised one of its entries — the group switch is the
-    /// broader, later decision.
+    /// The rules in effect: the user's custom rules, then the preset's groups
+    /// that are on with the user's changes, pressed with the chosen control
+    /// key. A switched-off group contributes nothing, even where the user has
+    /// customised one of its entries — the group switch is the broader, later
+    /// decision. Custom rules are taken as recorded: the control key is a
+    /// setting for the preset.
     func effectiveRules(of preset: Preset) -> [Rule] {
         let enabled = preset.groups
             .filter(isEnabled(group:))
             .flatMap(\.rules)
-        return controlKey.apply(to: effectiveRules(base: enabled))
+        return customRules + controlKey.apply(to: presetRules(base: enabled))
     }
 
     /// Whether a group is switched on: the user's choice, or else the
@@ -80,22 +82,45 @@ struct Configuration: Hashable, Sendable {
         overrides.removeAll { if case .modified(let rule) = $0 { rule.id == id } else { false } }
     }
 
-    /// The rules in effect: `base` with the user's overrides on top.
+    /// The rules in effect: the custom rules, then `base` with the user's
+    /// changes.
     ///
-    /// A modified rule takes the place of the base rule with the same ID, so
-    /// order and matching priority are kept; one whose ID the base no longer
-    /// has is ignored. Custom rules follow the base rules. Re-applying presets
-    /// while keeping customizations is KB-031.
+    /// Custom rules come first so that, where one shares a trigger with a
+    /// preset rule in the same scope, the user's own rule wins: the matcher
+    /// keeps the given order between equally narrow scopes.
     func effectiveRules(base: [Rule]) -> [Rule] {
+        customRules + presetRules(base: base)
+    }
+
+    /// `base` with the user's changes. A modified rule takes the place of the
+    /// base rule with the same ID, so order and matching priority are kept;
+    /// one whose ID the base no longer has is ignored. Re-applying presets
+    /// while keeping customizations is KB-031.
+    func presetRules(base: [Rule]) -> [Rule] {
         var modified: [String: Rule] = [:]
-        var custom: [Rule] = []
-        for override in overrides {
-            switch override {
-            case .modified(let rule): modified[rule.id] = rule
-            case .custom(let rule): custom.append(rule)
-            }
+        for case .modified(let rule) in overrides {
+            modified[rule.id] = rule
         }
-        return base.map { modified[$0.id] ?? $0 } + custom
+        return base.map { modified[$0.id] ?? $0 }
+    }
+
+    /// Rules the user made that no preset provides, in the order made.
+    var customRules: [Rule] {
+        overrides.compactMap { if case .custom(let rule) = $0 { rule } else { nil } }
+    }
+
+    /// Adds a custom rule, or replaces the one with the same ID in place.
+    mutating func setCustomRule(_ rule: Rule) {
+        let custom = Override.custom(rule: rule)
+        if let index = overrides.firstIndex(where: { if case .custom(let old) = $0 { old.id == rule.id } else { false } }) {
+            overrides[index] = custom
+        } else {
+            overrides.append(custom)
+        }
+    }
+
+    mutating func removeCustomRule(_ id: String) {
+        overrides.removeAll { if case .custom(let rule) = $0 { rule.id == id } else { false } }
     }
 }
 

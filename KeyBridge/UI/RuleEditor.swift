@@ -189,7 +189,7 @@ struct RuleEditor: View {
 
 /// What a recorded trigger or result looks like; clicking it records a new
 /// one.
-private struct RecorderField<Content: View>: View {
+struct RecorderField<Content: View>: View {
     let isRecording: Bool
     let prompt: LocalizedStringKey
     let liveModifiers: Modifiers

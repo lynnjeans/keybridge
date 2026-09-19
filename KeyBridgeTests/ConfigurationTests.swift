@@ -131,7 +131,8 @@ import Testing
 
     @Test func overridesApplyOnTopOfTheBuiltInRules() {
         let rules = Configuration(overrides: [copyOff, middleClickCloses]).effectiveRules(base: BuiltInRules.all)
-        #expect(rules.map(\.id) == BuiltInRules.all.map(\.id) + ["custom.1"], "Order and priority are kept")
+        #expect(rules.map(\.id) == ["custom.1"] + BuiltInRules.all.map(\.id),
+                "Preset order is kept; the user's own rules come first and win ties")
         // Evaluated outside #expect, whose expansion trips over closures and
         // optional chains here.
         let copyIsEnabled = rules.first { $0.id == "edit.copy" }?.isEnabled

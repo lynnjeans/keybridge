@@ -12,6 +12,9 @@ struct Rule: Codable, Hashable, Identifiable, Sendable {
     var action: Action
     var scope: Scope = .everywhere
     var isEnabled = true
+    /// What the user called a custom rule. Preset rules are named by the app
+    /// and leave this out, so their encoding is unchanged.
+    var name: String?
 }
 
 /// The input a rule reacts to.

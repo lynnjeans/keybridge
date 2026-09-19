@@ -132,7 +132,29 @@ final class RulesController {
     /// group is switched on.
     func rules(inGroup group: String) -> [Rule] {
         guard let group = preset.groups.first(where: { $0.id == group }) else { return [] }
-        return configuration.effectiveRules(base: group.rules)
+        return configuration.presetRules(base: group.rules)
+    }
+
+    /// The user's own rules, in the order made.
+    var customRules: [Rule] {
+        configuration.customRules
+    }
+
+    /// Adds a custom rule or saves changes to one, taking effect at once.
+    func saveCustomRule(_ rule: Rule) {
+        let before = configuration
+        configuration.setCustomRule(rule)
+        guard configuration != before else { return }
+        Logger.configuration.notice("Custom rule \(rule.id, privacy: .public) saved")
+        commit()
+    }
+
+    func deleteCustomRule(_ id: String) {
+        let before = configuration
+        configuration.removeCustomRule(id)
+        guard configuration != before else { return }
+        Logger.configuration.notice("Custom rule \(id, privacy: .public) deleted")
+        commit()
     }
 
     /// The preset's version of an entry, before any change by the user.
