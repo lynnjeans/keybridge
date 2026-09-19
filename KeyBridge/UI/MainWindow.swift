@@ -41,6 +41,9 @@ struct MainWindow: View {
         }
         .frame(minWidth: 780, minHeight: 520)
         .showsInDock()
+        #if DEBUG
+        .onAppear { if let requested = LayoutCheck.page { page = requested } }
+        #endif
     }
 }
 
@@ -74,7 +77,7 @@ private struct PageContent<Content: View>: View {
 private struct ShortcutsPage: View {
     let rules: RulesController
     @State private var search = ""
-    @State private var expanded: Set<String> = ["editing"]
+    @State private var expanded: Set<String> = Self.initiallyExpanded
     /// The entry open in the editor sheet.
     @State private var editing: Rule?
     @State private var confirmingWinKey = false
@@ -150,6 +153,13 @@ private struct ShortcutsPage: View {
         }
     }
 
+    private static var initiallyExpanded: Set<String> {
+        #if DEBUG
+        if LayoutCheck.expandsAllGroups { return Set(BuiltInRules.preset.groups.map(\.id)) }
+        #endif
+        return ["editing"]
+    }
+
     /// The keyboard groups; mouse buttons and scrolling have pages of their
     /// own.
     static func groups(of preset: Preset) -> [Preset.Group] {
@@ -180,16 +190,17 @@ private struct PresetBar: View {
         Card {
             HStack(spacing: 14) {
                 IconTile(symbol: "list.bullet.rectangle", tint: .accentColor, size: 34)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Preset: \(RuleNames.presetName(preset.id))")
-                        .font(.headline)
-                    Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages.")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Preset: \(RuleNames.presetName(preset.id))")
+                            .font(.headline)
+                        Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    RestoreDefaultsButton(rules: rules)
                 }
-                Spacer(minLength: 8)
-                RestoreDefaultsButton(rules: rules)
             }
         }
     }
@@ -203,24 +214,25 @@ private struct ControlKeyCard: View {
         Card {
             HStack(spacing: 14) {
                 IconTile(symbol: "globe", tint: .indigo, size: 34)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Press Ctrl shortcuts with")
-                        .font(.headline)
-                    Text(description)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Press Ctrl shortcuts with")
+                            .font(.headline)
+                        Text(description)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    // In the order the keys sit on a Mac keyboard: fn, then Ctrl.
+                    Picker("Press Ctrl shortcuts with", selection: $choice) {
+                        Text("fn").tag(ControlKey.function)
+                        Text("Ctrl").tag(ControlKey.control)
+                        Text("Both").tag(ControlKey.both)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    .fixedSize()
                 }
-                Spacer(minLength: 8)
-                // In the order the keys sit on a Mac keyboard: fn, then Ctrl.
-                Picker("Press Ctrl shortcuts with", selection: $choice) {
-                    Text("fn").tag(ControlKey.function)
-                    Text("Ctrl").tag(ControlKey.control)
-                    Text("Both").tag(ControlKey.both)
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .fixedSize()
             }
         }
     }
@@ -323,7 +335,7 @@ struct GroupCard: View {
 /// Apple keyboard's top row sends brightness and volume events, not F-keys.
 private struct FunctionKeysRow: View {
     var body: some View {
-        HStack(spacing: 12) {
+        AdaptiveRow {
             VStack(alignment: .leading, spacing: 2) {
                 Text("F1–F12 as standard function keys")
                 Text("Set in System Settings › Keyboard › Keyboard Shortcuts › Function Keys. A PC keyboard's F-keys already work.")
@@ -331,7 +343,6 @@ private struct FunctionKeysRow: View {
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer(minLength: 12)
             Button("Open Keyboard Settings") {
                 if let url = URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension") {
                     NSWorkspace.shared.open(url)
@@ -358,21 +369,26 @@ struct EntryRow: View {
 
     var body: some View {
         Button(action: edit) {
-            HStack(alignment: .center, spacing: 12) {
+            // A long name goes under the keys rather than being squeezed
+            // beside them.
+            AdaptiveRow(flexible: .trailing, minFlexibleWidth: 100, stackedSpacing: 6) {
                 MappingView(rule: displayed)
                     .opacity(rule.isEnabled ? 1 : 0.45)
-                Spacer(minLength: 12)
-                if isCustomized {
-                    CustomizedBadge()
+                HStack(spacing: 12) {
+                    if isCustomized {
+                        CustomizedBadge()
+                    }
+                    Text(RuleNames.name(of: rule))
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .strikethrough(!rule.isEnabled)
+                        .multilineTextAlignment(.trailing)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Image(systemName: "pencil")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .opacity(isHovered ? 1 : 0)
                 }
-                Text(RuleNames.name(of: rule))
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .strikethrough(!rule.isEnabled)
-                Image(systemName: "pencil")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .opacity(isHovered ? 1 : 0)
             }
             .padding(.vertical, 9)
             .contentShape(.rect)
@@ -622,25 +638,26 @@ private struct PermissionRow: View {
     let granted: Bool
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Image(systemName: granted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                .foregroundStyle(granted ? .green : .orange)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(permission.title)
-                Text(permission.purpose)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                if let hint = permission.settingsHint(granted: granted) {
-                    Text(hint)
+        AdaptiveRow {
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
+                Image(systemName: granted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                    .foregroundStyle(granted ? .green : .orange)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(permission.title)
+                    Text(permission.purpose)
                         .font(.caption)
-                        // Secondary, not tertiary: tertiary is too faint to
-                        // read in the dark appearance.
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                    if let hint = permission.settingsHint(granted: granted) {
+                        Text(hint)
+                            .font(.caption)
+                            // Secondary, not tertiary: tertiary is too faint to
+                            // read in the dark appearance.
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             }
-            Spacer()
             if granted {
                 Text("Granted")
                     .foregroundStyle(.secondary)

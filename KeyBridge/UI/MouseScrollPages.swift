@@ -131,14 +131,21 @@ struct ScrollPage: View {
 
     private var modifierPicker: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Picker("Hold while scrolling", selection: choice) {
-                ForEach(Self.singles, id: \.0.rawValue) { modifiers, name in
-                    Text(name).tag(Optional(modifiers))
+            // The label apart from the menu, so a long translation wraps
+            // instead of making the page wider than the window.
+            AdaptiveRow(minFlexibleWidth: 140) {
+                Text("Hold while scrolling")
+                    .fixedSize(horizontal: false, vertical: true)
+                Picker("Hold while scrolling", selection: choice) {
+                    ForEach(Self.singles, id: \.0.rawValue) { modifiers, name in
+                        Text(name).tag(Optional(modifiers))
+                    }
+                    Divider()
+                    Text("Custom…").tag(Modifiers?.none)
                 }
-                Divider()
-                Text("Custom…").tag(Modifiers?.none)
+                .labelsHidden()
+                .fixedSize()
             }
-            .fixedSize()
 
             if choice.wrappedValue == nil {
                 HStack(spacing: 14) {

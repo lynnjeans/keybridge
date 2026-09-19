@@ -20,17 +20,20 @@ struct OverviewPage: View {
         Card {
             HStack(spacing: 14) {
                 IconTile(symbol: "list.bullet.rectangle", tint: .indigo, size: 34)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Preset: \(RuleNames.presetName(rules.preset.id))")
-                        .font(.headline)
-                    Text(presetDetail)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Preset: \(RuleNames.presetName(rules.preset.id))")
+                            .font(.headline)
+                        Text(presetDetail)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    WrappingControls {
+                        Button("Customize…") { open(.shortcuts) }
+                        RestoreDefaultsButton(rules: rules)
+                    }
                 }
-                Spacer(minLength: 8)
-                Button("Customize…") { open(.shortcuts) }
-                RestoreDefaultsButton(rules: rules)
             }
         }
 

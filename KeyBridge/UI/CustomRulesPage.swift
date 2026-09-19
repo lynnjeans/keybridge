@@ -34,12 +34,11 @@ struct CustomRulesPage: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 40)
             } else {
-                HStack {
+                AdaptiveRow {
                     Text("Your rules come before the preset: where both use the same shortcut, yours wins.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: 12)
                     Button("New Rule…") { editing = EditedRule(rule: nil) }
                 }
                 Card {
@@ -64,10 +63,9 @@ private struct CustomRuleRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Button(action: edit) {
-                HStack(spacing: 12) {
+                AdaptiveRow(flexible: .trailing, minFlexibleWidth: 100, stackedSpacing: 6) {
                     MappingView(rule: rule)
                         .opacity(rule.isEnabled ? 1 : 0.45)
-                    Spacer(minLength: 12)
                     VStack(alignment: .trailing, spacing: 2) {
                         if let name = rule.name, !name.isEmpty {
                             Text(name).font(.callout)

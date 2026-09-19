@@ -38,6 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if engine.isActive {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
         }
+        LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
         #endif
     }
 

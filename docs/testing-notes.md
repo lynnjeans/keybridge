@@ -224,6 +224,36 @@ notchedWheel=… smoothWheel=… gesture=…`, and only the mouse should produce
 selftest.scrollUp=…` / `selftest.scrollDown=…`. A trackpad flick keeps producing `gesture`
 events for a while after the fingers lift; that is momentum, and it must not match either.
 
+## Layout in other languages
+
+German and French run about 30% longer than English, so every page must wrap rather than cut
+text off. Three more debug switches open a window without clicking, so each page can be
+screenshotted in each language:
+
+| Variable | Effect |
+|---|---|
+| `KB_DEBUG_SHOW` | `main`, `onboarding` or `clipboard` (the history panel) opens a second after launch |
+| `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
+| `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
+
+```bash
+open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \
+  --env KB_DEBUG_PAGE=shortcuts --env KB_DEBUG_EXPAND_ALL=1 \
+  --args -AppleLanguages '(en)' -NSDoubleLocalizedStrings YES
+```
+
+- `-NSDoubleLocalizedStrings YES` repeats every localized string twice, a harsher test than any
+  real language. Format specifiers come out mangled (`lld`, `@`); that is the pseudo-language, not
+  a bug.
+- Check at the smallest window, 780 pt wide, as well as the default 880. System Events can set the
+  size and scroll the page:
+  `osascript -e 'tell application "System Events" to tell process "KeyBridge" to set size of window 1 to {780, 860}'`,
+  then `set value of scroll bar 1 of scroll area 1 of group 2 of splitter group 1 of group 1 of window 1 to 0.5`.
+- Rows with a control beside text use `AdaptiveRow`: the text keeps a minimum width, and the
+  control moves under it when it cannot. Groups of buttons use `WrappingControls`. A plain `HStack`
+  with a `Spacer` squeezes the text to a word per line or truncates the button instead.
+- Not reachable this way: the menu bar menu, the rule editor sheets and alerts. Check those by hand.
+
 ## Karabiner-Elements and other HID-level remappers
 
 Tools that remap at the HID level, such as Karabiner-Elements, act before KeyBridge's event tap,

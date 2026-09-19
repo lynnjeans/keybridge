@@ -33,19 +33,21 @@ struct ClipboardPage: View {
         if clipboard.isEnabled {
             HotKeyCard(clipboard: clipboard, rules: rules)
 
-            HStack {
+            AdaptiveRow(minFlexibleWidth: 120) {
                 Text("History (\(clipboard.history.items.count))")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.secondary)
-                Spacer()
-                Picker("Keep", selection: Binding(get: { clipboard.limit }, set: { clipboard.limit = $0 })) {
-                    ForEach(ClipboardController.limitChoices, id: \.self) { Text("\($0) items").tag($0) }
+                    .fixedSize(horizontal: false, vertical: true)
+                WrappingControls {
+                    Picker("Keep", selection: Binding(get: { clipboard.limit }, set: { clipboard.limit = $0 })) {
+                        ForEach(ClipboardController.limitChoices, id: \.self) { Text("\($0) items").tag($0) }
+                    }
+                    .fixedSize()
+                    .help("Older items are dropped once there are more; pinned items are kept")
+                    Button("Clear History") { clipboard.history.clear() }
+                        .help("Removes everything except pinned items")
+                        .disabled(clipboard.history.items.isEmpty)
                 }
-                .fixedSize()
-                .help("Older items are dropped once there are more; pinned items are kept")
-                Button("Clear History") { clipboard.history.clear() }
-                    .help("Removes everything except pinned items")
-                    .disabled(clipboard.history.items.isEmpty)
             }
             Card {
                 if clipboard.history.items.isEmpty {
@@ -169,15 +171,15 @@ private struct HotKeyCard: View {
     var body: some View {
         Card {
             VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 14) {
+                AdaptiveRow(spacing: 14) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Open clipboard history")
                             .font(.headline)
                         Text("From any app. Click to record a different shortcut.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer(minLength: 8)
                     RecorderField(isRecording: isRecording, prompt: "Press a shortcut…",
                                   liveModifiers: recorder.modifiers, style: .mac) {
                         KeyComboView(combo: clipboard.hotKey, style: .mac)
@@ -228,15 +230,15 @@ private struct ExcludedAppsCard: View {
     var body: some View {
         Card {
             VStack(alignment: .leading, spacing: 10) {
-                HStack {
+                AdaptiveRow {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Never record from")
                             .font(.headline)
                         Text("Password managers are on the list from the start.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer()
                     Button("Add App…") {
                         if let app = AppChooser.choose() { clipboard.exclude(app) }
                     }
