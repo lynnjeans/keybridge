@@ -214,7 +214,7 @@ struct CustomRuleEditor: View {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
                             Button(app == nil ? "Choose App…" : "Change…") {
-                                if let chosen = Self.chooseApp() { app = chosen }
+                                if let chosen = AppChooser.choose() { app = chosen }
                             }
                         }
                     }
@@ -240,7 +240,7 @@ struct CustomRuleEditor: View {
                                 }
                             }
                             Button("Add App…") {
-                                if let chosen = Self.chooseApp(), !apps.contains(chosen) { apps.append(chosen) }
+                                if let chosen = AppChooser.choose(), !apps.contains(chosen) { apps.append(chosen) }
                             }
                         }
                         .frame(width: 220, alignment: .leading)
@@ -351,9 +351,12 @@ struct CustomRuleEditor: View {
         recorder.stop()
         recording = nil
     }
+}
 
-    /// Asks for an app in the Applications folder and returns its identifier.
-    private static func chooseApp() -> String? {
+/// Asks for an app in the Applications folder and returns its identifier.
+enum AppChooser {
+    @MainActor
+    static func choose() -> String? {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.directoryURL = URL(fileURLWithPath: "/Applications")
@@ -364,7 +367,7 @@ struct CustomRuleEditor: View {
 }
 
 /// An app's icon and name.
-private struct AppLabel: View {
+struct AppLabel: View {
     let bundleID: String
 
     var body: some View {

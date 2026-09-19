@@ -18,7 +18,8 @@ struct KeyBridgeApp: App {
                 engine: appDelegate.engine,
                 onboarding: appDelegate.onboarding,
                 rules: appDelegate.rules,
-                secureInput: appDelegate.secureInput
+                secureInput: appDelegate.secureInput,
+                clipboard: appDelegate.clipboard
             )
         }
         .defaultSize(width: 880, height: 600)

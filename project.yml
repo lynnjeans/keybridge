@@ -79,6 +79,7 @@ targets:
       - path: KeyBridge/Engine/ScrollStepper.swift
       - path: KeyBridge/Engine/WheelDirection.swift
       - path: KeyBridge/Permissions
+      - path: KeyBridge/Clipboard
       - path: KeyBridge/App/EngineController.swift
     settings:
       base:

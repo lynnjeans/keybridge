@@ -8,6 +8,7 @@ struct MainWindow: View {
     /// The preset and the user's changes to it, shown on the Shortcuts page.
     let rules: RulesController
     let secureInput: SecureInputMonitor
+    let clipboard: ClipboardController
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -26,6 +27,8 @@ struct MainWindow: View {
                     MousePage(rules: rules)
                 case .scroll:
                     ScrollPage(rules: rules)
+                case .clipboard:
+                    ClipboardPage(clipboard: clipboard)
                 case .customRules:
                     CustomRulesPage(rules: rules)
                 case .about:
