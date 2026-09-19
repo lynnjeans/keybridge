@@ -52,7 +52,7 @@ import Testing
             (KeyCombo(.delete), KeyCombo([.command], .upArrow), "com.apple.finder"),
             (KeyCombo([.option], .tab), KeyCombo([.command], .tab), "com.apple.TextEdit"),
             (KeyCombo([.option], .f4), KeyCombo([.command], .q), "com.apple.TextEdit"),
-            (KeyCombo(.f13), KeyCombo([.shift, .command], .three), "com.apple.TextEdit"),
+            (KeyCombo(.f13), KeyCombo([.control, .shift, .command], .three), "com.apple.TextEdit"),
             (KeyCombo([.control], .t), KeyCombo([.command], .t), "com.apple.TextEdit"),
             (KeyCombo([.control], .w), KeyCombo([.command], .w), "com.apple.TextEdit"),
             (KeyCombo([.control, .shift], .t), KeyCombo([.shift, .command], .t), "com.apple.TextEdit"),
@@ -60,7 +60,7 @@ import Testing
             (KeyCombo([.control], .r), KeyCombo([.command], .r), "com.apple.TextEdit"),
             (KeyCombo([.command], .l), KeyCombo([.control, .command], .q), "com.apple.TextEdit"),
             (KeyCombo([.command], .period), KeyCombo([.control, .command], .space), "com.apple.TextEdit"),
-            (KeyCombo([.shift, .command], .s), KeyCombo([.shift, .command], .four), "com.apple.TextEdit"),
+            (KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four), "com.apple.TextEdit"),
         ]
         for (trigger, result, app) in expected {
             let rule = matcher.match(.key(combo: trigger), in: MatchContext(frontmostBundleID: app))

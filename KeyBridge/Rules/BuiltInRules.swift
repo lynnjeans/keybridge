@@ -69,8 +69,10 @@ enum BuiltInRules {
         .init(id: "windows", rules: [
             rule("win.switchApp", KeyCombo([.option], .tab), KeyCombo([.command], .tab)),
             rule("win.quit", KeyCombo([.option], .f4), KeyCombo([.command], .q)),
-            // PC keyboards send Print Screen as F13.
-            rule("win.screenshot", KeyCombo(.f13), KeyCombo([.shift, .command], .three)),
+            // PC keyboards send Print Screen as F13. As on Windows, the
+            // screenshot goes to the clipboard (⌃ added), not to a file, so
+            // it also lands in the clipboard history.
+            rule("win.screenshot", KeyCombo(.f13), KeyCombo([.control, .shift, .command], .three)),
             Rule(id: "win.taskManager", trigger: .key(combo: KeyCombo([.control, .shift], .escape)),
                  action: .openApplication(bundleID: "com.apple.ActivityMonitor")),
         ]),
@@ -94,7 +96,7 @@ enum BuiltInRules {
             // F11 is macOS's Show Desktop key.
             rule("winKey.showDesktop", KeyCombo([.command], .d), KeyCombo(.f11)),
             rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
-            rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.shift, .command], .four)),
+            rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
         ], isEnabledByDefault: false),
         .init(id: "mouse", rules: [
             // Back and forward in browsers and Finder. Not limited by app: the
