@@ -32,6 +32,20 @@ final class ClipboardController {
 
     static let limitChoices = [25, 50, 100, 200, 500, 1000]
 
+    /// The shortcut that brings up the history panel from any app.
+    private(set) var hotKey: KeyCombo
+
+    /// Why the shortcut does not work, when it does not.
+    private(set) var hotKeyProblem: String?
+
+    /// ⌘⇧C, as in Maccy: ⌘⇧V, closer to Win+V, is Paste and Match Style in
+    /// many apps.
+    static let defaultHotKey = KeyCombo([.shift, .command], .c)
+
+    /// Shows or hides the history panel; set by the app, which owns it.
+    @ObservationIgnored var togglePanel: (@MainActor () -> Void)?
+    @ObservationIgnored private lazy var globalHotKey = GlobalHotKey { [weak self] in self?.togglePanel?() }
+
     @ObservationIgnored private let monitor: ClipboardMonitor
     @ObservationIgnored private let defaults: UserDefaults
 
@@ -39,6 +53,7 @@ final class ClipboardController {
         static let enabled = "clipboard.enabled"
         static let excludedApps = "clipboard.excludedApps"
         static let limit = "clipboard.limit"
+        static let hotKey = "clipboard.hotKey"
     }
 
     init(pasteboard: NSPasteboard = .general, defaults: UserDefaults = .standard, store: ClipboardStore = ClipboardStore()) {
@@ -58,6 +73,8 @@ final class ClipboardController {
         }
         self.history = history
         excludedApps = excluded
+        hotKey = defaults.data(forKey: Keys.hotKey).flatMap { try? JSONDecoder().decode(KeyCombo.self, from: $0) }
+            ?? Self.defaultHotKey
         isEnabled = defaults.bool(forKey: Keys.enabled)
         monitor = ClipboardMonitor(
             pasteboard: pasteboard, history: history,
@@ -79,6 +96,35 @@ final class ClipboardController {
         setExcludedApps(ClipboardPrivacy.defaultExcludedApps.sorted())
     }
 
+    /// Changes the shortcut and registers it at once.
+    func setHotKey(_ combo: KeyCombo) {
+        hotKey = combo
+        defaults.set(try? JSONEncoder().encode(combo), forKey: Keys.hotKey)
+        update()
+    }
+
+    /// Lets go of the shortcut while a new one is being recorded, so
+    /// pressing the current one records it instead of opening the panel.
+    func suspendHotKey() {
+        globalHotKey.unregister()
+    }
+
+    func resumeHotKey() {
+        update()
+    }
+
+    /// Puts an item back on the pasteboard in every form it was copied in.
+    /// It then counts as the newest copy and moves to the top.
+    func restore(_ item: ClipboardItem) {
+        let pasteboard = monitor.pasteboard
+        pasteboard.clearContents()
+        let pasteboardItem = NSPasteboardItem()
+        for type in ClipboardItem.keptTypes {
+            if let data = item.contents[type.rawValue] { pasteboardItem.setData(data, forType: type) }
+        }
+        pasteboard.writeObjects([pasteboardItem])
+    }
+
     /// Checks the pasteboard now rather than at the next poll; for tests.
     func checkNow() {
         monitor.check()
@@ -95,6 +141,28 @@ final class ClipboardController {
             monitor.start()
         } else if !isEnabled && monitor.isRunning {
             monitor.stop()
+        }
+        registerHotKey()
+    }
+
+    private func registerHotKey() {
+        guard isEnabled else {
+            globalHotKey.unregister()
+            hotKeyProblem = nil
+            return
+        }
+        do {
+            try globalHotKey.register(hotKey)
+            hotKeyProblem = nil
+        } catch .unsupportedModifier {
+            hotKeyProblem = "fn cannot be part of this shortcut. Choose one with ⌘, ⌥, ⌃ or ⇧."
+        } catch .taken {
+            hotKeyProblem = "Another app already uses this shortcut. Choose a different one."
+        } catch {
+            hotKeyProblem = "The shortcut could not be set up. Choose a different one."
+        }
+        if let hotKeyProblem {
+            Logger.clipboard.error("Hot key not registered: \(hotKeyProblem, privacy: .public)")
         }
     }
 }

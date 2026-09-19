@@ -7,6 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
     let secureInput = SecureInputMonitor()
     lazy var clipboard = ClipboardController()
+    lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
     let frontmost = FrontmostApplication()
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
@@ -30,7 +31,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         _ = rules.effectiveRules
         permissionMonitor.start()
         secureInput.start()
-        _ = clipboard
+        clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
         engine.update()
 
         #if DEBUG

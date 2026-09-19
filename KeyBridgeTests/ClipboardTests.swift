@@ -180,3 +180,61 @@ import Testing
         #expect(loaded.last?.isPinned == true)
     }
 }
+
+@Suite struct ClipboardSearchTests {
+    func text(_ string: String, pinned: Bool = false) -> ClipboardItem {
+        ClipboardItem(date: .now, contents: [NSPasteboard.PasteboardType.string.rawValue: Data(string.utf8)], isPinned: pinned)
+    }
+
+    @Test func everyWordMustAppearInAnyOrderAndCase() {
+        let items = [text("SELECT * FROM users"), text("hello world"), text("users of the world")]
+        #expect(ClipboardSearch.filter(items, "users select").compactMap(\.text) == ["SELECT * FROM users"])
+        #expect(ClipboardSearch.filter(items, "WORLD").count == 2)
+        #expect(ClipboardSearch.filter(items, "  ").count == 3, "An empty query shows everything")
+    }
+
+    @Test func fileNamesAreSearchedToo() {
+        let file = ClipboardItem(date: .now, contents: [
+            NSPasteboard.PasteboardType.fileURL.rawValue: Data("file:///tmp/2026Q3-report.pdf".utf8),
+        ])
+        #expect(ClipboardSearch.filter([file], "report").count == 1)
+    }
+
+    @Test func pinnedComeFirst() {
+        let items = [text("new"), text("pinned", pinned: true), text("old")]
+        #expect(ClipboardSearch.ordered(items).compactMap(\.text) == ["pinned", "new", "old"])
+    }
+}
+
+@MainActor
+@Suite struct ClipboardPanelSupportTests {
+    let pasteboard = NSPasteboard(name: .init("KeyBridgeTests-\(UUID().uuidString)"))
+    let defaults = UserDefaults(suiteName: "ClipboardPanelSupportTests.\(UUID().uuidString)")!
+    let store = ClipboardStore(folder: FileManager.default.temporaryDirectory.appending(path: "KeyBridgeTests-\(UUID().uuidString)"))
+
+    @Test func theShortcutDefaultsToCommandShiftCAndIsSaved() {
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
+        #expect(clipboard.hotKey == KeyCombo([.shift, .command], .c))
+        clipboard.setHotKey(KeyCombo([.control, .option], .v))
+        #expect(ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store).hotKey
+                == KeyCombo([.control, .option], .v))
+    }
+
+    @Test func fnIsRejectedForTheShortcut() {
+        let hotKey = GlobalHotKey {}
+        #expect(throws: GlobalHotKey.Failure.unsupportedModifier) {
+            try hotKey.register(KeyCombo([.function], .v))
+        }
+    }
+
+    @Test func aChosenItemGoesBackInEveryForm() {
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
+        let item = ClipboardItem(date: .now, contents: [
+            NSPasteboard.PasteboardType.string.rawValue: Data("hi".utf8),
+            NSPasteboard.PasteboardType.rtf.rawValue: Data("{\\rtf1 hi}".utf8),
+        ])
+        clipboard.restore(item)
+        #expect(pasteboard.string(forType: .string) == "hi")
+        #expect(pasteboard.data(forType: .rtf) == Data("{\\rtf1 hi}".utf8))
+    }
+}

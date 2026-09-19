@@ -18,8 +18,11 @@
 		1B97BFB873708FD8EB3B7764 /* RulesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */; };
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
+		22EB9C0690D3F14CC2D4CA8C /* ClipboardSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115F289F5288F9D19031854 /* ClipboardSearch.swift */; };
 		22FC3D3D1E78412110C0AAB7 /* RuleEditingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84228954A785CF91645EF /* RuleEditingTests.swift */; };
 		259BA482F1587BCE0740375F /* RestoreDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */; };
+		27DA42B6B1E5F52FB4E2B744 /* ClipboardSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115F289F5288F9D19031854 /* ClipboardSearch.swift */; };
+		291351EF51FB7445541CCD13 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */; };
 		31537DF7937B96FD501355AD /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
@@ -63,6 +66,7 @@
 		A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A9099E73D29EA499A3BB1F62 /* ClipboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */; };
 		A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */; };
+		AD46A5BDFE9B583FFA43C33B /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */; };
 		B07862A01FA1AEA844D12ADA /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A725A82C03775E1984FCAD69 /* ClipboardController.swift */; };
 		B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0716DA00216F64009A16E9A /* ControlKeyTests.swift */; };
 		B49E9A452F204EAEA8BBE126 /* CustomRulesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */; };
@@ -81,6 +85,7 @@
 		D48D84229B7A4417A394335C /* ClipboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7780A268C4CFC269CC2BB6A /* ClipboardTests.swift */; };
 		D5253BB0F467B15081C32DCE /* WindowsPresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F82CCDE4B6CECB35739037 /* WindowsPresetTests.swift */; };
 		D55B116708310FAF2D7D7048 /* WheelDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE014E64C5E7702B70F7970C /* WheelDirection.swift */; };
+		D58CE66D36590C83A3B9363C /* ClipboardPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11218502FEED797A2687D64 /* ClipboardPanel.swift */; };
 		D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
 		DDD3C2C8F7D32EFB5886C3B1 /* SecureInputMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */; };
@@ -117,6 +122,7 @@
 		251FB64A66A60043BE23FE52 /* ScrollStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepper.swift; sourceTree = "<group>"; };
 		2561BA66378F4145D8A0F360 /* KeyBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardItem.swift; sourceTree = "<group>"; };
+		3115F289F5288F9D19031854 /* ClipboardSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardSearch.swift; sourceTree = "<group>"; };
 		32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
 		3342818B2B9994226304B401 /* FocusedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedElement.swift; sourceTree = "<group>"; };
 		33C045757621DA8A83B0E8BC /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 		95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPrivacy.swift; sourceTree = "<group>"; };
 		96082856ACBC42E969537459 /* OnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputMonitorTests.swift; sourceTree = "<group>"; };
+		9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKey.swift; sourceTree = "<group>"; };
 		9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerTests.swift; sourceTree = "<group>"; };
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
@@ -160,6 +167,7 @@
 		BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationStore.swift; sourceTree = "<group>"; };
 		BED7AF0AEDC194C18DD407B9 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		C0716DA00216F64009A16E9A /* ControlKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlKeyTests.swift; sourceTree = "<group>"; };
+		C11218502FEED797A2687D64 /* ClipboardPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPanel.swift; sourceTree = "<group>"; };
 		C5E81D2D3DE6A2849BB8DEFA /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabel.swift; sourceTree = "<group>"; };
 		CE014E64C5E7702B70F7970C /* WheelDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDirection.swift; sourceTree = "<group>"; };
@@ -256,7 +264,9 @@
 				30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */,
 				33C045757621DA8A83B0E8BC /* ClipboardMonitor.swift */,
 				95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */,
+				3115F289F5288F9D19031854 /* ClipboardSearch.swift */,
 				0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */,
+				9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */,
 			);
 			path = Clipboard;
 			sourceTree = "<group>";
@@ -265,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				3C2DA3B8FB2535F5B89DA3E5 /* ClipboardPage.swift */,
+				C11218502FEED797A2687D64 /* ClipboardPanel.swift */,
 				3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */,
 				0154638BD14E05405EE874B3 /* DockPresence.swift */,
 				708C0A9C5EAC893363675EAF /* Keycap.swift */,
@@ -414,6 +425,7 @@
 				E797509088BEB5921B15B9AD /* ClipboardItem.swift in Sources */,
 				7FB988A51B09E7074419FA20 /* ClipboardMonitor.swift in Sources */,
 				4C9CF0564FB65F276CD1A67A /* ClipboardPrivacy.swift in Sources */,
+				27DA42B6B1E5F52FB4E2B744 /* ClipboardSearch.swift in Sources */,
 				52434F6728447D8407EAFF9D /* ClipboardStore.swift in Sources */,
 				D48D84229B7A4417A394335C /* ClipboardTests.swift in Sources */,
 				ED941C18625ED6E5D4D246D6 /* Configuration.swift in Sources */,
@@ -427,6 +439,7 @@
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
 				D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */,
 				16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */,
+				AD46A5BDFE9B583FFA43C33B /* GlobalHotKey.swift in Sources */,
 				CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */,
 				4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */,
 				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
@@ -468,7 +481,9 @@
 				A9099E73D29EA499A3BB1F62 /* ClipboardItem.swift in Sources */,
 				1B35B38B6E69F163D8062248 /* ClipboardMonitor.swift in Sources */,
 				F035AC9B8BEA29C0C5B72C77 /* ClipboardPage.swift in Sources */,
+				D58CE66D36590C83A3B9363C /* ClipboardPanel.swift in Sources */,
 				C1C152854351274F0EE89CB8 /* ClipboardPrivacy.swift in Sources */,
+				22EB9C0690D3F14CC2D4CA8C /* ClipboardSearch.swift in Sources */,
 				639B401B4484559F8BC89001 /* ClipboardStore.swift in Sources */,
 				2027926C27C6697B960913D0 /* Configuration.swift in Sources */,
 				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
@@ -483,6 +498,7 @@
 				7FDBE38023D696D64B59955B /* EventTrigger.swift in Sources */,
 				83413F653462D858EF9D9975 /* FocusedElement.swift in Sources */,
 				F788BD5F97662264DF992188 /* FrontmostApplication.swift in Sources */,
+				291351EF51FB7445541CCD13 /* GlobalHotKey.swift in Sources */,
 				0CD38FD869C5446D957B8FB9 /* KeyBridgeApp.swift in Sources */,
 				48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */,
 				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,

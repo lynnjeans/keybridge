@@ -8,7 +8,7 @@ import OSLog
 /// the contents are only read when it has moved.
 @MainActor
 final class ClipboardMonitor {
-    private let pasteboard: NSPasteboard
+    let pasteboard: NSPasteboard
     private let history: ClipboardHistory
     var privacy: ClipboardPrivacy
     /// The app in front when the copy happened, for copies that do not say

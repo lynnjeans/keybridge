@@ -28,7 +28,7 @@ struct MainWindow: View {
                 case .scroll:
                     ScrollPage(rules: rules)
                 case .clipboard:
-                    ClipboardPage(clipboard: clipboard)
+                    ClipboardPage(clipboard: clipboard, rules: rules)
                 case .customRules:
                     CustomRulesPage(rules: rules)
                 case .about:
