@@ -6,6 +6,7 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
     let secureInput = SecureInputMonitor()
+    let otherRemappers = OtherRemapperMonitor()
     lazy var clipboard = ClipboardController()
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
     let frontmost = FrontmostApplication()
@@ -31,6 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         _ = rules.effectiveRules
         permissionMonitor.start()
         secureInput.start()
+        otherRemappers.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
         engine.update()
 

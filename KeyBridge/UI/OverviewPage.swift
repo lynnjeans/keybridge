@@ -8,6 +8,7 @@ struct OverviewPage: View {
     let onboarding: OnboardingController
     let rules: RulesController
     let secureInput: SecureInputMonitor
+    let otherRemappers: OtherRemapperMonitor
     let open: (Page) -> Void
 
     var body: some View {
@@ -15,6 +16,10 @@ struct OverviewPage: View {
 
         if engine.isActive, let holder = secureInput.holder {
             SecureInputNotice(holder: holder, isLingering: secureInput.isLingering)
+        }
+
+        if !otherRemappers.running.isEmpty {
+            OtherRemapperNotice(tools: otherRemappers.running)
         }
 
         Card {
@@ -168,6 +173,37 @@ private struct SecureInputNotice: View {
         return parts.joined(separator: " ")
     }
 
+}
+
+/// Names the other remapping tools that are running, since their rules and
+/// KeyBridge's act on the same keys, buttons and scrolling.
+private struct OtherRemapperNotice: View {
+    let tools: [String]
+
+    var body: some View {
+        Card {
+            HStack(alignment: .top, spacing: 14) {
+                IconTile(symbol: "exclamationmark.triangle.fill", tint: .orange, size: 34)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(tools.count == 1
+                         ? "\(tools[0]) is running"
+                         : "Other remapping tools are running")
+                        .font(.headline)
+                    Text(detail)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var detail: String {
+        tools.count == 1
+            ? String(localized: "It can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit it while you use KeyBridge, or turn off its settings that overlap.")
+            : String(localized: "\(tools.formatted()) can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit them while you use KeyBridge, or turn off their settings that overlap.")
+    }
 }
 
 /// Puts the preset back as it ships, after asking.

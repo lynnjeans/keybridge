@@ -20,6 +20,22 @@
         }
       }
     },
+    "%@ can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit them while you use KeyBridge, or turn off their settings that overlap." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ は KeyBridge より先にキー、マウスボタン、スクロールを変更することがあるため、一部のショートカットが効かなかったり、違う動作になったりします。KeyBridge を使う間はこれらを終了するか、重なる設定をオフにしてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 可能会在 KeyBridge 之前改掉按键、鼠标键和滚动，导致部分快捷键没有反应或结果不对。使用 KeyBridge 时请退出它们，或关闭它们与 KeyBridge 重叠的设置。"
+          }
+        }
+      }
+    },
     "%@ has turned on Secure Input, which hides key presses from apps like KeyBridge — a macOS safeguard for passwords, not a fault. Mouse buttons and scrolling still work." : {
       "localizations" : {
         "ja" : {
@@ -32,6 +48,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 开启了安全输入，系统会对 KeyBridge 这类应用隐藏按键——这是 macOS 保护密码的机制，不是故障。鼠标按键和滚动仍然正常。"
+          }
+        }
+      }
+    },
+    "%@ is running" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ が実行中です"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 正在运行"
           }
         }
       }
@@ -1737,6 +1769,22 @@
         }
       }
     },
+    "It can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit it while you use KeyBridge, or turn off its settings that overlap." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge より先にキー、マウスボタン、スクロールを変更することがあるため、一部のショートカットが効かなかったり、違う動作になったりします。KeyBridge を使う間は終了するか、重なる設定をオフにしてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它可能会在 KeyBridge 之前改掉按键、鼠标键和滚动，导致部分快捷键没有反应或结果不对。使用 KeyBridge 时请退出它，或关闭它与 KeyBridge 重叠的设置。"
+          }
+        }
+      }
+    },
     "It ends when you leave the password field." : {
       "localizations" : {
         "ja" : {
@@ -2725,6 +2773,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可选"
+          }
+        }
+      }
+    },
+    "Other remapping tools are running" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ほかのキー変更ツールが実行中です"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他改键工具正在运行"
           }
         }
       }

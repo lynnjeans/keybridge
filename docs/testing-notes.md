@@ -269,6 +269,19 @@ open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Bui
 Expected log: `own=5`, then `Event tap was disabled by the system (timeout); re-enabled,
 recovery #1`, then the later plain events still counted.
 
+KeyBridge names other remappers it finds running in a notice on the Overview (KB-043). It reads
+the user's own process list every 5 seconds — `NSWorkspace.runningApplications` does not list
+agents that launchd starts, which is where most of these tools do their work — and logs each
+change in the `permissions` category as `Other remappers running: …`. For Karabiner-Elements
+only the user-level `Karabiner-Console-User-Server` counts: its root daemons
+(`Karabiner-Core-Service`, `Karabiner-VirtualHIDDevice-Daemon`) keep running after the user quits
+it from its menu. The list of tools is `OtherRemapperMonitor.Tool.known`.
+
+To test without installing one of them, run any binary from a bundle whose `Info.plist` has a
+listed identifier (for example `com.caldis.Mos`). Build the bundle in a folder not named `.app`
+and rename it afterwards, since macOS refuses writes into an existing app bundle, and use a
+binary you compiled: a copy of a system binary such as `/bin/sleep` is killed at launch.
+
 ## Posting test events
 
 - A process can post events only if it holds the permission to. **Shells launched by AI coding

@@ -19,6 +19,7 @@ struct KeyBridgeApp: App {
                 onboarding: appDelegate.onboarding,
                 rules: appDelegate.rules,
                 secureInput: appDelegate.secureInput,
+                otherRemappers: appDelegate.otherRemappers,
                 clipboard: appDelegate.clipboard
             )
         }

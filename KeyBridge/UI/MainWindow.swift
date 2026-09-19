@@ -8,6 +8,7 @@ struct MainWindow: View {
     /// The preset and the user's changes to it, shown on the Shortcuts page.
     let rules: RulesController
     let secureInput: SecureInputMonitor
+    let otherRemappers: OtherRemapperMonitor
     let clipboard: ClipboardController
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
@@ -20,7 +21,8 @@ struct MainWindow: View {
             PageContent(page: page) {
                 switch page {
                 case .overview:
-                    OverviewPage(engine: engine, onboarding: onboarding, rules: rules, secureInput: secureInput) { page = $0 }
+                    OverviewPage(engine: engine, onboarding: onboarding, rules: rules, secureInput: secureInput,
+                                 otherRemappers: otherRemappers) { page = $0 }
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
                 case .mouse:
