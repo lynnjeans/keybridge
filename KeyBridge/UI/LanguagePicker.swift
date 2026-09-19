@@ -24,9 +24,12 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     }
 
     /// Stored as the app's own AppleLanguages, which is what macOS's
-    /// per-app language setting in System Settings writes too.
+    /// per-app language setting in System Settings writes too. A launch with
+    /// `-AppleLanguages` among the arguments shows that language instead.
     static var current: AppLanguage {
-        let languages = UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier ?? "")?["AppleLanguages"] as? [String]
+        let defaults = UserDefaults.standard
+        let languages = (defaults.volatileDomain(forName: UserDefaults.argumentDomain)["AppleLanguages"]
+            ?? defaults.persistentDomain(forName: Bundle.main.bundleIdentifier ?? "")?["AppleLanguages"]) as? [String]
         return languages?.first.flatMap(AppLanguage.init(rawValue:)) ?? .system
     }
 

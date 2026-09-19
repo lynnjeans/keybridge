@@ -13,7 +13,7 @@ struct ClipboardStore: Sendable {
     let folder: URL
 
     static var defaultFolder: URL {
-        URL.applicationSupportDirectory.appending(path: "KeyBridge/Clipboard")
+        URL.keyBridgeSupport.appending(path: "Clipboard")
     }
 
     init(folder: URL = Self.defaultFolder) {

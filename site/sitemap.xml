@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://lynnjeans.github.io/keybridge/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lynnjeans.github.io/keybridge/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://lynnjeans.github.io/keybridge/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lynnjeans.github.io/keybridge/ja/"/>
+  </url>
+  <url>
+    <loc>https://lynnjeans.github.io/keybridge/zh-hans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lynnjeans.github.io/keybridge/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://lynnjeans.github.io/keybridge/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lynnjeans.github.io/keybridge/ja/"/>
+  </url>
+  <url>
+    <loc>https://lynnjeans.github.io/keybridge/ja/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lynnjeans.github.io/keybridge/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://lynnjeans.github.io/keybridge/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lynnjeans.github.io/keybridge/ja/"/>
+  </url>
+</urlset>

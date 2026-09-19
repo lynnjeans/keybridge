@@ -4,8 +4,10 @@
 
 KeyBridge lets people who just moved from Windows to macOS keep their muscle memory:
 `Ctrl+C` still copies, `Home`/`End` still jump to line start/end, mouse side buttons still
-go back and forward, `Ctrl`/`fn` + scroll still zooms the page, and `⌘⇧V` brings up a
+go back and forward, `Ctrl`/`fn` + scroll still zooms the page, and `⌘⇧C` brings up a
 Windows-style clipboard history.
+
+Website: **[lynnjeans.github.io/keybridge](https://lynnjeans.github.io/keybridge/)** (English, 简体中文, 日本語)
 
 > Status: **pre-alpha — under active development.** Nothing is released yet.
 
@@ -115,6 +117,28 @@ scripts/sync-strings.sh
 ## Project docs
 
 Design and planning documents live in [`docs/`](docs/).
+
+## Website
+
+The product website is plain HTML in [`site/`](site/), one page per language, published to
+GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) whenever `site/`
+changes on `main`. Nothing is built. To preview it at the address it will have:
+
+```bash
+mkdir -p /tmp/pages && ln -sfn "$PWD/site" /tmp/pages/keybridge
+python3 -m http.server 8123 --directory /tmp/pages
+```
+
+and open `http://localhost:8123/keybridge/`. The three pages share one stylesheet but not their
+markup: a change to one page's structure goes into all three.
+
+The screenshots come from the Debug build, with a fresh settings folder and an example
+clipboard history, so nothing of yours shows up in them. Retake them all after the UI changes:
+
+```bash
+xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build build
+scripts/site/screenshots.sh
+```
 
 ## License
 

@@ -236,6 +236,7 @@ screenshotted in each language:
 | `KB_DEBUG_SHOW` | `main`, `onboarding` or `clipboard` (the history panel) opens a second after launch |
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
+| `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/KeyBridge`; the website's screenshots use it (`scripts/site/screenshots.sh`) |
 
 ```bash
 open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \

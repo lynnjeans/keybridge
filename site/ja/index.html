@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ja" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KeyBridge – Mac で Windows のショートカットを：Ctrl+C、Home/End、マウスのサイドボタン</title>
+  <meta name="description" content="Windows から Mac に乗り換えたばかり？KeyBridge なら Mac でも Ctrl+C でコピー、Home と End で行頭・行末へ、マウスのサイドボタンで戻る・進む、Ctrl+スクロールでズーム。無料のオープンソースです。">
+  <link rel="canonical" href="https://lynnjeans.github.io/keybridge/ja/">
+  <link rel="alternate" hreflang="en" href="https://lynnjeans.github.io/keybridge/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://lynnjeans.github.io/keybridge/zh-hans/">
+  <link rel="alternate" hreflang="ja" href="https://lynnjeans.github.io/keybridge/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://lynnjeans.github.io/keybridge/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KeyBridge – Mac で Windows のショートカットを">
+  <meta property="og:description" content="Ctrl+C でコピー、Home と End もそのまま、マウスのサイドボタンで戻る。無料のオープンソース。">
+  <meta property="og:url" content="https://lynnjeans.github.io/keybridge/ja/">
+  <meta property="og:image" content="https://lynnjeans.github.io/keybridge/screenshots/ja/shortcuts-light.png">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KeyBridge",
+    "operatingSystem": "macOS 14 以降",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Windows のショートカットとマウスの操作を Mac でもそのまま。",
+    "url": "https://lynnjeans.github.io/keybridge/ja/",
+    "inLanguage": "ja",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="./" aria-label="KeyBridge ホーム"><span class="mark" aria-hidden="true">⌘</span>KeyBridge</a>
+    <nav class="site-nav" aria-label="セクション">
+      <a href="#shortcuts">ショートカット</a>
+      <a href="#clipboard">クリップボード</a>
+      <a href="#privacy">プライバシー</a>
+      <a href="#download">ダウンロード</a>
+      <a href="https://github.com/lynnjeans/keybridge">GitHub</a>
+    </nav>
+    <nav class="languages" aria-label="言語">
+      <a href="../" hreflang="en" lang="en">EN</a>
+      <a href="../zh-hans/" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a href="./" hreflang="ja" lang="ja" aria-current="page">日本語</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="hero">
+  <div class="narrow">
+    <p class="eyebrow">Windows から Mac に乗り換えたあなたへ</p>
+    <h1>Windows のショートカットを、Mac でも。</h1>
+    <p class="lede">KeyBridge なら <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> でコピー、<kbd>Home</kbd> と <kbd>End</kbd> で行頭・行末へ、マウスのサイドボタンで戻る・進む。長年の指の記憶がそのまま使えます。</p>
+    <div class="actions">
+      <a class="button" href="#download">Mac 版をダウンロード</a>
+      <a class="link-arrow" href="https://github.com/lynnjeans/keybridge">GitHub でソースコードを見る</a>
+    </div>
+    <p class="fine">無料・オープンソース · macOS 14 以降</p>
+  </div>
+  <picture class="hero-shot">
+    <source srcset="../screenshots/ja/shortcuts-dark.png" media="(prefers-color-scheme: dark)">
+    <img src="../screenshots/ja/shortcuts-light.png" width="1760" height="1400"
+         alt="KeyBridge のショートカット画面：Windows 標準プリセット、Ctrl のショートカットに fn・Ctrl・両方のどれを使うかの選択、そして Ctrl+C を ⌘C、Ctrl+X を ⌘X、Ctrl+V を ⌘V、Ctrl+Z を ⌘Z、Ctrl+Y を ⇧⌘Z に割り当てる編集グループ。">
+  </picture>
+</div>
+
+<section id="shortcuts" aria-labelledby="shortcuts-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="shortcuts-title">指が覚えている操作を、そのまま。</h2>
+      <p>毎日の操作の多くは、Mac では別のキーだったり、そもそも無かったりします。KeyBridge は押したキーを Mac が期待するキーに置き換えます。</p>
+    </div>
+    <div class="table-card">
+      <table class="habits">
+        <caption>全部で 45 のショートカットを、グループごとにオン・オフできます。どれも変更でき、自分で追加することもできます。</caption>
+        <thead>
+          <tr><th scope="col">Windows では</th><th scope="col">Mac では</th><th scope="col">KeyBridge なら</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></span></th>
+            <td class="without" data-label="Mac では：">コピー・ペースト・取り消しは <kbd>⌘</kbd></td>
+            <td class="with">コピー、ペースト、取り消し、保存、検索…</td>
+          </tr>
+          <tr>
+            <th scope="row"><kbd>Home</kbd> <kbd>End</kbd></th>
+            <td class="without" data-label="Mac では：">ページの先頭・末尾へスクロール</td>
+            <td class="with">行頭・行末へ移動</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>←</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>→</kbd></span></th>
+            <td class="without" data-label="Mac では：">デスクトップを切り替え</td>
+            <td class="with">単語単位で移動</td>
+          </tr>
+          <tr>
+            <th scope="row">マウスのサイドボタン</th>
+            <td class="without" data-label="Mac では：">何も起きない</td>
+            <td class="with">戻る・進む</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span>スクロール</span></th>
+            <td class="without" data-label="Mac では：">画面全体を拡大、または何も起きない</td>
+            <td class="with">ページをズーム（<kbd>fn</kbd> または <kbd>Ctrl</kbd>）</td>
+          </tr>
+          <tr>
+            <th scope="row">マウスホイールの向き</th>
+            <td class="without" data-label="Mac では：">トラックパッドと一緒に逆向き</td>
+            <td class="with">Windows と同じ向き、トラックパッドはそのまま</td>
+          </tr>
+          <tr>
+            <th scope="row">Finder での <kbd>Delete</kbd> <kbd>F2</kbd> <kbd>Enter</kbd></th>
+            <td class="without" data-label="Mac では："><kbd>Enter</kbd> で名前の変更、ほかは何も起きない</td>
+            <td class="with">削除、名前の変更、開く</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></span> <span class="combo"><kbd>Alt</kbd><span class="plus">+</span><kbd>F4</kbd></span></th>
+            <td class="without" data-label="Mac では："><span class="combo"><kbd>⌘</kbd><span class="plus">+</span><kbd>Tab</kbd></span> と <span class="combo"><kbd>⌘</kbd><span class="plus">+</span><kbd>Q</kbd></span></td>
+            <td class="with">アプリの切り替え、終了</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Esc</kbd></span></th>
+            <td class="without" data-label="Mac では：">何も起きない</td>
+            <td class="with">アクティビティモニタを開く</td>
+          </tr>
+          <tr>
+            <th scope="row"><kbd>PrtScn</kbd></th>
+            <td class="without" data-label="Mac では：">何も起きない</td>
+            <td class="with">スクリーンショットをクリップボードへ</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></span> クリップボード履歴</th>
+            <td class="without" data-label="Mac では：">機能が無い</td>
+            <td class="with">内蔵、<span class="combo"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>C</kbd></span> で表示</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="details-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="details-title">乗り換えのために、細部まで。</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">⌨️</div>
+        <h3>どのキーボードでも</h3>
+        <p>PC 用キーボードでも Mac のキーボードでも使えます。Windows と同じく Ctrl を押すことも、<kbd>fn</kbd> を代わりに使って Ctrl を Mac 本来のショートカットに残すことも、両方を使うこともできます。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">💻</div>
+        <h3>ターミナルはそのまま</h3>
+        <p>ターミナルや iTerm では、<span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> は今まで通り実行中のプログラムを止めます。Ctrl が別の意味を持つ場所を KeyBridge は知っています。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🎛️</div>
+        <h3>自由に調整</h3>
+        <p>グループごとにオン・オフ、どの項目も別のショートカットを記録でき、独自のルールも作れます。すべてのアプリにも、特定のアプリだけにも。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🖱️</div>
+        <h3>マウスとトラックパッドは別々に</h3>
+        <p>ホイールの向きとズームはマウスだけに適用。トラックパッドのジェスチャは Mac のままです。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🪶</div>
+        <h3>小さく、静かに</h3>
+        <p>メニューバーに常駐し、ワンクリックで一時停止。システム機能拡張もキーボードドライバも不要です。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🌐</div>
+        <h3>あなたの言語で</h3>
+        <p>English、简体中文、日本語に対応。ほかの言語も順次追加します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clipboard" aria-labelledby="clipboard-title">
+  <div class="wrap split">
+    <div>
+      <div class="section-head">
+        <h2 id="clipboard-title">Win+V のようなクリップボード履歴。</h2>
+        <p><span class="combo"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>C</kbd></span> を押すと、最近コピーしたものがポインタのそばに表示されます。選べばそのままペースト。</p>
+      </div>
+      <ul class="points">
+        <li>テキスト・画像・ファイルを検索できる</li>
+        <li>よく使うものはピンで固定</li>
+        <li>パスワードマネージャのパスワードは記録しない</li>
+        <li>履歴はこの Mac の中だけ、アップロードはしません。オンにするまでは無効です。</li>
+      </ul>
+    </div>
+    <picture>
+      <source srcset="../screenshots/ja/clipboard-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="../screenshots/ja/clipboard-light.png" width="760" height="984" loading="lazy"
+           alt="クリップボード履歴パネル：検索欄の下に、ピンで固定したメモ、メールの一文、画像、リンク、PDF ファイル、テキストなど最近コピーした項目が、コピーした時刻とともに並んでいます。">
+    </picture>
+  </div>
+</section>
+
+<section id="privacy" class="alt" aria-labelledby="privacy-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="privacy-title">2 つのアクセス権と、その理由。</h2>
+      <p>キーの働きを変えるアプリには、macOS がこの 2 つの許可を求めます。</p>
+    </div>
+    <div class="permissions">
+      <div class="permission">
+        <h3>アクセシビリティ</h3>
+        <p>Windows のショートカットを Mac の同じ操作に置き換えるために使います。<span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> を押すと、アプリには <span class="combo"><kbd>⌘</kbd><kbd>C</kbd></span> が届きます。この許可が無いと、macOS はどのアプリにも入力の書き換えを認めません。</p>
+      </div>
+      <div class="permission">
+        <h3>入力監視</h3>
+        <p><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> の C のような普通のキーを KeyBridge が受け取るために使います。この許可が無いと、届くのは修飾キーとクリック、スクロールだけです。</p>
+      </div>
+    </div>
+    <p class="promise"><strong>KeyBridge はキー入力を記録しません。</strong>押されたキーは、置き換えるショートカットかどうかを判断するためだけに見て、そのまま通します。利用状況の収集も一切なく、コードはすべて公開されています。</p>
+  </div>
+</section>
+
+<section id="download" class="download" aria-labelledby="download-title">
+  <div class="narrow">
+    <h2 id="download-title">KeyBridge を入手。</h2>
+    <div class="actions">
+      <a class="button" data-download href="https://github.com/lynnjeans/keybridge/releases/latest">Mac 版をダウンロード</a>
+    </div>
+    <p class="status" data-release-status
+       data-none="最初のリリースを準備中です。GitHub でリポジトリをウォッチすると、公開時にお知らせが届きます。"
+       data-version="バージョン {version} · macOS 14 以降 · 無料">macOS 14 以降 · 無料</p>
+    <div class="brew">
+      <p><a href="https://brew.sh">Homebrew</a> でもインストールできます：</p>
+      <pre><code>brew install --cask lynnjeans/tap/keybridge</code></pre>
+    </div>
+    <ul class="notes">
+      <li>KeyBridge を開くと、2 つのアクセス権の設定を順に案内します。</li>
+      <li>Karabiner-Elements などを使っている場合は、KeyBridge の使用中は終了してください。同じキーを取り合わないようにするためです。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="faq-title">
+  <div class="narrow">
+    <div class="section-head">
+      <h2 id="faq-title">よくある質問</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Mac で Ctrl+C でコピーするには？</summary>
+        <p>macOS ではコピーやペースト、ほとんどのショートカットに ⌘（Command）キーを使います。KeyBridge を入れればすぐに有効になり、Ctrl+C、Ctrl+V、Ctrl+Z、Ctrl+S などが Windows と同じように働きます。ただしターミナルは例外で、Ctrl+C はプログラムを止めるために残します。</p>
+      </details>
+      <details>
+        <summary>Mac で Home と End が行頭・行末に移動しないのはなぜ？</summary>
+        <p>Mac の Home と End は書類の先頭・末尾へのスクロールで、行頭・行末は ⌘← と ⌘→ です。KeyBridge が置き換えるので、Shift+Home、Shift+End、Ctrl+Home、Ctrl+End も Windows と同じように選択・移動できます。</p>
+      </details>
+      <details>
+        <summary>Apple のキーボードでも使えますか？</summary>
+        <p>はい。Control キーは PC の Ctrl と同じ位置にあります。Ctrl を Mac のショートカット用に残したい場合は fn を選び、fn+C でコピーします。</p>
+      </details>
+      <details>
+        <summary>KeyBridge は無料ですか？</summary>
+        <p>無料です。GNU 一般公衆利用許諾書 第 3 版のオープンソースで、誰でもコードを読み、ビルドし、改良できます。</p>
+      </details>
+      <details>
+        <summary>Karabiner-Elements との違いは？</summary>
+        <p>Karabiner-Elements は単一キーの変更やレイヤー作りに強い、高機能なツールです。KeyBridge は「Mac で Windows の習慣を使う」ことだけに絞り、初回起動からすぐ使えて、マウスやホイールにも対応します。システムドライバも不要です。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="プロジェクト">
+      <a href="https://github.com/lynnjeans/keybridge">ソースコード</a>
+      <a href="https://github.com/lynnjeans/keybridge/issues">問題を報告</a>
+      <a href="https://github.com/lynnjeans/keybridge/releases">リリース一覧</a>
+      <a href="https://github.com/lynnjeans/keybridge/blob/main/LICENSE">ライセンス（GPL-3.0）</a>
+    </nav>
+    <p>© 2026 Lei Sun and KeyBridge contributors. KeyBridge は Apple および Microsoft とは関係ありません。Mac と macOS は Apple Inc. の商標、Windows は Microsoft Corporation の商標です。</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-Hans" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KeyBridge – 在 Mac 上用 Windows 快捷键：Ctrl+C 复制、Home/End、鼠标侧键</title>
+  <meta name="description" content="刚从 Windows 换到 Mac？KeyBridge 让 Mac 上的 Ctrl+C 复制、Home 和 End 跳到行首行尾、鼠标侧键后退前进、Ctrl+滚轮缩放网页。免费开源。">
+  <link rel="canonical" href="https://lynnjeans.github.io/keybridge/zh-hans/">
+  <link rel="alternate" hreflang="en" href="https://lynnjeans.github.io/keybridge/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://lynnjeans.github.io/keybridge/zh-hans/">
+  <link rel="alternate" hreflang="ja" href="https://lynnjeans.github.io/keybridge/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://lynnjeans.github.io/keybridge/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KeyBridge – 在 Mac 上用 Windows 快捷键">
+  <meta property="og:description" content="Ctrl+C 照样复制，Home 和 End 照样好用，鼠标侧键照样后退。免费开源。">
+  <meta property="og:url" content="https://lynnjeans.github.io/keybridge/zh-hans/">
+  <meta property="og:image" content="https://lynnjeans.github.io/keybridge/screenshots/zh-Hans/shortcuts-light.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KeyBridge",
+    "operatingSystem": "macOS 14 或更高版本",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "在 Mac 上沿用 Windows 的快捷键和鼠标习惯。",
+    "url": "https://lynnjeans.github.io/keybridge/zh-hans/",
+    "inLanguage": "zh-Hans",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="./" aria-label="KeyBridge 首页"><span class="mark" aria-hidden="true">⌘</span>KeyBridge</a>
+    <nav class="site-nav" aria-label="页面章节">
+      <a href="#shortcuts">快捷键</a>
+      <a href="#clipboard">剪贴板</a>
+      <a href="#privacy">隐私</a>
+      <a href="#download">下载</a>
+      <a href="https://github.com/lynnjeans/keybridge">GitHub</a>
+    </nav>
+    <nav class="languages" aria-label="语言">
+      <a href="../" hreflang="en" lang="en">EN</a>
+      <a href="./" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a>
+      <a href="../ja/" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="hero">
+  <div class="narrow">
+    <p class="eyebrow">给从 Windows 换到 Mac 的你</p>
+    <h1>Windows 的快捷键，在 Mac 上照样用。</h1>
+    <p class="lede">KeyBridge 让 <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> 照样复制，<kbd>Home</kbd> 和 <kbd>End</kbd> 照样跳到行首行尾，鼠标侧键照样后退前进。多年的肌肉记忆，不用重新练。</p>
+    <div class="actions">
+      <a class="button" href="#download">下载 Mac 版</a>
+      <a class="link-arrow" href="https://github.com/lynnjeans/keybridge">在 GitHub 上查看源代码</a>
+    </div>
+    <p class="fine">免费开源 · macOS 14 或更高版本</p>
+  </div>
+  <picture class="hero-shot">
+    <source srcset="../screenshots/zh-Hans/shortcuts-dark.png" media="(prefers-color-scheme: dark)">
+    <img src="../screenshots/zh-Hans/shortcuts-light.png" width="1760" height="1400"
+         alt="KeyBridge 的快捷键页面：Windows 标准预设，Ctrl 快捷键可选用 fn、Ctrl 或两者，编辑组把 Ctrl+C 映射为 ⌘C、Ctrl+X 为 ⌘X、Ctrl+V 为 ⌘V、Ctrl+Z 为 ⌘Z、Ctrl+Y 为 ⇧⌘Z。">
+  </picture>
+</div>
+
+<section id="shortcuts" aria-labelledby="shortcuts-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="shortcuts-title">手指记得的，都还算数。</h2>
+      <p>很多日常操作，Mac 用的是另一套按键，有的干脆没有。KeyBridge 把你按下的键，换成 Mac 认得的那一个。</p>
+    </div>
+    <div class="table-card">
+      <table class="habits">
+        <caption>共 45 个快捷键，按组整体开关。每一条都能改，也能自己添加。</caption>
+        <thead>
+          <tr><th scope="col">在 Windows 上</th><th scope="col">在 Mac 上</th><th scope="col">装了 KeyBridge</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Z</kbd></span></th>
+            <td class="without" data-label="在 Mac 上：">复制、粘贴、撤销要按 <kbd>⌘</kbd></td>
+            <td class="with">复制、粘贴、撤销、保存、查找……</td>
+          </tr>
+          <tr>
+            <th scope="row"><kbd>Home</kbd> <kbd>End</kbd></th>
+            <td class="without" data-label="在 Mac 上：">滚到页面顶部或底部</td>
+            <td class="with">跳到行首、行尾</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>←</kbd></span> <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>→</kbd></span></th>
+            <td class="without" data-label="在 Mac 上：">切换桌面</td>
+            <td class="with">按词移动</td>
+          </tr>
+          <tr>
+            <th scope="row">鼠标侧键</th>
+            <td class="without" data-label="在 Mac 上：">没有反应</td>
+            <td class="with">后退、前进</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span>滚轮</span></th>
+            <td class="without" data-label="在 Mac 上：">放大整个屏幕，或者没反应</td>
+            <td class="with">缩放网页，用 <kbd>fn</kbd> 或 <kbd>Ctrl</kbd></td>
+          </tr>
+          <tr>
+            <th scope="row">鼠标滚轮方向</th>
+            <td class="without" data-label="在 Mac 上：">和触控板一起反过来</td>
+            <td class="with">Windows 的方向，触控板不受影响</td>
+          </tr>
+          <tr>
+            <th scope="row">访达里的 <kbd>Delete</kbd> <kbd>F2</kbd> <kbd>Enter</kbd></th>
+            <td class="without" data-label="在 Mac 上："><kbd>Enter</kbd> 是重命名，另外两个没反应</td>
+            <td class="with">删除、重命名、打开</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></span> <span class="combo"><kbd>Alt</kbd><span class="plus">+</span><kbd>F4</kbd></span></th>
+            <td class="without" data-label="在 Mac 上：">要按 <span class="combo"><kbd>⌘</kbd><span class="plus">+</span><kbd>Tab</kbd></span> 和 <span class="combo"><kbd>⌘</kbd><span class="plus">+</span><kbd>Q</kbd></span></td>
+            <td class="with">切换应用、退出</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Esc</kbd></span></th>
+            <td class="without" data-label="在 Mac 上：">没有反应</td>
+            <td class="with">打开活动监视器</td>
+          </tr>
+          <tr>
+            <th scope="row"><kbd>PrtScn</kbd></th>
+            <td class="without" data-label="在 Mac 上：">没有反应</td>
+            <td class="with">截屏到剪贴板</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></span> 剪贴板历史</th>
+            <td class="without" data-label="在 Mac 上：">没有这个功能</td>
+            <td class="with">内置，按 <span class="combo"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>C</kbd></span> 打开</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="details-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="details-title">为换机的人想周全。</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">⌨️</div>
+        <h3>什么键盘都行</h3>
+        <p>PC 键盘、Mac 键盘都能用。可以像在 Windows 上一样按 Ctrl，也可以用 <kbd>fn</kbd> 代替它，把 Ctrl 留给 Mac 自己的快捷键。二选一，或者两个都要。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">💻</div>
+        <h3>不碰终端</h3>
+        <p>在“终端”和 iTerm 里，<span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> 依然用来中断正在运行的程序。KeyBridge 知道哪里的 Ctrl 另有用处。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🎛️</div>
+        <h3>随你调整</h3>
+        <p>整组开关，给任何一条录制别的快捷键，或者写自己的规则，对所有应用生效，也可以只对某一个。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🖱️</div>
+        <h3>鼠标、触控板各管各</h3>
+        <p>滚轮方向和缩放只改鼠标。触控板手势照旧按 Mac 的方式来。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🪶</div>
+        <h3>小巧安静</h3>
+        <p>待在菜单栏里，一键暂停。不用装系统扩展，也不用装键盘驱动。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🌐</div>
+        <h3>说你的语言</h3>
+        <p>支持 English、简体中文和日本語，更多语言陆续加入。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clipboard" aria-labelledby="clipboard-title">
+  <div class="wrap split">
+    <div>
+      <div class="section-head">
+        <h2 id="clipboard-title">剪贴板历史，就像 Win+V。</h2>
+        <p>按 <span class="combo"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>C</kbd></span>，最近复制过的东西就出现在鼠标旁边。选中一条，直接粘贴。</p>
+      </div>
+      <ul class="points">
+        <li>文字、图片、文件都能搜索</li>
+        <li>常用的内容可以固定</li>
+        <li>密码管理器里的密码一律不记录</li>
+        <li>只保存在你的 Mac 上，绝不上传。默认关闭，由你决定是否打开。</li>
+      </ul>
+    </div>
+    <picture>
+      <source srcset="../screenshots/zh-Hans/clipboard-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="../screenshots/zh-Hans/clipboard-light.png" width="760" height="984" loading="lazy"
+           alt="剪贴板历史面板：搜索框下面是最近复制的内容，包括一条固定的笔记、一句邮件内容、一张图片、一个链接、一个 PDF 文件和一段文字，每条都标着复制时间。">
+    </picture>
+  </div>
+</section>
+
+<section id="privacy" class="alt" aria-labelledby="privacy-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="privacy-title">两项权限，各有用处。</h2>
+      <p>任何应用想改变按键的作用，macOS 都会先请你允许这两项。</p>
+    </div>
+    <div class="permissions">
+      <div class="permission">
+        <h3>辅助功能</h3>
+        <p>让 KeyBridge 把 Windows 快捷键换成 Mac 上对应的那个：你按 <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span>，应用收到的是 <span class="combo"><kbd>⌘</kbd><kbd>C</kbd></span>。没有这项权限，macOS 不允许任何应用改写输入。</p>
+      </div>
+      <div class="permission">
+        <h3>输入监控</h3>
+        <p>让 KeyBridge 看到普通按键，比如 <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></span> 里的 C。没有这项权限，只收得到修饰键、点按和滚动。</p>
+      </div>
+    </div>
+    <p class="promise"><strong>KeyBridge 不记录任何按键。</strong>每次按键它只看一眼，判断是不是要转换的快捷键，然后就放行。没有任何数据统计，每一行代码都是公开的。</p>
+  </div>
+</section>
+
+<section id="download" class="download" aria-labelledby="download-title">
+  <div class="narrow">
+    <h2 id="download-title">下载 KeyBridge。</h2>
+    <div class="actions">
+      <a class="button" data-download href="https://github.com/lynnjeans/keybridge/releases/latest">下载 Mac 版</a>
+    </div>
+    <p class="status" data-release-status
+       data-none="第一个正式版本正在路上。在 GitHub 上关注这个仓库，发布时就会收到通知。"
+       data-version="版本 {version} · macOS 14 或更高版本 · 免费">macOS 14 或更高版本 · 免费</p>
+    <div class="brew">
+      <p>也可以用 <a href="https://brew.sh">Homebrew</a> 安装：</p>
+      <pre><code>brew install --cask lynnjeans/tap/keybridge</code></pre>
+    </div>
+    <ul class="notes">
+      <li>打开 KeyBridge，它会一步步带你开启这两项权限。</li>
+      <li>在用 Karabiner-Elements 或类似工具？使用 KeyBridge 时请先退出它们，免得两边抢同一个按键。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="faq-title">
+  <div class="narrow">
+    <div class="section-head">
+      <h2 id="faq-title">常见问题</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Mac 上怎么用 Ctrl+C 复制？</summary>
+        <p>macOS 的复制、粘贴和大多数快捷键用的是 ⌘（Command）键。装上 KeyBridge 就生效了：Ctrl+C、Ctrl+V、Ctrl+Z、Ctrl+S 等都和在 Windows 上一样。只有终端例外，那里的 Ctrl+C 要用来中断程序。</p>
+      </details>
+      <details>
+        <summary>Mac 上的 Home 和 End 为什么不能跳到行首行尾？</summary>
+        <p>在 Mac 上，Home 和 End 是滚到文档的顶部和底部，行首行尾要按 ⌘← 和 ⌘→。KeyBridge 替你转换，Shift+Home、Shift+End、Ctrl+Home 和 Ctrl+End 也都和在 Windows 上一样选中、跳转。</p>
+      </details>
+      <details>
+        <summary>用苹果键盘也可以吗？</summary>
+        <p>可以。Control 键就在 PC 键盘上 Ctrl 的位置。如果想把 Ctrl 留给 Mac 自己的快捷键，可以改用 fn，按 fn+C 复制。</p>
+      </details>
+      <details>
+        <summary>KeyBridge 免费吗？</summary>
+        <p>免费，并以 GNU 通用公共许可证第 3 版开源。任何人都可以阅读、编译和改进它的代码。</p>
+      </details>
+      <details>
+        <summary>和 Karabiner-Elements 有什么不同？</summary>
+        <p>Karabiner-Elements 擅长改单个按键、做多层键位，功能强大。KeyBridge 只做一件事：在 Mac 上沿用 Windows 的习惯，第一次打开就能用，还管鼠标和滚轮，而且不需要装系统驱动。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="项目">
+      <a href="https://github.com/lynnjeans/keybridge">源代码</a>
+      <a href="https://github.com/lynnjeans/keybridge/issues">报告问题</a>
+      <a href="https://github.com/lynnjeans/keybridge/releases">所有版本</a>
+      <a href="https://github.com/lynnjeans/keybridge/blob/main/LICENSE">许可证（GPL-3.0）</a>
+    </nav>
+    <p>© 2026 Lei Sun 与 KeyBridge 贡献者。KeyBridge 与 Apple 和 Microsoft 均无关联。Mac 和 macOS 是 Apple Inc. 的商标，Windows 是 Microsoft Corporation 的商标。</p>
+  </div>
+</footer>
+</body>
+</html>

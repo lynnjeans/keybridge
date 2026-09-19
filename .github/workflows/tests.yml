@@ -8,9 +8,9 @@ name: Tests
 on:
   push:
     branches: [main]
-    paths-ignore: ["**.md", "docs/**"]
+    paths-ignore: ["**.md", "docs/**", "site/**"]
   pull_request:
-    paths-ignore: ["**.md", "docs/**"]
+    paths-ignore: ["**.md", "docs/**", "site/**"]
   workflow_dispatch:
 
 # A newer push to the same branch makes an older run pointless; macOS
