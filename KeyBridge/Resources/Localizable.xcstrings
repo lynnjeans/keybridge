@@ -345,6 +345,22 @@
         }
       }
     },
+    "Add Button…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタンを追加…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加按钮…"
+          }
+        }
+      }
+    },
     "Address bar" : {
       "localizations" : {
         "ja" : {
@@ -761,18 +777,18 @@
         }
       }
     },
-    "Click an entry, then press the mouse button it should use; its number is shown. The left and right buttons cannot be remapped. A mouse's own software, or tools such as Karabiner-Elements, may remap buttons before KeyBridge sees them." : {
+    "Click an entry, then press the mouse button it should use; its number is shown. To use another button, choose Add Button… and press it; buttons you add are custom rules, also listed on the Custom Rules page. The left and right buttons cannot be remapped. A mouse's own software, or tools such as Karabiner-Elements, may remap buttons before KeyBridge sees them." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "項目をクリックして、使いたいマウスボタンを押すと番号が表示されます。左右のボタンは変更できません。マウス付属のソフトや Karabiner-Elements などのツールが、KeyBridge より先にボタンを変更していることがあります。"
+            "value" : "項目をクリックして、使いたいマウスボタンを押すと番号が表示されます。ほかのボタンを使うには「ボタンを追加…」を選んでそのボタンを押します。追加したボタンはカスタムルールで、「カスタムルール」ページにも表示されます。左右のボタンは変更できません。マウス付属のソフトや Karabiner-Elements などのツールが、KeyBridge より先にボタンを変更していることがあります。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击一个条目，然后按下要使用的鼠标键，会显示它的编号。左键和右键不能改。鼠标自带的软件或 Karabiner-Elements 之类的工具，可能会在 KeyBridge 之前改掉按键。"
+            "value" : "点击一个条目，然后按下要使用的鼠标键，会显示它的编号。要用其他按键，选“添加按钮…”再按一下它；添加的按钮是自定义规则，也会列在“自定义规则”页。左键和右键不能改。鼠标自带的软件或 Karabiner-Elements 之类的工具，可能会在 KeyBridge 之前改掉按键。"
           }
         }
       }
@@ -1397,6 +1413,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上级文件夹"
+          }
+        }
+      }
+    },
+    "Esc to cancel" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esc でキャンセル"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按 Esc 取消"
           }
         }
       }

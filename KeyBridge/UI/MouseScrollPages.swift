@@ -4,6 +4,15 @@ import SwiftUI
 struct MousePage: View {
     let rules: RulesController
     @State private var editing: Rule?
+    /// A button the user added, open in the custom rule editor (KB-055).
+    @State private var editingAdded: CustomRulesPage.EditedRule?
+    @State private var isAdding = false
+    @State private var recorder = KeyRecorder()
+
+    /// Buttons the user added: custom rules pressed with a mouse button.
+    private var addedButtons: [Rule] {
+        rules.customRules.filter { if case .mouseButton = $0.trigger { true } else { false } }
+    }
 
     var body: some View {
         Card {
@@ -22,14 +31,31 @@ struct MousePage: View {
                 }
                 Divider().padding(.top, 12)
                 EntryList(rules: rules, group: "mouse", edit: { editing = $0 })
+                ForEach(addedButtons, id: \.id) { rule in
+                    Divider()
+                    CustomRuleRow(rules: rules, rule: rule) { editingAdded = .init(rule: rule) }
+                }
+                Divider()
+                HStack(spacing: 10) {
+                    Button(isAdding ? "Press a mouse button…" : "Add Button…") { toggleAdding() }
+                    if isAdding {
+                        Text("Esc to cancel")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                }
+                .padding(.top, 10)
             }
         }
 
-        Text("Click an entry, then press the mouse button it should use; its number is shown. The left and right buttons cannot be remapped. A mouse's own software, or tools such as Karabiner-Elements, may remap buttons before KeyBridge sees them.")
+        Text("Click an entry, then press the mouse button it should use; its number is shown. To use another button, choose Add Button… and press it; buttons you add are custom rules, also listed on the Custom Rules page. The left and right buttons cannot be remapped. A mouse's own software, or tools such as Karabiner-Elements, may remap buttons before KeyBridge sees them.")
             .font(.callout)
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
             .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+            .sheet(item: $editingAdded) { CustomRuleEditor(rules: rules, existing: $0.rule, trigger: $0.trigger) }
+            .onDisappear { stopAdding() }
 
         Card {
             HStack(spacing: 12) {
@@ -51,6 +77,34 @@ struct MousePage: View {
                 .labelsHidden()
             }
         }
+    }
+}
+
+extension MousePage {
+    /// Waits for a mouse button, then opens what it should do: the entry
+    /// already using it, or a new custom rule pressed with it. Only buttons
+    /// 3 and up reach the recorder; the left and right buttons never do.
+    private func toggleAdding() {
+        guard !isAdding else { return stopAdding() }
+        isAdding = true
+        recorder.start(rules: rules, accepting: { trigger in
+            if case .mouseButton = trigger { true } else { false }
+        }) { trigger in
+            stopAdding()
+            guard let trigger else { return }
+            if let entry = rules.rules(inGroup: "mouse").first(where: { $0.trigger == trigger }) {
+                editing = entry
+            } else if let added = addedButtons.first(where: { $0.trigger == trigger }) {
+                editingAdded = .init(rule: added)
+            } else {
+                editingAdded = .init(rule: nil, trigger: trigger)
+            }
+        }
+    }
+
+    private func stopAdding() {
+        recorder.stop()
+        isAdding = false
     }
 }
 

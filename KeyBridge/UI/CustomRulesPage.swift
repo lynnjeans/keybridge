@@ -12,6 +12,8 @@ struct CustomRulesPage: View {
 
     struct EditedRule: Identifiable {
         let rule: Rule?
+        /// For a new rule, the trigger it starts with.
+        var trigger: Trigger?
         let id = UUID()
     }
 
@@ -51,11 +53,11 @@ struct CustomRulesPage: View {
                 }
             }
         }
-        .sheet(item: $editing) { CustomRuleEditor(rules: rules, existing: $0.rule) }
+        .sheet(item: $editing) { CustomRuleEditor(rules: rules, existing: $0.rule, trigger: $0.trigger) }
     }
 }
 
-private struct CustomRuleRow: View {
+struct CustomRuleRow: View {
     let rules: RulesController
     let rule: Rule
     let edit: () -> Void
@@ -140,11 +142,13 @@ struct CustomRuleEditor: View {
     enum Result: Hashable { case keys, app, system }
     enum Where: Hashable { case everywhere, only, except }
 
-    init(rules: RulesController, existing: Rule?) {
+    /// - Parameter trigger: for a new rule, what it is pressed with, such as
+    ///   the mouse button just added on the Mouse page.
+    init(rules: RulesController, existing: Rule?, trigger: Trigger? = nil) {
         self.rules = rules
         self.existing = existing
         _name = State(initialValue: existing?.name ?? "")
-        _trigger = State(initialValue: existing?.trigger)
+        _trigger = State(initialValue: existing?.trigger ?? trigger)
         _isEnabled = State(initialValue: existing?.isEnabled ?? true)
         switch existing?.action {
         case .openApplication(let bundleID)?:
