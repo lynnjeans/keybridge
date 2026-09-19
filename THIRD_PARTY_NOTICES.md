@@ -15,6 +15,15 @@ external project, add it here** with its license and copyright notice, and keep 
 copyright headers on any file derived from it. The next expected entry is Sparkle (MIT),
 for automatic updates (KB-101).
 
+## Artwork
+
+The word **Ctrl** on the app icon (`KeyBridge/Resources/AppIcon.icon/Assets/legends.svg`, and
+the website's `site/favicon.svg`) is the outline of the text set in
+[Inter](https://github.com/rsms/inter) Bold, converted to a vector path; no font file is
+included. Inter is Copyright © 2016 The Inter Project Authors, licensed under the
+[SIL Open Font License 1.1](https://openfontlicense.org), which places no restriction on
+artwork made with the font.
+
 ---
 
 ## Projects studied as references
