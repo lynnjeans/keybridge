@@ -55,9 +55,7 @@ struct MenuBarContent: View {
 
         Button("Open KeyBridge…") {
             openWindow(id: WindowID.main)
-            // A menu bar app is never frontmost on its own, so without this
-            // the window opens behind whatever the user was working in.
-            NSApplication.shared.activate()
+            WindowID.bringToFront(WindowID.main)
         }
         .keyboardShortcut(",")
 

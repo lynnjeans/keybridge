@@ -31,9 +31,7 @@ struct MenuBarIcon: View {
 
     private func open(_ id: String) {
         openWindow(id: id)
-        // A menu bar app is never frontmost on its own, so without this the
-        // window opens behind whatever the user was working in.
-        NSApplication.shared.activate()
+        WindowID.bringToFront(id)
     }
 
     // Menu bar icons are template images: macOS colors them to match the menu
