@@ -24,8 +24,10 @@
 		259BA482F1587BCE0740375F /* RestoreDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */; };
 		27DA42B6B1E5F52FB4E2B744 /* ClipboardSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115F289F5288F9D19031854 /* ClipboardSearch.swift */; };
 		291351EF51FB7445541CCD13 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */; };
+		309449CEB90EA200DFFE855D /* DiagnosticReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D063DAF87CDA6258065860D0 /* DiagnosticReportTests.swift */; };
 		31537DF7937B96FD501355AD /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
+		3E971AEC9CFF0B8B6A990A08 /* DiagnosticReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11600CF9269C9EF897B4579E /* DiagnosticReport.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
 		435FFFBB497EF6A209F57480 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
 		48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
@@ -42,6 +44,7 @@
 		60BB3275921A3B5C2CA30EF6 /* DockPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0154638BD14E05405EE874B3 /* DockPresence.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
 		639B401B4484559F8BC89001 /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */; };
+		65D7BA65A24A69CB16E317F5 /* DiagnosticsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D6012632391A10AB3555 /* DiagnosticsCard.swift */; };
 		66A8E97CB829BBCF2162AF63 /* ClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AD351EB464FBDBE261033 /* ClipboardHistory.swift */; };
 		67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687E05B9F8DE493CF14920E7 /* AppDelegate.swift */; };
 		685FDE358D13454414DC243A /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A137375CBE08E7894FE76 /* Sidebar.swift */; };
@@ -73,6 +76,7 @@
 		A9099E73D29EA499A3BB1F62 /* ClipboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */; };
 		A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */; };
 		AD46A5BDFE9B583FFA43C33B /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */; };
+		AE5D23E59524AC72A9688B53 /* DiagnosticReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11600CF9269C9EF897B4579E /* DiagnosticReport.swift */; };
 		B07862A01FA1AEA844D12ADA /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A725A82C03775E1984FCAD69 /* ClipboardController.swift */; };
 		B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0716DA00216F64009A16E9A /* ControlKeyTests.swift */; };
 		B49E9A452F204EAEA8BBE126 /* CustomRulesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */; };
@@ -122,6 +126,7 @@
 		0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStore.swift; sourceTree = "<group>"; };
 		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		1146BA4FC00A62E0117F773D /* OtherRemapperMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherRemapperMonitorTests.swift; sourceTree = "<group>"; };
+		11600CF9269C9EF897B4579E /* DiagnosticReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticReport.swift; sourceTree = "<group>"; };
 		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		12D84228954A785CF91645EF /* RuleEditingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditingTests.swift; sourceTree = "<group>"; };
 		15087DE16390140942799307 /* ScrollStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepperTests.swift; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 		C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabel.swift; sourceTree = "<group>"; };
 		CE014E64C5E7702B70F7970C /* WheelDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDirection.swift; sourceTree = "<group>"; };
 		CF8C22F5CFA7BBE22239F4C5 /* OtherRemapperMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherRemapperMonitor.swift; sourceTree = "<group>"; };
+		D063DAF87CDA6258065860D0 /* DiagnosticReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticReportTests.swift; sourceTree = "<group>"; };
 		D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInRules.swift; sourceTree = "<group>"; };
 		D41BF86A97C1D2936EC49111 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineControllerTests.swift; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 		E132BEBB027CC54A18CBEBCA /* LayoutCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCheck.swift; sourceTree = "<group>"; };
 		E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputMonitor.swift; sourceTree = "<group>"; };
+		EF77D6012632391A10AB3555 /* DiagnosticsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsCard.swift; sourceTree = "<group>"; };
 		FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrigger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -247,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				687E05B9F8DE493CF14920E7 /* AppDelegate.swift */,
+				11600CF9269C9EF897B4579E /* DiagnosticReport.swift */,
 				21CF5A6AADC1A2FFE5631673 /* EngineController.swift */,
 				4A48518803C5FCBBE21F3299 /* FrontmostApplication.swift */,
 				197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */,
@@ -294,6 +302,7 @@
 				3C2DA3B8FB2535F5B89DA3E5 /* ClipboardPage.swift */,
 				C11218502FEED797A2687D64 /* ClipboardPanel.swift */,
 				3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */,
+				EF77D6012632391A10AB3555 /* DiagnosticsCard.swift */,
 				0154638BD14E05405EE874B3 /* DockPresence.swift */,
 				708C0A9C5EAC893363675EAF /* Keycap.swift */,
 				8289E77DDADD9A2D9D5B6FD7 /* LanguagePicker.swift */,
@@ -317,6 +326,7 @@
 				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
 				C0716DA00216F64009A16E9A /* ControlKeyTests.swift */,
 				47B63EC2258A88FE5A42B0EB /* CustomRuleTests.swift */,
+				D063DAF87CDA6258065860D0 /* DiagnosticReportTests.swift */,
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
@@ -478,6 +488,8 @@
 				A514BBCBD41FBAFD95F8CED7 /* ControlKey.swift in Sources */,
 				B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */,
 				969CAA3E91F97E8E4BD2D1A3 /* CustomRuleTests.swift in Sources */,
+				3E971AEC9CFF0B8B6A990A08 /* DiagnosticReport.swift in Sources */,
+				309449CEB90EA200DFFE855D /* DiagnosticReportTests.swift in Sources */,
 				FE54A3657D1101357A0D2A75 /* Dispatcher.swift in Sources */,
 				9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */,
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
@@ -537,6 +549,8 @@
 				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
 				54E64666073B870126B46981 /* ControlKey.swift in Sources */,
 				B49E9A452F204EAEA8BBE126 /* CustomRulesPage.swift in Sources */,
+				AE5D23E59524AC72A9688B53 /* DiagnosticReport.swift in Sources */,
+				65D7BA65A24A69CB16E317F5 /* DiagnosticsCard.swift in Sources */,
 				10C65A2AF5B64DD68C24FC16 /* Dispatcher.swift in Sources */,
 				60BB3275921A3B5C2CA30EF6 /* DockPresence.swift in Sources */,
 				CA26343A776777E581648645 /* DownstreamProbe.swift in Sources */,

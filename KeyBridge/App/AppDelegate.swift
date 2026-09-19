@@ -27,7 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var onboarding = OnboardingController(permissions: permissionMonitor)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        logPermissionState()
+        logLaunchState()
         // Reading the configuration installs the first set of rules.
         _ = rules.effectiveRules
         permissionMonitor.start()
@@ -41,6 +41,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
         }
         LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
+        // Writes the report the About page exports, without the save panel.
+        if let path = ProcessInfo.processInfo.environment["KB_DEBUG_DIAGNOSTICS"] {
+            Task { [self] in
+                try? await Task.sleep(for: .seconds(3))
+                let report = await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
+                                                            otherRemappers: otherRemappers, clipboard: clipboard)
+                try? report.text.write(toFile: path, atomically: true, encoding: .utf8)
+            }
+        }
         #endif
     }
 
@@ -56,9 +65,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
-    /// Records permission state at launch so a user's setup can be diagnosed
-    /// from the system log.
-    private func logPermissionState() {
+    /// Records the version and permission state at launch, so a user's setup
+    /// can be diagnosed from the system log.
+    private func logLaunchState() {
+        let info = Bundle.main.infoDictionary
+        let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
+        Logger.permissions.notice(
+            "KeyBridge \(version, privacy: .public) on macOS \(DiagnosticReport.systemVersion, privacy: .public)"
+        )
         for permission in Permission.allCases {
             let status = permissionMonitor.status(of: permission)
             Logger.permissions.notice(

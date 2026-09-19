@@ -28,6 +28,7 @@ final class EngineController {
     var isEnabled: Bool {
         didSet {
             defaults.set(isEnabled, forKey: Self.enabledKey)
+            Logger.engine.notice("Windows Shortcut Mode \(self.isEnabled ? "on" : "off", privacy: .public)")
             update()
         }
     }

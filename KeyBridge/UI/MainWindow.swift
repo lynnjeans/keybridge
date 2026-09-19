@@ -35,6 +35,10 @@ struct MainWindow: View {
                     CustomRulesPage(rules: rules)
                 case .about:
                     AboutCard()
+                    DiagnosticsCard {
+                        await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
+                                                 otherRemappers: otherRemappers, clipboard: clipboard)
+                    }
                 default:
                     ComingSoon(page: page)
                 }

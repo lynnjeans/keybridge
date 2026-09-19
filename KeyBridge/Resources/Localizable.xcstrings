@@ -217,6 +217,22 @@
         }
       }
     },
+    "A text file with KeyBridge's version, permissions, settings and log since launch, to attach to a problem report. Nothing you copied is included." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge のバージョン、権限、設定、起動後のログをまとめたテキストファイルです。問題の報告に添付してください。コピーした内容は含まれません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一个文本文件，包含 KeyBridge 的版本、权限、设置和本次启动以来的日志，可附在问题反馈里。不包含你复制过的任何内容。"
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "ja" : {
@@ -1129,6 +1145,22 @@
         }
       }
     },
+    "Diagnostics" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "診断情報"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "诊断信息"
+          }
+        }
+      }
+    },
     "Document end" : {
       "localizations" : {
         "ja" : {
@@ -1381,6 +1413,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "所有应用，输入文字时除外"
+          }
+        }
+      }
+    },
+    "Export Diagnostics…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "診断情報を書き出す…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出诊断信息…"
+          }
+        }
+      }
+    },
+    "Exporting…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "書き出し中…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在导出…"
           }
         }
       }
@@ -2389,6 +2453,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "还没有复制内容。"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好"
           }
         }
       }
@@ -4075,6 +4155,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "文本导航"
+          }
+        }
+      }
+    },
+    "The diagnostics could not be saved" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "診断情報を保存できませんでした"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存诊断信息"
           }
         }
       }

@@ -194,6 +194,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_SELFTEST` | KeyBridge posts zero-delta scroll events itself: five stamped as its own, then plain ones |
 | `KB_DEBUG_STALL_ONCE` | The next event blocks the tap callback for 2 s, so macOS disables the tap and recovery can be observed |
 | `KB_DEBUG_MATCHTEST` | Installs two test rules on F19 (one everywhere, one Finder-only), brings Finder to the front and presses F19, switches back to the previous app and presses F19 again, then presses F20, which has no rule |
+| `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
 
 Expected log for `KB_DEBUG_MATCHTEST` (category `engine`): `Matched rules: selftest.finder=3`,
 then `selftest.any=3`, and no match for F20. The `eventtap` category reports per-event
@@ -253,6 +254,16 @@ open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \
   control moves under it when it cannot. Groups of buttons use `WrappingControls`. A plain `HStack`
   with a `Spacer` squeezes the text to a word per line or truncates the button instead.
 - Not reachable this way: the menu bar menu, the rule editor sheets and alerts. Check those by hand.
+
+## Diagnostic report
+
+About › Export Diagnostics… saves a text file for a user to attach to a problem report: version,
+macOS and Mac model, permissions, whether the engine runs, Secure Input, other remappers, a summary
+of the settings, the configuration file in full, and KeyBridge's log since launch. The clipboard
+history appears only as a count, and the home folder is written as `~`. The log comes from
+`OSLogStore(scope: .currentProcessIdentifier)`, so only the current launch is in it; reading it
+takes a second or more, which is why it runs off the main thread. For earlier launches, ask the user
+for `/usr/bin/log show --last 1h --predicate 'subsystem == "io.github.lynnjeans.KeyBridge"'`.
 
 ## Karabiner-Elements and other HID-level remappers
 

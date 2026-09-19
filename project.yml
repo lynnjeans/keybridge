@@ -89,6 +89,7 @@ targets:
       - path: KeyBridge/Permissions
       - path: KeyBridge/Clipboard
       - path: KeyBridge/App/EngineController.swift
+      - path: KeyBridge/App/DiagnosticReport.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests
