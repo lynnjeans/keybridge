@@ -475,16 +475,16 @@
     },
     "Application windows" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "应用程序窗口"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "アプリケーションウインドウ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用程序窗口"
           }
         }
       }
@@ -507,16 +507,16 @@
     },
     "Apps" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "应用程序"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "アプリ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用程序"
           }
         }
       }
@@ -1963,64 +1963,64 @@
     },
     "It has no shortcut in System Settings, so KeyBridge opens it directly." : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "它在系统设置中没有快捷键，KeyBridge 会直接打开它。"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定にショートカットがないため、KeyBridge が直接開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它在系统设置中没有快捷键，KeyBridge 会直接打开它。"
           }
         }
       }
     },
     "It has no shortcut in System Settings, so this does nothing until you give it one." : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "它在系统设置中没有快捷键，设置一个之前这里不会起作用。"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定にショートカットがないため、設定するまで何も起きません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它在系统设置中没有快捷键，设置一个之前这里不会起作用。"
           }
         }
       }
     },
     "Its shortcut is switched off in System Settings, so KeyBridge opens it directly." : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "它的快捷键已在系统设置中关闭，KeyBridge 会直接打开它。"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定でショートカットがオフになっているため、KeyBridge が直接開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它的快捷键已在系统设置中关闭，KeyBridge 会直接打开它。"
           }
         }
       }
     },
     "Its shortcut is switched off in System Settings, so this does nothing until you switch it on." : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "它的快捷键已在系统设置中关闭，打开之前这里不会起作用。"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定でショートカットがオフになっているため、オンにするまで何も起きません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它的快捷键已在系统设置中关闭，打开之前这里不会起作用。"
           }
         }
       }
@@ -2235,16 +2235,16 @@
     },
     "Launchpad" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启动台"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Launchpad"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动台"
           }
         }
       }
@@ -2395,16 +2395,16 @@
     },
     "Mission Control" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调度中心"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mission Control"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调度中心"
           }
         }
       }
@@ -2443,32 +2443,32 @@
     },
     "Move left a space" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "向左移动一个空间"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "操作スペースを左に移動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向左移动一个空间"
           }
         }
       }
     },
     "Move right a space" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "向右移动一个空间"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "操作スペースを右に移動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向右移动一个空间"
           }
         }
       }
@@ -2645,22 +2645,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有匹配项"
-          }
-        }
-      }
-    },
-    "Not editable here" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ここでは編集できません"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此处不可编辑"
           }
         }
       }
@@ -2987,16 +2971,16 @@
     },
     "Open Keyboard Shortcuts…" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开键盘快捷键设置…"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "キーボードショートカットを開く…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开键盘快捷键设置…"
           }
         }
       }
@@ -3419,16 +3403,16 @@
     },
     "Presses your shortcut for it:" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "会按下你为它设置的快捷键："
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定されているショートカットを送ります："
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会按下你为它设置的快捷键："
           }
         }
       }
@@ -4219,16 +4203,16 @@
     },
     "Show Desktop" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示桌面"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "デスクトップを表示"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示桌面"
           }
         }
       }
@@ -4299,16 +4283,16 @@
     },
     "Spotlight" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "聚焦"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Spotlight"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聚焦"
           }
         }
       }
@@ -4433,16 +4417,16 @@
     },
     "System function" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统功能"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム機能"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统功能"
           }
         }
       }

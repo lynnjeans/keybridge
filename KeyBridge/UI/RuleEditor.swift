@@ -14,8 +14,8 @@ struct RuleEditor: View {
 
     enum Side { case trigger, action }
 
-    /// A mouse button's result: keys, or a system function (KB-051).
-    enum ResultKind: Hashable { case keys, system }
+    /// A mouse button's result: keys, an app, or a system function (KB-051).
+    enum ResultKind: Hashable { case keys, app, system }
 
     /// The keys to go back to when the result is switched from a system
     /// function to a shortcut.
@@ -161,6 +161,7 @@ struct RuleEditor: View {
             VStack(alignment: .leading, spacing: 8) {
                 Picker("Does", selection: resultKind) {
                     Text("A shortcut").tag(ResultKind.keys)
+                    Text("Open an app").tag(ResultKind.app)
                     Text("System function").tag(ResultKind.system)
                 }
                 .pickerStyle(.segmented)
@@ -179,8 +180,13 @@ struct RuleEditor: View {
                         get: { function },
                         set: { draft.action = .systemAction($0) }
                     ))
-                case .openApplication:
-                    Text("Not editable here").foregroundStyle(.secondary)
+                case .openApplication(let bundleID):
+                    HStack {
+                        AppLabel(bundleID: bundleID)
+                        Button("Change…") {
+                            if let chosen = AppChooser.choose() { draft.action = .openApplication(bundleID: chosen) }
+                        }
+                    }
                 }
             }
         }
@@ -188,16 +194,25 @@ struct RuleEditor: View {
 
     private var resultKind: Binding<ResultKind> {
         Binding(
-            get: { if case .systemAction = draft.action { .system } else { .keys } },
+            get: {
+                switch draft.action {
+                case .key: .keys
+                case .openApplication: .app
+                case .systemAction: .system
+                }
+            },
             set: { kind in
-                switch (kind, draft.action) {
-                case (.system, .key(let combo)):
-                    lastCombo = combo
-                    draft.action = .systemAction(.missionControl)
-                case (.keys, .systemAction):
+                guard kind != resultKind.wrappedValue else { return }
+                if case .key(let combo) = draft.action { lastCombo = combo }
+                switch kind {
+                case .keys:
                     draft.action = .key(combo: lastCombo)
-                default:
-                    break
+                case .app:
+                    // An app has to be chosen for the result to be one;
+                    // cancelling keeps the result as it was.
+                    if let chosen = AppChooser.choose() { draft.action = .openApplication(bundleID: chosen) }
+                case .system:
+                    draft.action = .systemAction(.missionControl)
                 }
             }
         )
