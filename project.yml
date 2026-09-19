@@ -30,6 +30,12 @@ targets:
       - path: KeyBridge
         excludes:
           - Resources/Info.plist
+      # Shipped inside the app, as GPL-3.0 asks of every copy handed on, and
+      # shown from the About page.
+      - path: LICENSE
+        buildPhase: resources
+      - path: THIRD_PARTY_NOTICES.md
+        buildPhase: resources
     info:
       path: KeyBridge/Resources/Info.plist
       properties:
@@ -46,7 +52,7 @@ targets:
         # The languages KeyBridge ships in (M9). Listing them lets macOS pick
         # one per app in System Settings › General › Language & Region.
         CFBundleLocalizations: [en, zh-Hans, ja]
-        NSHumanReadableCopyright: "Copyright © 2026 KeyBridge contributors. Licensed under GPL-3.0."
+        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge

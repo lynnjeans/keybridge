@@ -35,6 +35,7 @@ struct MainWindow: View {
                     CustomRulesPage(rules: rules)
                 case .about:
                     AboutCard()
+                    LegalCard()
                     DiagnosticsCard {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard)

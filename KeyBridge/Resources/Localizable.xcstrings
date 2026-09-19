@@ -1209,6 +1209,22 @@
         }
       }
     },
+    "Done" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
     "Each keyboard and mouse can be set up on its own." : {
       "localizations" : {
         "ja" : {
@@ -1945,6 +1961,22 @@
         }
       }
     },
+    "KeyBridge is free software: you can redistribute it and change it under the terms of the GNU General Public License, version 3. It comes with ABSOLUTELY NO WARRANTY." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge はフリーソフトウェアです。GNU 一般公衆利用許諾書 第 3 版の条件のもとで、再配布や改変ができます。本ソフトウェアには一切の保証がありません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge 是自由软件：你可以按照 GNU 通用公共许可证第 3 版的条款再发布和修改它。本软件不提供任何担保。"
+          }
+        }
+      }
+    },
     "KeyBridge is off" : {
       "localizations" : {
         "ja" : {
@@ -2133,6 +2165,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "让 KeyBridge 看到普通按键，比如 Ctrl+C 里的 C。"
+          }
+        }
+      }
+    },
+    "License" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンス"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "许可证"
           }
         }
       }
@@ -3993,6 +4041,22 @@
         }
       }
     },
+    "Source Code" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソースコード"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "源代码"
+          }
+        }
+      }
+    },
     "Start Using KeyBridge" : {
       "localizations" : {
         "ja" : {
@@ -4219,6 +4283,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法设置这个快捷键，请换一个。"
+          }
+        }
+      }
+    },
+    "Third-Party Notices" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サードパーティの表記"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第三方声明"
+          }
+        }
+      }
+    },
+    "This file is missing from the app. The license and notices are also at %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイルがアプリに含まれていません。ライセンスと表記は %@ でも確認できます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App 中缺少这个文件。许可证和声明也可以在 %@ 查看。"
           }
         }
       }

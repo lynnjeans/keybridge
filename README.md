@@ -118,10 +118,16 @@ Design and planning documents live in [`docs/`](docs/).
 
 ## License
 
-**GPL-3.0** — see [LICENSE](LICENSE).
+Copyright © 2026 Lei Sun and KeyBridge contributors.
+
+KeyBridge is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, version 3. It is
+distributed in the hope that it will be useful, but **without any warranty**; without even
+the implied warranty of merchantability or fitness for a particular purpose. See
+[LICENSE](LICENSE) for the full terms.
 
 KeyBridge is free software and always will be. If it saves you some frustration,
 donations are welcome, but never required.
 
-Third-party components and their licenses are listed in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+KeyBridge includes no third-party code. The projects it was designed after, and the ones
+whose licenses rule out reuse, are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
