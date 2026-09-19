@@ -75,6 +75,8 @@ modifier+scroll zooms the page.**
 |---|---|
 | `scripts/bootstrap-github.sh` | Creates the repository, labels, 14 milestones and the full 62-issue backlog |
 | `scripts/reset-github.sh` | Deletes every issue and milestone so the backlog can be rebuilt. **Permanent — no undo.** |
+| `scripts/sync-strings.sh` | Writes the strings found by the last command-line build into the String Catalog |
+| `scripts/release.sh` | Builds a release DMG into `dist/`: Release build, Developer ID signature, notarization and stapling when the credentials are there, and the SHA-256 for Homebrew. Falls back to an ad-hoc build that only runs on this Mac |
 
 ## Progress
 
