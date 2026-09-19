@@ -30,6 +30,7 @@ struct OverviewPage: View {
                 }
                 Spacer(minLength: 8)
                 Button("Customize…") { open(.shortcuts) }
+                RestoreDefaultsButton(rules: rules)
             }
         }
 
@@ -59,7 +60,10 @@ struct OverviewPage: View {
 
     private var presetDetail: LocalizedStringKey {
         let groupsOn = rules.preset.groups.filter { rules.isEnabled(group: $0.id) }.count
-        return "\(groupsOn) of \(rules.preset.groups.count) groups on. Every entry can be changed on the Shortcuts, Mouse and Scroll pages."
+        let changed = rules.customizedCount
+        return changed == 0
+            ? "\(groupsOn) of \(rules.preset.groups.count) groups on."
+            : "\(groupsOn) of \(rules.preset.groups.count) groups on, \(changed) entries customized."
     }
 
     /// Things worth knowing about the current setup, each only while it
@@ -160,5 +164,23 @@ private struct SecureInputNotice: View {
             text += " It ends when you leave the password field."
         }
         return text
+    }
+}
+
+/// Puts the preset back as it ships, after asking.
+struct RestoreDefaultsButton: View {
+    let rules: RulesController
+    @State private var confirming = false
+
+    var body: some View {
+        Button("Restore Defaults…") { confirming = true }
+            .disabled(rules.isDefault)
+            .help(rules.isDefault ? "The preset is as it ships" : "Undo every change to the preset")
+            .alert("Restore the preset's defaults?", isPresented: $confirming) {
+                Button("Restore Defaults", role: .destructive) { rules.restoreDefaults() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("All groups and entries go back to the preset. Your custom rules are kept.")
+            }
     }
 }

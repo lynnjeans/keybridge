@@ -61,6 +61,23 @@ struct Configuration: Hashable, Sendable {
         }
     }
 
+    /// Puts the preset back as it ships: every group at its default — the
+    /// Windows key group off, the rest on — and every changed entry back to
+    /// the preset's version. The user's own rules stay, and so do the
+    /// settings that are not part of the preset: the control key and the
+    /// wheel direction.
+    mutating func restoreDefaults() {
+        disabledGroups = []
+        enabledGroups = []
+        overrides.removeAll { if case .modified = $0 { true } else { false } }
+    }
+
+    /// Whether `restoreDefaults()` would change nothing.
+    var isDefault: Bool {
+        disabledGroups.isEmpty && enabledGroups.isEmpty
+            && !overrides.contains { if case .modified = $0 { true } else { false } }
+    }
+
     /// Whether the user has changed the preset rule with this ID.
     func isCustomized(_ id: String) -> Bool {
         overrides.contains { if case .modified(let rule) = $0 { rule.id == id } else { false } }

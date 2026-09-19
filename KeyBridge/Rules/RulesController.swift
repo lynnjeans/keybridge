@@ -50,6 +50,21 @@ final class RulesController {
         applyWheelDirection(loaded.wheelDirection)
     }
 
+    /// Whether the preset is as it ships, with no group switched and no
+    /// entry changed.
+    var isDefault: Bool {
+        configuration.isDefault
+    }
+
+    /// Puts the preset back as it ships, keeping custom rules. See
+    /// `Configuration.restoreDefaults()`.
+    func restoreDefaults() {
+        guard !configuration.isDefault else { return }
+        configuration.restoreDefaults()
+        Logger.configuration.notice("Defaults restored")
+        commit()
+    }
+
     func isEnabled(group: String) -> Bool {
         guard let group = preset.groups.first(where: { $0.id == group }) else { return false }
         return configuration.isEnabled(group: group)

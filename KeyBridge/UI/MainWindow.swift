@@ -77,7 +77,7 @@ private struct ShortcutsPage: View {
     @State private var confirmingWinKey = false
 
     var body: some View {
-        PresetBar(preset: rules.preset, groups: Self.groups(of: rules.preset))
+        PresetBar(rules: rules, groups: Self.groups(of: rules.preset))
         ControlKeyCard(choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }))
 
         HStack(spacing: 10) {
@@ -169,8 +169,9 @@ private struct ShortcutsPage: View {
 /// Which preset is in use. Switching between presets and re-applying one
 /// arrive with the preset packs (KB-060) and the apply action (KB-061).
 private struct PresetBar: View {
-    let preset: Preset
+    let rules: RulesController
     let groups: [Preset.Group]
+    private var preset: Preset { rules.preset }
 
     var body: some View {
         Card {
@@ -179,12 +180,13 @@ private struct PresetBar: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Preset: \(RuleNames.presetName(preset.id))")
                         .font(.headline)
-                    Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages. More presets, and re-applying one, are still to come.")
+                    Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 8)
+                RestoreDefaultsButton(rules: rules)
             }
         }
     }

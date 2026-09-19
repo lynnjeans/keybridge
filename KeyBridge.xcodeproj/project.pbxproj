@@ -18,6 +18,7 @@
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		22FC3D3D1E78412110C0AAB7 /* RuleEditingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84228954A785CF91645EF /* RuleEditingTests.swift */; };
+		259BA482F1587BCE0740375F /* RestoreDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */; };
 		31537DF7937B96FD501355AD /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
@@ -107,6 +108,7 @@
 		3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRulesPage.swift; sourceTree = "<group>"; };
 		4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		47B63EC2258A88FE5A42B0EB /* CustomRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRuleTests.swift; sourceTree = "<group>"; };
+		499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreDefaultsTests.swift; sourceTree = "<group>"; };
 		4A48518803C5FCBBE21F3299 /* FrontmostApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontmostApplication.swift; sourceTree = "<group>"; };
 		542F7297D61F8E6943745351 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
 		5B24DCD833DE67E0939EA386 /* OverviewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewPage.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
 				9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */,
 				787259A999A89270DA15D66F /* PermissionMonitorTests.swift */,
+				499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */,
 				12D84228954A785CF91645EF /* RuleEditingTests.swift */,
 				A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */,
 				ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */,
@@ -389,6 +392,7 @@
 				C97335D5A5A889D06E7AE791 /* PermissionMonitorTests.swift in Sources */,
 				6C9B7992187775D00EBE88CD /* PermissionService.swift in Sources */,
 				02D4C4ADD903A8EBD9249CC9 /* Preset.swift in Sources */,
+				259BA482F1587BCE0740375F /* RestoreDefaultsTests.swift in Sources */,
 				435FFFBB497EF6A209F57480 /* Rule.swift in Sources */,
 				22FC3D3D1E78412110C0AAB7 /* RuleEditingTests.swift in Sources */,
 				E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */,
