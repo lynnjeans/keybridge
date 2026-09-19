@@ -195,6 +195,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_STALL_ONCE` | The next event blocks the tap callback for 2 s, so macOS disables the tap and recovery can be observed |
 | `KB_DEBUG_MATCHTEST` | Installs two test rules on F19 (one everywhere, one Finder-only), brings Finder to the front and presses F19, switches back to the previous app and presses F19 again, then presses F20, which has no rule |
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
+| `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
 
 Expected log for `KB_DEBUG_MATCHTEST` (category `engine`): `Matched rules: selftest.finder=3`,
 then `selftest.any=3`, and no match for F20. The `eventtap` category reports per-event
