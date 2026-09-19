@@ -8,16 +8,17 @@ struct KeyBridgeApp: App {
         // With LSUIElement set there is no Dock icon, so the menu bar item is
         // the app's only permanent presence and the way into everything else.
         MenuBarExtra {
-            MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding)
+            MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding, secureInput: appDelegate.secureInput)
         } label: {
-            MenuBarIcon(isActive: appDelegate.engine.isActive, onboarding: appDelegate.onboarding)
+            MenuBarIcon(isActive: appDelegate.engine.isActive && appDelegate.secureInput.holder == nil, onboarding: appDelegate.onboarding)
         }
 
         Window("KeyBridge", id: WindowID.main) {
             MainWindow(
                 engine: appDelegate.engine,
                 onboarding: appDelegate.onboarding,
-                rules: appDelegate.rules
+                rules: appDelegate.rules,
+                secureInput: appDelegate.secureInput
             )
         }
         .defaultSize(width: 880, height: 600)

@@ -6,6 +6,7 @@ import SwiftUI
 struct MenuBarContent: View {
     let engine: EngineController
     let onboarding: OnboardingController
+    let secureInput: SecureInputMonitor
     @Environment(\.openWindow) private var openWindow
 
     private var permissions: PermissionMonitor { engine.permissions }
@@ -76,6 +77,9 @@ struct MenuBarContent: View {
             return until == .distantFuture
                 ? "Paused"
                 : "Paused until \(until.formatted(date: .omitted, time: .shortened))"
+        }
+        if engine.isActive, let holder = secureInput.holder {
+            return "Keyboard paused by Secure Input" + (holder.appName.map { " (\($0))" } ?? "")
         }
         return engine.isActive ? "KeyBridge is on" : "KeyBridge could not start"
     }

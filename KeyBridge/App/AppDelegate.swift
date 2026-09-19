@@ -5,6 +5,7 @@ import OSLog
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let permissionMonitor = PermissionMonitor()
+    let secureInput = SecureInputMonitor()
     let frontmost = FrontmostApplication()
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
@@ -27,6 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Reading the configuration installs the first set of rules.
         _ = rules.effectiveRules
         permissionMonitor.start()
+        secureInput.start()
         engine.update()
 
         #if DEBUG

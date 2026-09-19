@@ -7,10 +7,15 @@ struct OverviewPage: View {
     let engine: EngineController
     let onboarding: OnboardingController
     let rules: RulesController
+    let secureInput: SecureInputMonitor
     let open: (Page) -> Void
 
     var body: some View {
         ModeCard(engine: engine, controlKey: rules.controlKey)
+
+        if engine.isActive, let holder = secureInput.holder {
+            SecureInputNotice(holder: holder, isLingering: secureInput.isLingering)
+        }
 
         Card {
             HStack(spacing: 14) {
@@ -116,5 +121,44 @@ private struct PermissionsSummary: View {
                     .background(.green.opacity(0.14), in: Capsule())
             }
         }
+    }
+}
+
+/// Says why keyboard rules are doing nothing while Secure Input is on.
+private struct SecureInputNotice: View {
+    let holder: SecureInputMonitor.Holder
+    let isLingering: Bool
+
+    var body: some View {
+        Card {
+            HStack(alignment: .top, spacing: 14) {
+                IconTile(symbol: "lock.fill", tint: .orange, size: 34)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Keyboard shortcuts paused by macOS")
+                        .font(.headline)
+                    Text(detail)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var detail: String {
+        let who = holder.appName.map { "\($0) has" } ?? "An app has"
+        var text = "\(who) turned on Secure Input, which hides key presses from every app like KeyBridge — a macOS safeguard for passwords, not a fault. Mouse buttons and scrolling still work."
+        if isLingering {
+            text += " It has been on for a while, so it is probably not a password field."
+            if let hint = holder.switchOffHint {
+                text += " " + hint
+            } else {
+                text += " Quitting \(holder.appName ?? "that app") ends it."
+            }
+        } else {
+            text += " It ends when you leave the password field."
+        }
+        return text
     }
 }

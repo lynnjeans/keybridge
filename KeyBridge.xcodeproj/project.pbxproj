@@ -18,6 +18,7 @@
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		22FC3D3D1E78412110C0AAB7 /* RuleEditingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84228954A785CF91645EF /* RuleEditingTests.swift */; };
+		31537DF7937B96FD501355AD /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */; };
 		435FFFBB497EF6A209F57480 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BF86A97C1D2936EC49111 /* Rule.swift */; };
@@ -69,8 +70,10 @@
 		D55B116708310FAF2D7D7048 /* WheelDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE014E64C5E7702B70F7970C /* WheelDirection.swift */; };
 		D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
+		DDD3C2C8F7D32EFB5886C3B1 /* SecureInputMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */; };
 		DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */; };
 		E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
+		E3DD25711FA686863B870E13 /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		E421522BA3A931884F0AB510 /* WheelDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE014E64C5E7702B70F7970C /* WheelDirection.swift */; };
 		E6085F0D9E8793B81AACAE80 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
 		EC3B2B052803EF4829977E79 /* EventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */; };
@@ -117,6 +120,7 @@
 		848719F069115F286CC12A7B /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
 		8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitor.swift; sourceTree = "<group>"; };
 		96082856ACBC42E969537459 /* OnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
+		97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputMonitorTests.swift; sourceTree = "<group>"; };
 		9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerTests.swift; sourceTree = "<group>"; };
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 		DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabelTests.swift; sourceTree = "<group>"; };
 		DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatcherTests.swift; sourceTree = "<group>"; };
 		E2B1C6410B112C98C119F415 /* KeyBridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputMonitor.swift; sourceTree = "<group>"; };
 		FDF7168F56E0D73BA47F20D3 /* EventTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrigger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,6 +190,7 @@
 				96082856ACBC42E969537459 /* OnboardingController.swift */,
 				8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */,
 				B595E1D78A10E425D9D48C34 /* PermissionService.swift */,
+				E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */,
 			);
 			path = Permissions;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 				ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */,
 				0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */,
 				15087DE16390140942799307 /* ScrollStepperTests.swift */,
+				97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */,
 				B2282E9DB43AE3B51A2DBF60 /* WheelDirectionTests.swift */,
 				39F82CCDE4B6CECB35739037 /* WindowsPresetTests.swift */,
 			);
@@ -392,6 +399,8 @@
 				F3FAD7FF929CF2E00E863237 /* Scope.swift in Sources */,
 				D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */,
 				8858D898B53F84D42CBFB269 /* ScrollStepperTests.swift in Sources */,
+				E3DD25711FA686863B870E13 /* SecureInputMonitor.swift in Sources */,
+				DDD3C2C8F7D32EFB5886C3B1 /* SecureInputMonitorTests.swift in Sources */,
 				1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */,
 				E421522BA3A931884F0AB510 /* WheelDirection.swift in Sources */,
 				BD129928F49ACA10EE961887 /* WheelDirectionTests.swift in Sources */,
@@ -439,6 +448,7 @@
 				D3B7AEE697CDBDCF64EF7DED /* RulesController.swift in Sources */,
 				19E2BC68837D322095AC2C1F /* Scope.swift in Sources */,
 				CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */,
+				31537DF7937B96FD501355AD /* SecureInputMonitor.swift in Sources */,
 				685FDE358D13454414DC243A /* Sidebar.swift in Sources */,
 				83B098FBCF43B11D0B662B0C /* SyntheticEvent.swift in Sources */,
 				D55B116708310FAF2D7D7048 /* WheelDirection.swift in Sources */,

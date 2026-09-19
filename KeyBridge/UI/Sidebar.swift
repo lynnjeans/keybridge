@@ -8,7 +8,8 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
     var id: Self { self }
 
     /// The pages listed above the Advanced heading.
-    static let primary: [Page] = [.overview, .shortcuts, .mouse, .scroll, .clipboard, .devices]
+    // Devices waits for per-device rules in v1.1 (#98).
+    static let primary: [Page] = [.overview, .shortcuts, .mouse, .scroll, .clipboard]
     static let advanced: [Page] = [.customRules, .about]
 
     var title: String {
