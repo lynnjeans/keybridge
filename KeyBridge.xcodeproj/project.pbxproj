@@ -56,6 +56,7 @@
 		8B714E010EF7A46A93F57F15 /* KeyRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = B468133EB5D247B76FBE8965 /* KeyRecording.swift */; };
 		912C020783005C132B70314C /* RuleMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */; };
 		92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
+		957257EB2F7C2C6786D1F40F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 91054FB5487B42E3BA2DCD97 /* Localizable.xcstrings */; };
 		969CAA3E91F97E8E4BD2D1A3 /* CustomRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B63EC2258A88FE5A42B0EB /* CustomRuleTests.swift */; };
 		96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		9AAF6A512F6B2B7D2E4DAE45 /* OverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B24DCD833DE67E0939EA386 /* OverviewPage.swift */; };
@@ -145,6 +146,7 @@
 		82D8E64863C57D05FECB554B /* RuleMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcher.swift; sourceTree = "<group>"; };
 		848719F069115F286CC12A7B /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
 		8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitor.swift; sourceTree = "<group>"; };
+		91054FB5487B42E3BA2DCD97 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPrivacy.swift; sourceTree = "<group>"; };
 		96082856ACBC42E969537459 /* OnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputMonitorTests.swift; sourceTree = "<group>"; };
@@ -326,6 +328,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		C375BDED3BAE1C256647FE2D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				91054FB5487B42E3BA2DCD97 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CA7535D48B037F462485F5C2 /* KeyBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +343,7 @@
 				4CE18D754C3D4B2DE276DF47 /* Clipboard */,
 				0C459A1A8C76E5F1DC9F098C /* Engine */,
 				37D4A23CC47E5FB690CCE8E9 /* Permissions */,
+				C375BDED3BAE1C256647FE2D /* Resources */,
 				40C3A24990956D206AEE8E1D /* Rules */,
 				4F1BE0D5D81EAAB04295FC03 /* UI */,
 			);
@@ -364,6 +375,7 @@
 			buildConfigurationList = D9B8137C9D61824FA7DBBDCF /* Build configuration list for PBXNativeTarget "KeyBridge" */;
 			buildPhases = (
 				F7E39108CDE33012D59CEBE9 /* Sources */,
+				F7F1A11226F89D06CECC0967 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -413,6 +425,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F7F1A11226F89D06CECC0967 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				957257EB2F7C2C6786D1F40F /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		14EF8F7A318CA591E01603FE /* Sources */ = {
@@ -543,9 +566,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.lynnjeans.KeyBridge;
 				PRODUCT_NAME = KeyBridge;
 				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -580,9 +605,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.lynnjeans.KeyBridge;
 				PRODUCT_NAME = KeyBridge;
 				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
 		};

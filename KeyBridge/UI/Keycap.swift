@@ -124,10 +124,10 @@ struct MappingView: View {
 private extension ScrollDirection {
     var scrollLabel: String {
         switch self {
-        case .up: "Scroll up"
-        case .down: "Scroll down"
-        case .left: "Scroll left"
-        case .right: "Scroll right"
+        case .up: String(localized: "Scroll up")
+        case .down: String(localized: "Scroll down")
+        case .left: String(localized: "Scroll left")
+        case .right: String(localized: "Scroll right")
         }
     }
 }

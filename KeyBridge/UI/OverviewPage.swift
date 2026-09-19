@@ -151,20 +151,20 @@ private struct SecureInputNotice: View {
     }
 
     private var detail: String {
-        let who = holder.appName.map { "\($0) has" } ?? "An app has"
-        var text = "\(who) turned on Secure Input, which hides key presses from every app like KeyBridge — a macOS safeguard for passwords, not a fault. Mouse buttons and scrolling still work."
+        // Whole sentences, so each language can order them its own way.
+        var parts = [holder.appName.map {
+            String(localized: "\($0) has turned on Secure Input, which hides key presses from apps like KeyBridge — a macOS safeguard for passwords, not a fault. Mouse buttons and scrolling still work.")
+        } ?? String(localized: "An app has turned on Secure Input, which hides key presses from apps like KeyBridge — a macOS safeguard for passwords, not a fault. Mouse buttons and scrolling still work.")]
         if isLingering {
-            text += " It has been on for a while, so it is probably not a password field."
-            if let hint = holder.switchOffHint {
-                text += " " + hint
-            } else {
-                text += " Quitting \(holder.appName ?? "that app") ends it."
-            }
+            parts.append(String(localized: "It has been on for a while, so it is probably not a password field."))
+            parts.append(holder.switchOffHint ?? holder.appName.map { String(localized: "Quitting \($0) ends it.") }
+                ?? String(localized: "Quitting that app ends it."))
         } else {
-            text += " It ends when you leave the password field."
+            parts.append(String(localized: "It ends when you leave the password field."))
         }
-        return text
+        return parts.joined(separator: " ")
     }
+
 }
 
 /// Puts the preset back as it ships, after asking.

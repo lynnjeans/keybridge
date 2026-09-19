@@ -89,8 +89,8 @@ extension SecureInputMonitor.Holder {
     /// Where the user can switch it off, for apps known to offer that.
     var switchOffHint: String? {
         switch bundleID {
-        case "com.apple.Terminal": "In Terminal, uncheck Terminal › Secure Keyboard Entry."
-        case "com.googlecode.iterm2": "In iTerm2, uncheck iTerm2 › Secure Keyboard Entry."
+        case "com.apple.Terminal": String(localized: "In Terminal, uncheck Terminal › Secure Keyboard Entry.")
+        case "com.googlecode.iterm2": String(localized: "In iTerm2, uncheck iTerm2 › Secure Keyboard Entry.")
         default: nil
         }
     }

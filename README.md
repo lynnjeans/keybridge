@@ -98,6 +98,20 @@ your own certificate — a free Apple ID is enough:
 Without it the build falls back to ad-hoc signing: everything still runs, but you will
 have to re-grant permissions after every build.
 
+### Localization
+
+Every string the UI shows lives in
+[`KeyBridge/Resources/Localizable.xcstrings`](KeyBridge/Resources/Localizable.xcstrings),
+KeyBridge's String Catalog, with English as the source language. Write UI text as
+string literals in SwiftUI (`Text("…")`) or as `String(localized: "…")` where a `String`
+is needed; building in Xcode adds new strings to the catalog and lists missing
+translations. A command-line build only extracts them, so sync the catalog afterwards:
+
+```bash
+xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build build
+scripts/sync-strings.sh
+```
+
 ## Project docs
 
 Design and planning documents live in [`docs/`](docs/).

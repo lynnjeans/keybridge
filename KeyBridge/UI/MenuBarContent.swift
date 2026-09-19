@@ -71,34 +71,36 @@ struct MenuBarContent: View {
 
     /// One line on what KeyBridge is doing right now.
     private var status: String {
-        if !engine.canEnable { return "KeyBridge needs permissions" }
-        if !engine.isEnabled { return "KeyBridge is off" }
+        if !engine.canEnable { return String(localized: "KeyBridge needs permissions") }
+        if !engine.isEnabled { return String(localized: "KeyBridge is off") }
         if let until = engine.pausedUntil {
             return until == .distantFuture
-                ? "Paused"
-                : "Paused until \(until.formatted(date: .omitted, time: .shortened))"
+                ? String(localized: "Paused")
+                : String(localized: "Paused until \(until.formatted(date: .omitted, time: .shortened))")
         }
         if engine.isActive, let holder = secureInput.holder {
-            return "Keyboard paused by Secure Input" + (holder.appName.map { " (\($0))" } ?? "")
+            return holder.appName.map { String(localized: "Keyboard paused by Secure Input (\($0))") }
+                ?? String(localized: "Keyboard paused by Secure Input")
         }
-        return engine.isActive ? "KeyBridge is on" : "KeyBridge could not start"
+        return engine.isActive ? String(localized: "KeyBridge is on") : String(localized: "KeyBridge could not start")
     }
+
 }
 
 extension Permission {
     /// The name System Settings uses for the permission.
     var title: String {
         switch self {
-        case .accessibility: "Accessibility"
-        case .inputMonitoring: "Input Monitoring"
+        case .accessibility: String(localized: "Accessibility")
+        case .inputMonitoring: String(localized: "Input Monitoring")
         }
     }
 
     /// Why KeyBridge needs it, in the user's terms.
     var purpose: String {
         switch self {
-        case .accessibility: "Lets KeyBridge replace shortcuts, clicks and scrolling with their Mac equivalents."
-        case .inputMonitoring: "Lets KeyBridge see ordinary key presses, such as the C in Ctrl+C."
+        case .accessibility: String(localized: "Lets KeyBridge replace shortcuts, clicks and scrolling with their Mac equivalents.")
+        case .inputMonitoring: String(localized: "Lets KeyBridge see ordinary key presses, such as the C in Ctrl+C.")
         }
     }
 
@@ -111,8 +113,8 @@ extension Permission {
             nil
         case .inputMonitoring:
             granted
-                ? "macOS grants this together with Accessibility and may not list KeyBridge under Input Monitoring."
-                : "If KeyBridge is not in the Input Monitoring list, click + and choose KeyBridge."
+                ? String(localized: "macOS grants this together with Accessibility and may not list KeyBridge under Input Monitoring.")
+                : String(localized: "If KeyBridge is not in the Input Monitoring list, click + and choose KeyBridge.")
         }
     }
 }

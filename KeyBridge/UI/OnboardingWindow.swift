@@ -199,17 +199,17 @@ private extension OnboardingController.Step {
     /// The short name in the step indicator.
     var indicatorTitle: String {
         switch self {
-        case .accessibility: "Accessibility"
-        case .inputMonitoring: "Input Monitoring"
-        case .ready: "Ready"
+        case .accessibility: String(localized: "Accessibility")
+        case .inputMonitoring: String(localized: "Input Monitoring")
+        case .ready: String(localized: "Ready")
         }
     }
 
     var headline: String {
         switch self {
-        case .accessibility: "Let KeyBridge change what your keys do"
-        case .inputMonitoring: "Let KeyBridge see your key presses"
-        case .ready: "KeyBridge is ready"
+        case .accessibility: String(localized: "Let KeyBridge change what your keys do")
+        case .inputMonitoring: String(localized: "Let KeyBridge see your key presses")
+        case .ready: String(localized: "KeyBridge is ready")
         }
     }
 
@@ -217,11 +217,11 @@ private extension OnboardingController.Step {
     var explanation: String {
         switch self {
         case .accessibility:
-            "Accessibility is what lets KeyBridge turn a Windows shortcut into its Mac equivalent — pressing Ctrl+C and getting ⌘C. Without it macOS will not let any app rewrite input, and KeyBridge can do nothing at all."
+            String(localized: "Accessibility is what lets KeyBridge turn a Windows shortcut into its Mac equivalent — pressing Ctrl+C and getting ⌘C. Without it macOS will not let any app rewrite input, and KeyBridge can do nothing at all.")
         case .inputMonitoring:
-            "Input Monitoring is what lets KeyBridge see ordinary keys, such as the C in Ctrl+C. Without it macOS delivers only modifiers, clicks and scrolling, so mouse buttons would work while keyboard shortcuts silently did not."
+            String(localized: "Input Monitoring is what lets KeyBridge see ordinary keys, such as the C in Ctrl+C. Without it macOS delivers only modifiers, clicks and scrolling, so mouse buttons would work while keyboard shortcuts silently did not.")
         case .ready:
-            "Both permissions are granted."
+            String(localized: "Both permissions are granted.")
         }
     }
 }

@@ -149,10 +149,10 @@ struct ClipboardRow: View {
 
     private var preview: String {
         switch item.kind {
-        case .file: item.fileURL?.lastPathComponent ?? "File"
-        case .image: "Image"
+        case .file: item.fileURL?.lastPathComponent ?? String(localized: "File")
+        case .image: String(localized: "Image")
         case .text, .richText:
-            (item.text ?? "Rich text")
+            (item.text ?? String(localized: "Rich text"))
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "\n", with: " ")
         }

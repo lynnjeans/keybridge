@@ -226,7 +226,7 @@ private struct ControlKeyCard: View {
     }
 
     /// fn+← reaches the Mac as Home, so fn cannot stand in for Ctrl there.
-    private static let arrowNote = "Word moves stay Ctrl+← / →, since fn+← is Home on a Mac keyboard."
+    private static let arrowNote = String(localized: "Word moves stay Ctrl+← / →, since fn+← is Home on a Mac keyboard.")
 
     private var description: LocalizedStringKey {
         switch choice {
@@ -387,20 +387,20 @@ struct EntryRow: View {
 /// (KB-060) will carry their own, and localization is KB-090.
 enum RuleNames {
     static func presetName(_ id: String) -> String {
-        id == "windows-standard" ? "Windows Standard" : id
+        id == "windows-standard" ? String(localized: "Windows Standard") : id
     }
 
     static func name(ofGroup id: String) -> String {
         switch id {
-        case "editing": "Editing"
-        case "navigation": "Text Navigation"
-        case "finder": "File Management"
-        case "windows": "Windows & Apps"
-        case "browser": "Browser"
-        case "system": "System"
-        case "winKey": "Windows Key"
-        case "mouse": "Mouse"
-        case "scroll": "Scroll"
+        case "editing": String(localized: "Editing")
+        case "navigation": String(localized: "Text Navigation")
+        case "finder": String(localized: "File Management")
+        case "windows": String(localized: "Windows & Apps")
+        case "browser": String(localized: "Browser")
+        case "system": String(localized: "System")
+        case "winKey": String(localized: "Windows Key")
+        case "mouse": String(localized: "Mouse")
+        case "scroll": String(localized: "Scroll")
         default: id
         }
     }
@@ -408,8 +408,8 @@ enum RuleNames {
     /// A line under the group's name, for groups that need explaining.
     static func note(ofGroup id: String) -> String? {
         switch id {
-        case "finder": "Only in Finder, and not while renaming or searching"
-        case "winKey": "Off by default: also takes over ⌘ shortcuts on a Mac keyboard"
+        case "finder": String(localized: "Only in Finder, and not while renaming or searching")
+        case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")
         default: nil
         }
     }
@@ -448,29 +448,29 @@ enum RuleNames {
         names[rule.id] ?? rule.id
     }
 
-    private static let names = [
-        "edit.copy": "Copy", "edit.cut": "Cut", "edit.paste": "Paste", "edit.undo": "Undo",
-        "edit.redo": "Redo", "edit.selectAll": "Select all", "edit.save": "Save", "edit.find": "Find",
-        "edit.new": "New", "edit.open": "Open", "edit.print": "Print",
-        "nav.lineStart": "Line start", "nav.lineEnd": "Line end",
-        "nav.selectLineStart": "Select to line start", "nav.selectLineEnd": "Select to line end",
-        "nav.docStart": "Document start", "nav.docEnd": "Document end",
-        "nav.selectDocStart": "Select to document start", "nav.selectDocEnd": "Select to document end",
-        "nav.wordLeft": "Previous word", "nav.wordRight": "Next word",
-        "nav.selectWordLeft": "Select previous word", "nav.selectWordRight": "Select next word",
-        "nav.deleteWord": "Delete previous word",
-        "finder.trash": "Move to Trash", "finder.rename": "Rename", "finder.open": "Open",
-        "finder.cut": "Cut (mark to move)", "finder.move": "Move here", "finder.parent": "Enclosing folder",
-        "win.switchApp": "Switch apps", "win.quit": "Quit app", "win.screenshot": "Screenshot to clipboard",
-        "win.taskManager": "Task Manager (Activity Monitor)",
-        "browser.newTab": "New tab", "browser.closeTab": "Close tab", "browser.reopenTab": "Reopen closed tab",
-        "browser.address": "Address bar", "browser.reload": "Reload",
-        "sys.forceQuit": "Force Quit",
-        "winKey.lock": "Lock screen", "winKey.explorer": "File Explorer (Finder)",
-        "winKey.showDesktop": "Show desktop", "winKey.emoji": "Emoji & symbols",
-        "winKey.screenshotArea": "Screenshot of an area to clipboard",
-        "mouse.back": "Back", "mouse.forward": "Forward",
-        "scroll.zoomIn": "Zoom in", "scroll.zoomOut": "Zoom out",
+    private static let names: [String: String] = [
+        "edit.copy": String(localized: "Copy"), "edit.cut": String(localized: "Cut"), "edit.paste": String(localized: "Paste"), "edit.undo": String(localized: "Undo"),
+        "edit.redo": String(localized: "Redo"), "edit.selectAll": String(localized: "Select all"), "edit.save": String(localized: "Save"), "edit.find": String(localized: "Find"),
+        "edit.new": String(localized: "New"), "edit.open": String(localized: "Open"), "edit.print": String(localized: "Print"),
+        "nav.lineStart": String(localized: "Line start"), "nav.lineEnd": String(localized: "Line end"),
+        "nav.selectLineStart": String(localized: "Select to line start"), "nav.selectLineEnd": String(localized: "Select to line end"),
+        "nav.docStart": String(localized: "Document start"), "nav.docEnd": String(localized: "Document end"),
+        "nav.selectDocStart": String(localized: "Select to document start"), "nav.selectDocEnd": String(localized: "Select to document end"),
+        "nav.wordLeft": String(localized: "Previous word"), "nav.wordRight": String(localized: "Next word"),
+        "nav.selectWordLeft": String(localized: "Select previous word"), "nav.selectWordRight": String(localized: "Select next word"),
+        "nav.deleteWord": String(localized: "Delete previous word"),
+        "finder.trash": String(localized: "Move to Trash"), "finder.rename": String(localized: "Rename"), "finder.open": String(localized: "Open"),
+        "finder.cut": String(localized: "Cut (mark to move)"), "finder.move": String(localized: "Move here"), "finder.parent": String(localized: "Enclosing folder"),
+        "win.switchApp": String(localized: "Switch apps"), "win.quit": String(localized: "Quit app"), "win.screenshot": String(localized: "Screenshot to clipboard"),
+        "win.taskManager": String(localized: "Task Manager (Activity Monitor)"),
+        "browser.newTab": String(localized: "New tab"), "browser.closeTab": String(localized: "Close tab"), "browser.reopenTab": String(localized: "Reopen closed tab"),
+        "browser.address": String(localized: "Address bar"), "browser.reload": String(localized: "Reload"),
+        "sys.forceQuit": String(localized: "Force Quit"),
+        "winKey.lock": String(localized: "Lock screen"), "winKey.explorer": String(localized: "File Explorer (Finder)"),
+        "winKey.showDesktop": String(localized: "Show desktop"), "winKey.emoji": String(localized: "Emoji & symbols"),
+        "winKey.screenshotArea": String(localized: "Screenshot of an area to clipboard"),
+        "mouse.back": String(localized: "Back"), "mouse.forward": String(localized: "Forward"),
+        "scroll.zoomIn": String(localized: "Zoom in"), "scroll.zoomOut": String(localized: "Zoom out"),
     ]
 }
 
@@ -499,7 +499,7 @@ private struct AboutCard: View {
         let info = Bundle.main.infoDictionary
         let short = info?["CFBundleShortVersionString"] as? String ?? "?"
         let build = info?["CFBundleVersion"] as? String ?? "?"
-        return "Version \(short) (\(build))"
+        return String(localized: "Version \(short) (\(build))")
     }
 
     var body: some View {
@@ -555,28 +555,28 @@ struct ModeCard: View {
 
     private var detail: String {
         if !engine.canEnable {
-            return "Unavailable until KeyBridge has the permissions below. macOS does not let an app change shortcuts without them."
+            return String(localized: "Unavailable until KeyBridge has the permissions below. macOS does not let an app change shortcuts without them.")
         }
         if !engine.isEnabled {
-            return "Off. Every key, click and scroll reaches apps unchanged."
+            return String(localized: "Off. Every key, click and scroll reaches apps unchanged.")
         }
         if let until = engine.pausedUntil {
             return until == .distantFuture
-                ? "Paused. Every key, click and scroll reaches apps unchanged until you resume."
-                : "Paused until \(until.formatted(date: .omitted, time: .shortened)). Every key, click and scroll reaches apps unchanged until then."
+                ? String(localized: "Paused. Every key, click and scroll reaches apps unchanged until you resume.")
+                : String(localized: "Paused until \(until.formatted(date: .omitted, time: .shortened)). Every key, click and scroll reaches apps unchanged until then.")
         }
         if !engine.isActive {
-            return "On, but the event tap could not be started. Quitting and reopening KeyBridge may help."
+            return String(localized: "On, but the event tap could not be started. Quitting and reopening KeyBridge may help.")
         }
-        return "On. \(copyKey)+C, Home/End, Alt+Tab, the mouse side buttons and scroll zoom work the Windows way."
+        return String(localized: "On. \(copyKey)+C, Home/End, Alt+Tab, the mouse side buttons and scroll zoom work the Windows way.")
     }
 
     /// The key the user copies with, as they chose on the Shortcuts page.
     private var copyKey: String {
         switch controlKey {
-        case .control: "Ctrl"
-        case .function: "fn"
-        case .both: "Ctrl or fn"
+        case .control: String(localized: "Ctrl")
+        case .function: String(localized: "fn")
+        case .both: String(localized: "Ctrl or fn")
         }
     }
 }

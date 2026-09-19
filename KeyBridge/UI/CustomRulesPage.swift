@@ -100,10 +100,10 @@ private struct CustomRuleRow: View {
 enum ScopeText {
     static func describe(_ filter: ApplicationFilter) -> String {
         switch filter {
-        case .all: "Everywhere"
-        case .only(let ids): "Only in \(names(ids))"
-        case .except(let ids) where ids == BuiltInRules.terminals: "Everywhere except terminals"
-        case .except(let ids): "Everywhere except \(names(ids))"
+        case .all: String(localized: "Everywhere")
+        case .only(let ids): String(localized: "Only in \(names(ids))")
+        case .except(let ids) where ids == BuiltInRules.terminals: String(localized: "Everywhere except terminals")
+        case .except(let ids): String(localized: "Everywhere except \(names(ids))")
         }
     }
 
@@ -360,7 +360,7 @@ enum AppChooser {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.directoryURL = URL(fileURLWithPath: "/Applications")
-        panel.prompt = "Choose"
+        panel.prompt = String(localized: "Choose")
         guard panel.runModal() == .OK, let url = panel.url else { return nil }
         return Bundle(url: url)?.bundleIdentifier
     }

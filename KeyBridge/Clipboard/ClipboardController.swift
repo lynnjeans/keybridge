@@ -155,11 +155,11 @@ final class ClipboardController {
             try globalHotKey.register(hotKey)
             hotKeyProblem = nil
         } catch .unsupportedModifier {
-            hotKeyProblem = "fn cannot be part of this shortcut. Choose one with ⌘, ⌥, ⌃ or ⇧."
+            hotKeyProblem = String(localized: "fn cannot be part of this shortcut. Choose one with ⌘, ⌥, ⌃ or ⇧.")
         } catch .taken {
-            hotKeyProblem = "Another app already uses this shortcut. Choose a different one."
+            hotKeyProblem = String(localized: "Another app already uses this shortcut. Choose a different one.")
         } catch {
-            hotKeyProblem = "The shortcut could not be set up. Choose a different one."
+            hotKeyProblem = String(localized: "The shortcut could not be set up. Choose a different one.")
         }
         if let hotKeyProblem {
             Logger.clipboard.error("Hot key not registered: \(hotKeyProblem, privacy: .public)")

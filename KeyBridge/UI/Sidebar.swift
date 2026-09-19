@@ -14,28 +14,28 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .overview: "Overview"
-        case .shortcuts: "Shortcuts"
-        case .mouse: "Mouse"
-        case .scroll: "Scroll"
-        case .clipboard: "Clipboard"
-        case .devices: "Devices"
-        case .customRules: "Custom Rules"
-        case .about: "About"
+        case .overview: String(localized: "Overview")
+        case .shortcuts: String(localized: "Shortcuts")
+        case .mouse: String(localized: "Mouse")
+        case .scroll: String(localized: "Scroll")
+        case .clipboard: String(localized: "Clipboard")
+        case .devices: String(localized: "Devices")
+        case .customRules: String(localized: "Custom Rules")
+        case .about: String(localized: "About")
         }
     }
 
     /// The line under the page title.
     var subtitle: String {
         switch self {
-        case .overview: "See everything at a glance, and switch to the Windows feel in one click."
-        case .shortcuts: "Switch whole preset groups on and off, or expand them to fine-tune each entry."
-        case .mouse: "Side-button mapping and button actions."
-        case .scroll: "Zoom and direction. Mouse only; the trackpad is left alone."
-        case .clipboard: "Bring up your copy history at any time, like Win+V on Windows."
-        case .devices: "Each keyboard and mouse can be set up on its own."
-        case .customRules: "Create any “combination → combination” mapping of your own."
-        case .about: "Open source under GPL-3.0, and free."
+        case .overview: String(localized: "See everything at a glance, and switch to the Windows feel in one click.")
+        case .shortcuts: String(localized: "Switch whole preset groups on and off, or expand them to fine-tune each entry.")
+        case .mouse: String(localized: "Side-button mapping and button actions.")
+        case .scroll: String(localized: "Zoom and direction. Mouse only; the trackpad is left alone.")
+        case .clipboard: String(localized: "Bring up your copy history at any time, like Win+V on Windows.")
+        case .devices: String(localized: "Each keyboard and mouse can be set up on its own.")
+        case .customRules: String(localized: "Create any “combination → combination” mapping of your own.")
+        case .about: String(localized: "Open source under GPL-3.0, and free.")
         }
     }
 

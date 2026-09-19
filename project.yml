@@ -14,6 +14,7 @@ options:
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
+  developmentLanguage: en
 
 settings:
   base:
@@ -42,6 +43,9 @@ targets:
         # opened on demand from the menu bar item.
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.utilities
+        # The languages KeyBridge ships in (M9). Listing them lets macOS pick
+        # one per app in System Settings › General › Language & Region.
+        CFBundleLocalizations: [en, zh-Hans, ja]
         NSHumanReadableCopyright: "Copyright © 2026 KeyBridge contributors. Licensed under GPL-3.0."
     settings:
       base:
@@ -53,6 +57,10 @@ targets:
         # identity, so ad-hoc development builds run without it.
         ENABLE_APP_SANDBOX: NO
         ENABLE_HARDENED_RUNTIME: YES
+        # Strings are extracted into Resources/Localizable.xcstrings on every
+        # build; Xcode lists any a translation is missing.
+        SWIFT_EMIT_LOC_STRINGS: YES
+        LOCALIZATION_PREFERS_STRING_CATALOGS: YES
     # Signing is configured in xcconfig files, not here: target settings in
     # this file would override them. See Config/Signing.xcconfig.
     configFiles:
