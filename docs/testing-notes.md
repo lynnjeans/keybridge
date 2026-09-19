@@ -2,7 +2,7 @@
 
 How to verify KeyBridge's behaviour on a real Mac, and the traps that produce confidently
 wrong results. Every item here cost at least one round of misdiagnosis during development.
-This is the seed of the manual test checklist (KB-111).
+The pass to run before every release is [release-checklist.md](release-checklist.md).
 
 **Rule of thumb:** when a check reports zero events, no log lines, or "no change", suspect the
 check before the code.

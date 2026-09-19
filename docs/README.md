@@ -27,6 +27,13 @@ its String Catalog — that is product content, not project language.
 > Plan is in English; the other four are in Chinese. Everything that ships in this
 > repository follows the English convention above.
 
+## In this folder
+
+| File | Purpose |
+|---|---|
+| [release-checklist.md](release-checklist.md) | The manual regression pass to run before every release |
+| [testing-notes.md](testing-notes.md) | How to verify behaviour on a real Mac, debug switches, and the traps that give wrong results |
+
 ## Key decisions
 
 - **Positioning** — a shortcut bridge for people migrating from Windows to macOS, not a
