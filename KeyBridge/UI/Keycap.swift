@@ -108,6 +108,8 @@ struct MappingView: View {
                 .labelStyle(.titleAndIcon)
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(.secondary)
+        case .systemAction(let function):
+            SystemActionLabel(action: function)
         }
     }
 

@@ -56,16 +56,22 @@ final class Dispatcher {
     /// Replaceable so tests do not start real apps.
     private let openApplication: @MainActor (String) -> Void
 
+    /// The user's shortcuts for system functions. Replaceable so tests do not
+    /// depend on this Mac's settings.
+    private let systemShortcuts: @MainActor () -> SymbolicHotKeys
+
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
         isEditingText: @escaping @MainActor () -> Bool = { false },
         post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) },
-        openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) }
+        openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) },
+        systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() }
     ) {
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
         self.post = post
         self.openApplication = openApplication
+        self.systemShortcuts = systemShortcuts
     }
 
     /// While set, the rule editor is recording a trigger: key presses and
@@ -187,6 +193,31 @@ final class Dispatcher {
             }
         case .openApplication(let bundleID):
             openApplication(bundleID)
+        case .systemAction(let function):
+            trigger(function)
+        }
+    }
+
+    /// Posts the user's shortcut for a system function, or opens the app that
+    /// does the same when it has none. Nothing else is posted for a function
+    /// switched off with no app to stand in; the rule editor says so.
+    ///
+    /// The shortcut is read after the tap callback returns, since reading
+    /// another app's preferences can take a moment.
+    private func trigger(_ function: SystemAction) {
+        DispatchQueue.main.async { [self] in
+            switch systemShortcuts().shortcut(for: function) {
+            case .combo(let combo):
+                for down in [true, false] {
+                    if let keystroke = SyntheticEvent.key(combo, down: down) { post(keystroke) }
+                }
+            case .off, .none:
+                if let bundleID = function.fallbackApplication {
+                    openApplication(bundleID)
+                } else {
+                    Logger.engine.notice("\(function.rawValue, privacy: .public) has no shortcut in System Settings; nothing posted")
+                }
+            }
         }
     }
 
@@ -214,6 +245,10 @@ final class Dispatcher {
         case .openApplication(let bundleID):
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             openApplication(bundleID)
+            return .consume
+        case .systemAction(let function):
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            trigger(function)
             return .consume
         }
     }
@@ -254,6 +289,11 @@ final class Dispatcher {
     }
 
     #if DEBUG
+    /// KB_DEBUG_SYSACTION: triggers a system function as a rule would.
+    func selfTestTrigger(_ function: SystemAction) {
+        trigger(function)
+    }
+
     /// How often each rule matched since the last call. Rule IDs are part of
     /// KeyBridge's configuration, not user input, so they are safe to log.
     private var matchCounts: [String: Int] = [:]

@@ -473,6 +473,22 @@
         }
       }
     },
+    "Application windows" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用程序窗口"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリケーションウインドウ"
+          }
+        }
+      }
+    },
     "Applies" : {
       "localizations" : {
         "ja" : {
@@ -485,6 +501,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "生效范围"
+          }
+        }
+      }
+    },
+    "Apps" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用程序"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリ"
           }
         }
       }
@@ -715,16 +747,16 @@
     },
     "Click a Dock icon to minimize" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "点按程序坞图标最小化"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dock のアイコンをクリックで最小化"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按程序坞图标最小化"
           }
         }
       }
@@ -779,16 +811,16 @@
     },
     "Clicking the Dock icon of the app in front minimizes its window, like a taskbar button on Windows. Click it again to bring the window back." : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "点按最前面那个应用的程序坞图标，会把它的窗口最小化，就像 Windows 的任务栏按钮。再点一次，窗口就回来了。"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "最前面のアプリの Dock アイコンをクリックすると、Windows のタスクバーのボタンのようにウインドウが最小化されます。もう一度クリックすると元に戻ります。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按最前面那个应用的程序坞图标，会把它的窗口最小化，就像 Windows 的任务栏按钮。再点一次，窗口就回来了。"
           }
         }
       }
@@ -1929,6 +1961,70 @@
         }
       }
     },
+    "It has no shortcut in System Settings, so KeyBridge opens it directly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它在系统设置中没有快捷键，KeyBridge 会直接打开它。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定にショートカットがないため、KeyBridge が直接開きます。"
+          }
+        }
+      }
+    },
+    "It has no shortcut in System Settings, so this does nothing until you give it one." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它在系统设置中没有快捷键，设置一个之前这里不会起作用。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定にショートカットがないため、設定するまで何も起きません。"
+          }
+        }
+      }
+    },
+    "Its shortcut is switched off in System Settings, so KeyBridge opens it directly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它的快捷键已在系统设置中关闭，KeyBridge 会直接打开它。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定でショートカットがオフになっているため、KeyBridge が直接開きます。"
+          }
+        }
+      }
+    },
+    "Its shortcut is switched off in System Settings, so this does nothing until you switch it on." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "它的快捷键已在系统设置中关闭，打开之前这里不会起作用。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定でショートカットがオフになっているため、オンにするまで何も起きません。"
+          }
+        }
+      }
+    },
     "Keep" : {
       "localizations" : {
         "ja" : {
@@ -2137,6 +2233,22 @@
         }
       }
     },
+    "Launchpad" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动台"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpad"
+          }
+        }
+      }
+    },
     "Let KeyBridge change what your keys do" : {
       "localizations" : {
         "ja" : {
@@ -2281,6 +2393,22 @@
         }
       }
     },
+    "Mission Control" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调度中心"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Control"
+          }
+        }
+      }
+    },
     "Mouse" : {
       "localizations" : {
         "ja" : {
@@ -2309,6 +2437,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移动到此处"
+          }
+        }
+      }
+    },
+    "Move left a space" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向左移动一个空间"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作スペースを左に移動"
+          }
+        }
+      }
+    },
+    "Move right a space" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向右移动一个空间"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作スペースを右に移動"
           }
         }
       }
@@ -2825,6 +2985,22 @@
         }
       }
     },
+    "Open Keyboard Shortcuts…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开键盘快捷键设置…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードショートカットを開く…"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "localizations" : {
         "ja" : {
@@ -3237,6 +3413,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用 fn 代替 Ctrl 按"
+          }
+        }
+      }
+    },
+    "Presses your shortcut for it:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会按下你为它设置的快捷键："
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定されているショートカットを送ります："
           }
         }
       }
@@ -4025,6 +4217,22 @@
         }
       }
     },
+    "Show Desktop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示桌面"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デスクトップを表示"
+          }
+        }
+      }
+    },
     "Show desktop" : {
       "localizations" : {
         "ja" : {
@@ -4085,6 +4293,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "源代码"
+          }
+        }
+      }
+    },
+    "Spotlight" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聚焦"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spotlight"
           }
         }
       }
@@ -4203,6 +4427,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "系统权限"
+          }
+        }
+      }
+    },
+    "System function" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统功能"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム機能"
           }
         }
       }

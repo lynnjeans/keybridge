@@ -126,6 +126,7 @@ struct CustomRuleEditor: View {
     @State private var name: String
     @State private var trigger: Trigger?
     @State private var result: Result
+    @State private var systemAction: SystemAction = .missionControl
     @State private var combo: KeyCombo?
     @State private var app: String?
     @State private var where_: Where
@@ -136,7 +137,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app }
+    enum Result: Hashable { case keys, app, system }
     enum Where: Hashable { case everywhere, only, except }
 
     init(rules: RulesController, existing: Rule?) {
@@ -150,6 +151,11 @@ struct CustomRuleEditor: View {
             _result = State(initialValue: .app)
             _app = State(initialValue: bundleID)
             _combo = State(initialValue: nil)
+        case .systemAction(let function)?:
+            _result = State(initialValue: .system)
+            _systemAction = State(initialValue: function)
+            _combo = State(initialValue: nil)
+            _app = State(initialValue: nil)
         case .key(let combo)?:
             _result = State(initialValue: .keys)
             _combo = State(initialValue: combo)
@@ -194,6 +200,7 @@ struct CustomRuleEditor: View {
                 Picker("Does", selection: $result) {
                     Text("A shortcut").tag(Result.keys)
                     Text("Open an app").tag(Result.app)
+                    Text("System function").tag(Result.system)
                 }
                 .pickerStyle(.segmented)
                 LabeledContent("") {
@@ -208,6 +215,8 @@ struct CustomRuleEditor: View {
                         } action: {
                             toggleRecording(.action)
                         }
+                    } else if result == .system {
+                        SystemActionPicker(selection: $systemAction)
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -295,6 +304,8 @@ struct CustomRuleEditor: View {
         case .app:
             guard let app else { return nil }
             action = .openApplication(bundleID: app)
+        case .system:
+            action = .systemAction(systemAction)
         }
         let applications: ApplicationFilter
         switch where_ {

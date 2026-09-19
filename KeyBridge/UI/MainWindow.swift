@@ -181,6 +181,7 @@ private struct ShortcutsPage: View {
             var haystack = [RuleNames.name(of: rule), rule.id]
             if case .key(let combo) = controlKey.trigger(of: rule) { haystack += combo.caps(.windows) }
             if case .key(let combo) = rule.action { haystack += combo.caps(.mac) }
+            if case .systemAction(let function) = rule.action { haystack.append(function.name) }
             return haystack.contains { $0.lowercased().contains(query) }
         }
     }

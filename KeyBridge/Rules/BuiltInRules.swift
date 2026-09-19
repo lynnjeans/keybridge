@@ -93,8 +93,10 @@ enum BuiltInRules {
             rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
             Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
                  action: .openApplication(bundleID: finderID)),
-            // F11 is macOS's Show Desktop key.
-            rule("winKey.showDesktop", KeyCombo([.command], .d), KeyCombo(.f11)),
+            // Whatever Show Desktop is set to (F11 as shipped), so a changed
+            // shortcut keeps working.
+            Rule(id: "winKey.showDesktop", trigger: .key(combo: KeyCombo([.command], .d)),
+                 action: .systemAction(.showDesktop)),
             rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
             rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
         ], isEnabledByDefault: false),

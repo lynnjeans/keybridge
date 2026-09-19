@@ -39,4 +39,7 @@ enum Action: Codable, Hashable, Sendable {
     /// Launches or activates an application. Covers Windows shortcuts with no
     /// macOS key equivalent, such as Win+E opening Finder.
     case openApplication(bundleID: String)
+    /// Triggers a macOS function, such as Mission Control, with the user's
+    /// own shortcut for it (KB-051).
+    case systemAction(SystemAction)
 }

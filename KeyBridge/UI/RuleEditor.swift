@@ -14,10 +14,23 @@ struct RuleEditor: View {
 
     enum Side { case trigger, action }
 
+    /// A mouse button's result: keys, or a system function (KB-051).
+    enum ResultKind: Hashable { case keys, system }
+
+    /// The keys to go back to when the result is switched from a system
+    /// function to a shortcut.
+    @State private var lastCombo: KeyCombo
+
     init(rules: RulesController, rule: Rule) {
         self.rules = rules
-        original = rules.original(of: rule.id) ?? rule
+        let original = rules.original(of: rule.id) ?? rule
+        self.original = original
         _draft = State(initialValue: rule)
+        var combo = KeyCombo([.command], .leftBracket)
+        for action in [rule.action, original.action] {
+            if case .key(let keys) = action { combo = keys; break }
+        }
+        _lastCombo = State(initialValue: combo)
     }
 
     var body: some View {
@@ -139,20 +152,55 @@ struct RuleEditor: View {
                 switch draft.action {
                 case .key(let combo): KeyComboView(combo: combo, style: .mac)
                 case .openApplication: EmptyView()
+                case .systemAction(let function): SystemActionLabel(action: function)
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
             }
-        } else if case .key(let combo) = draft.action {
-            RecorderField(isRecording: recording == .action, prompt: "Press a shortcut…",
-                          liveModifiers: recorder.modifiers, style: .mac) {
-                KeyComboView(combo: combo, style: .mac)
-            } action: {
-                toggleRecording(.action)
-            }
         } else {
-            Text("Not editable here").foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 8) {
+                Picker("Does", selection: resultKind) {
+                    Text("A shortcut").tag(ResultKind.keys)
+                    Text("System function").tag(ResultKind.system)
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .fixedSize()
+                switch draft.action {
+                case .key(let combo):
+                    RecorderField(isRecording: recording == .action, prompt: "Press a shortcut…",
+                                  liveModifiers: recorder.modifiers, style: .mac) {
+                        KeyComboView(combo: combo, style: .mac)
+                    } action: {
+                        toggleRecording(.action)
+                    }
+                case .systemAction(let function):
+                    SystemActionPicker(selection: Binding(
+                        get: { function },
+                        set: { draft.action = .systemAction($0) }
+                    ))
+                case .openApplication:
+                    Text("Not editable here").foregroundStyle(.secondary)
+                }
+            }
         }
+    }
+
+    private var resultKind: Binding<ResultKind> {
+        Binding(
+            get: { if case .systemAction = draft.action { .system } else { .keys } },
+            set: { kind in
+                switch (kind, draft.action) {
+                case (.system, .key(let combo)):
+                    lastCombo = combo
+                    draft.action = .systemAction(.missionControl)
+                case (.keys, .systemAction):
+                    draft.action = .key(combo: lastCombo)
+                default:
+                    break
+                }
+            }
+        )
     }
 
     private func toggleRecording(_ side: Side) {

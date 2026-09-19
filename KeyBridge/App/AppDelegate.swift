@@ -52,6 +52,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
         DockWindow.selfTest()
+        if let name = ProcessInfo.processInfo.environment["KB_DEBUG_SYSACTION"],
+           let function = SystemAction(rawValue: name) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [dispatcher] in
+                Logger.engine.notice("sysaction selftest \(name, privacy: .public)")
+                dispatcher.selfTestTrigger(function)
+            }
+        }
         // Writes the report the About page exports, without the save panel.
         if let path = ProcessInfo.processInfo.environment["KB_DEBUG_DIAGNOSTICS"] {
             Task { [self] in
