@@ -111,4 +111,42 @@ final class FakeTap: EventTapControlling {
         #expect(!engine.isActive)
         #expect(tap.starts == 1)
     }
+
+    @Test func aPauseStopsTheEngineUntilResumed() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        engine.pause(for: nil)
+        #expect(engine.isPaused && !engine.isActive && !tap.isRunning)
+        #expect(engine.isEnabled, "The master switch stays on")
+
+        engine.resume()
+        #expect(!engine.isPaused && engine.isActive && tap.isRunning)
+    }
+
+    @Test func aTimedPauseEndsByItself() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        engine.pause(for: 300)
+        let until = try! #require(engine.pausedUntil)
+        engine.resumeIfDue(now: until.addingTimeInterval(-1))
+        #expect(engine.isPaused, "Not yet")
+        engine.resumeIfDue(now: until)
+        #expect(!engine.isPaused && tap.isRunning)
+    }
+
+    @Test func aPauseIsNotRemembered() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        engine.pause(for: nil)
+        let (relaunched, _) = makeEngine()
+        #expect(!relaunched.isPaused)
+    }
+
+    @Test func permissionsComingBackDoNotEndAPause() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        engine.pause(for: nil)
+        engine.update()
+        #expect(!tap.isRunning)
+    }
 }

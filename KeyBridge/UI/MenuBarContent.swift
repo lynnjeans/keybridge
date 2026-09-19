@@ -1,31 +1,53 @@
 import AppKit
 import SwiftUI
 
-/// The dropdown shown from the menu bar item.
+/// The dropdown shown from the menu bar item: what KeyBridge is doing, the
+/// master switch, a quick pause, and the way into the main window.
 struct MenuBarContent: View {
-    let permissions: PermissionMonitor
+    let engine: EngineController
     let onboarding: OnboardingController
     @Environment(\.openWindow) private var openWindow
 
+    private var permissions: PermissionMonitor { engine.permissions }
+
     var body: some View {
-        // Live permission state. A missing permission opens its System
-        // Settings pane when chosen. The Overview has the fuller picture.
-        Section("Permissions") {
-            ForEach(Permission.allCases, id: \.self) { permission in
-                let granted = permissions.status(of: permission) == .granted
-                Button {
-                    if !granted { NSWorkspace.shared.open(permission.settingsURL) }
-                } label: {
-                    Label(
-                        granted ? "\(permission.title): Granted" : "\(permission.title): Not granted — Open Settings…",
-                        systemImage: granted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
-                    )
-                }
+        Text(status)
+
+        Toggle("Windows Shortcut Mode", isOn: Binding(
+            get: { engine.isEnabled && engine.canEnable },
+            set: { engine.isEnabled = $0 }
+        ))
+        .disabled(!engine.canEnable)
+
+        if engine.isPaused {
+            Button("Resume Now") { engine.resume() }
+        } else {
+            Menu("Pause") {
+                Button("For 5 Minutes") { engine.pause(for: 5 * 60) }
+                Button("For 15 Minutes") { engine.pause(for: 15 * 60) }
+                Button("For 1 Hour") { engine.pause(for: 60 * 60) }
+                Divider()
+                Button("Until I Resume") { engine.pause(for: nil) }
             }
+            .disabled(!engine.isActive)
         }
 
+        // Only when something is missing; the Overview has the full picture.
         if !permissions.allGranted {
-            Button("Set Up Permissions…") { onboarding.open() }
+            Section("Permissions") {
+                ForEach(Permission.allCases, id: \.self) { permission in
+                    let granted = permissions.status(of: permission) == .granted
+                    Button {
+                        if !granted { NSWorkspace.shared.open(permission.settingsURL) }
+                    } label: {
+                        Label(
+                            granted ? "\(permission.title): Granted" : "\(permission.title): Not granted — Open Settings…",
+                            systemImage: granted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
+                        )
+                    }
+                }
+                Button("Set Up Permissions…") { onboarding.open() }
+            }
         }
 
         Divider()
@@ -36,6 +58,7 @@ struct MenuBarContent: View {
             // the window opens behind whatever the user was working in.
             NSApplication.shared.activate()
         }
+        .keyboardShortcut(",")
 
         Divider()
 
@@ -43,6 +66,18 @@ struct MenuBarContent: View {
             NSApplication.shared.terminate(nil)
         }
         .keyboardShortcut("q")
+    }
+
+    /// One line on what KeyBridge is doing right now.
+    private var status: String {
+        if !engine.canEnable { return "KeyBridge needs permissions" }
+        if !engine.isEnabled { return "KeyBridge is off" }
+        if let until = engine.pausedUntil {
+            return until == .distantFuture
+                ? "Paused"
+                : "Paused until \(until.formatted(date: .omitted, time: .shortened))"
+        }
+        return engine.isActive ? "KeyBridge is on" : "KeyBridge could not start"
     }
 }
 

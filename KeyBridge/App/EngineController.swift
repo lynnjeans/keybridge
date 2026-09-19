@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import Observation
 
 /// What `EngineController` needs from the event tap; lets tests stand in for it.
@@ -34,6 +35,16 @@ final class EngineController {
     /// Whether the engine is actually running.
     private(set) var isActive = false
 
+    /// While set, the engine stands aside even though it is switched on:
+    /// a quick break, for a game or someone else at the keyboard. Not
+    /// remembered, so relaunching KeyBridge ends it. `.distantFuture` means
+    /// until the user resumes.
+    private(set) var pausedUntil: Date?
+
+    var isPaused: Bool { pausedUntil != nil }
+
+    @ObservationIgnored private var resumeTimer: Timer?
+
     /// The master switch can only be turned on with every permission granted.
     var canEnable: Bool { permissions.allGranted }
 
@@ -50,9 +61,44 @@ final class EngineController {
         permissions.onChange = { [weak self] _ in self?.update() }
     }
 
-    /// Starts or stops the tap to match the switch and the permissions.
+    /// Pauses for `duration`, or until `resume()` when nil.
+    func pause(for duration: TimeInterval?) {
+        resumeTimer?.invalidate()
+        resumeTimer = nil
+        if let duration {
+            let until = Date.now.addingTimeInterval(duration)
+            pausedUntil = until
+            let timer = Timer(fire: until, interval: 0, repeats: false) { [weak self] _ in
+                MainActor.assumeIsolated { self?.resumeIfDue() }
+            }
+            RunLoop.main.add(timer, forMode: .common)
+            resumeTimer = timer
+        } else {
+            pausedUntil = .distantFuture
+        }
+        Logger.engine.notice("Paused for \(duration.map { "\(Int($0))s" } ?? "as long as the user wants", privacy: .public)")
+        update()
+    }
+
+    func resume() {
+        guard isPaused else { return }
+        resumeTimer?.invalidate()
+        resumeTimer = nil
+        pausedUntil = nil
+        Logger.engine.notice("Resumed")
+        update()
+    }
+
+    /// Ends a timed pause once its time has come. A Mac asleep through the
+    /// end of a pause fires the timer late, which lands here too.
+    func resumeIfDue(now: Date = .now) {
+        if let pausedUntil, pausedUntil <= now { resume() }
+    }
+
+    /// Starts or stops the tap to match the switch, the pause and the
+    /// permissions.
     func update() {
-        let shouldRun = isEnabled && canEnable
+        let shouldRun = isEnabled && canEnable && !isPaused
         if shouldRun && !tap.isRunning {
             tap.start()
         } else if !shouldRun && tap.isRunning {

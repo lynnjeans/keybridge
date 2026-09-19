@@ -8,7 +8,7 @@ struct KeyBridgeApp: App {
         // With LSUIElement set there is no Dock icon, so the menu bar item is
         // the app's only permanent presence and the way into everything else.
         MenuBarExtra {
-            MenuBarContent(permissions: appDelegate.permissionMonitor, onboarding: appDelegate.onboarding)
+            MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding)
         } label: {
             MenuBarIcon(isActive: appDelegate.engine.isActive, onboarding: appDelegate.onboarding)
         }

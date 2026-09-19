@@ -529,6 +529,9 @@ struct ModeCard: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer()
+                if engine.isPaused {
+                    Button("Resume") { engine.resume() }
+                }
                 // Shown off while it cannot run, even if the user left it on;
                 // it comes back on by itself once the permissions are granted.
                 Toggle("Windows Shortcut Mode", isOn: Binding(
@@ -548,6 +551,11 @@ struct ModeCard: View {
         }
         if !engine.isEnabled {
             return "Off. Every key, click and scroll reaches apps unchanged."
+        }
+        if let until = engine.pausedUntil {
+            return until == .distantFuture
+                ? "Paused. Every key, click and scroll reaches apps unchanged until you resume."
+                : "Paused until \(until.formatted(date: .omitted, time: .shortened)). Every key, click and scroll reaches apps unchanged until then."
         }
         if !engine.isActive {
             return "On, but the event tap could not be started. Quitting and reopening KeyBridge may help."
