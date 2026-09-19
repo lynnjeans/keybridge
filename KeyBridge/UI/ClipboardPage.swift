@@ -34,7 +34,13 @@ struct ClipboardPage: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.secondary)
                 Spacer()
+                Picker("Keep", selection: Binding(get: { clipboard.limit }, set: { clipboard.limit = $0 })) {
+                    ForEach(ClipboardController.limitChoices, id: \.self) { Text("\($0) items").tag($0) }
+                }
+                .fixedSize()
+                .help("Older items are dropped once there are more; pinned items are kept")
                 Button("Clear History") { clipboard.history.clear() }
+                    .help("Removes everything except pinned items")
                     .disabled(clipboard.history.items.isEmpty)
             }
             Card {
@@ -47,7 +53,9 @@ struct ClipboardPage: View {
                     VStack(spacing: 0) {
                         ForEach(Array(clipboard.history.items.prefix(20).enumerated()), id: \.element.id) { index, item in
                             if index > 0 { Divider() }
-                            ClipboardRow(item: item) { clipboard.history.remove(item.id) }
+                            ClipboardRow(item: item,
+                                         remove: { clipboard.history.remove(item.id) },
+                                         setPinned: { clipboard.history.setPinned(item.id, $0) })
                         }
                     }
                 }
@@ -67,6 +75,7 @@ struct ClipboardPage: View {
 struct ClipboardRow: View {
     let item: ClipboardItem
     var remove: (() -> Void)?
+    var setPinned: ((Bool) -> Void)?
     @State private var isHovered = false
 
     var body: some View {
@@ -76,6 +85,16 @@ struct ClipboardRow: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
             Spacer(minLength: 8)
+            if let setPinned, isHovered || item.isPinned {
+                Button {
+                    setPinned(!item.isPinned)
+                } label: {
+                    Image(systemName: item.isPinned ? "pin.fill" : "pin")
+                        .foregroundStyle(item.isPinned ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
+                }
+                .buttonStyle(.plain)
+                .help(item.isPinned ? "Unpin" : "Pin: kept whatever the limit")
+            }
             if let remove, isHovered {
                 Button(action: remove) {
                     Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)

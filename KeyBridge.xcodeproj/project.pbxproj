@@ -29,12 +29,14 @@
 		4C9CF0564FB65F276CD1A67A /* ClipboardPrivacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */; };
 		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		506B3F1B922AC2420E1B1062 /* KeyRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = B468133EB5D247B76FBE8965 /* KeyRecording.swift */; };
+		52434F6728447D8407EAFF9D /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */; };
 		54E64666073B870126B46981 /* ControlKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07804BDC7C51D4B77C914313 /* ControlKey.swift */; };
 		56E454804BB718D3F6D5F34B /* ClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AD351EB464FBDBE261033 /* ClipboardHistory.swift */; };
 		573EFCCDB359AFCF1016673D /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		60BB3275921A3B5C2CA30EF6 /* DockPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0154638BD14E05405EE874B3 /* DockPresence.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
+		639B401B4484559F8BC89001 /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */; };
 		66A8E97CB829BBCF2162AF63 /* ClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AD351EB464FBDBE261033 /* ClipboardHistory.swift */; };
 		67D8FC795D67E37F77CCA412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687E05B9F8DE493CF14920E7 /* AppDelegate.swift */; };
 		685FDE358D13454414DC243A /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A137375CBE08E7894FE76 /* Sidebar.swift */; };
@@ -103,6 +105,7 @@
 /* Begin PBXFileReference section */
 		0154638BD14E05405EE874B3 /* DockPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockPresence.swift; sourceTree = "<group>"; };
 		07804BDC7C51D4B77C914313 /* ControlKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlKey.swift; sourceTree = "<group>"; };
+		0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStore.swift; sourceTree = "<group>"; };
 		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		12D84228954A785CF91645EF /* RuleEditingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditingTests.swift; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 				30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */,
 				33C045757621DA8A83B0E8BC /* ClipboardMonitor.swift */,
 				95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */,
+				0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */,
 			);
 			path = Clipboard;
 			sourceTree = "<group>";
@@ -410,6 +414,7 @@
 				E797509088BEB5921B15B9AD /* ClipboardItem.swift in Sources */,
 				7FB988A51B09E7074419FA20 /* ClipboardMonitor.swift in Sources */,
 				4C9CF0564FB65F276CD1A67A /* ClipboardPrivacy.swift in Sources */,
+				52434F6728447D8407EAFF9D /* ClipboardStore.swift in Sources */,
 				D48D84229B7A4417A394335C /* ClipboardTests.swift in Sources */,
 				ED941C18625ED6E5D4D246D6 /* Configuration.swift in Sources */,
 				A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */,
@@ -464,6 +469,7 @@
 				1B35B38B6E69F163D8062248 /* ClipboardMonitor.swift in Sources */,
 				F035AC9B8BEA29C0C5B72C77 /* ClipboardPage.swift in Sources */,
 				C1C152854351274F0EE89CB8 /* ClipboardPrivacy.swift in Sources */,
+				639B401B4484559F8BC89001 /* ClipboardStore.swift in Sources */,
 				2027926C27C6697B960913D0 /* Configuration.swift in Sources */,
 				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
 				54E64666073B870126B46981 /* ControlKey.swift in Sources */,

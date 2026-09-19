@@ -64,6 +64,7 @@ import Testing
         let suite = "ClipboardCaptureTests.\(UUID().uuidString)"
         return UserDefaults(suiteName: suite)!
     }()
+    let store = ClipboardStore(folder: FileManager.default.temporaryDirectory.appending(path: "KeyBridgeTests-\(UUID().uuidString)"))
 
     func copy(_ text: String, extra: [String] = []) {
         pasteboard.clearContents()
@@ -74,7 +75,7 @@ import Testing
     }
 
     @Test func offByDefaultAndRecordsNothing() {
-        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults)
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
         #expect(!clipboard.isEnabled)
         copy("hello")
         clipboard.checkNow()
@@ -86,7 +87,7 @@ import Testing
     }
 
     @Test func textIsCapturedAndConcealedIsNot() {
-        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults)
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
         clipboard.isEnabled = true
         copy("hello")
         clipboard.checkNow()
@@ -98,7 +99,7 @@ import Testing
     }
 
     @Test func imagesAndFilesKeepTheirType() throws {
-        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults)
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
         clipboard.isEnabled = true
 
         pasteboard.clearContents()
@@ -115,12 +116,67 @@ import Testing
     }
 
     @Test func theExclusionListIsEditableAndSaved() {
-        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults)
+        let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
         clipboard.exclude("com.apple.Safari")
-        #expect(ClipboardController(pasteboard: pasteboard, defaults: defaults).excludedApps.contains("com.apple.Safari"))
+        #expect(ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store).excludedApps.contains("com.apple.Safari"))
         clipboard.include("com.1password.1password")
         #expect(!clipboard.excludedApps.contains("com.1password.1password"))
         clipboard.resetExcludedApps()
         #expect(Set(clipboard.excludedApps) == ClipboardPrivacy.defaultExcludedApps)
+    }
+}
+
+@MainActor
+@Suite struct ClipboardStoreTests {
+    let store = ClipboardStore(folder: FileManager.default.temporaryDirectory.appending(path: "KeyBridgeTests-\(UUID().uuidString)"))
+
+    func text(_ string: String, pinned: Bool = false) -> ClipboardItem {
+        ClipboardItem(date: .now, contents: [NSPasteboard.PasteboardType.string.rawValue: Data(string.utf8)], isPinned: pinned)
+    }
+
+    @Test func historySurvivesARestart() throws {
+        let image = ClipboardItem(date: .now, sourceBundleID: "com.apple.Preview",
+                                  contents: [NSPasteboard.PasteboardType.png.rawValue: Data([1, 2, 3])])
+        let items = [text("b", pinned: true), image, text("a")]
+        try store.save(items)
+        let loaded = store.load()
+        #expect(loaded.map(\.id) == items.map(\.id), "Same order")
+        #expect(loaded.map(\.contents) == items.map(\.contents), "Same contents, every type")
+        #expect(loaded.first?.isPinned == true)
+        #expect(loaded[1].sourceBundleID == "com.apple.Preview")
+    }
+
+    @Test func droppedItemsLeaveNoFileBehind() throws {
+        let a = text("a"), b = text("b")
+        try store.save([a, b])
+        try store.save([b])
+        let files = try FileManager.default.contentsOfDirectory(atPath: store.folder.appending(path: "items").path)
+        #expect(files == ["\(b.id.uuidString).plist"])
+    }
+
+    @Test func theFolderIsPrivate() throws {
+        try store.save([text("a")])
+        let attributes = try FileManager.default.attributesOfItem(atPath: store.folder.path)
+        #expect((attributes[.posixPermissions] as? Int) == 0o700)
+    }
+
+    @Test func aMissingOrBrokenIndexStartsEmpty() throws {
+        #expect(store.load().isEmpty)
+        try FileManager.default.createDirectory(at: store.folder, withIntermediateDirectories: true)
+        try Data("not json".utf8).write(to: store.folder.appending(path: "index.json"))
+        #expect(store.load().isEmpty)
+    }
+
+    @Test func theControllerSavesAsItGoes() {
+        let history = ClipboardHistory(limit: 2)
+        history.onChange = { [store] in try? store.save($0) }
+        history.add(text("1"))
+        history.add(text("2"))
+        history.setPinned(history.items[1].id, true)
+        history.add(text("3"))
+        history.add(text("4"))
+        let loaded = store.load()
+        #expect(loaded.compactMap(\.text) == ["4", "3", "1"], "Evicted by the limit, pinned kept")
+        #expect(loaded.last?.isPinned == true)
     }
 }

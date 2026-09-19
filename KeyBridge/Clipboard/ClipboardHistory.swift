@@ -6,7 +6,12 @@ import Observation
 @MainActor
 @Observable
 final class ClipboardHistory {
-    private(set) var items: [ClipboardItem] = []
+    private(set) var items: [ClipboardItem] = [] {
+        didSet { onChange?(items) }
+    }
+
+    /// Called after every change, with the items as they now are.
+    @ObservationIgnored var onChange: (([ClipboardItem]) -> Void)?
 
     /// How many unpinned items are kept.
     var limit: Int {
@@ -32,6 +37,13 @@ final class ClipboardHistory {
         trim()
     }
 
+    func setPinned(_ id: ClipboardItem.ID, _ pinned: Bool) {
+        guard let index = items.firstIndex(where: { $0.id == id }) else { return }
+        items[index].isPinned = pinned
+        // Unpinning can put the history over its limit.
+        trim()
+    }
+
     func remove(_ id: ClipboardItem.ID) {
         items.removeAll { $0.id == id }
     }
@@ -44,10 +56,12 @@ final class ClipboardHistory {
     /// Drops the oldest unpinned items beyond the limit.
     private func trim() {
         var unpinned = 0
-        items.removeAll { item in
-            guard !item.isPinned else { return false }
+        let kept = items.filter { item in
+            guard !item.isPinned else { return true }
             unpinned += 1
-            return unpinned > limit
+            return unpinned <= limit
         }
+        // Assigned only when something goes, so a no-op saves nothing.
+        if kept.count != items.count { items = kept }
     }
 }
