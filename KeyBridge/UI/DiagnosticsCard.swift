@@ -38,6 +38,9 @@ struct DiagnosticsCard: View {
         panel.nameFieldStringValue = "KeyBridge Diagnostics \(Date.now.formatted(.iso8601.year().month().day())).txt"
         panel.allowedContentTypes = [.plainText]
         panel.canCreateDirectories = true
+        // Where a browser's file picker is likely to look when the report is
+        // attached, rather than wherever the last save panel was.
+        panel.directoryURL = URL.downloadsDirectory
         guard panel.runModal() == .OK, let url = panel.url else { return }
         isExporting = true
         Task {
