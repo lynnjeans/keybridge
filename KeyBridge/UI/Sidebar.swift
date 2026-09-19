@@ -103,7 +103,7 @@ struct Sidebar: View {
 private struct Brand: View {
     var body: some View {
         HStack(spacing: 9) {
-            IconTile(symbol: "command", tint: .accentColor, size: 30)
+            AppIcon(size: 30)
             VStack(alignment: .leading, spacing: 1) {
                 Text("KeyBridge")
                     .font(.headline)
@@ -121,6 +121,21 @@ private struct Brand: View {
 
 /// A white symbol on a rounded colored square, as System Settings draws its
 /// sidebar icons.
+/// KeyBridge's own icon (KB-106), as macOS draws it: Liquid Glass on macOS 26.
+/// The system's rendering leaves a margin round the tile, so it is drawn a
+/// little larger than `size` to line up with the `IconTile`s beside it.
+struct AppIcon: View {
+    let size: CGFloat
+
+    var body: some View {
+        Image(nsImage: NSApplication.shared.applicationIconImage)
+            .resizable()
+            .frame(width: size * 1.22, height: size * 1.22)
+            .frame(width: size, height: size)
+            .accessibilityHidden(true)
+    }
+}
+
 struct IconTile: View {
     let symbol: String
     let tint: Color

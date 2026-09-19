@@ -114,6 +114,24 @@ xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build
 scripts/sync-strings.sh
 ```
 
+### App icon
+
+[`KeyBridge/Resources/AppIcon.icon`](KeyBridge/Resources/AppIcon.icon) is an Icon Composer
+document: three SVG layers (bridge, keycaps, legends) on a blue gradient. macOS 26 draws it in
+Liquid Glass; the build derives the flat icon macOS 14 and 15 show. The layers are plain SVG, so
+they can be edited by hand; render every appearance without opening Icon Composer with its
+`ictool`:
+
+```bash
+"$(xcode-select -p)/../Applications/Icon Composer.app/Contents/Executables/ictool" \
+  KeyBridge/Resources/AppIcon.icon --export-image --output-file /tmp/icon.png \
+  --platform macOS --rendition Dark --width 512 --height 512 --scale 1
+```
+
+Renditions: `Default`, `Dark`, `ClearLight`, `ClearDark`, `TintedLight`, `TintedDark`. The
+website's [`site/favicon.svg`](site/favicon.svg) is the same artwork, flattened: redo it after
+changing a layer.
+
 ## Project docs
 
 Design and planning documents live in [`docs/`](docs/).

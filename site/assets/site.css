@@ -91,10 +91,7 @@ p { margin: 0; }
 
 .wordmark { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; font-size: 1.05rem; }
 .wordmark:hover { text-decoration: none; }
-.wordmark .mark {
-  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px;
-  background: linear-gradient(160deg, #4aa8ff, #0a64e6); color: #fff; font-size: 18px; line-height: 1;
-}
+.wordmark .mark { width: 30px; height: 30px; }
 
 .site-nav { display: flex; gap: 22px; margin-left: auto; font-size: 0.9rem; }
 .site-nav a { color: var(--text-2); }

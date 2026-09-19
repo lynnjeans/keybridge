@@ -528,7 +528,7 @@ private struct AboutCard: View {
     var body: some View {
         Card {
             HStack(spacing: 14) {
-                IconTile(symbol: "command", tint: .accentColor, size: 40)
+                AppIcon(size: 40)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("KeyBridge")
                         .font(.headline)

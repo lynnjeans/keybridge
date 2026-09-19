@@ -1,10 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- The flat KeyBridge icon: the layers of KeyBridge/Resources/AppIcon.icon on its gradient. -->
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0.35" y2="1">
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="0.7">
       <stop offset="0" stop-color="#4aa8ff"/>
-      <stop offset="1" stop-color="#0a64e6"/>
+      <stop offset="1" stop-color="#0a5fd8"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="15" fill="url(#g)"/>
-  <text x="32" y="45" font-family="-apple-system, 'Helvetica Neue', sans-serif" font-size="38" text-anchor="middle" fill="#fff">⌘</text>
+  <rect width="1024" height="1024" rx="230" fill="url(#fill)"/>
+  <g transform="translate(0 20)">
+  <g fill="none" stroke="#ffffff" stroke-linecap="round">
+    <path d="M190 440 C 290 190, 734 190, 834 440" stroke-width="40"/>
+    <path d="M150 440 H874" stroke-width="40"/>
+    <path d="M300 310 V440 M406 266 V440 M512 253 V440 M618 266 V440 M724 310 V440" stroke-width="18"/>
+  </g>
+  </g>
+  <g transform="translate(0 20)">
+  <rect x="150" y="470" width="300" height="280" rx="66" fill="#ffffff"/>
+  <rect x="574" y="470" width="300" height="280" rx="66" fill="#ffffff"/>
+  </g>
+  <g transform="translate(0 20)">
+  <g fill="none" stroke="#1d4f91" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M274.5 581 A45 45 0 1 0 274.5 639"/>
+    <path d="M305 572 V636 Q305 655 324 655 M290 600 H324"/>
+    <path d="M345 600 V655 M345 628 Q345 600 376 600"/>
+    <path d="M400 560 V655"/>
+  </g>
+  <path d="M694 580 V550 A30 30 0 1 0 664 580 H784 A30 30 0 1 0 754 550 V670 A30 30 0 1 0 784 640 H664 A30 30 0 1 0 694 670 Z"
+        fill="none" stroke="#0a5fd8" stroke-width="22" stroke-linejoin="round"/>
+  </g>
 </svg>

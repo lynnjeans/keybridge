@@ -57,6 +57,9 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge
         PRODUCT_NAME: KeyBridge
+        # Resources/AppIcon.icon, made in Icon Composer: Liquid Glass on macOS
+        # 26, and actool derives the flat icon macOS 14 and 15 show (KB-106).
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         # Global input interception cannot run inside the App Sandbox, so the
         # sandbox stays off permanently. Hardened runtime is required for
         # notarization; Xcode only applies it when signing with a real
