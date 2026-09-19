@@ -81,6 +81,12 @@ struct Sidebar: View {
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { Brand() }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            LanguagePicker()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }
     }
 
     private func row(for page: Page) -> some View {

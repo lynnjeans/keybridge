@@ -30,6 +30,7 @@
 		48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED948C2F00802E52BAF49F /* KeyCodeLabel.swift */; };
 		4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */; };
 		4C9CF0564FB65F276CD1A67A /* ClipboardPrivacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */; };
+		4EB0EC35190282151736C6DB /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0901980EBE4BBF714534B44E /* LocalizationTests.swift */; };
 		4EBE8CFB96C59B3FBE7299DC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848719F069115F286CC12A7B /* Preset.swift */; };
 		506B3F1B922AC2420E1B1062 /* KeyRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = B468133EB5D247B76FBE8965 /* KeyRecording.swift */; };
 		52434F6728447D8407EAFF9D /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */; };
@@ -64,6 +65,7 @@
 		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
 		A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A514BBCBD41FBAFD95F8CED7 /* ControlKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07804BDC7C51D4B77C914313 /* ControlKey.swift */; };
+		A668B7C231D3996BA42F3444 /* LanguagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8289E77DDADD9A2D9D5B6FD7 /* LanguagePicker.swift */; };
 		A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A9099E73D29EA499A3BB1F62 /* ClipboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */; };
 		A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */; };
@@ -111,6 +113,7 @@
 /* Begin PBXFileReference section */
 		0154638BD14E05405EE874B3 /* DockPresence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockPresence.swift; sourceTree = "<group>"; };
 		07804BDC7C51D4B77C914313 /* ControlKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlKey.swift; sourceTree = "<group>"; };
+		0901980EBE4BBF714534B44E /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStore.swift; sourceTree = "<group>"; };
 		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		128B9CB689364A424B8F3640 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		708C0A9C5EAC893363675EAF /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
 		787259A999A89270DA15D66F /* PermissionMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitorTests.swift; sourceTree = "<group>"; };
 		794A137375CBE08E7894FE76 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		8289E77DDADD9A2D9D5B6FD7 /* LanguagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePicker.swift; sourceTree = "<group>"; };
 		82D8E64863C57D05FECB554B /* RuleMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcher.swift; sourceTree = "<group>"; };
 		848719F069115F286CC12A7B /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
 		8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitor.swift; sourceTree = "<group>"; };
@@ -281,6 +285,7 @@
 				3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */,
 				0154638BD14E05405EE874B3 /* DockPresence.swift */,
 				708C0A9C5EAC893363675EAF /* Keycap.swift */,
+				8289E77DDADD9A2D9D5B6FD7 /* LanguagePicker.swift */,
 				4548E0F39AC9A1003DA5FE98 /* MainWindow.swift */,
 				32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */,
 				A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */,
@@ -303,6 +308,7 @@
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
+				0901980EBE4BBF714534B44E /* LocalizationTests.swift */,
 				9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */,
 				787259A999A89270DA15D66F /* PermissionMonitorTests.swift */,
 				499C73450E6CECD9A01F5724 /* RestoreDefaultsTests.swift */,
@@ -412,6 +418,8 @@
 			knownRegions = (
 				Base,
 				en,
+				ja,
+				"zh-Hans",
 			);
 			mainGroup = BBD418FC1D32831A5D73D727;
 			minimizedProjectReferenceProxies = 1;
@@ -467,6 +475,7 @@
 				4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */,
 				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
 				506B3F1B922AC2420E1B1062 /* KeyRecording.swift in Sources */,
+				4EB0EC35190282151736C6DB /* LocalizationTests.swift in Sources */,
 				C5F5A08982C8AA13574F80DA /* OnboardingController.swift in Sources */,
 				3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */,
 				0BD1963115498DF37B2F34A5 /* PermissionMonitor.swift in Sources */,
@@ -527,6 +536,7 @@
 				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,
 				8B714E010EF7A46A93F57F15 /* KeyRecording.swift in Sources */,
 				CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */,
+				A668B7C231D3996BA42F3444 /* LanguagePicker.swift in Sources */,
 				F3282C27664078C37C79E61E /* MainWindow.swift in Sources */,
 				DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */,
 				A9489D0BA88F7E4D776D1474 /* MenuBarIcon.swift in Sources */,
