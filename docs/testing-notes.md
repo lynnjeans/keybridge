@@ -198,6 +198,11 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
 
+- **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
+  result for its touches, ends the callback there and then: no log line, no crash, and the rest
+  of the callback never runs — which reads exactly like the code not being called at all. Read
+  `CGEvent` fields instead.
+
 Expected log for `KB_DEBUG_MATCHTEST` (category `engine`): `Matched rules: selftest.finder=3`,
 then `selftest.any=3`, and no match for F20. The `eventtap` category reports per-event
 processing time as `Processing: n=… avg=…µs max=…µs`; each call is also a signpost interval
@@ -295,6 +300,29 @@ To test without installing one of them, run any binary from a bundle whose `Info
 listed identifier (for example `com.caldis.Mos`). Build the bundle in a folder not named `.app`
 and rename it afterwards, since macOS refuses writes into an existing app bundle, and use a
 binary you compiled: a copy of a system binary such as `/bin/sleep` is killed at launch.
+
+## Pointer movement and acceleration
+
+Measured while building and then dropping KB-054, so the ground does not have to be covered
+again:
+
+- **A mouse and a trackpad are told apart by `kCGMouseEventSubtype`**: a trackpad stamps its
+  movement with 3 (touch), a mouse leaves 0. Public, and the only distinction a session tap
+  gets — an event carries no device.
+- **The delta in a mouse-moved event is what the pointer actually did.** Summing
+  `kCGMouseEventDeltaX/Y` over a movement and summing the change in `location` over the same
+  movement gave 1944 against 1943: the acceleration curve is applied before the tap sees
+  anything, so a tap cannot recover the raw counts the mouse sent.
+- **Writing a new `location` into a mouse-moved event does not move the pointer.** The window
+  server has already placed it; the field only says where the event is delivered. Posting a
+  movement of one's own does move it.
+- **`HIDMouseAcceleration`, written through the public `IOHIDSystem` parameter connection,
+  only changes the overall gain.** Setting it to 0 (a negative value is read back as an
+  enormous unsigned one, so 0 is what "off" must be written as) made the same stretch of desk
+  report ≈27% further. It did not change the relation between speed and distance: covered in
+  3 s and in 1 s, the same stretch reported 10490/11136 with the curve on and 13379/14173 with
+  it nominally off — a ratio of 1.06 either way. On current macOS the per-device curve lives
+  in the HID service layer (`IOHIDServiceClient`), which is private API.
 
 ## Posting test events
 
