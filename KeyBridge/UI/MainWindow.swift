@@ -419,7 +419,7 @@ enum RuleNames {
         case "editing": String(localized: "Editing")
         case "navigation": String(localized: "Text Navigation")
         case "finder": String(localized: "File Management")
-        case "windows": String(localized: "Windows & Apps")
+        case "windows": String(localized: "Apps & System")
         case "browser": String(localized: "Browser")
         case "system": String(localized: "System")
         case "winKey": String(localized: "Windows Key")
@@ -435,7 +435,7 @@ enum RuleNames {
         switch id {
         case "finder": String(localized: "Only in Finder, and not while renaming or searching")
         case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")
-        case "window": String(localized: "⌥ sits where the Windows key does, so ⌥ and an arrow snaps the window in front")
+        case "window": String(localized: "⌥ sits where the Windows key does, so ⌥ and an arrow places or minimizes the window in front")
         default: nil
         }
     }
