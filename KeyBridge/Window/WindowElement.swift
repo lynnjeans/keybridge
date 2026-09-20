@@ -89,9 +89,13 @@ enum WindowElement {
     /// should touch — a full-screen or minimized window, a panel, a sheet, or
     /// an app that refuses to be moved. Staying put is the right answer there;
     /// the alternative is throwing a window the user did not mean.
-    static func perform(_ position: WindowSnap) {
+    static func perform(_ position: WindowAction) {
         guard let window = frontmost() else {
             Logger.window.notice("snap \(position.rawValue, privacy: .public): no window to move")
+            return
+        }
+        guard position.movesWindow else {
+            minimize(window)
             return
         }
         guard canSetFrame(window) else {
@@ -109,6 +113,22 @@ enum WindowElement {
             "snap \(position.rawValue, privacy: .public) wanted=\(describe(wanted), privacy: .public) landed=\(landed.map(describe) ?? "unreadable", privacy: .public)"
         )
         #endif
+    }
+
+    /// Sends a window to the Dock, the same Accessibility attribute a click
+    /// on the Dock icon uses (KB-204). A window that cannot be minimized —
+    /// some utility windows say so — is left alone.
+    private static func minimize(_ window: AXUIElement) {
+        var settable: DarwinBoolean = false
+        guard AXUIElementIsAttributeSettable(window, kAXMinimizedAttribute as CFString, &settable) == .success,
+              settable.boolValue else {
+            Logger.window.notice("snap minimize: the window cannot be minimized")
+            return
+        }
+        let result = AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanTrue)
+        if result != .success {
+            Logger.window.error("Could not minimize the window: AXError \(result.rawValue, privacy: .public)")
+        }
     }
 
     // MARK: - Self-test
@@ -160,7 +180,7 @@ enum WindowElement {
     #if DEBUG
     /// KB_DEBUG_SNAP: runs each snap in turn on the frontmost window, two
     /// seconds apart, then puts the window back where it started. Proof that
-    /// the positions land where `WindowSnap` computes them, without needing
+    /// the positions land where `WindowAction` computes them, without needing
     /// someone at the keyboard.
     static func snapSelfTest() {
         guard ProcessInfo.processInfo.environment["KB_DEBUG_SNAP"] != nil else { return }
@@ -174,9 +194,12 @@ enum WindowElement {
             Logger.window.notice(
                 "snaptest front=\(app, privacy: .public) was=\(describe(original), privacy: .public) usable=\(describe(screen.visibleFrame), privacy: .public)"
             )
-            for (index, position) in WindowSnap.allCases.enumerated() {
+            // Minimize would hide the window and end the run, so the
+            // self-test only drives the ones that move it.
+            let positions = WindowAction.allCases.filter(\.movesWindow)
+            for (index, position) in positions.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 2) {
-                    let wanted = position.frame(on: screen)
+                    guard let wanted = position.frame(on: screen) else { return }
                     perform(position)
                     let landed = frame(of: window)
                     Logger.window.notice(
@@ -184,9 +207,19 @@ enum WindowElement {
                     )
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(WindowSnap.allCases.count) * 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(positions.count) * 2) {
                 setFrame(original, of: window)
                 Logger.window.notice("snaptest restored")
+                // Minimize last, and report whether the window actually went
+                // to the Dock; the run ends with it there.
+                perform(.minimize)
+                // Read after a pause: a written Accessibility attribute does
+                // not read back changed straight away, so an immediate check
+                // reports the old value and looks like a failure.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let minimized = copy(window, kAXMinimizedAttribute) as? Bool
+                    Logger.window.notice("snaptest minimize minimized=\(minimized.map(String.init) ?? "unreadable", privacy: .public)")
+                }
             }
         }
     }

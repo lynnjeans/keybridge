@@ -1,11 +1,12 @@
 import SwiftUI
 
-extension WindowSnap {
+extension WindowAction {
     var name: String {
         switch self {
         case .leftHalf: String(localized: "Left half of the screen")
         case .rightHalf: String(localized: "Right half of the screen")
         case .maximize: String(localized: "Fill the screen")
+        case .minimize: String(localized: "Minimize to the Dock")
         }
     }
 
@@ -14,13 +15,14 @@ extension WindowSnap {
         case .leftHalf: "rectangle.lefthalf.filled"
         case .rightHalf: "rectangle.righthalf.filled"
         case .maximize: "rectangle.fill"
+        case .minimize: "arrow.down.right.and.arrow.up.left"
         }
     }
 }
 
 /// A window position as a rule's result, in lists.
-struct WindowSnapLabel: View {
-    let snap: WindowSnap
+struct WindowActionLabel: View {
+    let snap: WindowAction
 
     var body: some View {
         Label(snap.name, systemImage: snap.symbol)
@@ -31,13 +33,13 @@ struct WindowSnapLabel: View {
 }
 
 /// Chooses where a rule puts the frontmost window.
-struct WindowSnapPicker: View {
-    @Binding var selection: WindowSnap
+struct WindowActionPicker: View {
+    @Binding var selection: WindowAction
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Picker("Window position", selection: $selection) {
-                ForEach(WindowSnap.allCases, id: \.self) { snap in
+                ForEach(WindowAction.allCases, id: \.self) { snap in
                     Label(snap.name, systemImage: snap.symbol).tag(snap)
                 }
             }

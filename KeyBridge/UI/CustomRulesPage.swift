@@ -129,7 +129,7 @@ struct CustomRuleEditor: View {
     @State private var trigger: Trigger?
     @State private var result: Result
     @State private var systemAction: SystemAction = .missionControl
-    @State private var windowSnap: WindowSnap = .leftHalf
+    @State private var windowAction: WindowAction = .leftHalf
     @State private var combo: KeyCombo?
     @State private var app: String?
     @State private var where_: Where
@@ -161,9 +161,9 @@ struct CustomRuleEditor: View {
             _systemAction = State(initialValue: function)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
-        case .windowSnap(let snap)?:
+        case .windowAction(let snap)?:
             _result = State(initialValue: .window)
-            _windowSnap = State(initialValue: snap)
+            _windowAction = State(initialValue: snap)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -229,7 +229,7 @@ struct CustomRuleEditor: View {
                     } else if result == .system {
                         SystemActionPicker(selection: $systemAction)
                     } else if result == .window {
-                        WindowSnapPicker(selection: $windowSnap)
+                        WindowActionPicker(selection: $windowAction)
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -320,7 +320,7 @@ struct CustomRuleEditor: View {
         case .system:
             action = .systemAction(systemAction)
         case .window:
-            action = .windowSnap(windowSnap)
+            action = .windowAction(windowAction)
         }
         let applications: ApplicationFilter
         switch where_ {

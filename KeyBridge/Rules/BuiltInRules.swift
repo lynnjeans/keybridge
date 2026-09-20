@@ -109,11 +109,17 @@ enum BuiltInRules {
         // here as a snap.
         .init(id: "window", rules: [
             Rule(id: "window.leftHalf", trigger: .key(combo: KeyCombo([.option], .leftArrow)),
-                 action: .windowSnap(.leftHalf)),
+                 action: .windowAction(.leftHalf)),
             Rule(id: "window.rightHalf", trigger: .key(combo: KeyCombo([.option], .rightArrow)),
-                 action: .windowSnap(.rightHalf)),
+                 action: .windowAction(.rightHalf)),
             Rule(id: "window.maximize", trigger: .key(combo: KeyCombo([.option], .upArrow)),
-                 action: .windowSnap(.maximize)),
+                 action: .windowAction(.maximize)),
+            // Win+↓ on Windows restores a maximized window and minimizes a
+            // normal one. Only the minimize half is here: restoring means
+            // remembering what each window's frame was before it was snapped,
+            // which is its own piece of state and its own ticket.
+            Rule(id: "window.minimize", trigger: .key(combo: KeyCombo([.option], .downArrow)),
+                 action: .windowAction(.minimize)),
         ]),
         .init(id: "mouse", rules: [
             // Back and forward in browsers and Finder. Not limited by app: the

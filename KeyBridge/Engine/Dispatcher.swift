@@ -60,7 +60,7 @@ final class Dispatcher {
     /// depend on this Mac's settings.
     private let systemShortcuts: @MainActor () -> SymbolicHotKeys
     /// Moves the frontmost window. Injected so tests need no real windows.
-    private let snap: @MainActor (WindowSnap) -> Void
+    private let snap: @MainActor (WindowAction) -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
@@ -68,7 +68,7 @@ final class Dispatcher {
         post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) },
         openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) },
         systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() },
-        snap: @escaping @MainActor (WindowSnap) -> Void = { WindowElement.perform($0) }
+        snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) }
     ) {
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
@@ -199,7 +199,7 @@ final class Dispatcher {
             openApplication(bundleID)
         case .systemAction(let function):
             trigger(function)
-        case .windowSnap(let position):
+        case .windowAction(let position):
             move(position)
         }
     }
@@ -230,7 +230,7 @@ final class Dispatcher {
     /// Snaps the frontmost window, after the tap callback returns: the
     /// Accessibility round trip to another app is far too slow to hold up the
     /// event stream, and a held key must not stall the keyboard.
-    private func move(_ position: WindowSnap) {
+    private func move(_ position: WindowAction) {
         DispatchQueue.main.async { [self] in snap(position) }
     }
 
@@ -263,7 +263,7 @@ final class Dispatcher {
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             trigger(function)
             return .consume
-        case .windowSnap(let position):
+        case .windowAction(let position):
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             move(position)
             return .consume
