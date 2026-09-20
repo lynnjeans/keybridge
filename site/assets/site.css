@@ -136,6 +136,16 @@ p { margin: 0; }
 .hero-shot { display: block; margin: clamp(48px, 7vw, 72px) auto 0; width: min(1000px, 100% - 32px); }
 .hero-shot img { border-radius: 14px; box-shadow: var(--shadow); }
 
+/* Sponsor */
+
+.sponsor { padding: clamp(48px, 7vw, 72px) 0; text-align: center; }
+.sponsor h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.sponsor p { color: var(--text-2); max-width: 34em; margin: 14px auto 0; }
+.sponsor .button { margin-top: 26px; }
+.button.secondary { background: none; color: var(--accent); box-shadow: inset 0 0 0 1px var(--line); }
+.button.secondary:hover { background: var(--bg-alt); }
+.button svg { width: 1em; height: 1em; fill: currentColor; }
+
 /* Sections */
 
 section { padding: clamp(72px, 10vw, 120px) 0; }
