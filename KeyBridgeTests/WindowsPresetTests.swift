@@ -23,18 +23,19 @@ import Testing
 
     /// The snap shortcuts are ⌥ and an arrow, on by default (KB-201). ⌥ is
     /// where the Windows key sits on a PC keyboard; ⌘ is where Alt does.
-    @Test func windowSnappingIsOnOptionAndTheArrowsAndStartsOn() {
+    @Test func windowActionpingIsOnOptionAndTheArrowsAndStartsOn() {
         let group = preset.groups.first { $0.id == "window" }
         #expect(group?.isEnabledByDefault == true)
-        let snaps: [(String, KeyCode, WindowSnap)] = [
+        let snaps: [(String, KeyCode, WindowAction)] = [
             ("window.leftHalf", .leftArrow, .leftHalf),
             ("window.rightHalf", .rightArrow, .rightHalf),
             ("window.maximize", .upArrow, .maximize),
+            ("window.minimize", .downArrow, .minimize),
         ]
         for (id, key, snap) in snaps {
             let rule = preset.rules.first { $0.id == id }
             #expect(rule?.trigger == .key(combo: KeyCombo([.option], key)), "\(id) trigger")
-            #expect(rule?.action == .windowSnap(snap), "\(id) action")
+            #expect(rule?.action == .windowAction(snap), "\(id) action")
             // Everywhere, terminals included: an arrow with ⌥ means nothing to a shell.
             #expect(rule?.scope == .everywhere, "\(id) scope")
         }

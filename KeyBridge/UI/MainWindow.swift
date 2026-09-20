@@ -501,6 +501,7 @@ enum RuleNames {
         "scroll.zoomIn": String(localized: "Zoom in"), "scroll.zoomOut": String(localized: "Zoom out"),
         "window.leftHalf": String(localized: "Snap to the left half"), "window.rightHalf": String(localized: "Snap to the right half"),
         "window.maximize": String(localized: "Fill the screen"),
+        "window.minimize": String(localized: "Minimize"),
     ]
 }
 

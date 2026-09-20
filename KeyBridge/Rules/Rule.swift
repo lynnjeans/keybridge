@@ -44,5 +44,5 @@ enum Action: Codable, Hashable, Sendable {
     case systemAction(SystemAction)
     /// Moves and resizes the frontmost window: left half, right half or
     /// maximized within the screen's usable area (KB-201).
-    case windowSnap(WindowSnap)
+    case windowAction(WindowAction)
 }

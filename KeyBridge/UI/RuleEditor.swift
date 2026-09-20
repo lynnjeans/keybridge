@@ -153,7 +153,7 @@ struct RuleEditor: View {
                 case .key(let combo): KeyComboView(combo: combo, style: .mac)
                 case .openApplication: EmptyView()
                 case .systemAction(let function): SystemActionLabel(action: function)
-                case .windowSnap(let snap): WindowSnapLabel(snap: snap)
+                case .windowAction(let snap): WindowActionLabel(snap: snap)
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
@@ -189,10 +189,10 @@ struct RuleEditor: View {
                             if let chosen = AppChooser.choose() { draft.action = .openApplication(bundleID: chosen) }
                         }
                     }
-                case .windowSnap(let snap):
-                    WindowSnapPicker(selection: Binding(
+                case .windowAction(let snap):
+                    WindowActionPicker(selection: Binding(
                         get: { snap },
-                        set: { draft.action = .windowSnap($0) }
+                        set: { draft.action = .windowAction($0) }
                     ))
                 }
             }
@@ -206,7 +206,7 @@ struct RuleEditor: View {
                 case .key: .keys
                 case .openApplication: .app
                 case .systemAction: .system
-                case .windowSnap: .window
+                case .windowAction: .window
                 }
             },
             set: { kind in
@@ -222,7 +222,7 @@ struct RuleEditor: View {
                 case .system:
                     draft.action = .systemAction(.missionControl)
                 case .window:
-                    draft.action = .windowSnap(.leftHalf)
+                    draft.action = .windowAction(.leftHalf)
                 }
             }
         )

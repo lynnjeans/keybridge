@@ -197,8 +197,16 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
-| `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart and puts it back (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
+| `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
 | `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
+
+- **A written Accessibility attribute does not read back changed straight away.** After setting
+  `kAXMinimizedAttribute`, reading it in the same turn of the run loop still gives the old
+  value — `minimized=false` for a window that does go to the Dock a moment later. The write
+  itself returns `.success`, so there is no error to see, and the check looks like a failed
+  minimize. Wait (a second is plenty) before reading back. Positions and sizes are not affected:
+  `kAXPosition`/`kAXSize` read back immediately, which is why `setFrame` can report where a
+  window landed.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest

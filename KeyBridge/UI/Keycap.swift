@@ -110,8 +110,8 @@ struct MappingView: View {
                 .foregroundStyle(.secondary)
         case .systemAction(let function):
             SystemActionLabel(action: function)
-        case .windowSnap(let snap):
-            WindowSnapLabel(snap: snap)
+        case .windowAction(let snap):
+            WindowActionLabel(snap: snap)
         }
     }
 
