@@ -100,6 +100,21 @@ enum BuiltInRules {
             rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
             rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
         ], isEnabledByDefault: false),
+        // Win+←/→/↑ on Windows. The trigger is ⌥, not ⌘, because these are
+        // arrow keys pressed by feel: on a Mac keyboard ⌥ sits where the Win
+        // key sits on a PC one, and ⌘ where Alt does. ⌥+arrow is macOS's own
+        // move-by-word, but the people this preset is for reach for Ctrl+←
+        // instead — the navigation group turns that into ⌥← for them, and
+        // KeyBridge's own output is stamped, so it never comes back through
+        // here as a snap.
+        .init(id: "window", rules: [
+            Rule(id: "window.leftHalf", trigger: .key(combo: KeyCombo([.option], .leftArrow)),
+                 action: .windowSnap(.leftHalf)),
+            Rule(id: "window.rightHalf", trigger: .key(combo: KeyCombo([.option], .rightArrow)),
+                 action: .windowSnap(.rightHalf)),
+            Rule(id: "window.maximize", trigger: .key(combo: KeyCombo([.option], .upArrow)),
+                 action: .windowSnap(.maximize)),
+        ]),
         .init(id: "mouse", rules: [
             // Back and forward in browsers and Finder. Not limited by app: the
             // side buttons mean nothing to a terminal either.

@@ -82,6 +82,35 @@ enum WindowElement {
         }
     }
 
+    /// Snaps the frontmost window to `position` on the screen it mostly sits
+    /// on (KB-201).
+    ///
+    /// Does nothing, with a line in the log, when there is no window a snap
+    /// should touch — a full-screen or minimized window, a panel, a sheet, or
+    /// an app that refuses to be moved. Staying put is the right answer there;
+    /// the alternative is throwing a window the user did not mean.
+    static func perform(_ position: WindowSnap) {
+        guard let window = frontmost() else {
+            Logger.window.notice("snap \(position.rawValue, privacy: .public): no window to move")
+            return
+        }
+        guard canSetFrame(window) else {
+            Logger.window.notice("snap \(position.rawValue, privacy: .public): the window's frame cannot be set")
+            return
+        }
+        guard let current = frame(of: window),
+              let wanted = position.frame(for: current, among: screens()) else {
+            Logger.window.notice("snap \(position.rawValue, privacy: .public): no frame or no screen")
+            return
+        }
+        let landed = setFrame(wanted, of: window)
+        #if DEBUG
+        Logger.window.notice(
+            "snap \(position.rawValue, privacy: .public) wanted=\(describe(wanted), privacy: .public) landed=\(landed.map(describe) ?? "unreadable", privacy: .public)"
+        )
+        #endif
+    }
+
     // MARK: - Self-test
 
     #if DEBUG
@@ -126,10 +155,46 @@ enum WindowElement {
         }
     }
 
+    #endif
+
+    #if DEBUG
+    /// KB_DEBUG_SNAP: runs each snap in turn on the frontmost window, two
+    /// seconds apart, then puts the window back where it started. Proof that
+    /// the positions land where `WindowSnap` computes them, without needing
+    /// someone at the keyboard.
+    static func snapSelfTest() {
+        guard ProcessInfo.processInfo.environment["KB_DEBUG_SNAP"] != nil else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            let app = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?"
+            guard let window = frontmost(), let original = frame(of: window) else {
+                Logger.window.notice("snaptest front=\(app, privacy: .public) no window")
+                return
+            }
+            guard let screen = WindowGeometry.screen(for: original, among: screens()) else { return }
+            Logger.window.notice(
+                "snaptest front=\(app, privacy: .public) was=\(describe(original), privacy: .public) usable=\(describe(screen.visibleFrame), privacy: .public)"
+            )
+            for (index, position) in WindowSnap.allCases.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 2) {
+                    let wanted = position.frame(on: screen)
+                    perform(position)
+                    let landed = frame(of: window)
+                    Logger.window.notice(
+                        "snaptest \(position.rawValue, privacy: .public) wanted=\(describe(wanted), privacy: .public) landed=\(landed.map(describe) ?? "unreadable", privacy: .public)"
+                    )
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(WindowSnap.allCases.count) * 2) {
+                setFrame(original, of: window)
+                Logger.window.notice("snaptest restored")
+            }
+        }
+    }
+    #endif
+
     private static func describe(_ rect: CGRect) -> String {
         "\(Int(rect.origin.x)),\(Int(rect.origin.y)) \(Int(rect.width))x\(Int(rect.height))"
     }
-    #endif
 
     // MARK: - Accessibility plumbing
 

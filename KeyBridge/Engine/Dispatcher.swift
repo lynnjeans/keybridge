@@ -59,19 +59,23 @@ final class Dispatcher {
     /// The user's shortcuts for system functions. Replaceable so tests do not
     /// depend on this Mac's settings.
     private let systemShortcuts: @MainActor () -> SymbolicHotKeys
+    /// Moves the frontmost window. Injected so tests need no real windows.
+    private let snap: @MainActor (WindowSnap) -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
         isEditingText: @escaping @MainActor () -> Bool = { false },
         post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) },
         openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) },
-        systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() }
+        systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() },
+        snap: @escaping @MainActor (WindowSnap) -> Void = { WindowElement.perform($0) }
     ) {
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
         self.post = post
         self.openApplication = openApplication
         self.systemShortcuts = systemShortcuts
+        self.snap = snap
     }
 
     /// While set, the rule editor is recording a trigger: key presses and
@@ -195,6 +199,8 @@ final class Dispatcher {
             openApplication(bundleID)
         case .systemAction(let function):
             trigger(function)
+        case .windowSnap(let position):
+            move(position)
         }
     }
 
@@ -219,6 +225,13 @@ final class Dispatcher {
                 }
             }
         }
+    }
+
+    /// Snaps the frontmost window, after the tap callback returns: the
+    /// Accessibility round trip to another app is far too slow to hold up the
+    /// event stream, and a held key must not stall the keyboard.
+    private func move(_ position: WindowSnap) {
+        DispatchQueue.main.async { [self] in snap(position) }
     }
 
     private func keyDown(_ event: CGEvent) -> Disposition {
@@ -249,6 +262,10 @@ final class Dispatcher {
         case .systemAction(let function):
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             trigger(function)
+            return .consume
+        case .windowSnap(let position):
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            move(position)
             return .consume
         }
     }
