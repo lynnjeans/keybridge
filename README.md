@@ -169,7 +169,7 @@ the implied warranty of merchantability or fitness for a particular purpose. See
 [LICENSE](LICENSE) for the full terms.
 
 KeyBridge is free software and always will be. If it saves you some frustration,
-donations are welcome, but never required.
+donations are welcome, but never required: [sponsor the project on GitHub](https://github.com/sponsors/lynnjeans).
 
 KeyBridge includes no third-party code. The projects it was designed after, and the ones
 whose licenses rule out reuse, are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
