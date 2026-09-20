@@ -96,6 +96,7 @@ targets:
       - path: KeyBridge/Engine/ScrollStepper.swift
       - path: KeyBridge/Engine/WheelDirection.swift
       - path: KeyBridge/Engine/DockClick.swift
+      - path: KeyBridge/Window/WindowGeometry.swift
       - path: KeyBridge/Permissions
       - path: KeyBridge/Clipboard
       - path: KeyBridge/App/EngineController.swift
