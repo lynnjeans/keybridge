@@ -197,6 +197,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
+| `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest
