@@ -53,6 +53,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
         DockWindow.selfTest()
         WindowElement.selfTest()
+        WindowElement.snapSelfTest()
         if let name = ProcessInfo.processInfo.environment["KB_DEBUG_SYSACTION"],
            let function = SystemAction(rawValue: name) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [dispatcher] in

@@ -15,7 +15,7 @@ struct RuleEditor: View {
     enum Side { case trigger, action }
 
     /// A mouse button's result: keys, an app, or a system function (KB-051).
-    enum ResultKind: Hashable { case keys, app, system }
+    enum ResultKind: Hashable { case keys, app, system, window }
 
     /// The keys to go back to when the result is switched from a system
     /// function to a shortcut.
@@ -153,6 +153,7 @@ struct RuleEditor: View {
                 case .key(let combo): KeyComboView(combo: combo, style: .mac)
                 case .openApplication: EmptyView()
                 case .systemAction(let function): SystemActionLabel(action: function)
+                case .windowSnap(let snap): WindowSnapLabel(snap: snap)
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
@@ -163,6 +164,7 @@ struct RuleEditor: View {
                     Text("A shortcut").tag(ResultKind.keys)
                     Text("Open an app").tag(ResultKind.app)
                     Text("System function").tag(ResultKind.system)
+                    Text("Window").tag(ResultKind.window)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -187,6 +189,11 @@ struct RuleEditor: View {
                             if let chosen = AppChooser.choose() { draft.action = .openApplication(bundleID: chosen) }
                         }
                     }
+                case .windowSnap(let snap):
+                    WindowSnapPicker(selection: Binding(
+                        get: { snap },
+                        set: { draft.action = .windowSnap($0) }
+                    ))
                 }
             }
         }
@@ -199,6 +206,7 @@ struct RuleEditor: View {
                 case .key: .keys
                 case .openApplication: .app
                 case .systemAction: .system
+                case .windowSnap: .window
                 }
             },
             set: { kind in
@@ -213,6 +221,8 @@ struct RuleEditor: View {
                     if let chosen = AppChooser.choose() { draft.action = .openApplication(bundleID: chosen) }
                 case .system:
                     draft.action = .systemAction(.missionControl)
+                case .window:
+                    draft.action = .windowSnap(.leftHalf)
                 }
             }
         )

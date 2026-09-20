@@ -42,4 +42,7 @@ enum Action: Codable, Hashable, Sendable {
     /// Triggers a macOS function, such as Mission Control, with the user's
     /// own shortcut for it (KB-051).
     case systemAction(SystemAction)
+    /// Moves and resizes the frontmost window: left half, right half or
+    /// maximized within the screen's usable area (KB-201).
+    case windowSnap(WindowSnap)
 }

@@ -425,6 +425,7 @@ enum RuleNames {
         case "winKey": String(localized: "Windows Key")
         case "mouse": String(localized: "Mouse")
         case "scroll": String(localized: "Scroll")
+        case "window": String(localized: "Window Snapping")
         default: id
         }
     }
@@ -434,6 +435,7 @@ enum RuleNames {
         switch id {
         case "finder": String(localized: "Only in Finder, and not while renaming or searching")
         case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")
+        case "window": String(localized: "⌥ sits where the Windows key does, so ⌥ and an arrow snaps the window in front")
         default: nil
         }
     }
@@ -449,6 +451,7 @@ enum RuleNames {
         case "winKey": "command"
         case "mouse": "computermouse.fill"
         case "scroll": "arrow.up.and.down"
+        case "window": "rectangle.split.2x1"
         default: "square.grid.2x2.fill"
         }
     }
@@ -464,6 +467,7 @@ enum RuleNames {
         case "winKey": .pink
         case "mouse": .orange
         case "scroll": .cyan
+        case "window": .mint
         default: .gray
         }
     }
@@ -495,6 +499,8 @@ enum RuleNames {
         "winKey.screenshotArea": String(localized: "Screenshot of an area to clipboard"),
         "mouse.back": String(localized: "Back"), "mouse.forward": String(localized: "Forward"),
         "scroll.zoomIn": String(localized: "Zoom in"), "scroll.zoomOut": String(localized: "Zoom out"),
+        "window.leftHalf": String(localized: "Snap to the left half"), "window.rightHalf": String(localized: "Snap to the right half"),
+        "window.maximize": String(localized: "Fill the screen"),
     ]
 }
 

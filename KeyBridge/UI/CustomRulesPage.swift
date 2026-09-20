@@ -129,6 +129,7 @@ struct CustomRuleEditor: View {
     @State private var trigger: Trigger?
     @State private var result: Result
     @State private var systemAction: SystemAction = .missionControl
+    @State private var windowSnap: WindowSnap = .leftHalf
     @State private var combo: KeyCombo?
     @State private var app: String?
     @State private var where_: Where
@@ -139,7 +140,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app, system }
+    enum Result: Hashable { case keys, app, system, window }
     enum Where: Hashable { case everywhere, only, except }
 
     /// - Parameter trigger: for a new rule, what it is pressed with, such as
@@ -158,6 +159,11 @@ struct CustomRuleEditor: View {
         case .systemAction(let function)?:
             _result = State(initialValue: .system)
             _systemAction = State(initialValue: function)
+            _combo = State(initialValue: nil)
+            _app = State(initialValue: nil)
+        case .windowSnap(let snap)?:
+            _result = State(initialValue: .window)
+            _windowSnap = State(initialValue: snap)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -205,6 +211,7 @@ struct CustomRuleEditor: View {
                     Text("A shortcut").tag(Result.keys)
                     Text("Open an app").tag(Result.app)
                     Text("System function").tag(Result.system)
+                    Text("Window").tag(Result.window)
                 }
                 .pickerStyle(.segmented)
                 LabeledContent("") {
@@ -221,6 +228,8 @@ struct CustomRuleEditor: View {
                         }
                     } else if result == .system {
                         SystemActionPicker(selection: $systemAction)
+                    } else if result == .window {
+                        WindowSnapPicker(selection: $windowSnap)
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -310,6 +319,8 @@ struct CustomRuleEditor: View {
             action = .openApplication(bundleID: app)
         case .system:
             action = .systemAction(systemAction)
+        case .window:
+            action = .windowSnap(windowSnap)
         }
         let applications: ApplicationFilter
         switch where_ {

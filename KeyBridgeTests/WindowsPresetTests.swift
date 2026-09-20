@@ -15,10 +15,29 @@ import Testing
         #expect(Set(ids).count == ids.count)
     }
 
-    @Test func groupsAreTheCoverageListsPlusMouseAndScroll() {
+    @Test func groupsAreTheCoverageListsPlusMouseScrollAndWindow() {
         #expect(preset.groups.map(\.id) == [
-            "editing", "navigation", "finder", "windows", "browser", "system", "winKey", "mouse", "scroll",
+            "editing", "navigation", "finder", "windows", "browser", "system", "winKey", "window", "mouse", "scroll",
         ])
+    }
+
+    /// The snap shortcuts are ⌥ and an arrow, on by default (KB-201). ⌥ is
+    /// where the Windows key sits on a PC keyboard; ⌘ is where Alt does.
+    @Test func windowSnappingIsOnOptionAndTheArrowsAndStartsOn() {
+        let group = preset.groups.first { $0.id == "window" }
+        #expect(group?.isEnabledByDefault == true)
+        let snaps: [(String, KeyCode, WindowSnap)] = [
+            ("window.leftHalf", .leftArrow, .leftHalf),
+            ("window.rightHalf", .rightArrow, .rightHalf),
+            ("window.maximize", .upArrow, .maximize),
+        ]
+        for (id, key, snap) in snaps {
+            let rule = preset.rules.first { $0.id == id }
+            #expect(rule?.trigger == .key(combo: KeyCombo([.option], key)), "\(id) trigger")
+            #expect(rule?.action == .windowSnap(snap), "\(id) action")
+            // Everywhere, terminals included: an arrow with ⌥ means nothing to a shell.
+            #expect(rule?.scope == .everywhere, "\(id) scope")
+        }
     }
 
     /// Every "bulk" and "dedicated" entry of the list, as trigger → result.
