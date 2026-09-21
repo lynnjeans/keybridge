@@ -1545,6 +1545,22 @@
         }
       }
     },
+    "Excel Workbook" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excel ブック"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excel 工作簿"
+          }
+        }
+      }
+    },
     "Export Diagnostics…" : {
       "localizations" : {
         "ja" : {
@@ -1685,6 +1701,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在列表中找到 **KeyBridge** 并打开开关。"
+          }
+        }
+      }
+    },
+    "Finder right-click menu" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder の右クリックメニュー"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder 右键菜单"
           }
         }
       }
@@ -2297,6 +2329,22 @@
         }
       }
     },
+    "Keynote Presentation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keynote プレゼンテーション"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keynote 演示文稿"
+          }
+        }
+      }
+    },
     "Launchpad" : {
       "localizations" : {
         "ja" : {
@@ -2469,6 +2517,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "把任意组合键或鼠标键映射到另一个快捷键或某个应用——比如在 Ctrl+C 之外再让 fn+C 变成 ⌘C，或让 Win+E 打开访达。"
+          }
+        }
+      }
+    },
+    "Markdown Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown ドキュメント"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown 文档"
           }
         }
       }
@@ -2681,6 +2745,102 @@
         }
       }
     },
+    "New Excel Workbook" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Excel ブック"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Excel 工作簿"
+          }
+        }
+      }
+    },
+    "New Keynote Presentation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Keynote プレゼンテーション"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Keynote 演示文稿"
+          }
+        }
+      }
+    },
+    "New Markdown Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Markdown ドキュメント"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Markdown 文档"
+          }
+        }
+      }
+    },
+    "New Numbers Spreadsheet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Numbers スプレッドシート"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Numbers 表格"
+          }
+        }
+      }
+    },
+    "New Pages Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Pages 書類"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Pages 文稿"
+          }
+        }
+      }
+    },
+    "New PowerPoint Presentation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 PowerPoint プレゼンテーション"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 PowerPoint 演示文稿"
+          }
+        }
+      }
+    },
     "New Rule" : {
       "localizations" : {
         "ja" : {
@@ -2709,6 +2869,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建规则…"
+          }
+        }
+      }
+    },
+    "New Text Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規テキスト ドキュメント"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建文本文档"
+          }
+        }
+      }
+    },
+    "New Word Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規 Word 文書"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建 Word 文档"
           }
         }
       }
@@ -2809,6 +3001,22 @@
         }
       }
     },
+    "Numbers Spreadsheet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numbers スプレッドシート"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numbers 表格"
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "ja" : {
@@ -2853,6 +3061,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已关闭。所有按键、点击和滚动都原样传给应用。"
+          }
+        }
+      }
+    },
+    "Off. Switch it on under KeyBridge in System Settings › General › Login Items & Extensions." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ。「システム設定 › 一般 › ログイン項目と機能拡張」の KeyBridge でオンにしてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未开启。请在“系统设置 › 通用 › 登录项与扩展”中的 KeyBridge 下开启。"
           }
         }
       }
@@ -2933,6 +3157,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已开启。%@+C、Home/End、Alt+Tab、鼠标侧键和滚轮缩放都按 Windows 的方式工作。"
+          }
+        }
+      }
+    },
+    "On. Switch it off under KeyBridge in System Settings › General › Login Items & Extensions." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オン。「システム設定 › 一般 › ログイン項目と機能拡張」の KeyBridge でオフにできます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已开启。可在“系统设置 › 通用 › 登录项与扩展”中的 KeyBridge 下关闭。"
           }
         }
       }
@@ -3193,6 +3433,22 @@
         }
       }
     },
+    "Open in Terminal" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ターミナルで開く"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在终端中打开"
+          }
+        }
+      }
+    },
     "Open source under GPL-3.0, and free." : {
       "localizations" : {
         "ja" : {
@@ -3253,6 +3509,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "概览"
+          }
+        }
+      }
+    },
+    "Pages Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pages 書類"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pages 文稿"
           }
         }
       }
@@ -3413,6 +3685,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "固定：不受条数上限影响"
+          }
+        }
+      }
+    },
+    "PowerPoint Presentation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPoint プレゼンテーション"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPoint 演示文稿"
           }
         }
       }
@@ -3925,6 +4213,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "屏幕右半边"
+          }
+        }
+      }
+    },
+    "Right-click empty space in a folder to create a new document there or open it in Terminal, like on Windows." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダの空いている場所を右クリックすると、そこに新しい書類を作成したり、ターミナルで開いたりできます。Windows と同じです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在文件夹的空白处右键，即可在此新建文档或在终端中打开，和 Windows 一样。"
           }
         }
       }
@@ -4639,6 +4943,22 @@
         }
       }
     },
+    "Text Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキスト ドキュメント"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本文档"
+          }
+        }
+      }
+    },
     "Text Navigation" : {
       "localizations" : {
         "ja" : {
@@ -5090,6 +5410,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows → Mac 快捷键桥"
+          }
+        }
+      }
+    },
+    "Word Document" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Word 文書"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Word 文档"
           }
         }
       }

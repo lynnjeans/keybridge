@@ -25,12 +25,16 @@ struct KeyBridgeApp: App {
         }
         .defaultSize(width: 880, height: 600)
         .windowResizability(.contentMinSize)
+        // A keybridge:// URL from the Finder extension would otherwise open
+        // this window; AppDelegate handles those URLs itself.
+        .handlesExternalEvents(matching: [])
 
         // The first-run guide, sized by its content.
         Window("Set Up KeyBridge", id: WindowID.onboarding) {
             OnboardingWindow(onboarding: appDelegate.onboarding)
         }
         .windowResizability(.contentSize)
+        .handlesExternalEvents(matching: [])
     }
 }
 

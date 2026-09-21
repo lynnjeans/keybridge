@@ -30,12 +30,21 @@ targets:
       - path: KeyBridge
         excludes:
           - Resources/Info.plist
+          - Resources/Templates
+      # Blank Office documents for the Finder menu, kept in a Templates folder
+      # inside the app (scripts/make-office-templates.py).
+      - path: KeyBridge/Resources/Templates
+        type: folder
+        buildPhase: resources
       # Shipped inside the app, as GPL-3.0 asks of every copy handed on, and
       # shown from the About page.
       - path: LICENSE
         buildPhase: resources
       - path: THIRD_PARTY_NOTICES.md
         buildPhase: resources
+    dependencies:
+      # The Finder right-click menu (KB-210), embedded in Contents/PlugIns.
+      - target: KeyBridgeFinder
     info:
       path: KeyBridge/Resources/Info.plist
       properties:
@@ -53,6 +62,11 @@ targets:
         # one per app in System Settings › General › Language & Region.
         CFBundleLocalizations: [en, zh-Hans, ja]
         NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
+        # The Finder extension hands each menu choice to the app as a
+        # keybridge:// URL (FinderMenuRequest).
+        CFBundleURLTypes:
+          - CFBundleURLName: io.github.lynnjeans.KeyBridge.finder
+            CFBundleURLSchemes: [keybridge]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge
@@ -80,6 +94,39 @@ targets:
       testTargets:
         - KeyBridgeTests
 
+  # The Finder right-click menu (KB-210). Finder only loads a sandboxed
+  # extension, so it builds the menu and leaves the work to the app.
+  KeyBridgeFinder:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: KeyBridgeFinder
+        excludes:
+          - Info.plist
+          - "*.entitlements"
+      - path: KeyBridge/FinderMenu/NewDocument.swift
+    info:
+      path: KeyBridgeFinder/Info.plist
+      properties:
+        CFBundleDisplayName: KeyBridge Finder Menu
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.FinderSync
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).FinderSync"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge.Finder
+        PRODUCT_NAME: KeyBridgeFinder
+        CODE_SIGN_ENTITLEMENTS: KeyBridgeFinder/KeyBridgeFinder.entitlements
+        ENABLE_APP_SANDBOX: YES
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_EMIT_LOC_STRINGS: NO
+    configFiles:
+      Debug: Config/Signing.xcconfig
+      Release: Config/Signing.xcconfig
+
   # Unit tests for logic that does not need a running app. The bundle compiles
   # the sources it tests itself instead of loading them from a host app, so a
   # test run never launches KeyBridge or starts its event tap.
@@ -103,6 +150,7 @@ targets:
       - path: KeyBridge/Clipboard
       - path: KeyBridge/App/EngineController.swift
       - path: KeyBridge/App/DiagnosticReport.swift
+      - path: KeyBridge/FinderMenu/NewDocument.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests

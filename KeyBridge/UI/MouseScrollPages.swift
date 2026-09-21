@@ -77,6 +77,8 @@ struct MousePage: View {
                 .labelsHidden()
             }
         }
+
+        FinderMenuCard()
     }
 }
 

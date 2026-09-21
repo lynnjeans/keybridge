@@ -85,6 +85,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
+    /// Choices from the Finder extension's menu arrive as keybridge:// URLs
+    /// (KB-210).
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            FinderMenuHandler.handle(url)
+        }
+    }
+
     /// Records the version and permission state at launch, so a user's setup
     /// can be diagnosed from the system log.
     private func logLaunchState() {
