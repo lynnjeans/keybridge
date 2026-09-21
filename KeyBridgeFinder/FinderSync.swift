@@ -29,6 +29,8 @@ final class FinderSync: FIFinderSync {
         }
         let newItem = NSMenuItem(title: FinderMenuTitle.new, action: nil, keyEquivalent: "")
         newItem.submenu = new
+        // A symbol, as Finder draws its own New Folder item.
+        newItem.image = NSImage(systemSymbolName: "doc.badge.plus", accessibilityDescription: nil)
         menu.addItem(newItem)
 
         let terminal = NSMenuItem(title: FinderMenuTitle.openInTerminal,
