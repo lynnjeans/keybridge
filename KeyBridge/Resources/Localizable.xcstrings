@@ -20,6 +20,22 @@
         }
       }
     },
+    "%@ also uses this shortcut; the path box takes it in Finder." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%@」もこのショートカットを使っています。Finder ではパスボックスが優先されます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”也使用这个快捷键，在 Finder 里路径框会优先占用它。"
+          }
+        }
+      }
+    },
     "%@ can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit them while you use KeyBridge, or turn off their settings that overlap." : {
       "localizations" : {
         "ja" : {
@@ -3305,6 +3321,22 @@
         }
       }
     },
+    "Only while Finder is in front: paste or type a path, Return to jump. Click to record a different shortcut." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder が最前面にあるときだけ使えます。パスを貼り付けまたは入力し、Return でジャンプします。クリックして別のショートカットを記録できます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅当 Finder 在前台时可用：粘贴或输入路径，回车跳转。点击可录制其他快捷键。"
+          }
+        }
+      }
+    },
     "Open" : {
       "localizations" : {
         "ja" : {
@@ -3589,6 +3621,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "粘贴"
+          }
+        }
+      }
+    },
+    "Paste a path in Finder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder でパスを貼り付け"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Finder 中粘贴路径"
+          }
+        }
+      }
+    },
+    "Paste or type a path…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスを貼り付けまたは入力…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粘贴或输入路径…"
           }
         }
       }

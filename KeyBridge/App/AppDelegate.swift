@@ -9,6 +9,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let otherRemappers = OtherRemapperMonitor()
     lazy var clipboard = ClipboardController()
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
+    lazy var pathBox = PathBoxController()
+    lazy var pathBoxPanel = PathBoxPanelController()
     let frontmost = FrontmostApplication()
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     lazy var dispatcher = Dispatcher(
@@ -36,6 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         secureInput.start()
         otherRemappers.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
+        pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show() }
         dispatcher.leftMouse = { [dockClick] event, type in
             let now = ProcessInfo.processInfo.systemUptime
             if type == .leftMouseDown {
