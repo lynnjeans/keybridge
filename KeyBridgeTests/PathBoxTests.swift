@@ -54,6 +54,26 @@ import Testing
         #expect(PathBoxResolver.resolve("~") == .folder(URL(fileURLWithPath: home.path(percentEncoded: false))))
     }
 
+    @Test func aBundleResolvesToAFileSoItIsRevealedRatherThanLaunched() throws {
+        try withFixture { folder in
+            // A bundle is a directory on disk; opening one would launch or
+            // open it instead of showing it in Finder.
+            let bundle = folder.appending(path: "Example.app")
+            try files.createDirectory(at: bundle, withIntermediateDirectories: true)
+            let path = bundle.path(percentEncoded: false)
+            #expect(PathBoxResolver.resolve(path) == .file(URL(fileURLWithPath: path)))
+        }
+    }
+
+    @Test func onlyTheFirstLineOfAMultipleSelectionIsUsed() {
+        withFixture { folder in
+            // KeyBridge's own Copy Path writes one path per line.
+            let path = folder.path(percentEncoded: false)
+            let pasted = "\(path)\n/definitely/not/a/real/path\n"
+            #expect(PathBoxResolver.resolve(pasted) == .folder(URL(fileURLWithPath: path)))
+        }
+    }
+
     @Test func aSingleQuoteIsLeftAlone() {
         // Not a matched pair, so it is part of the path, not a wrapper — and
         // a lone quote can never be a real path anyway.

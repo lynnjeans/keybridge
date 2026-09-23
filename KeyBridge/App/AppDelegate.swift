@@ -39,6 +39,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         otherRemappers.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
         pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show() }
+        // A system hot key never reaches the app in front, so the path box
+        // takes ⌘L only while Finder is there.
+        pathBox.setFrontmostApplication(frontmost.bundleID)
+        frontmost.onChange = { [pathBox] bundleID in pathBox.setFrontmostApplication(bundleID) }
         dispatcher.leftMouse = { [dockClick] event, type in
             let now = ProcessInfo.processInfo.systemUptime
             if type == .leftMouseDown {

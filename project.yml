@@ -148,6 +148,7 @@ targets:
       - path: KeyBridge/Window/WindowElement.swift
       - path: KeyBridge/Permissions
       - path: KeyBridge/Clipboard
+      - path: KeyBridge/PathBox/PathBoxResolver.swift
       - path: KeyBridge/App/EngineController.swift
       - path: KeyBridge/App/DiagnosticReport.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
