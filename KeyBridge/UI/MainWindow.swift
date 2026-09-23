@@ -10,6 +10,7 @@ struct MainWindow: View {
     let secureInput: SecureInputMonitor
     let otherRemappers: OtherRemapperMonitor
     let clipboard: ClipboardController
+    let pathBox: PathBoxController
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -26,7 +27,7 @@ struct MainWindow: View {
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
                 case .mouse:
-                    MousePage(rules: rules)
+                    MousePage(rules: rules, pathBox: pathBox)
                 case .scroll:
                     ScrollPage(rules: rules)
                 case .clipboard:

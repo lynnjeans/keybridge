@@ -20,7 +20,8 @@ struct KeyBridgeApp: App {
                 rules: appDelegate.rules,
                 secureInput: appDelegate.secureInput,
                 otherRemappers: appDelegate.otherRemappers,
-                clipboard: appDelegate.clipboard
+                clipboard: appDelegate.clipboard,
+                pathBox: appDelegate.pathBox
             )
         }
         .defaultSize(width: 880, height: 600)

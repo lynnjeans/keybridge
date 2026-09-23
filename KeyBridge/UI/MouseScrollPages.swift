@@ -3,6 +3,7 @@ import SwiftUI
 /// The side buttons: which button does what, each entry editable.
 struct MousePage: View {
     let rules: RulesController
+    let pathBox: PathBoxController
     @State private var editing: Rule?
     /// A button the user added, open in the custom rule editor (KB-055).
     @State private var editingAdded: CustomRulesPage.EditedRule?
@@ -79,6 +80,74 @@ struct MousePage: View {
         }
 
         FinderMenuCard()
+        PathBoxCard(pathBox: pathBox, rules: rules)
+    }
+}
+
+/// The shortcut that shows the paste-a-path box over Finder (KB-213).
+private struct PathBoxCard: View {
+    let pathBox: PathBoxController
+    let rules: RulesController
+    @State private var recorder = KeyRecorder()
+    @State private var isRecording = false
+
+    var body: some View {
+        Card {
+            HStack(alignment: .top, spacing: 12) {
+                IconTile(symbol: "signpost.right.fill", tint: .teal, size: 30)
+                VStack(alignment: .leading, spacing: 8) {
+                    AdaptiveRow(spacing: 14) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Paste a path in Finder")
+                                .font(.headline)
+                            Text("Only while Finder is in front: paste or type a path, Return to jump. Click to record a different shortcut.")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        RecorderField(isRecording: isRecording, prompt: "Press a shortcut…",
+                                      liveModifiers: recorder.modifiers, style: .mac) {
+                            KeyComboView(combo: pathBox.hotKey, style: .mac)
+                        } action: {
+                            isRecording ? stop() : start()
+                        }
+                    }
+                    if let problem = pathBox.hotKeyProblem {
+                        Label(problem, systemImage: "exclamationmark.triangle.fill")
+                            .font(.callout)
+                            .foregroundStyle(.orange)
+                    } else if let conflict {
+                        Label("\(conflict) also uses this shortcut; the path box takes it in Finder.",
+                              systemImage: "exclamationmark.triangle.fill")
+                            .font(.callout)
+                            .foregroundStyle(.orange)
+                    }
+                }
+            }
+        }
+        .onDisappear { if isRecording { stop() } }
+    }
+
+    /// A KeyBridge rule with the same trigger, which the box would shadow
+    /// while Finder is in front.
+    private var conflict: String? {
+        rules.effectiveRules.first { $0.isEnabled && $0.trigger == .key(combo: pathBox.hotKey) }
+            .map { $0.name ?? RuleNames.name(of: $0) }
+    }
+
+    private func start() {
+        isRecording = true
+        pathBox.suspendHotKey()
+        recorder.start(rules: rules, accepting: { if case .key = $0 { true } else { false } }) { trigger in
+            if case .key(let combo)? = trigger { pathBox.setHotKey(combo) }
+            stop()
+        }
+    }
+
+    private func stop() {
+        recorder.stop()
+        isRecording = false
+        pathBox.resumeHotKey()
     }
 }
 
