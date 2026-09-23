@@ -56,6 +56,13 @@ import Testing
         }
     }
 
+    @Test func copyPathJoinsOnePathPerLine() {
+        let a = URL(filePath: "/Users/someone/My Folder/a.txt")
+        let b = URL(filePath: "/Volumes/USB Stick/报告 & notes?#1", directoryHint: .isDirectory)
+        #expect(CopyPath.text(for: [a]) == "/Users/someone/My Folder/a.txt")
+        #expect(CopyPath.text(for: [a, b]) == "/Users/someone/My Folder/a.txt\n/Volumes/USB Stick/报告 & notes?#1/")
+    }
+
     @Test func foreignOrMalformedURLsAreRefused() {
         let refused = [
             "https://finder/new?type=text&folder=/tmp",

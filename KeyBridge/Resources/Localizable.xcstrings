@@ -953,6 +953,22 @@
         }
       }
     },
+    "Copy Path" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスをコピー"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制路径"
+          }
+        }
+      }
+    },
     "Create any “combination → combination” mapping of your own." : {
       "localizations" : {
         "ja" : {

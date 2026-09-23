@@ -137,6 +137,15 @@ enum NewDocument: String, CaseIterable, Sendable {
 enum FinderMenuTitle {
     static var new: String { String(localized: "New", bundle: .keyBridge) }
     static var openInTerminal: String { String(localized: "Open in Terminal", bundle: .keyBridge) }
+    static var copyPath: String { String(localized: "Copy Path", bundle: .keyBridge) }
+}
+
+/// The text Copy Path puts on the clipboard (KB-212): one POSIX path per
+/// line, in the order Finder reports the selection.
+enum CopyPath {
+    static func text(for urls: [URL]) -> String {
+        urls.map { $0.path(percentEncoded: false) }.joined(separator: "\n")
+    }
 }
 
 /// What the Finder extension asks the app to do.
