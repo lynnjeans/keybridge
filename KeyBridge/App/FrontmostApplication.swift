@@ -10,6 +10,11 @@ import OSLog
 final class FrontmostApplication {
     private(set) var bundleID: String?
 
+    /// Told whenever the frontmost application changes, for features that
+    /// have to act on the change rather than read the value per event: the
+    /// path box holds its system hot key only while Finder is in front.
+    var onChange: (@MainActor (String?) -> Void)?
+
     // Kept for the app's lifetime, so the observer is never removed.
     private var observer: NSObjectProtocol?
 
@@ -28,6 +33,7 @@ final class FrontmostApplication {
 
     private func update(_ bundleID: String?) {
         self.bundleID = bundleID
+        onChange?(bundleID)
         #if DEBUG
         Logger.engine.notice("Frontmost application: \(bundleID ?? "none", privacy: .public)")
         #endif

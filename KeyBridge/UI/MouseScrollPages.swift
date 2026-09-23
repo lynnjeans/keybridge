@@ -105,11 +105,19 @@ private struct PathBoxCard: View {
                                 .foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
-                        RecorderField(isRecording: isRecording, prompt: "Press a shortcut…",
-                                      liveModifiers: recorder.modifiers, style: .mac) {
-                            KeyComboView(combo: pathBox.hotKey, style: .mac)
-                        } action: {
-                            isRecording ? stop() : start()
+                        HStack(spacing: 12) {
+                            RecorderField(isRecording: isRecording, prompt: "Press a shortcut…",
+                                          liveModifiers: recorder.modifiers, style: .mac) {
+                                KeyComboView(combo: pathBox.hotKey, style: .mac)
+                            } action: {
+                                isRecording ? stop() : start()
+                            }
+                            Toggle("Paste a path in Finder", isOn: Binding(
+                                get: { pathBox.isEnabled },
+                                set: { pathBox.isEnabled = $0 }
+                            ))
+                            .toggleStyle(.switch)
+                            .labelsHidden()
                         }
                     }
                     if let problem = pathBox.hotKeyProblem {

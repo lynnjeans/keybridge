@@ -43,7 +43,10 @@ final class PathBoxPanelController {
 
     private func makePanel() -> NSPanel {
         let panel = PathBoxKeyablePanel(
-            contentRect: NSRect(x: 0, y: 0, width: 420, height: 44),
+            // 28pt taller than the box itself: with `.titled` the title
+            // bar covers the top of the content view, and a click there
+            // drags the panel instead of reaching the text field.
+            contentRect: NSRect(x: 0, y: 0, width: 420, height: 72),
             styleMask: [.titled, .nonactivatingPanel, .fullSizeContentView],
             backing: .buffered, defer: false
         )
@@ -72,9 +75,14 @@ final class PathBoxPanelController {
         let size = panel.frame.size
         if let window = WindowElement.frontmost(), let frame = WindowElement.frame(of: window),
            let primary = NSScreen.screens.first {
-            let cocoa = WindowGeometry.flip(frame, primaryHeight: primary.frame.height)
+            let primaryHeight = primary.frame.height
+            let cocoa = WindowGeometry.flip(frame, primaryHeight: primaryHeight)
             var origin = NSPoint(x: cocoa.midX - size.width / 2, y: cocoa.maxY - size.height - 40)
-            if let visible = (NSScreen.screens.first { $0.frame.intersects(cocoa) })?.visibleFrame {
+            // The screen the window mostly sits on, as macOS itself decides
+            // it; those frames are in Accessibility coordinates, so the one
+            // chosen is flipped back.
+            if let screen = WindowGeometry.screen(for: frame, among: WindowElement.screens()) {
+                let visible = WindowGeometry.flip(screen.visibleFrame, primaryHeight: primaryHeight)
                 origin.x = min(max(origin.x, visible.minX + 8), visible.maxX - size.width - 8)
                 origin.y = min(max(origin.y, visible.minY + 8), visible.maxY - size.height - 8)
             }
@@ -111,8 +119,9 @@ private struct PathBoxView: View {
                 .onSubmit { navigate(text) }
         }
         .padding(.horizontal, 14)
-        .padding(.vertical, 11)
-        .frame(width: 420)
+        .padding(.top, 28)
+        .padding(.bottom, 11)
+        .frame(width: 420, height: 72)
         .onAppear { focused = true }
         .onKeyPress(.escape) {
             close()
