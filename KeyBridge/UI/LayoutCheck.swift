@@ -8,7 +8,8 @@ import Foundation
 ///     open KeyBridge.app --env KB_DEBUG_SHOW=main --env KB_DEBUG_PAGE=shortcuts \
 ///         --args -AppleLanguages '(ja)'
 ///
-/// - `KB_DEBUG_SHOW`: `main`, `onboarding` or `clipboard` (the history panel).
+/// - `KB_DEBUG_SHOW`: `main`, `onboarding`, `clipboard` (the history panel)
+///   or `pathbox` (the path box, as ⌘L over Finder would open it).
 /// - `KB_DEBUG_PAGE`: a `Page` raw value, shown in the main window.
 /// - `KB_DEBUG_EXPAND_ALL`: every Shortcuts group starts expanded.
 ///
@@ -21,7 +22,7 @@ enum LayoutCheck {
     static var page: Page? { environment["KB_DEBUG_PAGE"].flatMap(Page.init(rawValue:)) }
     static var expandsAllGroups: Bool { environment["KB_DEBUG_EXPAND_ALL"] != nil }
 
-    static func showRequestedWindow(clipboardPanel: ClipboardPanelController) {
+    static func showRequestedWindow(clipboardPanel: ClipboardPanelController, pathBox: PathBoxController) {
         guard let window = environment["KB_DEBUG_SHOW"] else { return }
         // The notifications are received by the menu bar icon, which SwiftUI
         // installs only after launch finishes.
@@ -30,6 +31,7 @@ enum LayoutCheck {
             case "main": NotificationCenter.default.post(name: .openMainWindow, object: nil)
             case "onboarding": NotificationCenter.default.post(name: .openOnboarding, object: nil)
             case "clipboard": clipboardPanel.show()
+            case "pathbox": pathBox.showPanel?()
             default: break
             }
         }

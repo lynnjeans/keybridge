@@ -197,6 +197,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
+| `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `pathBox` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
 | `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
 | `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
 
@@ -207,6 +208,15 @@ Debug builds read these environment variables at launch. Pass them with `open --
   minimize. Wait (a second is plenty) before reading back. Positions and sizes are not affected:
   `kAXPosition`/`kAXSize` read back immediately, which is why `setFrame` can report where a
   window landed.
+
+- **Finder's window does not say which folder it shows** (KB-214, macOS 26.6). `AXDocument`
+  is listed but empty, and the title bar's `AXProxy` has no URL. The path bar (an `AXList` of
+  `AXStaticText`s) and the items in the view carry `AXURL`s — file-reference URLs
+  (`file:///.file/id=…`), resolved with `NSURL.filePathURL`. **The path bar follows the
+  selection** in every view: select a file or a folder and its last segment becomes that item.
+  A path-bar segment's `AXValue` writes spaces as no-break spaces (`iCloud\u{A0}Drive`), the
+  window title as ordinary ones. Walking every item of a large folder costs hundreds of
+  milliseconds (290 ms for a 57-item Trash in list view); read only a few.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest
@@ -250,7 +260,7 @@ screenshotted in each language:
 
 | Variable | Effect |
 |---|---|
-| `KB_DEBUG_SHOW` | `main`, `onboarding` or `clipboard` (the history panel) opens a second after launch |
+| `KB_DEBUG_SHOW` | `main`, `onboarding`, `clipboard` (the history panel) or `pathbox` (the path box, filled in as ⌘L would fill it — open Finder on a folder first) opens a second after launch |
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
 | `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/KeyBridge`; the website's screenshots use it (`scripts/site/screenshots.sh`) |

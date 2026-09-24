@@ -24,6 +24,7 @@
 		1B97BFB873708FD8EB3B7764 /* RulesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */; };
 		1BEE71E8AE9F25B441279406 /* PathBoxResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD867C4F572ECA5641FA840C /* PathBoxResolver.swift */; };
 		1EDF0B708F52B8BD4BDDCFDF /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
+		1F279491F1499CD42F075426 /* FinderFolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C021B12F08FBD1AFF4978BD /* FinderFolderPicker.swift */; };
 		2027926C27C6697B960913D0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B9CB689364A424B8F3640 /* Configuration.swift */; };
 		213C4F7B0C0E6B56FAAC6727 /* NewDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EFDDF4FA8FACE4A1C230AA /* NewDocument.swift */; };
 		223CE67E126349E44FC81312 /* FinderMenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8713E0B237BAEEDF9CCD4DB /* FinderMenuHandler.swift */; };
@@ -60,6 +61,7 @@
 		573EFCCDB359AFCF1016673D /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */; };
 		60BB3275921A3B5C2CA30EF6 /* DockPresence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0154638BD14E05405EE874B3 /* DockPresence.swift */; };
+		6134033CCAE5454CE7FDD7A4 /* FinderFolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C021B12F08FBD1AFF4978BD /* FinderFolderPicker.swift */; };
 		6154E0545939501866AA8601 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96082856ACBC42E969537459 /* OnboardingController.swift */; };
 		639B401B4484559F8BC89001 /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */; };
 		65D7BA65A24A69CB16E317F5 /* DiagnosticsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D6012632391A10AB3555 /* DiagnosticsCard.swift */; };
@@ -86,12 +88,14 @@
 		8E0FBFB50DA527B208271E91 /* WindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84B286DBCE89F219CAAB5C /* WindowGeometry.swift */; };
 		912C020783005C132B70314C /* RuleMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */; };
 		92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
+		9442D9C9BC1CD2C960621472 /* FinderFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9CB0143163E921D561FAE8 /* FinderFolderTests.swift */; };
 		957257EB2F7C2C6786D1F40F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 91054FB5487B42E3BA2DCD97 /* Localizable.xcstrings */; };
 		969CAA3E91F97E8E4BD2D1A3 /* CustomRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B63EC2258A88FE5A42B0EB /* CustomRuleTests.swift */; };
 		96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		9AAF6A512F6B2B7D2E4DAE45 /* OverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B24DCD833DE67E0939EA386 /* OverviewPage.swift */; };
 		9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */; };
 		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
+		9EA500D3B1A82BCD990E3307 /* FinderFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E122739093811B6047A1D32 /* FinderFolder.swift */; };
 		A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
 		A38809AA5CF0E980AA5B05D9 /* WindowActionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3F7A6394295658269DC1B /* WindowActionPicker.swift */; };
 		A473676252B0659718D8714A /* DockClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDA1B612033CB9C6BA0A37F /* DockClick.swift */; };
@@ -195,6 +199,7 @@
 		12D84228954A785CF91645EF /* RuleEditingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditingTests.swift; sourceTree = "<group>"; };
 		15087DE16390140942799307 /* ScrollStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepperTests.swift; sourceTree = "<group>"; };
 		197D09D4301A3F0BA2F38291 /* KeyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBridgeApp.swift; sourceTree = "<group>"; };
+		1E122739093811B6047A1D32 /* FinderFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderFolder.swift; sourceTree = "<group>"; };
 		1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTap.swift; sourceTree = "<group>"; };
 		20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTapSelfTest.swift; sourceTree = "<group>"; };
 		21CF5A6AADC1A2FFE5631673 /* EngineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineController.swift; sourceTree = "<group>"; };
@@ -221,6 +226,7 @@
 		4E9C624CC00946DA95041836 /* SystemActionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemActionPicker.swift; sourceTree = "<group>"; };
 		542F7297D61F8E6943745351 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
 		5B24DCD833DE67E0939EA386 /* OverviewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewPage.swift; sourceTree = "<group>"; };
+		5C021B12F08FBD1AFF4978BD /* FinderFolderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderFolderPicker.swift; sourceTree = "<group>"; };
 		5C623C6CBD8AD5B2647B5ADD /* MouseScrollPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseScrollPages.swift; sourceTree = "<group>"; };
 		5D253FFA3ED6784FFDE9938E /* DockWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockWindow.swift; sourceTree = "<group>"; };
 		687E05B9F8DE493CF14920E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +266,7 @@
 		AC3AD351EB464FBDBE261033 /* ClipboardHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHistory.swift; sourceTree = "<group>"; };
 		AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		ACC8258A4BA1EBA0B38FC473 /* RuleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModelTests.swift; sourceTree = "<group>"; };
+		AE9CB0143163E921D561FAE8 /* FinderFolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderFolderTests.swift; sourceTree = "<group>"; };
 		B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticEvent.swift; sourceTree = "<group>"; };
 		B2282E9DB43AE3B51A2DBF60 /* WheelDirectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDirectionTests.swift; sourceTree = "<group>"; };
 		B3EBB5A824AFC63255869F0A /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -378,6 +385,8 @@
 		3D7508C84A8DF54317B6E051 /* PathBox */ = {
 			isa = PBXGroup;
 			children = (
+				1E122739093811B6047A1D32 /* FinderFolder.swift */,
+				5C021B12F08FBD1AFF4978BD /* FinderFolderPicker.swift */,
 				9D876685E7767C4DF29FBAEC /* PathBoxController.swift */,
 				DD867C4F572ECA5641FA840C /* PathBoxResolver.swift */,
 			);
@@ -460,6 +469,7 @@
 				DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */,
 				F12AC513A9795A21875D6878 /* DockClickTests.swift */,
 				D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */,
+				AE9CB0143163E921D561FAE8 /* FinderFolderTests.swift */,
 				6FB119FD1EF6E5CB5BFECEAF /* FinderMenuTests.swift */,
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
 				0901980EBE4BBF714534B44E /* LocalizationTests.swift */,
@@ -681,6 +691,8 @@
 				92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */,
 				D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */,
 				16284073E6A06F4B50B3D7AA /* EventTrigger.swift in Sources */,
+				6134033CCAE5454CE7FDD7A4 /* FinderFolderPicker.swift in Sources */,
+				9442D9C9BC1CD2C960621472 /* FinderFolderTests.swift in Sources */,
 				B0C7FF3F09641315C75BE6B1 /* FinderMenuTests.swift in Sources */,
 				AD46A5BDFE9B583FFA43C33B /* GlobalHotKey.swift in Sources */,
 				CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */,
@@ -768,6 +780,8 @@
 				EC3B2B052803EF4829977E79 /* EventTap.swift in Sources */,
 				41BE24BDAF379813BCB1CAF7 /* EventTapSelfTest.swift in Sources */,
 				7FDBE38023D696D64B59955B /* EventTrigger.swift in Sources */,
+				9EA500D3B1A82BCD990E3307 /* FinderFolder.swift in Sources */,
+				1F279491F1499CD42F075426 /* FinderFolderPicker.swift in Sources */,
 				B8273C7D0EBF7A965F55426B /* FinderMenuCard.swift in Sources */,
 				223CE67E126349E44FC81312 /* FinderMenuHandler.swift in Sources */,
 				83413F653462D858EF9D9975 /* FocusedElement.swift in Sources */,

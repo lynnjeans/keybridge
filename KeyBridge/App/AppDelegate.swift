@@ -38,7 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         secureInput.start()
         otherRemappers.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
-        pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show() }
+        pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show(startingAt: FinderFolder.currentPath()) }
         // A system hot key never reaches the app in front, so the path box
         // takes ⌘L only while Finder is there.
         pathBox.setFrontmostApplication(frontmost.bundleID)
@@ -57,10 +57,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if engine.isActive {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
         }
-        LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
+        LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel, pathBox: pathBox)
         DockWindow.selfTest()
         WindowElement.selfTest()
         WindowElement.snapSelfTest()
+        FinderFolder.selfTest()
         if let name = ProcessInfo.processInfo.environment["KB_DEBUG_SYSACTION"],
            let function = SystemAction(rawValue: name) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [dispatcher] in
