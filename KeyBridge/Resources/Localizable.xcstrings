@@ -889,6 +889,22 @@
         }
       }
     },
+    "Clipboard History" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリップボード履歴"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "剪贴板历史"
+          }
+        }
+      }
+    },
     "Clipboard history" : {
       "localizations" : {
         "ja" : {

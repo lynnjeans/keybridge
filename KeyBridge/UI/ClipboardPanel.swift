@@ -28,6 +28,7 @@ final class ClipboardPanelController {
         ))
         position(panel)
         panel.makeKeyAndOrderFront(nil)
+        panel.focusFirstTextField()
     }
 
     func close() {
@@ -54,12 +55,14 @@ final class ClipboardPanelController {
     }
 
     private func makePanel() -> NSPanel {
+        // The content rect is the panel below its title bar, which says
+        // which app opened it, as the path box's does.
         let panel = KeyablePanel(
-            contentRect: NSRect(x: 0, y: 0, width: 380, height: 460),
+            contentRect: NSRect(x: 0, y: 0, width: ClipboardPanelView.width, height: ClipboardPanelView.height),
             styleMask: [.titled, .nonactivatingPanel, .fullSizeContentView],
             backing: .buffered, defer: false
         )
-        panel.titleVisibility = .hidden
+        panel.title = "KeyBridge · " + String(localized: "Clipboard History")
         panel.titlebarAppearsTransparent = true
         for button in [NSWindow.ButtonType.closeButton, .miniaturizeButton, .zoomButton] {
             panel.standardWindowButton(button)?.isHidden = true
@@ -99,12 +102,15 @@ private final class KeyablePanel: NSPanel {
 /// Search on top, pinned items, then the rest; arrows move, Return chooses,
 /// Esc closes.
 private struct ClipboardPanelView: View {
+    /// 460pt with the title bar, as the panel was before it had one.
+    static let width: CGFloat = 380
+    static let height: CGFloat = 428
+
     let clipboard: ClipboardController
     let choose: (ClipboardItem) -> Void
     let close: () -> Void
     @State private var query = ""
     @State private var selection = 0
-    @FocusState private var searchFocused: Bool
 
     private var items: [ClipboardItem] {
         ClipboardSearch.ordered(ClipboardSearch.filter(clipboard.history.items, query))
@@ -116,10 +122,9 @@ private struct ClipboardPanelView: View {
                 Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
                 TextField("Search clipboard history…", text: $query)
                     .textFieldStyle(.plain)
-                    .focused($searchFocused)
             }
             .padding(.horizontal, 14)
-            .padding(.top, 28)
+            .padding(.top, 4)
             .padding(.bottom, 10)
             Divider()
 
@@ -150,8 +155,7 @@ private struct ClipboardPanelView: View {
                 }
             }
         }
-        .frame(width: 380, height: 460)
-        .onAppear { searchFocused = true }
+        .frame(width: Self.width, height: Self.height)
         .onChange(of: query) { selection = 0 }
         .onKeyPress(.downArrow) {
             selection = min(selection + 1, max(items.count - 1, 0))
