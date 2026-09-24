@@ -87,15 +87,16 @@ final class PathBoxPanelController {
     }
 
     private func makePanel() -> NSPanel {
+        // The content rect is the box alone: `.titled` puts the title bar
+        // (32pt on macOS 26) on top of it, and SwiftUI lays the box out below
+        // that bar by itself. The bar carries the box's name, says what it
+        // is for, and is where the panel is dragged from.
         let panel = PathBoxKeyablePanel(
-            // 28pt taller than the box itself: with `.titled` the title
-            // bar covers the top of the content view, and a click there
-            // drags the panel instead of reaching the text field.
-            contentRect: NSRect(x: 0, y: 0, width: 420, height: 72),
+            contentRect: NSRect(x: 0, y: 0, width: PathBoxView.width, height: PathBoxView.height),
             styleMask: [.titled, .nonactivatingPanel, .fullSizeContentView],
             backing: .buffered, defer: false
         )
-        panel.titleVisibility = .hidden
+        panel.title = String(localized: "Go to Path")
         panel.titlebarAppearsTransparent = true
         for button in [NSWindow.ButtonType.closeButton, .miniaturizeButton, .zoomButton] {
             panel.standardWindowButton(button)?.isHidden = true
@@ -149,6 +150,9 @@ private final class PathBoxKeyablePanel: NSPanel {
 }
 
 private struct PathBoxView: View {
+    static let width: CGFloat = 420
+    static let height: CGFloat = 44
+
     let navigate: (String) -> Void
     let close: () -> Void
     @State private var text: String
@@ -168,9 +172,7 @@ private struct PathBoxView: View {
                 .onSubmit { navigate(text) }
         }
         .padding(.horizontal, 14)
-        .padding(.top, 28)
-        .padding(.bottom, 11)
-        .frame(width: 420, height: 72)
+        .frame(width: Self.width, height: Self.height)
         .onKeyPress(.escape) {
             close()
             return .handled

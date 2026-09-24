@@ -1865,6 +1865,22 @@
         }
       }
     },
+    "Go to Path" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスへ移動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往路径"
+          }
+        }
+      }
+    },
     "Granted" : {
       "localizations" : {
         "ja" : {
