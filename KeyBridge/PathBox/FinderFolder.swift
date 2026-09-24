@@ -41,6 +41,24 @@ enum FinderFolder {
         return reading?.path
     }
 
+    /// The folder of Finder's front window, whether or not Finder is the app
+    /// in front: what an open or save dialog in another app jumps to
+    /// (KB-217). Finder's focused window is its front one even while another
+    /// app is active; failing that (the desktop has the focus), its main
+    /// window, then the first ordinary window it lists. Only that one window
+    /// counts: when it shows no folder (Recents, a search) the answer is nil
+    /// rather than some window further back.
+    static func frontWindowPath() -> String? {
+        guard let finder = NSRunningApplication.runningApplications(withBundleIdentifier: BuiltInRules.finderID).first else {
+            return nil
+        }
+        let app = AXUIElementCreateApplication(finder.processIdentifier)
+        AXUIElementSetMessagingTimeout(app, timeout)
+        var windows = [kAXFocusedWindowAttribute, kAXMainWindowAttribute].compactMap { element(of: app, $0) }
+        windows += (copy(app, kAXWindowsAttribute) as? [AXUIElement]) ?? []
+        return windows.lazy.compactMap(read).first?.path
+    }
+
     /// Nil for anything but an ordinary Finder window: the desktop is a
     /// window of Finder's too, with no subrole.
     static func read(_ window: AXUIElement) -> Reading? {

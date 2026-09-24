@@ -24,6 +24,7 @@ extension KeyCode {
     static let d = KeyCode(kVK_ANSI_D)
     static let e = KeyCode(kVK_ANSI_E)
     static let f = KeyCode(kVK_ANSI_F)
+    static let g = KeyCode(kVK_ANSI_G)
     static let l = KeyCode(kVK_ANSI_L)
     static let n = KeyCode(kVK_ANSI_N)
     static let o = KeyCode(kVK_ANSI_O)

@@ -28,6 +28,7 @@ final class Dispatcher {
     var wheelDirection = WheelDirection.system
     private let frontmostBundleID: @MainActor () -> String?
     private let isEditingText: @MainActor () -> Bool
+    private let isInFileDialog: @MainActor () -> Bool
 
     /// Keys whose press was remapped and that are still held. Their repeats
     /// and release are rewritten to match the press, whatever modifiers are
@@ -61,17 +62,23 @@ final class Dispatcher {
     private let systemShortcuts: @MainActor () -> SymbolicHotKeys
     /// Moves the frontmost window. Injected so tests need no real windows.
     private let snap: @MainActor (WindowAction) -> Void
+    /// Acts on the open or save dialog in front. Injected for the same reason.
+    private let fileDialog: @MainActor (FileDialogAction) -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
         isEditingText: @escaping @MainActor () -> Bool = { false },
+        isInFileDialog: @escaping @MainActor () -> Bool = { false },
         post: @escaping @MainActor (CGEvent) -> Void = { SyntheticEvent.post($0) },
         openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) },
         systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() },
-        snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) }
+        snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) },
+        fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in }
     ) {
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
+        self.isInFileDialog = isInFileDialog
+        self.fileDialog = fileDialog
         self.post = post
         self.openApplication = openApplication
         self.systemShortcuts = systemShortcuts
@@ -201,6 +208,8 @@ final class Dispatcher {
             trigger(function)
         case .windowAction(let position):
             move(position)
+        case .fileDialog(let action):
+            act(on: action)
         }
     }
 
@@ -232,6 +241,12 @@ final class Dispatcher {
     /// event stream, and a held key must not stall the keyboard.
     private func move(_ position: WindowAction) {
         DispatchQueue.main.async { [self] in snap(position) }
+    }
+
+    /// Acts on the dialog in front, after the tap callback returns: jumping
+    /// takes keystrokes of its own and an Accessibility round trip.
+    private func act(on action: FileDialogAction) {
+        DispatchQueue.main.async { [self] in fileDialog(action) }
     }
 
     private func keyDown(_ event: CGEvent) -> Disposition {
@@ -267,6 +282,10 @@ final class Dispatcher {
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             move(position)
             return .consume
+        case .fileDialog(let action):
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            act(on: action)
+            return .consume
         }
     }
 
@@ -287,7 +306,8 @@ final class Dispatcher {
     private func match(_ event: CGEvent, type: CGEventType) -> Rule? {
         guard let trigger = Trigger(event: event, type: type) else { return nil }
         return matcher.match(
-            trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()), isEditingText: isEditingText
+            trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
+            isEditingText: isEditingText, isInFileDialog: isInFileDialog
         )
     }
 

@@ -1305,6 +1305,22 @@
         }
       }
     },
+    "Dialog action" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダイアログの操作"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对话框操作"
+          }
+        }
+      }
+    },
     "Document end" : {
       "localizations" : {
         "ja" : {
@@ -1705,6 +1721,22 @@
         }
       }
     },
+    "File dialog" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルダイアログ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件对话框"
+          }
+        }
+      }
+    },
     "Fill the screen" : {
       "localizations" : {
         "ja" : {
@@ -1765,6 +1797,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finder 右键菜单"
+          }
+        }
+      }
+    },
+    "Finder's current folder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder の現在のフォルダ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访达当前文件夹"
           }
         }
       }
@@ -1877,6 +1925,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在任何应用中都可用。点击可录制其他快捷键。"
+          }
+        }
+      }
+    },
+    "Go to Finder's folder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder のフォルダへ移動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往访达当前文件夹"
           }
         }
       }
@@ -3305,6 +3369,22 @@
         }
       }
     },
+    "Only in an open or save dialog; anywhere else the shortcut does what it always did." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開く・保存ダイアログの中だけで働きます。ほかの場所では、このショートカットは今まで通りです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在打开或存储对话框中生效；在其他地方，这个快捷键照常。"
+          }
+        }
+      }
+    },
     "Only in some apps" : {
       "localizations" : {
         "ja" : {
@@ -3369,6 +3449,22 @@
         }
       }
     },
+    "Only while an open or save dialog is in front, like Listary on Windows" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開く・保存ダイアログが最前面のときだけ。Windows の Listary と同じ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在打开或存储对话框位于最前面时生效，类似 Windows 上的 Listary"
+          }
+        }
+      }
+    },
     "Open" : {
       "localizations" : {
         "ja" : {
@@ -3381,6 +3477,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开"
+          }
+        }
+      }
+    },
+    "Open & Save Dialogs" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開く・保存ダイアログ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开与存储对话框"
           }
         }
       }

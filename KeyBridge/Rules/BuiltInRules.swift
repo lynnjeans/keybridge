@@ -66,6 +66,13 @@ enum BuiltInRules {
             inFinder("finder.move", KeyCombo([.control], .v), KeyCombo([.option, .command], .v)),
             inFinder("finder.parent", KeyCombo(.delete), KeyCombo([.command], .upArrow)),
         ]),
+        // Listary's quick switch on Windows (KB-217). These match only while
+        // an open or save dialog has the keyboard, whatever the scope says,
+        // so ⌃G stays free everywhere else, terminals included.
+        .init(id: "dialogs", rules: [
+            Rule(id: "dialog.finderFolder", trigger: .key(combo: KeyCombo([.control], .g)),
+                 action: .fileDialog(.finderFolder)),
+        ]),
         .init(id: "windows", rules: [
             rule("win.switchApp", KeyCombo([.option], .tab), KeyCombo([.command], .tab)),
             rule("win.quit", KeyCombo([.option], .f4), KeyCombo([.command], .q)),

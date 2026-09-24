@@ -112,6 +112,8 @@ struct MappingView: View {
             SystemActionLabel(action: function)
         case .windowAction(let snap):
             WindowActionLabel(snap: snap)
+        case .fileDialog(let action):
+            FileDialogActionLabel(action: action)
         }
     }
 

@@ -420,6 +420,7 @@ enum RuleNames {
         case "editing": String(localized: "Editing")
         case "navigation": String(localized: "Text Navigation")
         case "finder": String(localized: "File Management")
+        case "dialogs": String(localized: "Open & Save Dialogs")
         case "windows": String(localized: "Apps & System")
         case "browser": String(localized: "Browser")
         case "system": String(localized: "System")
@@ -435,6 +436,7 @@ enum RuleNames {
     static func note(ofGroup id: String) -> String? {
         switch id {
         case "finder": String(localized: "Only in Finder, and not while renaming or searching")
+        case "dialogs": String(localized: "Only while an open or save dialog is in front, like Listary on Windows")
         case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")
         case "window": String(localized: "⌥ sits where the Windows key does, so ⌥ and an arrow places or minimizes the window in front")
         default: nil
@@ -446,6 +448,7 @@ enum RuleNames {
         case "editing": "pencil"
         case "navigation": "arrow.left.and.right.text.vertical"
         case "finder": "folder.fill"
+        case "dialogs": "folder.badge.gearshape"
         case "windows": "macwindow.on.rectangle"
         case "browser": "globe"
         case "system": "gearshape.fill"
@@ -462,6 +465,7 @@ enum RuleNames {
         case "editing": .indigo
         case "navigation": .teal
         case "finder": .blue
+        case "dialogs": .brown
         case "windows": .purple
         case "browser": .green
         case "system": .gray
@@ -489,6 +493,7 @@ enum RuleNames {
         "nav.selectWordLeft": String(localized: "Select previous word"), "nav.selectWordRight": String(localized: "Select next word"),
         "nav.deleteWord": String(localized: "Delete previous word"),
         "finder.trash": String(localized: "Move to Trash"), "finder.rename": String(localized: "Rename"), "finder.open": String(localized: "Open"),
+        "dialog.finderFolder": String(localized: "Go to Finder's folder"),
         "finder.cut": String(localized: "Cut (mark to move)"), "finder.move": String(localized: "Move here"), "finder.parent": String(localized: "Enclosing folder"),
         "win.switchApp": String(localized: "Switch apps"), "win.quit": String(localized: "Quit app"), "win.screenshot": String(localized: "Screenshot to clipboard"),
         "win.taskManager": String(localized: "Task Manager (Activity Monitor)"),

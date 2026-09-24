@@ -30,12 +30,25 @@ struct RuleMatcher: Sendable {
         }
     }
 
-    /// - Parameter isEditingText: asked only when a candidate rule skips text
-    ///   input, since finding out means asking the frontmost application.
-    func match(_ trigger: Trigger, in context: MatchContext, isEditingText: () -> Bool = { false }) -> Rule? {
+    /// - Parameters:
+    ///   - isEditingText: asked only when a candidate rule skips text input,
+    ///     since finding out means asking the frontmost application.
+    ///   - isInFileDialog: asked only when a candidate rule acts on an open
+    ///     or save dialog, for the same reason.
+    func match(
+        _ trigger: Trigger,
+        in context: MatchContext,
+        isEditingText: () -> Bool = { false },
+        isInFileDialog: () -> Bool = { false }
+    ) -> Rule? {
         var editing: Bool?
+        var inDialog: Bool?
         return candidates[trigger]?.first { rule in
             guard rule.scope.admits(context) else { return false }
+            if rule.action.needsFileDialog {
+                if inDialog == nil { inDialog = isInFileDialog() }
+                guard inDialog == true else { return false }
+            }
             guard rule.scope.skipsTextInput else { return true }
             if editing == nil { editing = isEditingText() }
             return editing == false

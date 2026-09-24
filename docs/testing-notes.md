@@ -197,6 +197,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
+| `KB_DEBUG_DIALOGJUMP` | Three seconds after launch, jumps the open or save dialog in front to Finder's folder as ⌃G would (KB-217), and logs `dialogjump front=… dialog=true|false finder=… recent=…` in the `fileDialog` category. Open a dialog first and keep it in front (e.g. launch TextEdit, which opens with one); `where popup` in its AX tree then shows the new folder |
 | `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `pathBox` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
 | `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
 | `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
@@ -217,6 +218,18 @@ Debug builds read these environment variables at launch. Pass them with `open --
   A path-bar segment's `AXValue` writes spaces as no-break spaces (`iCloud\u{A0}Drive`), the
   window title as ordinary ones. Walking every item of a large folder costs hundreds of
   milliseconds (290 ms for a 57-item Trash in list view); read only a few.
+
+- **Open and save dialogs** (KB-217, macOS 26.6): every app's `NSOpenPanel`/`NSSavePanel` is in
+  the app's own AX tree with `AXIdentifier` `open-panel` / `save-panel`, as a window or as a sheet
+  on a document window, sandboxed app or not. The system-wide focused element is nil inside a
+  sandboxed app's sheet (the keyboard is in the dialog service), and while Go to Folder is open
+  the app reports **that** sheet (`GoToWindow`) as its focused window — look up through
+  `AXParent` and down through child sheets. Going somewhere: ⌘⇧G, AX-focus `PathTextField`, set
+  its value, then a real Return; `AXConfirm` alone does not navigate. The shell's
+  `osascript … System Events … keystroke` does reach the front app, which is handy for testing,
+  but check which app is in front first. **Never script TextEdit or another app with
+  `tell application "…"` beyond `quit`**: it needs the Automation permission and can leave a
+  prompt on the user's screen.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest

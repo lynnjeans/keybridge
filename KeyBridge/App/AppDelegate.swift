@@ -15,7 +15,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
-        isEditingText: FocusedElement.isEditingText
+        isEditingText: FocusedElement.isEditingText,
+        isInFileDialog: FileDialog.isFocused,
+        fileDialog: FileDialog.perform
     )
     /// The preset, the user's changes to it, and the rules that result. It
     /// hands each new set straight to the dispatcher, so a switch flipped in
@@ -62,6 +64,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         WindowElement.selfTest()
         WindowElement.snapSelfTest()
         FinderFolder.selfTest()
+        FileDialog.selfTest()
         if let name = ProcessInfo.processInfo.environment["KB_DEBUG_SYSACTION"],
            let function = SystemAction(rawValue: name) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [dispatcher] in

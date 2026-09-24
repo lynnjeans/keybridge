@@ -15,9 +15,9 @@ import Testing
         #expect(Set(ids).count == ids.count)
     }
 
-    @Test func groupsAreTheCoverageListsPlusMouseScrollAndWindow() {
+    @Test func groupsAreTheCoverageListsPlusDialogsMouseScrollAndWindow() {
         #expect(preset.groups.map(\.id) == [
-            "editing", "navigation", "finder", "windows", "browser", "system", "winKey", "window", "mouse", "scroll",
+            "editing", "navigation", "finder", "dialogs", "windows", "browser", "system", "winKey", "window", "mouse", "scroll",
         ])
     }
 

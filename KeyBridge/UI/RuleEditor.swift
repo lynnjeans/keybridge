@@ -15,7 +15,7 @@ struct RuleEditor: View {
     enum Side { case trigger, action }
 
     /// A mouse button's result: keys, an app, or a system function (KB-051).
-    enum ResultKind: Hashable { case keys, app, system, window }
+    enum ResultKind: Hashable { case keys, app, system, window, fileDialog }
 
     /// The keys to go back to when the result is switched from a system
     /// function to a shortcut.
@@ -154,6 +154,7 @@ struct RuleEditor: View {
                 case .openApplication: EmptyView()
                 case .systemAction(let function): SystemActionLabel(action: function)
                 case .windowAction(let snap): WindowActionLabel(snap: snap)
+                case .fileDialog(let action): FileDialogActionLabel(action: action)
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
@@ -165,6 +166,7 @@ struct RuleEditor: View {
                     Text("Open an app").tag(ResultKind.app)
                     Text("System function").tag(ResultKind.system)
                     Text("Window").tag(ResultKind.window)
+                    Text("File dialog").tag(ResultKind.fileDialog)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -194,6 +196,11 @@ struct RuleEditor: View {
                         get: { snap },
                         set: { draft.action = .windowAction($0) }
                     ))
+                case .fileDialog(let action):
+                    FileDialogActionPicker(selection: Binding(
+                        get: { action },
+                        set: { draft.action = .fileDialog($0) }
+                    ))
                 }
             }
         }
@@ -207,6 +214,7 @@ struct RuleEditor: View {
                 case .openApplication: .app
                 case .systemAction: .system
                 case .windowAction: .window
+                case .fileDialog: .fileDialog
                 }
             },
             set: { kind in
@@ -223,6 +231,8 @@ struct RuleEditor: View {
                     draft.action = .systemAction(.missionControl)
                 case .window:
                     draft.action = .windowAction(.leftHalf)
+                case .fileDialog:
+                    draft.action = .fileDialog(.finderFolder)
                 }
             }
         )

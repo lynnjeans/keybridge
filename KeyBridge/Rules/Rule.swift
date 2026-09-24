@@ -45,4 +45,7 @@ enum Action: Codable, Hashable, Sendable {
     /// Moves and resizes the frontmost window: left half, right half or
     /// maximized within the screen's usable area (KB-201).
     case windowAction(WindowAction)
+    /// Takes the open or save dialog in front somewhere, such as Finder's
+    /// folder (KB-217). Only matches while such a dialog has the keyboard.
+    case fileDialog(FileDialogAction)
 }

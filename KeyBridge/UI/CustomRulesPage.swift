@@ -130,6 +130,7 @@ struct CustomRuleEditor: View {
     @State private var result: Result
     @State private var systemAction: SystemAction = .missionControl
     @State private var windowAction: WindowAction = .leftHalf
+    @State private var fileDialogAction: FileDialogAction = .finderFolder
     @State private var combo: KeyCombo?
     @State private var app: String?
     @State private var where_: Where
@@ -140,7 +141,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app, system, window }
+    enum Result: Hashable { case keys, app, system, window, fileDialog }
     enum Where: Hashable { case everywhere, only, except }
 
     /// - Parameter trigger: for a new rule, what it is pressed with, such as
@@ -164,6 +165,11 @@ struct CustomRuleEditor: View {
         case .windowAction(let snap)?:
             _result = State(initialValue: .window)
             _windowAction = State(initialValue: snap)
+            _combo = State(initialValue: nil)
+            _app = State(initialValue: nil)
+        case .fileDialog(let action)?:
+            _result = State(initialValue: .fileDialog)
+            _fileDialogAction = State(initialValue: action)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -212,6 +218,7 @@ struct CustomRuleEditor: View {
                     Text("Open an app").tag(Result.app)
                     Text("System function").tag(Result.system)
                     Text("Window").tag(Result.window)
+                    Text("File dialog").tag(Result.fileDialog)
                 }
                 .pickerStyle(.segmented)
                 LabeledContent("") {
@@ -230,6 +237,8 @@ struct CustomRuleEditor: View {
                         SystemActionPicker(selection: $systemAction)
                     } else if result == .window {
                         WindowActionPicker(selection: $windowAction)
+                    } else if result == .fileDialog {
+                        FileDialogActionPicker(selection: $fileDialogAction)
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -321,6 +330,8 @@ struct CustomRuleEditor: View {
             action = .systemAction(systemAction)
         case .window:
             action = .windowAction(windowAction)
+        case .fileDialog:
+            action = .fileDialog(fileDialogAction)
         }
         let applications: ApplicationFilter
         switch where_ {
