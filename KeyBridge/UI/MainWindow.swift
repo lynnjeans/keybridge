@@ -11,6 +11,7 @@ struct MainWindow: View {
     let otherRemappers: OtherRemapperMonitor
     let clipboard: ClipboardController
     let pathBox: PathBoxController
+    let quickSwitch: QuickSwitch
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -33,7 +34,8 @@ struct MainWindow: View {
                 case .clipboard:
                     ClipboardPage(clipboard: clipboard, rules: rules)
                 case .finder:
-                    FinderPage(rules: rules, pathBox: pathBox)
+                    FinderPage(rules: rules, pathBox: pathBox, locations: quickSwitch.locations,
+                               clearHistory: quickSwitch.clearHistory)
                 case .customRules:
                     CustomRulesPage(rules: rules)
                 case .about:
@@ -438,7 +440,7 @@ enum RuleNames {
     static func note(ofGroup id: String) -> String? {
         switch id {
         case "finder": String(localized: "Only in Finder, and not while renaming or searching")
-        case "dialogs": String(localized: "Only while an open or save dialog is in front, like Listary on Windows")
+        case "dialogs": String(localized: "Only in an open or save dialog (the list also in Finder), like Listary on Windows")
         case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")
         case "window": String(localized: "⌥ sits where the Windows key does, so ⌥ and an arrow places or minimizes the window in front")
         default: nil
@@ -496,6 +498,7 @@ enum RuleNames {
         "nav.deleteWord": String(localized: "Delete previous word"),
         "finder.trash": String(localized: "Move to Trash"), "finder.rename": String(localized: "Rename"), "finder.open": String(localized: "Open"),
         "dialog.finderFolder": String(localized: "Go to Finder's folder"),
+        "dialog.recentLocations": String(localized: "Recent and favorite folders"),
         "finder.cut": String(localized: "Cut (mark to move)"), "finder.move": String(localized: "Move here"), "finder.parent": String(localized: "Enclosing folder"),
         "win.switchApp": String(localized: "Switch apps"), "win.quit": String(localized: "Quit app"), "win.screenshot": String(localized: "Screenshot to clipboard"),
         "win.taskManager": String(localized: "Task Manager (Activity Monitor)"),

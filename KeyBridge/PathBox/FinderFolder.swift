@@ -59,6 +59,20 @@ enum FinderFolder {
         return windows.lazy.compactMap(read).first?.path
     }
 
+    /// The folders of all of Finder's windows, front to back, each once:
+    /// the recent locations list offers them first (KB-219). Windows with no
+    /// folder behind them (Recents, a search) are left out.
+    static func windowPaths() -> [String] {
+        guard let finder = NSRunningApplication.runningApplications(withBundleIdentifier: BuiltInRules.finderID).first else {
+            return []
+        }
+        let app = AXUIElementCreateApplication(finder.processIdentifier)
+        AXUIElementSetMessagingTimeout(app, timeout)
+        let windows = (copy(app, kAXWindowsAttribute) as? [AXUIElement]) ?? []
+        var seen = Set<String>()
+        return windows.compactMap { read($0)?.path }.filter { seen.insert($0).inserted }
+    }
+
     /// Nil for anything but an ordinary Finder window: the desktop is a
     /// window of Finder's too, with no subrole.
     static func read(_ window: AXUIElement) -> Reading? {

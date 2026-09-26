@@ -45,7 +45,8 @@ struct RuleMatcher: Sendable {
         var inDialog: Bool?
         return candidates[trigger]?.first { rule in
             guard rule.scope.admits(context) else { return false }
-            if rule.action.needsFileDialog {
+            if let dialogAction = rule.action.fileDialogAction,
+               !(dialogAction.worksInFinder && context.frontmostBundleID == BuiltInRules.finderID) {
                 if inDialog == nil { inDialog = isInFileDialog() }
                 guard inDialog == true else { return false }
             }

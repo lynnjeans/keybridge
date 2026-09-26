@@ -4,12 +4,14 @@ extension FileDialogAction {
     var name: String {
         switch self {
         case .finderFolder: String(localized: "Finder's current folder")
+        case .recentLocations: String(localized: "List of recent folders")
         }
     }
 
     var symbol: String {
         switch self {
         case .finderFolder: "folder"
+        case .recentLocations: "clock.arrow.circlepath"
         }
     }
 }
@@ -39,7 +41,7 @@ struct FileDialogActionPicker: View {
             }
             .labelsHidden()
             .fixedSize()
-            Text("Only in an open or save dialog; anywhere else the shortcut does what it always did.")
+            Text("Only in an open or save dialog (the list also in Finder); anywhere else the shortcut does what it always did.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

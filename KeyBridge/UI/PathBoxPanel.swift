@@ -10,6 +10,8 @@ import SwiftUI
 final class PathBoxPanelController {
     private var panel: NSPanel?
     private var resignObserver: NSObjectProtocol?
+    /// Told the folder the box went to, for the recent locations (KB-219).
+    var visited: (@MainActor (String) -> Void)?
 
     /// `path` is where Finder already is; nil opens the box empty.
     func show(startingAt path: String? = nil) {
@@ -48,8 +50,10 @@ final class PathBoxPanelController {
         switch target {
         case let .folder(url):
             NSWorkspace.shared.open(url)
+            visited?(url.path(percentEncoded: false).trimmingTrailingSlash)
         case let .file(url):
             NSWorkspace.shared.activateFileViewerSelecting([url])
+            visited?(url.deletingLastPathComponent().path(percentEncoded: false).trimmingTrailingSlash)
         }
     }
 
@@ -145,5 +149,11 @@ private struct PathBoxView: View {
             close()
             return .handled
         }
+    }
+}
+
+private extension String {
+    var trimmingTrailingSlash: String {
+        count > 1 && hasSuffix("/") ? String(dropLast()) : self
     }
 }

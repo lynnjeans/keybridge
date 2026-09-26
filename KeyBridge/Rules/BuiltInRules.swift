@@ -72,6 +72,9 @@ enum BuiltInRules {
         .init(id: "dialogs", rules: [
             Rule(id: "dialog.finderFolder", trigger: .key(combo: KeyCombo([.control], .g)),
                  action: .fileDialog(.finderFolder)),
+            // Also in Finder, where the chosen folder is opened (KB-219).
+            Rule(id: "dialog.recentLocations", trigger: .key(combo: KeyCombo([.control, .shift], .g)),
+                 action: .fileDialog(.recentLocations)),
         ]),
         .init(id: "windows", rules: [
             rule("win.switchApp", KeyCombo([.option], .tab), KeyCombo([.command], .tab)),

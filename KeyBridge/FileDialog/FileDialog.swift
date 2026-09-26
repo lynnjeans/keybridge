@@ -17,19 +17,6 @@ import OSLog
 /// identifiers the shortcut stops matching and the key goes through as before.
 @MainActor
 enum FileDialog {
-    /// Carries out a file dialog rule's action.
-    static func perform(_ action: FileDialogAction) {
-        switch action {
-        case .finderFolder:
-            guard let path = FinderFolder.frontWindowPath() ?? FinderRecentFolders.paths().first else {
-                Logger.fileDialog.notice("No Finder folder to go to")
-                NSSound.beep()
-                return
-            }
-            jump(to: path)
-        }
-    }
-
     /// Whether an open or save dialog has the keyboard. Asked from the event
     /// tap, and only for rules that act on a dialog, so every query gives up
     /// after 50 ms.
@@ -37,8 +24,9 @@ enum FileDialog {
         panel(timeout: 0.05) != nil
     }
 
-    /// Takes the dialog in front to `path`.
-    static func jump(to path: String) {
+    /// Takes the dialog in front to `path`. `jumped` hears about it once
+    /// Return has gone out.
+    static func jump(to path: String, jumped: (@MainActor (String) -> Void)? = nil) {
         guard let app = NSWorkspace.shared.frontmostApplication, let panel = panel(timeout: timeout) else {
             Logger.fileDialog.notice("No open or save dialog in front")
             NSSound.beep()
@@ -47,7 +35,7 @@ enum FileDialog {
         // A Go to Folder sheet already open is used as it is; ⌘⇧G again
         // would not open a second one.
         if goToField(in: panel) == nil { press(KeyCombo([.shift, .command], .g)) }
-        fill(panel, in: app.processIdentifier, with: path, attempts: 30)
+        fill(panel, in: app.processIdentifier, with: path, attempts: 30, jumped: jumped)
     }
 
     // MARK: - Finding the dialog
@@ -95,7 +83,10 @@ enum FileDialog {
     /// it is sent only while the dialog's app is still in front and the
     /// field still has the focus: switching to a chat in the meantime must
     /// not send a message.
-    private static func fill(_ panel: AXUIElement, in pid: pid_t, with path: String, attempts: Int) {
+    private static func fill(
+        _ panel: AXUIElement, in pid: pid_t, with path: String, attempts: Int,
+        jumped: (@MainActor (String) -> Void)?
+    ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
             guard NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else {
                 Logger.fileDialog.notice("The dialog's app left the front; not going on")
@@ -103,7 +94,7 @@ enum FileDialog {
             }
             guard let field = goToField(in: panel) else {
                 if attempts > 1 {
-                    fill(panel, in: pid, with: path, attempts: attempts - 1)
+                    fill(panel, in: pid, with: path, attempts: attempts - 1, jumped: jumped)
                 } else {
                     Logger.fileDialog.error("Go to Folder did not open in the dialog")
                     NSSound.beep()
@@ -125,6 +116,7 @@ enum FileDialog {
                 }
                 press(KeyCombo([], .returnKey))
                 Logger.fileDialog.info("Jumped a dialog to \(path, privacy: .private)")
+                jumped?(path)
             }
         }
     }
@@ -186,18 +178,20 @@ enum FileDialog {
     // MARK: - Self-test
 
     #if DEBUG
-    /// KB_DEBUG_DIALOGJUMP: three seconds after launch, carries out
-    /// `finderFolder` on the dialog in front as ⌃G would, and logs whether a
-    /// dialog was found. Open a dialog in some app first and leave it in
-    /// front; the shell cannot press the shortcut, KeyBridge can.
-    static func selfTest() {
+    /// KB_DEBUG_DIALOGJUMP: three seconds after launch, carries out the
+    /// action it names (`finderFolder` when it names none) on the dialog in
+    /// front as its shortcut would, and logs whether a dialog was found. Open
+    /// a dialog in some app first and leave it in front; the shell cannot
+    /// press the shortcut, KeyBridge can.
+    static func selfTest(perform: @escaping @MainActor (FileDialogAction) -> Void) {
         guard ProcessInfo.processInfo.environment["KB_DEBUG_DIALOGJUMP"] != nil else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             let front = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "none"
             Logger.fileDialog.notice(
                 "dialogjump front=\(front, privacy: .public) dialog=\(isFocused(), privacy: .public) finder=\(FinderFolder.frontWindowPath() ?? "none", privacy: .public) recent=\(FinderRecentFolders.paths().first ?? "none", privacy: .public)"
             )
-            perform(.finderFolder)
+            let name = ProcessInfo.processInfo.environment["KB_DEBUG_DIALOGJUMP"] ?? ""
+            perform(FileDialogAction(rawValue: name) ?? .finderFolder)
         }
     }
     #endif

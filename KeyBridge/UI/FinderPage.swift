@@ -6,7 +6,11 @@ import SwiftUI
 struct FinderPage: View {
     let rules: RulesController
     let pathBox: PathBoxController
+    let locations: FileLocations
+    /// Empties the recent folders, telling Finder's list apart from new ones.
+    let clearHistory: () -> Void
     @State private var editing: Rule?
+    @State private var confirmingClear = false
 
     var body: some View {
         FinderMenuCard()
@@ -18,7 +22,7 @@ struct FinderPage: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Open & Save Dialogs")
                             .font(.headline)
-                        Text("In any app's open or save dialog, jump to the folder Finder is showing, like Listary on Windows. The same entries are on the Shortcuts page.")
+                        Text("In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The same entries are on the Shortcuts page.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
@@ -28,9 +32,101 @@ struct FinderPage: View {
                 }
                 Divider().padding(.top, 12)
                 EntryList(rules: rules, group: "dialogs", edit: { editing = $0 })
+                Divider()
+                AdaptiveRow(spacing: 14) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Recent folders in the list")
+                        Text("Folders you open in Finder or go to with KeyBridge.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    HStack(spacing: 10) {
+                        Stepper(value: Binding(get: { locations.recentLimit }, set: { locations.recentLimit = $0 }),
+                                in: FileLocations.limits) {
+                            Text(locations.recentLimit, format: .number)
+                                .monospacedDigit()
+                        }
+                        .fixedSize()
+                        Button("Clear…") { confirmingClear = true }
+                            .disabled(locations.history.isEmpty)
+                    }
+                }
+                .padding(.vertical, 10)
+                Divider()
+                FavoritesEditor(locations: locations)
+                    .padding(.top, 10)
             }
         }
         .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+        .confirmationDialog("Clear the recent folders?", isPresented: $confirmingClear) {
+            Button("Clear", role: .destructive, action: clearHistory)
+        } message: {
+            Text("Favorites and Finder's own Recent Folders are kept.")
+        }
+    }
+}
+
+/// The favorite folders, listed first by the recent locations list: add with
+/// a folder chooser, or with the star in the list itself; remove here.
+private struct FavoritesEditor: View {
+    let locations: FileLocations
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Favorites")
+            if locations.favorites.isEmpty {
+                Text("None yet. Add folders here, or press ⌘D on a folder in the list.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                ForEach(locations.favorites, id: \.self) { path in
+                    HStack(spacing: 10) {
+                        Image(nsImage: NSWorkspace.shared.icon(forFile: path))
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(FileManager.default.displayName(atPath: path))
+                                .lineLimit(1)
+                            Text((path as NSString).abbreviatingWithTildeInPath)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                        }
+                        Spacer(minLength: 8)
+                        Button {
+                            locations.setFavorite(path, false)
+                        } label: {
+                            Image(systemName: "minus.circle.fill").foregroundStyle(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                        .help("Remove from favorites")
+                    }
+                }
+            }
+            Button("Add Folder…", action: add)
+                .padding(.top, 2)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func add() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = true
+        panel.prompt = String(localized: "Add")
+        guard panel.runModal() == .OK else { return }
+        for url in panel.urls { locations.setFavorite(url.path(percentEncoded: false).trimmingSlash, true) }
+    }
+}
+
+private extension String {
+    /// A folder URL's path ends in a slash; paths here are kept without one.
+    var trimmingSlash: String {
+        count > 1 && hasSuffix("/") ? String(dropLast()) : self
     }
 }
 

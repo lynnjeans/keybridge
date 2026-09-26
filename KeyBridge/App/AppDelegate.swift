@@ -11,13 +11,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
     lazy var pathBox = PathBoxController()
     lazy var pathBoxPanel = PathBoxPanelController()
+    lazy var quickSwitch = QuickSwitch(locations: FileLocations())
     let frontmost = FrontmostApplication()
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
         isEditingText: FocusedElement.isEditingText,
         isInFileDialog: FileDialog.isFocused,
-        fileDialog: FileDialog.perform
+        fileDialog: { [quickSwitch] in quickSwitch.perform($0) }
     )
     /// The preset, the user's changes to it, and the rules that result. It
     /// hands each new set straight to the dispatcher, so a switch flipped in
@@ -44,7 +45,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // A system hot key never reaches the app in front, so the path box
         // takes ⌘L only while Finder is there.
         pathBox.setFrontmostApplication(frontmost.bundleID)
-        frontmost.onChange = { [pathBox] bundleID in pathBox.setFrontmostApplication(bundleID) }
+        frontmost.onChange = { [pathBox, quickSwitch] bundleID in
+            // Finder's recent folders are taken in as Finder leaves the
+            // front, so the history keeps roughly the order things happened.
+            if pathBox.isFinderFront, bundleID != BuiltInRules.finderID { quickSwitch.mergeFinderRecents() }
+            pathBox.setFrontmostApplication(bundleID)
+        }
+        pathBoxPanel.visited = { [quickSwitch] in quickSwitch.locations.record($0) }
         dispatcher.leftMouse = { [dockClick] event, type in
             let now = ProcessInfo.processInfo.systemUptime
             if type == .leftMouseDown {
@@ -64,7 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         WindowElement.selfTest()
         WindowElement.snapSelfTest()
         FinderFolder.selfTest()
-        FileDialog.selfTest()
+        FileDialog.selfTest { [quickSwitch] in quickSwitch.perform($0) }
         if let name = ProcessInfo.processInfo.environment["KB_DEBUG_SYSACTION"],
            let function = SystemAction(rawValue: name) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [dispatcher] in
