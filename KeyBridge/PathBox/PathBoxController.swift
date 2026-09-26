@@ -36,7 +36,7 @@ final class PathBoxController {
     @ObservationIgnored private let defaults: UserDefaults
     /// Whether Finder is the app in front; the app tells us, from the
     /// workspace notification it already watches for rule scoping.
-    @ObservationIgnored private var isFinderFront = false
+    @ObservationIgnored private(set) var isFinderFront = false
     /// Set while the shortcut is let go of for recording, so an app switch
     /// cannot register it again behind the recorder's back.
     @ObservationIgnored private var isSuspended = false

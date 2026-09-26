@@ -54,7 +54,24 @@ import Testing
     @Test func thePresetHasTheGroupOnByDefault() {
         let group = BuiltInRules.preset.groups.first { $0.id == "dialogs" }
         #expect(group?.isEnabledByDefault == true)
-        #expect(group?.rules == [jump])
+        #expect(group?.rules.first == jump)
+        #expect(group?.rules.last?.trigger == .key(combo: KeyCombo([.control, .shift], .g)))
+        #expect(group?.rules.last?.action == .fileDialog(.recentLocations))
+    }
+
+    /// The list also opens in Finder, with no dialog to ask about; going to
+    /// Finder's folder from Finder itself would mean nothing.
+    @Test func theListAlsoWorksInFinder() {
+        let list = Rule(id: "dialog.recentLocations", trigger: .key(combo: KeyCombo([.control, .shift], .g)),
+                        action: .fileDialog(.recentLocations))
+        let matcher = RuleMatcher(rules: [jump, list])
+        let finder = MatchContext(frontmostBundleID: BuiltInRules.finderID)
+        var asked = 0
+        #expect(matcher.match(list.trigger, in: finder, isInFileDialog: { asked += 1; return false })?.id == list.id)
+        #expect(asked == 0)
+        #expect(matcher.match(jump.trigger, in: finder, isInFileDialog: { false }) == nil)
+        #expect(matcher.match(list.trigger, in: context, isInFileDialog: { false }) == nil)
+        #expect(matcher.match(list.trigger, in: context, isInFileDialog: { true })?.id == list.id)
     }
 
     /// fn mode: fn+G, and in terminals too, since the fn version drops the

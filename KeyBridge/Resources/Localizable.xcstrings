@@ -345,6 +345,22 @@
         }
       }
     },
+    "Add" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加"
+          }
+        }
+      }
+    },
     "Add App…" : {
       "localizations" : {
         "ja" : {
@@ -373,6 +389,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "添加按钮…"
+          }
+        }
+      }
+    },
+    "Add Folder…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを追加…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加文件夹…"
+          }
+        }
+      }
+    },
+    "Add to favorites (⌘D)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よく使う項目に追加（⌘D）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加到收藏（⌘D）"
           }
         }
       }
@@ -777,6 +825,22 @@
         }
       }
     },
+    "Clear" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "消去"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除"
+          }
+        }
+      }
+    },
     "Clear History" : {
       "localizations" : {
         "ja" : {
@@ -789,6 +853,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "清空历史"
+          }
+        }
+      }
+    },
+    "Clear the recent folders?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近使ったフォルダを消去しますか？"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除最近的文件夹？"
+          }
+        }
+      }
+    },
+    "Clear…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "消去…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除…"
           }
         }
       }
@@ -1673,6 +1769,38 @@
         }
       }
     },
+    "Favorites" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よく使う項目"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏"
+          }
+        }
+      }
+    },
+    "Favorites and Finder's own Recent Folders are kept." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よく使う項目と、Finder 自身の「最近使ったフォルダ」はそのまま残ります。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏和访达自己的\"最近使用的文件夹\"会保留。"
+          }
+        }
+      }
+    },
     "File" : {
       "localizations" : {
         "ja" : {
@@ -1829,6 +1957,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "访达当前文件夹"
+          }
+        }
+      }
+    },
+    "Folders you open in Finder or go to with KeyBridge." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder で開いたフォルダや、KeyBridge で移動したフォルダです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你在访达中打开的，或通过 KeyBridge 前往的文件夹。"
           }
         }
       }
@@ -2105,18 +2249,18 @@
         }
       }
     },
-    "In any app's open or save dialog, jump to the folder Finder is showing, like Listary on Windows. The same entries are on the Shortcuts page." : {
+    "In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The same entries are on the Shortcuts page." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "どのアプリの開く・保存ダイアログでも、Finder が表示しているフォルダへ移動できます。Windows の Listary と同じです。同じ項目は「ショートカット」ページにもあります。"
+            "value" : "どのアプリの開く・保存ダイアログでも、Finder が表示しているフォルダへ移動したり、よく使う項目や最近使ったフォルダから選んだりできます。Windows の Listary と同じです。同じ項目は「ショートカット」ページにもあります。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在任何 App 的打开或存储对话框中，跳到访达正在显示的文件夹，类似 Windows 上的 Listary。这些条目也在「快捷键」页。"
+            "value" : "在任何 App 的打开或存储对话框中，跳到访达正在显示的文件夹，或从收藏和最近的文件夹中挑一个，类似 Windows 上的 Listary。这些条目也在「快捷键」页。"
           }
         }
       }
@@ -2649,6 +2793,22 @@
         }
       }
     },
+    "List of recent folders" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近使ったフォルダの一覧"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近文件夹列表"
+          }
+        }
+      }
+    },
     "Lock screen" : {
       "localizations" : {
         "ja" : {
@@ -3113,6 +3273,22 @@
         }
       }
     },
+    "No folders yet. Folders you open in Finder show up here." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだフォルダがありません。Finder で開いたフォルダがここに表示されます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有文件夹。你在访达中打开的文件夹会出现在这里。"
+          }
+        }
+      }
+    },
     "No matches" : {
       "localizations" : {
         "ja" : {
@@ -3125,6 +3301,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有匹配项"
+          }
+        }
+      }
+    },
+    "None yet. Add folders here, or press ⌘D on a folder in the list." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだありません。ここで追加するか、一覧でフォルダを選んで ⌘D を押してください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有。可以在这里添加，或在列表中选中文件夹后按 ⌘D。"
           }
         }
       }
@@ -3401,18 +3593,34 @@
         }
       }
     },
-    "Only in an open or save dialog; anywhere else the shortcut does what it always did." : {
+    "Only in an open or save dialog (the list also in Finder), like Listary on Windows" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開く・保存ダイアログの中だけで働きます。ほかの場所では、このショートカットは今まで通りです。"
+            "value" : "開く・保存ダイアログの中だけ（一覧は Finder でも）。Windows の Listary と同じ"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅在打开或存储对话框中生效；在其他地方，这个快捷键照常。"
+            "value" : "仅在打开或存储对话框中生效（列表在访达中也可用），类似 Windows 上的 Listary"
+          }
+        }
+      }
+    },
+    "Only in an open or save dialog (the list also in Finder); anywhere else the shortcut does what it always did." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開く・保存ダイアログの中だけで働きます（一覧は Finder でも）。ほかの場所では、このショートカットは今まで通りです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在打开或存储对话框中生效（列表在访达中也可用）；在其他地方，这个快捷键照常。"
           }
         }
       }
@@ -3477,22 +3685,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仅当 Finder 在前台时可用：粘贴或输入路径，回车跳转。点击可录制其他快捷键。"
-          }
-        }
-      }
-    },
-    "Only while an open or save dialog is in front, like Listary on Windows" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "開く・保存ダイアログが最前面のときだけ。Windows の Listary と同じ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅在打开或存储对话框位于最前面时生效，类似 Windows 上的 Listary"
           }
         }
       }
@@ -3653,6 +3845,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开剪贴板历史"
+          }
+        }
+      }
+    },
+    "Open in Finder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder で開いているフォルダ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在访达中打开的"
           }
         }
       }
@@ -4201,6 +4409,70 @@
         }
       }
     },
+    "Recent" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近"
+          }
+        }
+      }
+    },
+    "Recent Locations" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近の場所"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近位置"
+          }
+        }
+      }
+    },
+    "Recent and favorite folders" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近使ったフォルダとよく使う項目"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近和收藏的文件夹"
+          }
+        }
+      }
+    },
+    "Recent folders in the list" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一覧に表示する最近のフォルダ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列表中的最近文件夹数"
+          }
+        }
+      }
+    },
     "Record this app's copies again" : {
       "localizations" : {
         "ja" : {
@@ -4245,6 +4517,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "刷新"
+          }
+        }
+      }
+    },
+    "Remove from favorites" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よく使う項目から削除"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从收藏中移除"
+          }
+        }
+      }
+    },
+    "Remove from favorites (⌘D)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "よく使う項目から削除（⌘D）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从收藏中移除（⌘D）"
           }
         }
       }
@@ -4661,6 +4965,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜索剪贴板历史…"
+          }
+        }
+      }
+    },
+    "Search folders…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを検索…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索文件夹…"
           }
         }
       }
