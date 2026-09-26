@@ -148,6 +148,7 @@
 		DDD3C2C8F7D32EFB5886C3B1 /* SecureInputMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */; };
 		DDF0CF66405EA81A689BE2B8 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */; };
 		E1673CBA62A5E1ECCCE2DA97 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
+		E226F8D9CD555A6B81BF1389 /* FinderRecentFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E273436FE87DE04E78F3173 /* FinderRecentFolders.swift */; };
 		E34EBB2A39CB3FC47281FBFF /* FileDialogActionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626672FC8FE90DCFB309CE4B /* FileDialogActionPicker.swift */; };
 		E3DD25711FA686863B870E13 /* SecureInputMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932D004CA258ED3D13C5CD4 /* SecureInputMonitor.swift */; };
 		E421522BA3A931884F0AB510 /* WheelDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE014E64C5E7702B70F7970C /* WheelDirection.swift */; };
@@ -723,6 +724,7 @@
 				6134033CCAE5454CE7FDD7A4 /* FinderFolderPicker.swift in Sources */,
 				9442D9C9BC1CD2C960621472 /* FinderFolderTests.swift in Sources */,
 				B0C7FF3F09641315C75BE6B1 /* FinderMenuTests.swift in Sources */,
+				E226F8D9CD555A6B81BF1389 /* FinderRecentFolders.swift in Sources */,
 				AD46A5BDFE9B583FFA43C33B /* GlobalHotKey.swift in Sources */,
 				CA69F36DFFDA924E2CF26900 /* KeyCodeLabel.swift in Sources */,
 				4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */,

@@ -146,6 +146,7 @@ targets:
       - path: KeyBridge/Window/WindowGeometry.swift
       - path: KeyBridge/Window/WindowAction.swift
       - path: KeyBridge/FileDialog/FileDialogAction.swift
+      - path: KeyBridge/FileDialog/FinderRecentFolders.swift
       - path: KeyBridge/Window/WindowElement.swift
       - path: KeyBridge/Permissions
       - path: KeyBridge/Clipboard

@@ -101,6 +101,60 @@ import Testing
         }
     }
 
+    /// Holding ⌃G sends some thirty repeats a second; none of them asks the
+    /// front app again, and none acts again.
+    @Test func holdingTheKeyDoesNotAskOrActAgain() async throws {
+        var asked = 0
+        var acted = 0
+        let dispatcher = Dispatcher(frontmostBundleID: { "com.apple.TextEdit" },
+                                    isInFileDialog: { asked += 1; return true },
+                                    fileDialog: { _ in acted += 1 })
+        dispatcher.rules = [jump]
+        for isRepeat in [false, true, true, true] {
+            let event = try #require(CGEvent(keyboardEventSource: nil, virtualKey: KeyCode.g.rawValue, keyDown: true))
+            event.flags = .maskControl
+            event.setIntegerValueField(.keyboardEventAutorepeat, value: isRepeat ? 1 : 0)
+            #expect(isConsumed(dispatcher.process(event, type: .keyDown)))
+        }
+        try await Task.sleep(for: .milliseconds(50))
+        #expect(asked == 1)
+        #expect(acted == 1)
+    }
+
+    /// A repeat of a key KeyBridge let through goes through unmatched.
+    @Test func aRepeatOfAKeyLetThroughIsNotMatched() throws {
+        var asked = 0
+        let dispatcher = Dispatcher(frontmostBundleID: { "com.apple.TextEdit" },
+                                    isInFileDialog: { asked += 1; return true })
+        dispatcher.rules = [jump]
+        let event = try #require(CGEvent(keyboardEventSource: nil, virtualKey: KeyCode.g.rawValue, keyDown: true))
+        event.flags = .maskControl
+        event.setIntegerValueField(.keyboardEventAutorepeat, value: 1)
+        if case .passThrough = dispatcher.process(event, type: .keyDown) {} else {
+            Issue.record("an unheld repeat was not let through")
+        }
+        #expect(asked == 0)
+    }
+
+    // MARK: - Finder's recent folders
+
+    /// Bookmarks can outlive their folder; those are left out.
+    @Test func recentFoldersThatNoLongerExistAreLeftOut() throws {
+        let base = FileManager.default.temporaryDirectory.appending(path: "RecentFolders-\(UUID().uuidString)")
+        let kept = base.appending(path: "Kept")
+        let gone = base.appending(path: "Gone")
+        try FileManager.default.createDirectory(at: kept, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: gone, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: base) }
+        let entries: [[String: Any]] = try [gone, kept].map { ["file-bookmark": try $0.bookmarkData(), "name": $0.lastPathComponent] }
+        try FileManager.default.removeItem(at: gone)
+
+        let paths = FinderRecentFolders.paths(from: entries)
+        #expect(paths.count == 1)
+        #expect(paths.first.map { $0.hasSuffix("/Kept") } == true)
+        #expect(paths.first?.hasSuffix("/") == false)
+    }
+
     private func isConsumed(_ disposition: Dispatcher.Disposition) -> Bool {
         if case .consume = disposition { true } else { false }
     }

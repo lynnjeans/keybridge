@@ -167,6 +167,7 @@ enum FinderFolder {
         switch role {
         case kAXBrowserRole as String:
             children = Array(((copy(element, kAXColumnsAttribute) as? [AXUIElement]) ?? []).suffix(columns))
+            for column in children { AXUIElementSetMessagingTimeout(column, timeout) }
         case kAXOutlineRole as String:
             // An outline lists its columns among its children; only rows
             // hold items.
@@ -200,8 +201,12 @@ enum FinderFolder {
         return path.count > 1 && path.hasSuffix("/") ? String(path.dropLast()) : path
     }
 
+    /// Each child gets the timeout as well: an element without one of its
+    /// own waits about 1.5 s on a Finder that does not answer.
     private static func children(of element: AXUIElement) -> [AXUIElement] {
-        (copy(element, kAXChildrenAttribute) as? [AXUIElement]) ?? []
+        let children = (copy(element, kAXChildrenAttribute) as? [AXUIElement]) ?? []
+        for child in children { AXUIElementSetMessagingTimeout(child, timeout) }
+        return children
     }
 
     private static func copy(_ element: AXUIElement, _ attribute: String) -> CFTypeRef? {
@@ -216,7 +221,9 @@ enum FinderFolder {
 
     private static func element(of element: AXUIElement, _ attribute: String) -> AXUIElement? {
         guard let value = copy(element, attribute), CFGetTypeID(value) == AXUIElementGetTypeID() else { return nil }
-        return (value as! AXUIElement)
+        let result = value as! AXUIElement
+        AXUIElementSetMessagingTimeout(result, timeout)
+        return result
     }
 
     // MARK: - Self-test

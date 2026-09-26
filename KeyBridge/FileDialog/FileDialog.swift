@@ -39,7 +39,7 @@ enum FileDialog {
 
     /// Takes the dialog in front to `path`.
     static func jump(to path: String) {
-        guard let panel = panel(timeout: timeout) else {
+        guard let app = NSWorkspace.shared.frontmostApplication, let panel = panel(timeout: timeout) else {
             Logger.fileDialog.notice("No open or save dialog in front")
             NSSound.beep()
             return
@@ -47,7 +47,7 @@ enum FileDialog {
         // A Go to Folder sheet already open is used as it is; ⌘⇧G again
         // would not open a second one.
         if goToField(in: panel) == nil { press(KeyCombo([.shift, .command], .g)) }
-        fill(panel, with: path, attempts: 30)
+        fill(panel, in: app.processIdentifier, with: path, attempts: 30)
     }
 
     // MARK: - Finding the dialog
@@ -65,18 +65,17 @@ enum FileDialog {
         guard let app = NSWorkspace.shared.frontmostApplication else { return nil }
         let element = AXUIElementCreateApplication(app.processIdentifier)
         AXUIElementSetMessagingTimeout(element, timeout)
-        var candidate = self.element(of: element, kAXFocusedWindowAttribute)
-            ?? self.element(of: element, kAXMainWindowAttribute)
+        var candidate = self.element(of: element, kAXFocusedWindowAttribute, timeout: timeout)
+            ?? self.element(of: element, kAXMainWindowAttribute, timeout: timeout)
         // Window › dialog sheet › Go to Folder sheet is as deep as it goes.
         for _ in 0..<3 {
             guard let window = candidate else { return nil }
-            AXUIElementSetMessagingTimeout(window, timeout)
             if isPanel(window) { return window }
-            let sheet = children(of: window).first {
+            let sheet = children(of: window, timeout: timeout).first {
                 string(of: $0, kAXRoleAttribute) == kAXSheetRole as String && isPanel($0)
             }
             if let sheet { return sheet }
-            candidate = self.element(of: window, kAXParentAttribute)
+            candidate = self.element(of: window, kAXParentAttribute, timeout: timeout)
         }
         return nil
     }
@@ -91,11 +90,20 @@ enum FileDialog {
     /// confirms. The sheet takes a moment to appear after ⌘⇧G; checking every
     /// 30 ms for up to a second covers a slow app without holding up the
     /// main thread.
-    private static func fill(_ panel: AXUIElement, with path: String, attempts: Int) {
+    ///
+    /// Return is a real keystroke that goes to whatever has the keyboard, so
+    /// it is sent only while the dialog's app is still in front and the
+    /// field still has the focus: switching to a chat in the meantime must
+    /// not send a message.
+    private static func fill(_ panel: AXUIElement, in pid: pid_t, with path: String, attempts: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+            guard NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else {
+                Logger.fileDialog.notice("The dialog's app left the front; not going on")
+                return
+            }
             guard let field = goToField(in: panel) else {
                 if attempts > 1 {
-                    fill(panel, with: path, attempts: attempts - 1)
+                    fill(panel, in: pid, with: path, attempts: attempts - 1)
                 } else {
                     Logger.fileDialog.error("Go to Folder did not open in the dialog")
                     NSSound.beep()
@@ -110,6 +118,11 @@ enum FileDialog {
             }
             // A moment for the field to take the text before Return reads it.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                guard NSWorkspace.shared.frontmostApplication?.processIdentifier == pid,
+                      copy(field, kAXFocusedAttribute) as? Bool == true else {
+                    Logger.fileDialog.notice("Go to Folder lost the keyboard; Return not sent")
+                    return
+                }
                 press(KeyCombo([], .returnKey))
                 Logger.fileDialog.info("Jumped a dialog to \(path, privacy: .private)")
             }
@@ -141,8 +154,16 @@ enum FileDialog {
 
     // MARK: - Accessibility helpers
 
-    private static func children(of element: AXUIElement) -> [AXUIElement] {
-        (copy(element, kAXChildrenAttribute) as? [AXUIElement]) ?? []
+    // Every element read from another one gets the timeout too: it is a new
+    // reference, and one without its own waits about 1.5 s on an app that
+    // does not answer — measured against a stopped process, where the same
+    // query on an element with 0.1 s set gave up after 100 ms. From the
+    // event tap that would hold up the whole keyboard.
+
+    private static func children(of element: AXUIElement, timeout: Float = timeout) -> [AXUIElement] {
+        let children = (copy(element, kAXChildrenAttribute) as? [AXUIElement]) ?? []
+        for child in children { AXUIElementSetMessagingTimeout(child, timeout) }
+        return children
     }
 
     private static func copy(_ element: AXUIElement, _ attribute: String) -> CFTypeRef? {
@@ -155,9 +176,11 @@ enum FileDialog {
         copy(element, attribute) as? String
     }
 
-    private static func element(of element: AXUIElement, _ attribute: String) -> AXUIElement? {
+    private static func element(of element: AXUIElement, _ attribute: String, timeout: Float = timeout) -> AXUIElement? {
         guard let value = copy(element, attribute), CFGetTypeID(value) == AXUIElementGetTypeID() else { return nil }
-        return (value as! AXUIElement)
+        let result = value as! AXUIElement
+        AXUIElementSetMessagingTimeout(result, timeout)
+        return result
     }
 
     // MARK: - Self-test

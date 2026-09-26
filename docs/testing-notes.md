@@ -231,6 +231,14 @@ Debug builds read these environment variables at launch. Pass them with `open --
   `tell application "…"` beyond `quit`**: it needs the Automation permission and can leave a
   prompt on the user's screen.
 
+- **An Accessibility timeout belongs to one element reference.** `AXUIElementSetMessagingTimeout`
+  on an app or a window does not carry over to the children, parents or windows read from it;
+  those wait about **1.5 s** on an app that does not answer (measured against a `kill -STOP`ped
+  process: 1504 ms without, 100 ms with 0.1 s set). Some attributes, such as a role already
+  read, come from a cache and answer at once even then, so test with an uncached one
+  (`AXPosition`, `AXChildren`). Set the timeout on every element you query, above all from the
+  event tap.
+
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest
   of the callback never runs — which reads exactly like the code not being called at all. Read

@@ -251,19 +251,23 @@ final class Dispatcher {
 
     private func keyDown(_ event: CGEvent) -> Disposition {
         let key = event.keyCode
-        let rule = match(event, type: .keyDown)
 
         if let held = heldKeys[key] {
+            // Auto-repeat of a key whose press was an action: nothing to
+            // repeat, and no need to match again — matching can mean asking
+            // the front app, some thirty times a second.
+            guard let output = held.output else { return .consume }
             // Auto-repeat of a remapped key. If the modifiers changed mid-hold
             // the combination no longer applies; swallowing the rest of the
             // repeats beats suddenly typing the plain key.
-            guard rule?.id == held.ruleID, let output = held.output else { return .consume }
+            guard match(event, type: .keyDown)?.id == held.ruleID else { return .consume }
             return replacement(output, down: true, for: event)
         }
 
-        // A repeat that matches only now, because a modifier was pressed while
-        // the key was already held, belongs to a press that went out unchanged.
-        guard let rule, !event.isAutorepeat else { return .passThrough }
+        // A repeat that would match only now, because a modifier was pressed
+        // while the key was already held, belongs to a press that went out
+        // unchanged; it goes out unchanged too, without being matched.
+        guard !event.isAutorepeat, let rule = match(event, type: .keyDown) else { return .passThrough }
         record(rule)
 
         switch rule.action {

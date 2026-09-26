@@ -12,7 +12,13 @@ enum FinderRecentFolders {
         guard let entries = CFPreferencesCopyAppValue("FXRecentFolders" as CFString, domain) as? [[String: Any]] else {
             return []
         }
-        return entries.compactMap { entry in
+        return paths(from: entries)
+    }
+
+    /// The paths in `FXRecentFolders` entries, each a dictionary with the
+    /// folder's bookmark under `file-bookmark`.
+    static func paths(from entries: [[String: Any]]) -> [String] {
+        entries.compactMap { entry in
             guard let bookmark = entry["file-bookmark"] as? Data else { return nil }
             var isStale = false
             // Without UI or mounting: a folder on a server that is not
@@ -20,6 +26,12 @@ enum FinderRecentFolders {
             guard let url = try? URL(resolvingBookmarkData: bookmark, options: [.withoutUI, .withoutMounting],
                                      relativeTo: nil, bookmarkDataIsStale: &isStale) else { return nil }
             let path = url.path(percentEncoded: false)
+            // A bookmark can still resolve after its folder was deleted or
+            // renamed away; going there would only show an error.
+            var isDirectory: ObjCBool = false
+            guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory), isDirectory.boolValue else {
+                return nil
+            }
             return path.count > 1 && path.hasSuffix("/") ? String(path.dropLast()) : path
         }
     }
