@@ -2,14 +2,14 @@ import SwiftUI
 
 /// A page of the main window, in sidebar order.
 enum Page: String, CaseIterable, Identifiable, Sendable {
-    case overview, shortcuts, mouse, scroll, clipboard, devices
+    case overview, shortcuts, mouse, scroll, clipboard, finder, devices
     case customRules, about
 
     var id: Self { self }
 
     /// The pages listed above the Advanced heading.
     // Devices waits for per-device rules in v1.1 (#98).
-    static let primary: [Page] = [.overview, .shortcuts, .mouse, .scroll, .clipboard]
+    static let primary: [Page] = [.overview, .shortcuts, .mouse, .scroll, .clipboard, .finder]
     static let advanced: [Page] = [.customRules, .about]
 
     var title: String {
@@ -19,6 +19,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .mouse: String(localized: "Mouse")
         case .scroll: String(localized: "Scroll")
         case .clipboard: String(localized: "Clipboard")
+        case .finder: String(localized: "Finder")
         case .devices: String(localized: "Devices")
         case .customRules: String(localized: "Custom Rules")
         case .about: String(localized: "About")
@@ -33,6 +34,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .mouse: String(localized: "Side-button mapping and button actions.")
         case .scroll: String(localized: "Zoom and direction. Mouse only; the trackpad is left alone.")
         case .clipboard: String(localized: "Bring up your copy history at any time, like Win+V on Windows.")
+        case .finder: String(localized: "Right-click menu, a path box, and open and save dialogs that jump to where Finder is.")
         case .devices: String(localized: "Each keyboard and mouse can be set up on its own.")
         case .customRules: String(localized: "Create any “combination → combination” mapping of your own.")
         case .about: String(localized: "Open source under GPL-3.0, and free.")
@@ -46,6 +48,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .mouse: "computermouse.fill"
         case .scroll: "arrow.up.and.down"
         case .clipboard: "list.clipboard.fill"
+        case .finder: "folder.fill"
         case .devices: "desktopcomputer"
         case .customRules: "gearshape.fill"
         case .about: "info.circle.fill"
@@ -60,6 +63,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .mouse: .orange
         case .scroll: .teal
         case .clipboard: .purple
+        case .finder: .blue
         case .devices: .pink
         case .customRules: Color(red: 0.39, green: 0.45, blue: 0.55)
         case .about: .gray

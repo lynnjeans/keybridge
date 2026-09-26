@@ -27,11 +27,13 @@ struct MainWindow: View {
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
                 case .mouse:
-                    MousePage(rules: rules, pathBox: pathBox)
+                    MousePage(rules: rules)
                 case .scroll:
                     ScrollPage(rules: rules)
                 case .clipboard:
                     ClipboardPage(clipboard: clipboard, rules: rules)
+                case .finder:
+                    FinderPage(rules: rules, pathBox: pathBox)
                 case .customRules:
                     CustomRulesPage(rules: rules)
                 case .about:

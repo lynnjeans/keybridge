@@ -2,7 +2,7 @@ import AppKit
 import FinderSync
 import SwiftUI
 
-/// The Finder right-click menu on the Mouse page (KB-210): whether its
+/// The Finder right-click menu on the Finder page (KB-210, KB-218): whether its
 /// extension is on, and the way to System Settings, where it is switched on
 /// and off. KeyBridge keeps no switch of its own, so the two cannot disagree.
 struct FinderMenuCard: View {
