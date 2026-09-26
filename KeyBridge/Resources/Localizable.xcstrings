@@ -1785,6 +1785,22 @@
         }
       }
     },
+    "Finder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访达"
+          }
+        }
+      }
+    },
     "Finder right-click menu" : {
       "localizations" : {
         "ja" : {
@@ -2085,6 +2101,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在终端里取消勾选「终端 › 安全键盘输入」。"
+          }
+        }
+      }
+    },
+    "In any app's open or save dialog, jump to the folder Finder is showing, like Listary on Windows. The same entries are on the Shortcuts page." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのアプリの開く・保存ダイアログでも、Finder が表示しているフォルダへ移動できます。Windows の Listary と同じです。同じ項目は「ショートカット」ページにもあります。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在任何 App 的打开或存储对话框中，跳到访达正在显示的文件夹，类似 Windows 上的 Listary。这些条目也在「快捷键」页。"
           }
         }
       }
@@ -4453,6 +4485,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在文件夹的空白处右键，即可在此新建文档或在终端中打开，和 Windows 一样。"
+          }
+        }
+      }
+    },
+    "Right-click menu, a path box, and open and save dialogs that jump to where Finder is." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右クリックメニュー、パスボックス、そして Finder の場所へ移動できる開く・保存ダイアログ。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右键菜单、路径框，以及能跳到访达当前位置的打开与存储对话框。"
           }
         }
       }
