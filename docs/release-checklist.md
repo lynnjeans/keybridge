@@ -254,8 +254,8 @@ General › Language & Region › Applications):
 ## 16. About, diagnostics, legal
 
 - [ ] About shows the right version and build.
-- [ ] License and Third-Party Notices open in a sheet with the full text; Source Code opens the
-      public GitHub repository (not a 404).
+- [ ] License and Third-Party Notices open in a sheet with the full text (the notices end with
+      Sparkle's license); Source Code opens the public GitHub repository (not a 404).
 - [ ] Export Diagnostics… → the save panel starts in Downloads; saving shows the file in
       Finder. The file has the right version, the permissions, the settings and the log since
       launch, and **none** of the clipboard contents.
@@ -265,7 +265,22 @@ General › Language & Region › Applications):
 - [ ] Idle for 5 minutes with the main window closed → KeyBridge uses about 0 % CPU (Activity
       Monitor) and a stable amount of memory.
 - [ ] Type quickly in a long document for a minute → no lag, no dropped or doubled keys.
-- [ ] (Once automatic updates ship) Check for Updates finds, installs and relaunches into a
-      newer test build, keeping all settings and permissions.
+- [ ] Automatic updates, with the previous release installed in Applications and this build
+      served from a local feed (see "Testing updates" in [testing-notes.md](testing-notes.md)):
+      - [ ] The previous release finds this one on its own → a dot on the menu bar icon and
+            "KeyBridge <version> Is Available…" at the top of the menu; no window opens.
+      - [ ] Choose that item → the update window opens in front and takes the keyboard, with
+            the release notes in the interface language.
+      - [ ] Install Update → KeyBridge relaunches as this version; Accessibility and Input
+            Monitoring are still granted, no setup guide, shortcuts work at once, settings
+            and clipboard history are kept, the Finder right-click menu still appears.
+- [ ] The update signing key is safe: `generate_keys --account keybridge -p` (Sparkle's tool)
+      prints the `SUPublicEDKey` in `project.yml`, and the offline backup of the private key
+      is in the maintainer's password manager, under "KeyBridge Sparkle update key". Losing it
+      means no installed copy can ever be updated again.
+- [ ] About › Updates shows the version, the last check and the two switches; Check for
+      Updates… says KeyBridge is up to date.
+- [ ] Opened straight from the DMG → About › Updates asks to move KeyBridge to Applications,
+      and Check for Updates… says the same instead of checking.
 - [ ] Delete KeyBridge from Applications (or `brew uninstall --cask keybridge`) → the keyboard
       and mouse behave as on a plain Mac.

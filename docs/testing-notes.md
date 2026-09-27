@@ -200,6 +200,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DIALOGJUMP` | Three seconds after launch, carries out the file dialog action it names — `finderFolder` (the default, as ⌃G: jumps the dialog in front to Finder's folder, KB-217) or `recentLocations` (as ⌃⇧G: shows the recent locations list over the dialog or Finder, KB-219) — and logs `dialogjump front=… dialog=true|false finder=… recent=…` in the `fileDialog` category. Open a dialog first and keep it in front (e.g. launch TextEdit, which opens with one); `where popup` in its AX tree then shows the new folder |
 | `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `pathBox` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
 | `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
+| `KB_DEBUG_APPCAST` | Checks for updates against the appcast at this URL instead of the website (KB-101). Without it, debug builds never check: their build number is 1, so they would replace themselves with the latest release. See [Testing updates](#testing-updates) |
 | `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
 
 - **A written Accessibility attribute does not read back changed straight away.** After setting
@@ -415,6 +416,46 @@ again:
 
 - Hardened runtime shows as `flags=0x10000(runtime)`. Xcode applies it only when signing with a
   real identity; ad-hoc builds run without it.
+
+## Testing updates
+
+Sparkle can be tried end to end on one Mac, without publishing anything (KB-101):
+
+1. Build the "new" version into its own folder, pack it and sign it with the update key:
+
+   ```bash
+   xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build/update-test \
+     CURRENT_PROJECT_VERSION=2 MARKETING_VERSION=0.1.1 build
+   mkdir -p /tmp/kb-feed/dmg && ditto build/update-test/Build/Products/Debug/KeyBridge.app /tmp/kb-feed/dmg/KeyBridge.app
+   hdiutil create -quiet -volname "KeyBridge 0.1.1" -srcfolder /tmp/kb-feed/dmg -format UDZO /tmp/kb-feed/KeyBridge-0.1.1.dmg
+   build/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update --account keybridge -p /tmp/kb-feed/KeyBridge-0.1.1.dmg
+   ```
+
+2. Write test notes (`en.html`, `zh-Hans.html`, `ja.html`) into a folder and add the DMG to a
+   test appcast with `scripts/appcast.py --appcast /tmp/kb-feed/appcast.xml --url
+   http://127.0.0.1:8765/KeyBridge-0.1.1.dmg …`. `--critical` tries a critical update.
+3. Serve it: `python3 -m http.server 8765 --bind 127.0.0.1` in `/tmp/kb-feed`.
+4. Copy the current build somewhere writable, quit the running KeyBridge, and open the copy
+   with `--env KB_DEBUG_APPCAST=http://127.0.0.1:8765/appcast.xml`.
+   `defaults delete io.github.lynnjeans.KeyBridge SULastCheckTime` first makes the scheduled
+   check run straight after launch; `SUAutomaticallyUpdate -bool YES` tries automatic install.
+
+Things to know:
+
+- Both builds must be signed with the same certificate (an Apple Development one is enough
+  from `Config/Local.xcconfig`), or the relaunched copy loses its permissions — which is
+  exactly what an ad-hoc release would do to users.
+- After the relaunch the copy runs without `KB_DEBUG_APPCAST` (Sparkle starts it plainly), so it
+  does not check again.
+- Sparkle's settings land in KeyBridge's own defaults domain. Afterwards delete every `SU…` key
+  (`SUAutomaticallyUpdate`, `SUEnableAutomaticChecks`, `SUHasLaunchedBefore`, `SULastCheckTime`,
+  `SUUpdateGroupIdentifier`, `SUSkippedVersion`), or a release installed later inherits them.
+- Launching a copy from another folder registers **its** Finder extension. Afterwards remove
+  the test builds, `pluginkit -a` the extension of the build you use, and `pkill -x
+  KeyBridgeFinder`; `pluginkit -m -v -i io.github.lynnjeans.KeyBridge.Finder` shows which copy
+  Finder loads.
+- A menu item chosen through Accessibility is not a user action, so macOS may refuse to
+  activate KeyBridge for the update window; whether it takes the keyboard needs a real click.
 
 ## Menu bar on macOS 26
 

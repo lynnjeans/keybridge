@@ -7,11 +7,23 @@ struct MenuBarContent: View {
     let engine: EngineController
     let onboarding: OnboardingController
     let secureInput: SecureInputMonitor
+    let updates: UpdateController
     @Environment(\.openWindow) private var openWindow
 
     private var permissions: PermissionMonitor { engine.permissions }
 
     var body: some View {
+        // Where a scheduled check leaves a new version, next to the dot on
+        // the icon, instead of opening a window on its own (KB-101).
+        if let pending = updates.pending {
+            if pending.isDownloaded {
+                Button("Restart to Install KeyBridge \(pending.version)") { updates.installNow() }
+            } else {
+                Button("KeyBridge \(pending.version) Is Available…") { updates.checkForUpdates() }
+            }
+            Divider()
+        }
+
         Text(status)
 
         Toggle("Windows Shortcut Mode", isOn: Binding(
@@ -58,6 +70,9 @@ struct MenuBarContent: View {
             WindowID.bringToFront(WindowID.main)
         }
         .keyboardShortcut(",")
+
+        Button("Check for Updates…") { updates.checkForUpdates() }
+            .disabled(!updates.canCheckForUpdates)
 
         Divider()
 

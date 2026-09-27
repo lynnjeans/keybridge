@@ -12,6 +12,7 @@ struct MainWindow: View {
     let clipboard: ClipboardController
     let pathBox: PathBoxController
     let quickSwitch: QuickSwitch
+    let updates: UpdateController
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -40,6 +41,7 @@ struct MainWindow: View {
                     CustomRulesPage(rules: rules)
                 case .about:
                     AboutCard()
+                    UpdatesCard(updates: updates)
                     LegalCard()
                     DiagnosticsCard {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,

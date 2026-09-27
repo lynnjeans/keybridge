@@ -29,10 +29,10 @@ xcuserdata/
 *.xcodeproj/xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 
-# Swift Package Manager
+# Swift Package Manager. Package.resolved is committed: it pins the exact
+# Sparkle version, so a release builds the same from its commit.
 .build/
 .swiftpm/
-Package.resolved
 
 # CocoaPods / Carthage (if ever used)
 Pods/

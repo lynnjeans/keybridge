@@ -16,6 +16,12 @@ options:
   createIntermediateGroups: true
   developmentLanguage: en
 
+# Automatic updates (KB-101). MIT-licensed; see THIRD_PARTY_NOTICES.md.
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.10.0"
+
 settings:
   base:
     SWIFT_VERSION: "6.0"
@@ -45,6 +51,7 @@ targets:
     dependencies:
       # The Finder right-click menu (KB-210), embedded in Contents/PlugIns.
       - target: KeyBridgeFinder
+      - package: Sparkle
     info:
       path: KeyBridge/Resources/Info.plist
       properties:
@@ -67,6 +74,16 @@ targets:
         CFBundleURLTypes:
           - CFBundleURLName: io.github.lynnjeans.KeyBridge.finder
             CFBundleURLSchemes: [keybridge]
+        # Automatic updates (KB-101). The appcast is published with the
+        # website; every update in it is signed with the EdDSA key whose public
+        # half is below (private half: login keychain, account "keybridge").
+        # Checks run daily without asking first, and nothing about the Mac is
+        # sent with them.
+        SUFeedURL: https://lynnjeans.github.io/keybridge/appcast.xml
+        SUPublicEDKey: "+mui14fQOOo10sFdbz8XnVClc/6jH9XYn9DNxEMq7nA="
+        SUEnableAutomaticChecks: true
+        SUScheduledCheckInterval: 86400
+        SUEnableSystemProfiling: false
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge
@@ -159,6 +176,7 @@ targets:
       - path: KeyBridge/App/DiagnosticReport.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
       - path: KeyBridge/FinderMenu/FinderMenuHandler.swift
+      - path: KeyBridge/Updates/InstallLocation.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests

@@ -23,7 +23,8 @@
 # signed but not notarized.
 #
 # Output in dist/: KeyBridge-<version>.dmg and KeyBridge-<version>.dmg.sha256
-# (the checksum the Homebrew cask needs).
+# (the checksum the Homebrew cask needs). This script publishes nothing;
+# scripts/publish-release.sh uploads the DMG and adds it to the update feed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -108,6 +109,9 @@ print "  DMG:        $dmg ($(du -h $dmg | cut -f1 | tr -d ' '))"
 print "  SHA-256:    $(cat $dmg.sha256)"
 print "  Signed:     ${identity/#-/ad-hoc}"
 print "  Notarized:  $notarized"
+if [[ $notarized == yes ]]; then
+  print "  Next: write release-notes/$version/, then scripts/publish-release.sh"
+fi
 if [[ $notarized == no ]]; then
   print "  Not ready to publish: Gatekeeper will block this build on other Macs."
   [[ $identity == - ]] && print "  Needs a Developer ID Application certificate (paid Apple Developer Program)."

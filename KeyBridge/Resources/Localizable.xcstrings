@@ -793,6 +793,54 @@
         }
       }
     },
+    "Check for Updates…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップデートを確認…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查更新…"
+          }
+        }
+      }
+    },
+    "Check for updates automatically" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップデートを自動的に確認"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动检查更新"
+          }
+        }
+      }
+    },
+    "Checking reads the list of versions on KeyBridge's website. Nothing about you or this Mac is sent, and this is the only time KeyBridge goes online." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認時に読み込むのは KeyBridge の Web サイトにあるバージョン一覧だけで、あなたやこの Mac に関する情報は送信されません。KeyBridge がインターネットに接続するのはこのときだけです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查时只读取 KeyBridge 网站上的版本列表，不会发送任何关于你或这台 Mac 的信息。这也是 KeyBridge 唯一会联网的时候。"
+          }
+        }
+      }
+    },
     "Choose" : {
       "localizations" : {
         "ja" : {
@@ -1525,6 +1573,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完成"
+          }
+        }
+      }
+    },
+    "Download and install updates automatically" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップデートを自動的にダウンロードしてインストール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动下载并安装更新"
           }
         }
       }
@@ -2521,6 +2585,70 @@
         }
       }
     },
+    "KeyBridge %@ Is Available…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ が利用可能です…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ 现已推出…"
+          }
+        }
+      }
+    },
+    "KeyBridge %@ is available." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ が利用可能です。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ 现已推出。"
+          }
+        }
+      }
+    },
+    "KeyBridge %@ is ready to install. It installs the next time KeyBridge quits." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ のインストール準備ができました。次に KeyBridge を終了したときにインストールされます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge %@ 已下载，下次退出 KeyBridge 时会自动安装。"
+          }
+        }
+      }
+    },
+    "KeyBridge cannot be updated from the folder it was downloaded to. Move it to the Applications folder and open it from there." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロードしたフォルダに置いたままでは KeyBridge をアップデートできません。「アプリケーション」フォルダに移動して、そこから開いてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge 留在下载时所在的文件夹里无法更新。请把它移到“应用程序”文件夹，再从那里打开。"
+          }
+        }
+      }
+    },
     "KeyBridge could not start" : {
       "localizations" : {
         "ja" : {
@@ -2597,6 +2725,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KeyBridge 已就绪"
+          }
+        }
+      }
+    },
+    "KeyBridge is running from its disk image, where it cannot be updated. Drag it to the Applications folder and open it from there." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge はディスクイメージから実行されているため、アップデートできません。「アプリケーション」フォルダにドラッグして、そこから開いてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge 正在从磁盘映像运行，这样无法更新。请把它拖到“应用程序”文件夹，再从那里打开。"
           }
         }
       }
@@ -2693,6 +2837,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keynote 演示文稿"
+          }
+        }
+      }
+    },
+    "Last checked %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最終確認：%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次检查：%@。"
           }
         }
       }
@@ -2965,6 +3125,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "鼠标"
+          }
+        }
+      }
+    },
+    "Move KeyBridge to Applications" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を「アプリケーション」フォルダに移動してください"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请把 KeyBridge 移到“应用程序”文件夹"
           }
         }
       }
@@ -3365,6 +3541,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "还没有。可以在这里添加，或在列表中选中文件夹后按 ⌘D。"
+          }
+        }
+      }
+    },
+    "Not checked yet." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ確認していません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未检查。"
           }
         }
       }
@@ -4681,6 +4873,22 @@
         }
       }
     },
+    "Restart to Install KeyBridge %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再起動して KeyBridge %@ をインストール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新启动以安装 KeyBridge %@"
+          }
+        }
+      }
+    },
     "Restart to Switch Language" : {
       "localizations" : {
         "ja" : {
@@ -4693,6 +4901,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重启以切换语言"
+          }
+        }
+      }
+    },
+    "Restart to Update" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再起動してアップデート"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新启动以更新"
           }
         }
       }
@@ -5321,6 +5545,22 @@
         }
       }
     },
+    "Show Update…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップデートを表示…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看更新…"
+          }
+        }
+      }
+    },
     "Show desktop" : {
       "localizations" : {
         "ja" : {
@@ -5883,6 +6123,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "直到手动恢复"
+          }
+        }
+      }
+    },
+    "Updates" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップデート"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新"
           }
         }
       }

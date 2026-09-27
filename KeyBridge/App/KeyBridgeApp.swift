@@ -9,9 +9,11 @@ struct KeyBridgeApp: App {
         // With LSUIElement set there is no Dock icon, so the menu bar item is
         // the app's only permanent presence and the way into everything else.
         MenuBarExtra {
-            MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding, secureInput: appDelegate.secureInput)
+            MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding, secureInput: appDelegate.secureInput,
+                           updates: appDelegate.updates)
         } label: {
-            MenuBarIcon(isActive: appDelegate.engine.isActive && appDelegate.secureInput.holder == nil, onboarding: appDelegate.onboarding)
+            MenuBarIcon(isActive: appDelegate.engine.isActive && appDelegate.secureInput.holder == nil,
+                        hasUpdate: appDelegate.updates.needsAttention, onboarding: appDelegate.onboarding)
         }
 
         Window("KeyBridge", id: WindowID.main) {
@@ -23,7 +25,8 @@ struct KeyBridgeApp: App {
                 otherRemappers: appDelegate.otherRemappers,
                 clipboard: appDelegate.clipboard,
                 pathBox: appDelegate.pathBox,
-                quickSwitch: appDelegate.quickSwitch
+                quickSwitch: appDelegate.quickSwitch,
+                updates: appDelegate.updates
             )
         }
         .defaultSize(width: 880, height: 600)
@@ -67,6 +70,16 @@ enum WindowID {
                 window.makeKeyAndOrderFront(nil)
                 window.orderFrontRegardless()
             }
+            if !NSApplication.shared.isActive { activateThroughLaunchServices() }
+        }
+    }
+
+    /// Makes KeyBridge the active app for a window it did not open through
+    /// SwiftUI, such as Sparkle's update window, the same way.
+    @MainActor
+    static func activateKeyBridge() {
+        NSApplication.shared.activate()
+        DispatchQueue.main.async {
             if !NSApplication.shared.isActive { activateThroughLaunchServices() }
         }
     }
