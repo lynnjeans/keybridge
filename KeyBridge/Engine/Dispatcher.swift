@@ -162,14 +162,7 @@ final class Dispatcher {
     private func rewriteClick(_ event: CGEvent, type: CGEventType) {
         if type == .leftMouseDown {
             clickIsCommand = false
-            guard let ctrlClick else { return }
-            let flags = ctrlClick.rewrite(event.flags)
-            #if DEBUG
-            Logger.engine.notice(
-                "ctrlclick down flags=\(String(event.flags.rawValue, radix: 16), privacy: .public) fn=\(event.flags.contains(.maskSecondaryFn), privacy: .public) ctrl=\(event.flags.contains(.maskControl), privacy: .public) rewritten=\(flags != nil, privacy: .public)"
-            )
-            #endif
-            guard let flags else { return }
+            guard let ctrlClick, let flags = ctrlClick.rewrite(event.flags) else { return }
             event.flags = flags
             clickIsCommand = true
         } else if clickIsCommand {
