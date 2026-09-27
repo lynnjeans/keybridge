@@ -201,22 +201,6 @@
     "+" : {
       "shouldTranslate" : false
     },
-    "A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC キーボードの Windows キーは Mac では ⌘ として届くため、これらのショートカットは Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S も置き換え、⌘ を単独で押すと「アプリ」が開きます。Mac キーボードを使う場合はオフのままにしてください。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC 键盘的 Windows 键在 Mac 上就是 ⌘，所以这些快捷键也会取代 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 也会打开“应用程序”。如果你用的是 Mac 键盘，请保持关闭。"
-          }
-        }
-      }
-    },
     "A shortcut" : {
       "localizations" : {
         "ja" : {
@@ -5615,6 +5599,22 @@
         }
       }
     },
+    "Task View (Mission Control)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タスクビュー（Mission Control）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任务视图（调度中心）"
+          }
+        }
+      }
+    },
     "Text Document" : {
       "localizations" : {
         "ja" : {
@@ -5941,18 +5941,34 @@
         }
       }
     },
-    "Win is ⌥ as you chose, so these shortcuts take ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, which type characters on a Mac (é, ¬, ∂; @ on some layouts), and tapping ⌥ on its own opens Apps." : {
+    "Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win を ⌥ にしているため、これらのショートカットは ⌥L、⌥E、⌥D、⌥.、⌥⇧S を使います。これらは Mac では文字入力に使われます（é、¬、∂、一部の配列では @）。⌥ を単独で押すと「アプリ」が開きます。"
+            "value" : "Win は ⌘ のため、これらのショートカットは ⌘Tab、⌘L、⌘E、⌘D、⌘.、⌘⇧S を使い、⌘ を単独で押すと「アプリ」が開きます。⌘Tab は Mission Control を開くようになり、アプリの切り替えは ⌥Tab で行います。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你选择了 Win 为 ⌥，所以这些快捷键会占用 ⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S。它们在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @），单按一下 ⌥ 也会打开“应用程序”。"
+            "value" : "Win 映射为 ⌘，所以这些快捷键会占用 ⌘Tab、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 会打开“应用程序”。之后 ⌘Tab 打开调度中心，切换 App 请用 ⌥Tab。"
+          }
+        }
+      }
+    },
+    "Win is ⌥, so these shortcuts take ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts)." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win は ⌥ のため、これらのショートカットは ⌥Tab、⌥L、⌥E、⌥D、⌥.、⌥⇧S を使い、⌥ を単独で押すと「アプリ」が開きます。Mac では ⌥ と文字キーで文字を入力します（é、¬、∂、一部の配列では @）。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 映射为 ⌥，所以这些快捷键会占用 ⌥Tab、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S，单按一下 ⌥ 会打开“应用程序”。⌥ 加字母在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @）。"
           }
         }
       }
@@ -6102,34 +6118,34 @@
         }
       }
     },
-    "Windows key shortcuts are on with Win as ⌥, so ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps." : {
+    "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンで Win は ⌥ のため、⌥L、⌥E、⌥D、⌥.、⌥⇧S では文字を入力できず、⌥ を単独で押すと「アプリ」が開きます。"
+            "value" : "Windows キーのショートカットがオンで Win は ⌘ です：⌘Tab で Mission Control が開き（アプリの切り替えは ⌥Tab）、⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，Win 为 ⌥，所以 ⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再输入字符，单按 ⌥ 会打开“应用程序”。"
+            "value" : "Windows 键快捷键已开启，Win 为 ⌘：⌘Tab 打开调度中心（切换 App 用 ⌥Tab），⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
           }
         }
       }
     },
-    "Windows key shortcuts are on, so ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken on a Mac keyboard too." : {
+    "Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンのため、Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
+            "value" : "Windows キーのショートカットがオンで Win は ⌥ です：⌥Tab で Mission Control が開き、⌥L、⌥E、⌥D、⌥.、⌥⇧S では文字を入力できず、⌥ を単独で押すと「アプリ」が開きます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，所以 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
+            "value" : "Windows 键快捷键已开启，Win 为 ⌥：⌥Tab 打开调度中心，⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再输入字符，单按 ⌥ 会打开“应用程序”。"
           }
         }
       }

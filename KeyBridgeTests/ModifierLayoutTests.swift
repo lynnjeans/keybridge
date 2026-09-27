@@ -76,8 +76,24 @@ import Testing
         let matcher = RuleMatcher(rules: rules)
         let context = MatchContext(frontmostBundleID: "com.apple.Safari")
         #expect(matcher.match(key([.command], .tab), in: context) == nil, "Not replaced by a copy of itself")
-        #expect(matcher.match(key([.option], .tab), in: context) == nil)
+        #expect(matcher.match(key([.option], .tab), in: context)?.id == "winKey.taskView", "Win+Tab (KB-227)")
         #expect(matcher.match(key([.option], .l), in: context)?.id == "winKey.lock")
+    }
+
+    /// Win+Tab opens Mission Control and Alt+Tab still switches apps, with
+    /// either choice (KB-227).
+    @Test func winTabIsMissionControlAndAltTabStillSwitchesApps() {
+        let controller = makeController()
+        let context = MatchContext(frontmostBundleID: "com.apple.Safari")
+
+        var matcher = RuleMatcher(rules: controller.effectiveRules)
+        #expect(matcher.match(key([.command], .tab), in: context)?.action == .systemAction(.missionControl))
+        #expect(matcher.match(key([.option], .tab), in: context)?.id == "win.switchApp")
+
+        controller.setModifierLayout(.macPosition)
+        matcher = RuleMatcher(rules: controller.effectiveRules)
+        #expect(matcher.match(key([.option], .tab), in: context)?.id == "winKey.taskView")
+        #expect(matcher.match(key([.command], .tab), in: context) == nil, "The Mac's own app switcher")
     }
 
     @Test func worksTogetherWithFn() {

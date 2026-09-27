@@ -160,9 +160,9 @@ private struct ShortcutsPage: View {
             } message: {
                 switch rules.modifierLayout {
                 case .pcKeyboard:
-                    Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard.")
+                    Text("Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab.")
                 case .macPosition:
-                    Text("Win is ⌥ as you chose, so these shortcuts take ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, which type characters on a Mac (é, ¬, ∂; @ on some layouts), and tapping ⌥ on its own opens Apps.")
+                    Text("Win is ⌥, so these shortcuts take ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts).")
                 }
             }
 
@@ -561,7 +561,7 @@ enum RuleNames {
         "browser.zoomIn": String(localized: "Zoom in"), "browser.zoomOut": String(localized: "Zoom out"),
         "browser.zoomReset": String(localized: "Reset zoom"),
         "sys.forceQuit": String(localized: "Force Quit"),
-        "winKey.start": String(localized: "Start menu (Apps)"),
+        "winKey.start": String(localized: "Start menu (Apps)"), "winKey.taskView": String(localized: "Task View (Mission Control)"),
         "winKey.lock": String(localized: "Lock screen"), "winKey.explorer": String(localized: "File Explorer (Finder)"),
         "winKey.showDesktop": String(localized: "Show desktop"), "winKey.emoji": String(localized: "Emoji & symbols"),
         "winKey.screenshotArea": String(localized: "Screenshot of an area to clipboard"),

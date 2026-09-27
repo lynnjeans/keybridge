@@ -105,8 +105,8 @@ enum BuiltInRules {
         .init(id: "system", rules: [
             rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
-        // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘L,
-        // ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard. Off
+        // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘Tab,
+        // ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard. Off
         // until the user asks, and limited to one keyboard once devices can be
         // told apart.
         .init(id: "winKey", rules: [
@@ -115,6 +115,10 @@ enum BuiltInRules {
             // shortcut, or for longer than a second, is left alone.
             Rule(id: "winKey.start", trigger: .key(combo: KeyCombo(.command)),
                  action: .systemAction(.apps)),
+            // Task View, every window at a glance (KB-227). With Win on ⌘ this
+            // takes ⌘Tab: Alt+Tab (⌥Tab, the `windows` group) switches apps.
+            Rule(id: "winKey.taskView", trigger: .key(combo: KeyCombo([.command], .tab)),
+                 action: .systemAction(.missionControl)),
             rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
             Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
                  action: .openApplication(bundleID: finderID)),
