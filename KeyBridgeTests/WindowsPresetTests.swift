@@ -99,6 +99,19 @@ import Testing
         #expect(match(KeyCombo([.control], .v)) == "edit.paste")
     }
 
+    /// Ctrl+D deletes in Explorer too (KB-221): in Finder only, and not while
+    /// renaming, where Ctrl+D is the text field's own forward delete.
+    @Test func ctrlDMovesToTrashInFinderOnly() {
+        #expect(match(KeyCombo([.control], .d), in: "com.apple.finder") == "finder.trashCtrlD")
+        #expect(matcher.match(.key(combo: KeyCombo([.control], .d)), in: MatchContext(frontmostBundleID: "com.apple.finder"))?
+            .action == .key(combo: KeyCombo([.command], .delete)))
+        #expect(match(KeyCombo([.control], .d), in: "com.apple.finder", typing: true) == nil)
+        #expect(match(KeyCombo([.control], .d)) == nil, "Ctrl+D is left alone outside Finder")
+        let fn = RuleMatcher(rules: ControlKey.function.apply(to: BuiltInRules.all))
+        #expect(fn.match(.key(combo: KeyCombo([.function], .d)), in: MatchContext(frontmostBundleID: "com.apple.finder"))?
+            .id == "finder.trashCtrlD.fn")
+    }
+
     @Test func finderRulesStandAsideWhileTyping() {
         #expect(match(KeyCombo(.returnKey), in: "com.apple.finder") == "finder.open")
         #expect(match(KeyCombo(.returnKey), in: "com.apple.finder", typing: true) == nil)

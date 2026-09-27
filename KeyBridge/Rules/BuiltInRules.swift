@@ -58,6 +58,10 @@ enum BuiltInRules {
         // Backspace and Ctrl+V have to do what they do in any text field.
         .init(id: "finder", rules: [
             inFinder("finder.trash", KeyCombo(.forwardDelete), KeyCombo([.command], .delete)),
+            // Explorer's other delete key (KB-221). fn+D in fn mode, which is
+            // also macOS's own dictation shortcut: taken in Finder only, and
+            // let through while renaming, like the rest of the group.
+            inFinder("finder.trashCtrlD", KeyCombo([.control], .d), KeyCombo([.command], .delete)),
             inFinder("finder.rename", KeyCombo(.f2), KeyCombo(.returnKey)),
             inFinder("finder.open", KeyCombo(.returnKey), KeyCombo([.command], .downArrow)),
             // Ctrl+X marks for moving: Finder has no cut, but ⌘C followed by
