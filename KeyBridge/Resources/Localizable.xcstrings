@@ -633,6 +633,22 @@
         }
       }
     },
+    "As a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PC キーボードが送るとおり：Win+L は ⌘L、Alt+F4 は ⌥F4。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "和 PC 键盘传过来的一样：Win+L 就是 ⌘L，Alt+F4 就是 ⌥F4。"
+          }
+        }
+      }
+    },
     "Back" : {
       "localizations" : {
         "ja" : {
@@ -2873,22 +2889,6 @@
         }
       }
     },
-    "Mac keyboard" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac キーボード"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac 键盘"
-          }
-        }
-      }
-    },
     "Map any key combination or mouse button to another shortcut or to an app — for example fn+C to ⌘C next to Ctrl+C, or Win+E to Finder." : {
       "localizations" : {
         "ja" : {
@@ -4005,22 +4005,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "概览"
-          }
-        }
-      }
-    },
-    "PC keyboard" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC キーボード"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC 键盘"
           }
         }
       }
@@ -5957,6 +5941,22 @@
         }
       }
     },
+    "Where the keys sit on a Mac keyboard, or on a PC keyboard with ⌘ and ⌥ swapped in System Settings: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac キーボード上の位置どおり、またはシステム設定で ⌘ と ⌥ を入れ替えた PC キーボード：Win+L は ⌥L、Alt+F4 は ⌘F4、Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按 Mac 键盘上的位置，或者在系统设置里对调过 ⌘ 和 ⌥ 的 PC 键盘：Win+L 就是 ⌥L，Alt+F4 就是 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
+          }
+        }
+      }
+    },
     "Win and Alt keys" : {
       "localizations" : {
         "ja" : {
@@ -5969,38 +5969,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Win 键和 Alt 键"
-          }
-        }
-      }
-    },
-    "Win is ⌘ and Alt is ⌥, as a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC キーボードが送るとおり、Win は ⌘、Alt は ⌥ です：Win+L は ⌘L、Alt+F4 は ⌥F4。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Win 是 ⌘，Alt 是 ⌥，和 PC 键盘传过来的一样：Win+L 就是 ⌘L，Alt+F4 就是 ⌥F4。"
-          }
-        }
-      }
-    },
-    "Win is ⌥ and Alt is ⌘, where they sit on a Mac keyboard: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac キーボード上の位置どおり、Win は ⌥、Alt は ⌘ です：Win+L は ⌥L、Alt+F4 は ⌘F4、Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Win 是 ⌥，Alt 是 ⌘，按它们在 Mac 键盘上的位置：Win+L 就是 ⌥L，Alt+F4 就是 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
           }
         }
       }

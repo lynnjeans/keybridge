@@ -288,9 +288,13 @@ private struct WinAltCard: View {
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    // Both keys named in each option: which keyboard someone has
+                    // says less than where they reach for Win, and a PC
+                    // keyboard with ⌘ and ⌥ swapped in System Settings needs
+                    // the second option too. The same in every language.
                     Picker("Win and Alt keys", selection: $choice) {
-                        Text("PC keyboard").tag(ModifierLayout.pcKeyboard)
-                        Text("Mac keyboard").tag(ModifierLayout.macPosition)
+                        Text(verbatim: "Win ⌘ · Alt ⌥").tag(ModifierLayout.pcKeyboard)
+                        Text(verbatim: "Win ⌥ · Alt ⌘").tag(ModifierLayout.macPosition)
                     }
                     .pickerStyle(.segmented)
                     .labelsHidden()
@@ -303,9 +307,9 @@ private struct WinAltCard: View {
     private var description: LocalizedStringKey {
         switch choice {
         case .pcKeyboard:
-            "Win is ⌘ and Alt is ⌥, as a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4."
+            "As a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4."
         case .macPosition:
-            "Win is ⌥ and Alt is ⌘, where they sit on a Mac keyboard: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow."
+            "Where the keys sit on a Mac keyboard, or on a PC keyboard with ⌘ and ⌥ swapped in System Settings: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow."
         }
     }
 }
