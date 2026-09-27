@@ -150,6 +150,33 @@ struct ScrollPage: View {
     @State private var showsCustom = false
 
     var body: some View {
+        // The direction first: every wheel user meets it, while zooming is
+        // something to reach for (KB-223).
+        Card {
+            HStack(spacing: 12) {
+                IconTile(symbol: "arrow.up.arrow.down", tint: .teal, size: 30)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Windows scroll direction")
+                        .font(.headline)
+                    Text(directionNote)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Toggle("Windows scroll direction", isOn: Binding(
+                    get: { rules.wheelDirection == .windows },
+                    set: { rules.setWheelDirection($0 ? .windows : .system) }
+                ))
+                .toggleStyle(.switch)
+                .labelsHidden()
+            }
+        }
+
+        Text("Only mouse wheels. Trackpad and Magic Mouse scrolling are left to the system.")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+
         Card {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 12) {
@@ -180,32 +207,7 @@ struct ScrollPage: View {
                 EntryList(rules: rules, group: "scroll", edit: { editing = $0 })
             }
         }
-
-        Card {
-            HStack(spacing: 12) {
-                IconTile(symbol: "arrow.up.arrow.down", tint: .teal, size: 30)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Windows scroll direction")
-                        .font(.headline)
-                    Text(directionNote)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                Spacer(minLength: 8)
-                Toggle("Windows scroll direction", isOn: Binding(
-                    get: { rules.wheelDirection == .windows },
-                    set: { rules.setWheelDirection($0 ? .windows : .system) }
-                ))
-                .toggleStyle(.switch)
-                .labelsHidden()
-            }
-        }
-
-        Text("Only mouse wheels. Trackpad and Magic Mouse scrolling are left to the system.")
-            .font(.callout)
-            .foregroundStyle(.secondary)
-            .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+        .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
     }
 
     /// macOS applies natural scrolling to the trackpad and every mouse at
