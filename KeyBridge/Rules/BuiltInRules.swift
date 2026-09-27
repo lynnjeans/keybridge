@@ -7,8 +7,7 @@
 /// - F1–F12 as standard function keys: an Apple keyboard's top row sends
 ///   media-key events, not F-key codes, so this is the system setting the
 ///   System group points to.
-/// - Win alone opening Spotlight, and Win+V: they wait for lone-modifier
-///   triggers and the clipboard history.
+/// - Win+V: the clipboard history has its own switch and hot key.
 enum BuiltInRules {
     /// Terminals, where Ctrl combinations are control characters for the
     /// shell (Ctrl+C interrupts, Ctrl+W deletes a word) and must arrive
@@ -101,9 +100,15 @@ enum BuiltInRules {
             rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
         // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘L,
-        // ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Off until the user asks, and
-        // limited to one keyboard once devices can be told apart.
+        // ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard. Off
+        // until the user asks, and limited to one keyboard once devices can be
+        // told apart.
         .init(id: "winKey", rules: [
+            // Win alone opens Start; Apps is macOS 26's nearest thing, a grid
+            // of apps with a search field (KB-224). A tap only: ⌘ held for a
+            // shortcut, or for longer than a second, is left alone.
+            Rule(id: "winKey.start", trigger: .key(combo: KeyCombo(.command)),
+                 action: .systemAction(.apps)),
             rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
             Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
                  action: .openApplication(bundleID: finderID)),

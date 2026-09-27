@@ -201,18 +201,18 @@
     "+" : {
       "shouldTranslate" : false
     },
-    "A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Leave this off if you use a Mac keyboard." : {
+    "A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PC キーボードの Windows キーは Mac では ⌘ として届くため、これらのショートカットは Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S も置き換えます。Mac キーボードを使う場合はオフのままにしてください。"
+            "value" : "PC キーボードの Windows キーは Mac では ⌘ として届くため、これらのショートカットは Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S も置き換え、⌘ を単独で押すと「アプリ」が開きます。Mac キーボードを使う場合はオフのままにしてください。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PC 键盘的 Windows 键在 Mac 上就是 ⌘，所以这些快捷键也会取代 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S。如果你用的是 Mac 键盘，请保持关闭。"
+            "value" : "PC 键盘的 Windows 键在 Mac 上就是 ⌘，所以这些快捷键也会取代 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 也会打开“应用程序”。如果你用的是 Mac 键盘，请保持关闭。"
           }
         }
       }
@@ -5417,6 +5417,22 @@
         }
       }
     },
+    "Start menu (Apps)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スタートメニュー（アプリ）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始菜单（应用程序）"
+          }
+        }
+      }
+    },
     "Step %lld of %lld: %@" : {
       "localizations" : {
         "en" : {
@@ -5990,18 +6006,18 @@
         }
       }
     },
-    "Windows key shortcuts are on, so ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S are taken on a Mac keyboard too." : {
+    "Windows key shortcuts are on, so ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken on a Mac keyboard too." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンのため、Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S も使われます。"
+            "value" : "Windows キーのショートカットがオンのため、Mac キーボードの ⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，所以 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S 也会被占用。"
+            "value" : "Windows 键快捷键已开启，所以 Mac 键盘上的 ⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
           }
         }
       }

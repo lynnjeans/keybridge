@@ -282,6 +282,13 @@ notchedWheel=… smoothWheel=… gesture=…`, and only the mouse should produce
 selftest.scrollUp=…` / `selftest.scrollDown=…`. A trackpad flick keeps producing `gesture`
 events for a while after the fingers lift; that is momentum, and it must not match either.
 
+`KB_DEBUG_TAPALONETEST` checks lone-modifier triggers (KB-224, Win alone) with the test rule
+"⌘ alone → F17". The shell cannot: System Events sends modifier changes with key code 0 instead of
+the key's own code (55 for left ⌘), and KeyBridge only counts a change that names a modifier key,
+as every keyboard's does. The four steps are 4 s apart, so each lands in its own report: left ⌘
+tapped (`Matched rules: selftest.tapAlone=1`), ⌘+F20 (no match), ⌘ held 1.5 s (no match), right
+⌘ tapped (`selftest.tapAlone=1`). A match shows as `own=2` too, the F17 it posts.
+
 ## Layout in other languages
 
 German and French run about 30% longer than English, so every page must wrap rather than cut

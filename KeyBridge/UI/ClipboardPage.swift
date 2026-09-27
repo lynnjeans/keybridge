@@ -210,7 +210,10 @@ private struct HotKeyCard: View {
     private func start() {
         isRecording = true
         clipboard.suspendHotKey()
-        recorder.start(rules: rules, accepting: { if case .key = $0 { true } else { false } }) { trigger in
+        // A hot key needs a key besides the modifiers; Win alone cannot be one.
+        recorder.start(rules: rules, accepting: {
+            if case .key(let combo) = $0 { !combo.isModifierAlone } else { false }
+        }) { trigger in
             if case .key(let combo)? = trigger { clipboard.setHotKey(combo) }
             stop()
         }

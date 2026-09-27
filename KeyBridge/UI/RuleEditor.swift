@@ -249,7 +249,8 @@ struct RuleEditor: View {
         let wantsButton = side == .trigger && { if case .mouseButton = draft.trigger { true } else { false } }()
         recorder.start(rules: rules, accepting: { trigger in
             switch trigger {
-            case .key: !wantsButton
+            // A lone modifier makes a trigger (Win alone), never a result.
+            case .key(let combo): !wantsButton && (side == .trigger || !combo.isModifierAlone)
             case .mouseButton: wantsButton
             case .scroll: false
             }
@@ -355,11 +356,22 @@ final class KeyRecorder {
             }
         }
         rules.startRecording(finish)
-        monitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged, .otherMouseDown]) { [weak self] event in
+        var tap = ModifierTap()
+        monitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.keyDown, .flagsChanged, .otherMouseDown, .leftMouseDown, .rightMouseDown, .scrollWheel]
+        ) { [weak self] event in
             guard let self else { return event }
+            if event.type != .flagsChanged { tap.interrupt() }
             switch event.type {
             case .flagsChanged:
                 modifiers = Modifiers(modifierFlags: event.modifierFlags)
+                if let flags = event.cgEvent?.flags,
+                   let key = tap.flagsChanged(key: KeyCode(rawValue: event.keyCode), flags: flags,
+                                              now: DispatchTime.now().uptimeNanoseconds) {
+                    finish(.key(combo: KeyCombo(key)))
+                }
+                return event
+            case .leftMouseDown, .rightMouseDown, .scrollWheel:
                 return event
             case .otherMouseDown:
                 finish(.mouseButton(number: event.buttonNumber + 1,

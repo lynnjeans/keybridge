@@ -61,6 +61,10 @@ extension KeyCode {
     static let upArrow = KeyCode(kVK_UpArrow)
     static let downArrow = KeyCode(kVK_DownArrow)
     static let command = KeyCode(kVK_Command)
+    static let control = KeyCode(kVK_Control)
+    static let option = KeyCode(kVK_Option)
+    static let shift = KeyCode(kVK_Shift)
+    static let function = KeyCode(kVK_Function)
 
     static let f1 = KeyCode(kVK_F1)
     static let f2 = KeyCode(kVK_F2)
@@ -75,6 +79,22 @@ extension KeyCode {
     static let f18 = KeyCode(kVK_F18)
     static let f19 = KeyCode(kVK_F19)
     static let f20 = KeyCode(kVK_F20)
+}
+
+extension KeyCode {
+    /// The modifier this key is, for the keys a lone-modifier trigger can
+    /// name. Right-hand keys never get that far: `ModifierTap` reports them
+    /// as their left-hand twin.
+    var modifier: Modifiers? {
+        switch self {
+        case .control: .control
+        case .option: .option
+        case .shift: .shift
+        case .command: .command
+        case .function: .function
+        default: nil
+        }
+    }
 }
 
 /// The modifier keys a combination is made of. Left and right variants are
@@ -143,5 +163,12 @@ struct KeyCombo: Codable, Hashable, Sendable {
     /// A key on its own, such as Home.
     init(_ key: KeyCode) {
         self.init([], key)
+    }
+
+    /// A modifier key tapped on its own, such as Win alone (KB-224). Fine as
+    /// a trigger; as a result it would press a modifier and let go, which
+    /// does nothing.
+    var isModifierAlone: Bool {
+        modifiers.isEmpty && key.modifier != nil
     }
 }

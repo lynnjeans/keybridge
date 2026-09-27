@@ -138,14 +138,15 @@ import Testing
 
     @Test func onlyTheWinKeyGroupStartsOff() {
         #expect(preset.groups.filter { !$0.isEnabledByDefault }.map(\.id) == ["winKey"])
+        // ⌘ with a key, or ⌘ tapped on its own (Win alone).
+        func takesCommand(_ rule: Rule) -> Bool {
+            guard case .key(let combo) = rule.trigger else { return false }
+            return combo.modifiers.contains(.command) || combo.key == .command
+        }
         let winKey = preset.groups.first { $0.id == "winKey" }!
-        #expect(winKey.rules.allSatisfy {
-            if case .key(let combo) = $0.trigger { combo.modifiers.contains(.command) } else { false }
-        })
+        #expect(winKey.rules.allSatisfy(takesCommand))
         let others = preset.groups.filter { $0.id != "winKey" }.flatMap(\.rules)
-        #expect(!others.contains {
-            if case .key(let combo) = $0.trigger { combo.modifiers.contains(.command) } else { false }
-        }, "No other group may take over ⌘ shortcuts")
+        #expect(!others.contains(where: takesCommand), "No other group may take over ⌘ shortcuts")
     }
 
     @Test func noTwoRulesShareATriggerInTheSameApps() {

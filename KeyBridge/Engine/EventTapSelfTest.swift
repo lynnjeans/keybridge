@@ -16,6 +16,7 @@ enum EventTapSelfTest {
         if environment["KB_DEBUG_MATCHTEST"] != nil { runMatchTest(dispatcher) }
         if environment["KB_DEBUG_REMAPTEST"] != nil { runRemapTest(dispatcher) }
         if environment["KB_DEBUG_SCROLLTEST"] != nil { installScrollRules(dispatcher) }
+        if environment["KB_DEBUG_TAPALONETEST"] != nil { runTapAloneTest(dispatcher) }
     }
 
     /// For checking by hand that only mouse wheels trigger scroll rules:
@@ -81,6 +82,59 @@ enum EventTapSelfTest {
             Logger.engine.notice("Remap test 5: mouse button 6, no rule")
             click(button: 6)
         }
+    }
+
+    /// Checks lone-modifier triggers (KB-224) through the real tap, with the
+    /// test rule "⌘ alone → F17", which nothing reacts to. The shell cannot
+    /// do this: System Events sends modifier changes with key code 0, not the
+    /// key's own code as a keyboard does. Steps are 4 s apart, so each falls
+    /// in its own `Matched rules` report:
+    /// 1. Left ⌘ tapped: `selftest.tapAlone` = 1.
+    /// 2. ⌘ held with F20 pressed: no match.
+    /// 3. ⌘ held for 1.5 s: no match.
+    /// 4. Right ⌘ tapped: `selftest.tapAlone` = 1.
+    private static func runTapAloneTest(_ dispatcher: Dispatcher) {
+        dispatcher.rules = [
+            Rule(id: "selftest.tapAlone", trigger: .key(combo: KeyCombo(.command)),
+                 action: .key(combo: KeyCombo(.f17))),
+        ]
+        let left = CGEventFlags(rawValue: CGEventFlags.maskCommand.rawValue | 0x08)
+        let right = CGEventFlags(rawValue: CGEventFlags.maskCommand.rawValue | 0x10)
+        let rightCommand = KeyCode(rawValue: 54)
+
+        Task {
+            try? await Task.sleep(for: .seconds(1))
+            Logger.engine.notice("Tap-alone test 1: left ⌘ tapped (expect a match)")
+            modifier(.command, left)
+            try? await Task.sleep(for: .milliseconds(100))
+            modifier(.command, [])
+
+            try? await Task.sleep(for: .seconds(4))
+            Logger.engine.notice("Tap-alone test 2: ⌘+F20 (expect no match)")
+            modifier(.command, left)
+            post(.f20, down: true, left)
+            post(.f20, down: false, left)
+            modifier(.command, [])
+
+            try? await Task.sleep(for: .seconds(4))
+            Logger.engine.notice("Tap-alone test 3: ⌘ held 1.5 s (expect no match)")
+            modifier(.command, left)
+            try? await Task.sleep(for: .milliseconds(1500))
+            modifier(.command, [])
+
+            try? await Task.sleep(for: .seconds(4))
+            Logger.engine.notice("Tap-alone test 4: right ⌘ tapped (expect a match)")
+            modifier(rightCommand, right)
+            try? await Task.sleep(for: .milliseconds(100))
+            modifier(rightCommand, [])
+        }
+    }
+
+    private static func modifier(_ key: KeyCode, _ flags: CGEventFlags) {
+        guard let event = CGEvent(keyboardEventSource: nil, virtualKey: key.rawValue, keyDown: true) else { return }
+        event.type = .flagsChanged
+        event.flags = flags
+        event.post(tap: .cgSessionEventTap)
     }
 
     private static func click(button number: Int) {

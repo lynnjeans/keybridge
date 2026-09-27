@@ -1,4 +1,5 @@
 import AppKit
+import Carbon.HIToolbox
 import CoreGraphics
 import OSLog
 
@@ -49,6 +50,14 @@ final class Dispatcher {
 
     private var scrollStepper = ScrollStepper()
 
+    private var modifierTap = ModifierTap()
+    /// Nanoseconds, for how long a modifier was held. Replaceable so tests
+    /// can hold one for longer than they take.
+    private let now: @MainActor () -> UInt64
+    /// With Secure Input on, macOS keeps key presses from the tap but not
+    /// modifier changes, so ⌘A in a password field would look like ⌘ alone.
+    private let isSecureInputOn: @MainActor () -> Bool
+
     /// Sends events that are not replacements, such as the keystroke a side
     /// button stands for. Replaceable so tests can capture them instead.
     private let post: @MainActor (CGEvent) -> Void
@@ -73,8 +82,12 @@ final class Dispatcher {
         openApplication: @escaping @MainActor (String) -> Void = { Dispatcher.launch($0) },
         systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() },
         snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) },
-        fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in }
+        fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in },
+        now: @escaping @MainActor () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
+        isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() }
     ) {
+        self.now = now
+        self.isSecureInputOn = isSecureInputOn
         self.frontmostBundleID = frontmostBundleID
         self.isEditingText = isEditingText
         self.isInFileDialog = isInFileDialog
@@ -107,8 +120,15 @@ final class Dispatcher {
     private var clickIsCommand = false
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
-        if let recorder, let disposition = record(event, type: type, into: recorder) {
-            return disposition
+        let tapped = modifierTap(event, type: type)
+        if let recorder {
+            if let tapped {
+                recorder(.key(combo: KeyCombo(tapped)))
+            } else if let disposition = record(event, type: type, into: recorder) {
+                return disposition
+            }
+        } else if let tapped {
+            modifierTapped(tapped)
         }
         // Recording can end while the recorded button is still down.
         if type == .otherMouseUp, recordedButtons.remove(event.mouseButtonNumber) != nil {
@@ -132,6 +152,36 @@ final class Dispatcher {
         default:
             return .passThrough
         }
+    }
+
+    /// Follows modifier keys for lone-modifier triggers, and returns the key
+    /// this event completes a tap of. Every other key, click and scroll
+    /// cancels one in progress.
+    private func modifierTap(_ event: CGEvent, type: CGEventType) -> KeyCode? {
+        switch type {
+        case .flagsChanged:
+            guard let key = modifierTap.flagsChanged(key: event.keyCode, flags: event.flags, now: now()),
+                  !isSecureInputOn() else { return nil }
+            return key
+        case .keyDown, .leftMouseDown, .rightMouseDown, .otherMouseDown, .scrollWheel:
+            modifierTap.interrupt()
+            return nil
+        default:
+            return nil
+        }
+    }
+
+    /// A modifier tapped on its own. The key's own events went through; the
+    /// action follows once the release has reached the app, so a keystroke
+    /// posted for it does not arrive while the modifier still counts as held.
+    private func modifierTapped(_ key: KeyCode) {
+        let trigger = Trigger.key(combo: KeyCombo(key))
+        guard let rule = matcher.match(
+            trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
+            isEditingText: isEditingText, isInFileDialog: isInFileDialog
+        ) else { return }
+        record(rule)
+        DispatchQueue.main.async { [self] in carryOut(rule.action) }
     }
 
     private func record(_ event: CGEvent, type: CGEventType, into recorder: @MainActor (Trigger) -> Void) -> Disposition? {

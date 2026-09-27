@@ -155,7 +155,7 @@ private struct ShortcutsPage: View {
                 Button("Turn On") { rules.setGroup("winKey", enabled: true) }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard. Leave this off if you use a Mac keyboard.")
+                Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard.")
             }
 
         if !search.isEmpty && Self.groups(of: rules.preset).allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey).isEmpty }) {
@@ -505,6 +505,7 @@ enum RuleNames {
         "browser.newTab": String(localized: "New tab"), "browser.closeTab": String(localized: "Close tab"), "browser.reopenTab": String(localized: "Reopen closed tab"),
         "browser.address": String(localized: "Address bar"), "browser.reload": String(localized: "Reload"),
         "sys.forceQuit": String(localized: "Force Quit"),
+        "winKey.start": String(localized: "Start menu (Apps)"),
         "winKey.lock": String(localized: "Lock screen"), "winKey.explorer": String(localized: "File Explorer (Finder)"),
         "winKey.showDesktop": String(localized: "Show desktop"), "winKey.emoji": String(localized: "Emoji & symbols"),
         "winKey.screenshotArea": String(localized: "Screenshot of an area to clipboard"),

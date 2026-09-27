@@ -368,7 +368,8 @@ struct CustomRuleEditor: View {
         recording = side
         recorder.start(rules: rules, accepting: { trigger in
             switch trigger {
-            case .key: true
+            // A lone modifier makes a trigger (Win alone), never a result.
+            case .key(let combo): side == .trigger || !combo.isModifierAlone
             case .mouseButton: side == .trigger
             case .scroll: false
             }

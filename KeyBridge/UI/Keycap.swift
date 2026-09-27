@@ -49,7 +49,7 @@ struct KeyComboView: View {
                         .foregroundStyle(.tertiary)
                 }
             }
-            Keycap(text: combo.key.label)
+            Keycap(text: combo.key.label(style))
         }
     }
 }

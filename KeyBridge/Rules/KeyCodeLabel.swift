@@ -105,9 +105,18 @@ extension Modifiers {
     ]
 }
 
+extension KeyCode {
+    /// The cap in this style. Modifier keys, which appear on their own only
+    /// in a lone-modifier trigger, are named as modifiers are: Win, not ⌘,
+    /// on the Windows side.
+    func label(_ style: KeyStyle) -> String {
+        modifier?.caps(style).first ?? label
+    }
+}
+
 extension KeyCombo {
     /// Every cap of the combination, modifiers first.
     func caps(_ style: KeyStyle) -> [String] {
-        modifiers.caps(style) + [key.label]
+        modifiers.caps(style) + [key.label(style)]
     }
 }
