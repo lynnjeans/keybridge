@@ -1,3 +1,4 @@
+import OSLog
 import SwiftUI
 
 @main
@@ -52,7 +53,11 @@ enum WindowID {
     /// refused when the click came through the menu bar item, which macOS 26
     /// hosts in Control Center rather than in KeyBridge: the window then
     /// opened behind the frontmost app's. Ordering the window itself to the
-    /// front is not refused.
+    /// front is not refused, but leaves KeyBridge inactive — the window in
+    /// front, drawn grey, with the keyboard still in the other app.
+    ///
+    /// When that happens, KeyBridge asks Launch Services to open it, as
+    /// Finder or Spotlight would; that activation is honoured.
     @MainActor
     static func bringToFront(_ id: String) {
         NSApplication.shared.activate()
@@ -62,6 +67,31 @@ enum WindowID {
                 window.makeKeyAndOrderFront(nil)
                 window.orderFrontRegardless()
             }
+            if !NSApplication.shared.isActive { activateThroughLaunchServices() }
         }
     }
+
+    /// Set while KeyBridge is opening itself, so the reopen event this sends
+    /// does not open the main window as well (`AppDelegate`).
+    @MainActor static private(set) var isActivatingItself = false
+
+    @MainActor
+    private static func activateThroughLaunchServices() {
+        guard !isActivatingItself else { return }
+        isActivatingItself = true
+        Logger.ui.notice("Activation refused; asking Launch Services")
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.activates = true
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, error in
+            if let error {
+                Logger.ui.error("Could not activate through Launch Services: \(error.localizedDescription, privacy: .public)")
+            }
+            // The reopen event may still be on its way; give it a moment.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { isActivatingItself = false }
+        }
+    }
+}
+
+extension Logger {
+    static let ui = Logger(subsystem: Bundle.main.bundleIdentifier ?? "KeyBridge", category: "ui")
 }

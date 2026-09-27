@@ -100,6 +100,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// the main window. On a MacBook with a full menu bar the notch can hide
     /// the status item, and this is then the only way in.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
+        // KeyBridge bringing its own window forward (`WindowID.bringToFront`).
+        guard !WindowID.isActivatingItself else { return false }
         NotificationCenter.default.post(name: .openMainWindow, object: nil)
         return false
     }
