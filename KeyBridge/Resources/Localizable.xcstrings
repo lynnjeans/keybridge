@@ -633,22 +633,6 @@
         }
       }
     },
-    "As a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PC キーボードが送るとおり：Win+L は ⌘L、Alt+F4 は ⌥F4。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "和 PC 键盘传过来的一样：Win+L 就是 ⌘L，Alt+F4 就是 ⌥F4。"
-          }
-        }
-      }
-    },
     "Back" : {
       "localizations" : {
         "ja" : {
@@ -5941,22 +5925,6 @@
         }
       }
     },
-    "Where the keys sit on a Mac keyboard, or on a PC keyboard with ⌘ and ⌥ swapped in System Settings: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac キーボード上の位置どおり、またはシステム設定で ⌘ と ⌥ を入れ替えた PC キーボード：Win+L は ⌥L、Alt+F4 は ⌘F4、Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按 Mac 键盘上的位置，或者在系统设置里对调过 ⌘ 和 ⌥ 的 PC 键盘：Win+L 就是 ⌥L，Alt+F4 就是 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
-          }
-        }
-      }
-    },
     "Win and Alt keys" : {
       "localizations" : {
         "ja" : {
@@ -5985,6 +5953,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你选择了 Win 为 ⌥，所以这些快捷键会占用 ⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S。它们在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @），单按一下 ⌥ 也会打开“应用程序”。"
+          }
+        }
+      }
+    },
+    "Win+L is pressed as ⌘L, Alt+F4 as ⌥F4." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win+L は ⌘L、Alt+F4 は ⌥F4 で押します。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win+L 按 ⌘L，Alt+F4 按 ⌥F4。"
+          }
+        }
+      }
+    },
+    "Win+L is pressed as ⌥L, Alt+F4 as ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win+L は ⌥L、Alt+F4 は ⌘F4 で押します。Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win+L 按 ⌥L，Alt+F4 按 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
           }
         }
       }
