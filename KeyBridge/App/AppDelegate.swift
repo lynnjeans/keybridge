@@ -107,7 +107,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// (KB-210).
     func application(_ application: NSApplication, open urls: [URL]) {
         for url in urls {
-            FinderMenuHandler.handle(url)
+            FinderMenuHandler.handle(url) { [quickSwitch] in quickSwitch.locations.setFavorite($0, true) }
         }
     }
 

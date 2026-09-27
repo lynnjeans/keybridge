@@ -1,9 +1,10 @@
 import AppKit
 import FinderSync
+import OSLog
 
 /// KeyBridge's Finder extension: adds New › and Open in Terminal to the menu
-/// of a folder's background (KB-210), and Copy Path to that and to selected
-/// items (KB-212), as on Windows.
+/// of a folder's background (KB-210), and Copy Path (KB-212) and Add to
+/// KeyBridge Favorites (KB-220) to that and to selected items, as on Windows.
 ///
 /// It only builds the menu. Being sandboxed, it cannot write into the user's
 /// folders, so New and Open in Terminal go to KeyBridge as a `keybridge://`
@@ -58,15 +59,34 @@ final class FinderSync: FIFinderSync {
 
         menu.addItem(.separator())
         menu.addItem(copyPathItem())
+        menu.addItem(addFavoriteItem())
         return menu
     }
 
-    /// The menu on one or more selected items: just Copy Path.
+    /// The menu on one or more selected items: Copy Path, and Add to
+    /// KeyBridge Favorites when a folder is among them. KeyBridge checks
+    /// again and leaves out packages.
     private func itemsMenu() -> NSMenu? {
         guard let urls = FIFinderSyncController.default().selectedItemURLs(), !urls.isEmpty else { return nil }
         let menu = NSMenu()
         menu.addItem(copyPathItem())
+        let folders = urls.filter(Self.isFolder)
+        Logger(subsystem: "io.github.lynnjeans.KeyBridge.Finder", category: "menu")
+            .info("items menu: \(urls.count, privacy: .public) selected, \(folders.count, privacy: .public) folders")
+        if !folders.isEmpty { menu.addItem(addFavoriteItem()) }
         return menu
+    }
+
+    /// Finder ends a folder's URL in a slash; failing that, the file's own
+    /// metadata is asked, which the sandbox may or may not allow.
+    private static func isFolder(_ url: URL) -> Bool {
+        url.hasDirectoryPath || (try? url.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+    }
+
+    private func addFavoriteItem() -> NSMenuItem {
+        let item = NSMenuItem(title: FinderMenuTitle.addFavorite, action: #selector(addFavorite(_:)), keyEquivalent: "")
+        item.image = NSImage(systemSymbolName: "star", accessibilityDescription: nil)
+        return item
     }
 
     private func copyPathItem() -> NSMenuItem {
@@ -94,6 +114,15 @@ final class FinderSync: FIFinderSync {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(CopyPath.text(for: urls), forType: .string)
+    }
+
+    /// The selected folders, or the background folder itself when nothing
+    /// is selected.
+    @objc private func addFavorite(_ sender: NSMenuItem) {
+        let selected = (FIFinderSyncController.default().selectedItemURLs() ?? []).filter(Self.isFolder)
+        let folders = selected.isEmpty ? [targetFolder].compactMap { $0 } : selected
+        guard !folders.isEmpty else { return }
+        send(.addFavorites(folders: folders))
     }
 
     /// The folder whose background was clicked.

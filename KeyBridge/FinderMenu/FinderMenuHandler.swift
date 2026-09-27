@@ -5,8 +5,11 @@ import OSLog
 @MainActor
 enum FinderMenuHandler {
     /// Handles a `keybridge://finder/…` URL. Returns false for any other URL.
+    /// - Parameter addFavorite: adds a folder to the recent locations list's
+    ///   favorites (KB-220). Passed in rather than set once at launch: a URL
+    ///   that launches KeyBridge can arrive before launch has finished.
     @discardableResult
-    static func handle(_ url: URL) -> Bool {
+    static func handle(_ url: URL, addFavorite: @MainActor (String) -> Void) -> Bool {
         guard let request = FinderMenuRequest(url: url) else { return false }
         switch request {
         case let .new(document, folder):
@@ -22,8 +25,22 @@ enum FinderMenuHandler {
         case let .openTerminal(folder):
             guard isFolder(folder) else { return true }
             openTerminal(at: folder)
+        case let .addFavorites(folders):
+            let accepted = favoriteFolders(folders) { isFolder($0) && !isPackage($0) }
+            for path in accepted { addFavorite(path) }
+            Logger.finderMenu.notice("added \(accepted.count, privacy: .public) of \(folders.count, privacy: .public) favorites")
         }
         return true
+    }
+
+    /// The paths of `folders` that may become favorites: folders, not
+    /// packages — an app or a Keynote document is a directory on disk but a
+    /// file to whoever right-clicked it — without a trailing slash.
+    static func favoriteFolders(_ folders: [URL], accepting isFavoriteFolder: (URL) -> Bool) -> [String] {
+        folders.filter(isFavoriteFolder).map { url in
+            let path = url.path(percentEncoded: false)
+            return path.count > 1 && path.hasSuffix("/") ? String(path.dropLast()) : path
+        }
     }
 
     /// Creates a new file of `document`'s kind in `folder` under the first
@@ -78,6 +95,10 @@ enum FinderMenuHandler {
                 Logger.finderMenu.error("opening Terminal failed: \(error, privacy: .public)")
             }
         }
+    }
+
+    private static func isPackage(_ url: URL) -> Bool {
+        (try? url.resourceValues(forKeys: [.isPackageKey]))?.isPackage == true
     }
 
     private static func isFolder(_ url: URL) -> Bool {

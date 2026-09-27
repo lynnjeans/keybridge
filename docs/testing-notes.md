@@ -239,6 +239,15 @@ Debug builds read these environment variables at launch. Pass them with `open --
   (`AXPosition`, `AXChildren`). Set the timeout on every element you query, above all from the
   event tap.
 
+- **Finder's right-click menu cannot be driven from the shell** (KB-220, macOS 26.6). `AXShowMenu`
+  on an item's text field times out (-25204); on the list view it opens the background menu, but
+  its items are not in Finder's AX tree while it tracks, so the extension's entries can be neither
+  read nor pressed. Check the menu by hand. The app side can be tested alone: `open -g
+  'keybridge://finder/favorite?folder=/some/folder'` (or `/new`, `/terminal`) is what the extension
+  sends. The extension logs `items menu: N selected, M folders` under the subsystem
+  `io.github.lynnjeans.KeyBridge.Finder`; after a rebuild, `pkill -x KeyBridgeFinder` so Finder
+  starts the new one, and `pluginkit -m -v | grep -i keybridge` shows which build is registered.
+
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest
   of the callback never runs — which reads exactly like the code not being called at all. Read

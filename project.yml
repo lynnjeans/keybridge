@@ -156,6 +156,7 @@ targets:
       - path: KeyBridge/App/EngineController.swift
       - path: KeyBridge/App/DiagnosticReport.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
+      - path: KeyBridge/FinderMenu/FinderMenuHandler.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests

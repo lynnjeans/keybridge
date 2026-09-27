@@ -138,6 +138,7 @@ enum FinderMenuTitle {
     static var new: String { String(localized: "New", bundle: .keyBridge) }
     static var openInTerminal: String { String(localized: "Open in Terminal", bundle: .keyBridge) }
     static var copyPath: String { String(localized: "Copy Path", bundle: .keyBridge) }
+    static var addFavorite: String { String(localized: "Add to KeyBridge Favorites", bundle: .keyBridge) }
 }
 
 /// The text Copy Path puts on the clipboard (KB-212): one POSIX path per
@@ -157,6 +158,8 @@ enum CopyPath {
 enum FinderMenuRequest: Equatable, Sendable {
     case new(NewDocument, folder: URL)
     case openTerminal(folder: URL)
+    /// Adds folders to the recent locations list's favorites (KB-220).
+    case addFavorites(folders: [URL])
 
     static let scheme = "keybridge"
 
@@ -172,6 +175,9 @@ enum FinderMenuRequest: Equatable, Sendable {
         case let .openTerminal(folder):
             components.path = "/terminal"
             components.queryItems = [.init(name: "folder", value: folder.path(percentEncoded: false))]
+        case let .addFavorites(folders):
+            components.path = "/favorite"
+            components.queryItems = folders.map { .init(name: "folder", value: $0.path(percentEncoded: false)) }
         }
         return components.url!
     }
@@ -183,7 +189,8 @@ enum FinderMenuRequest: Equatable, Sendable {
               components.scheme == Self.scheme, components.host == "finder" else { return nil }
         let items = components.queryItems ?? []
         func value(_ name: String) -> String? { items.first { $0.name == name }?.value }
-        guard let path = value("folder"), path.hasPrefix("/") else { return nil }
+        let paths = items.filter { $0.name == "folder" }.compactMap(\.value)
+        guard let path = paths.first, paths.allSatisfy({ $0.hasPrefix("/") }) else { return nil }
         let folder = URL(filePath: path, directoryHint: .isDirectory)
         switch components.path {
         case "/new":
@@ -191,6 +198,8 @@ enum FinderMenuRequest: Equatable, Sendable {
             self = .new(document, folder: folder)
         case "/terminal":
             self = .openTerminal(folder: folder)
+        case "/favorite":
+            self = .addFavorites(folders: paths.map { URL(filePath: $0, directoryHint: .isDirectory) })
         default:
             return nil
         }

@@ -409,6 +409,22 @@
         }
       }
     },
+    "Add to KeyBridge Favorites" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge のよく使う項目に追加"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加到 KeyBridge 收藏"
+          }
+        }
+      }
+    },
     "Add to favorites (⌘D)" : {
       "localizations" : {
         "ja" : {

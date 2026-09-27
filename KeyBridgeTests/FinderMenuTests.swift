@@ -51,7 +51,9 @@ import Testing
         let odd = URL(filePath: "/Volumes/USB Stick/报告 & notes?#1", directoryHint: .isDirectory)
         for request in [FinderMenuRequest.new(.powerPoint, folder: folder),
                         .new(.pages, folder: odd),
-                        .openTerminal(folder: odd)] {
+                        .openTerminal(folder: odd),
+                        .addFavorites(folders: [folder]),
+                        .addFavorites(folders: [folder, odd])] {
             #expect(FinderMenuRequest(url: request.url) == request)
         }
     }
@@ -71,9 +73,22 @@ import Testing
             "keybridge://finder/new?type=text",
             "keybridge://finder/new?type=text&folder=relative/path",
             "keybridge://finder/delete?folder=/tmp",
+            "keybridge://finder/favorite",
+            // One relative path among several refuses the lot.
+            "keybridge://finder/favorite?folder=/tmp&folder=relative/path",
         ]
         for string in refused {
             #expect(FinderMenuRequest(url: URL(string: string)!) == nil, "\(string)")
         }
+    }
+
+    /// Only folders become favorites: files and packages are left out, and
+    /// the path is kept without Finder's trailing slash (KB-220).
+    @MainActor @Test func favoritesTakeFoldersOnly() {
+        let folder = URL(filePath: "/Users/someone/Projects", directoryHint: .isDirectory)
+        let app = URL(filePath: "/Applications/Safari.app", directoryHint: .isDirectory)
+        let root = URL(filePath: "/", directoryHint: .isDirectory)
+        let accepted = FinderMenuHandler.favoriteFolders([folder, app, root]) { $0 != app }
+        #expect(accepted == ["/Users/someone/Projects", "/"])
     }
 }
