@@ -14,9 +14,8 @@ enum ControlKey: String, Codable, CaseIterable, Sendable {
     /// Rewrites the Ctrl shortcuts among `rules` for this choice.
     ///
     /// Only triggers that hold Ctrl and not fn change, and never those on
-    /// keys that report fn by themselves (arrows, Home, F-keys): fn+Home
-    /// would read as plain Home. An fn version applies in terminals too,
-    /// since fn+C means nothing to a shell.
+    /// keys fn already has a use for (`keepsControl`). An fn version applies
+    /// in terminals too, since fn+C means nothing to a shell.
     func apply(to rules: [Rule]) -> [Rule] {
         guard self != .control else { return rules }
         return rules.flatMap { rule -> [Rule] in
@@ -34,7 +33,7 @@ enum ControlKey: String, Codable, CaseIterable, Sendable {
     private static func fnVersion(of rule: Rule) -> Rule? {
         guard case .key(var combo) = rule.trigger,
               combo.modifiers.contains(.control), !combo.modifiers.contains(.function),
-              !combo.key.carriesImplicitFunctionFlag else { return nil }
+              !combo.key.keepsControl else { return nil }
         combo.modifiers.remove(.control)
         combo.modifiers.insert(.function)
         var fn = rule
@@ -44,5 +43,15 @@ enum ControlKey: String, Codable, CaseIterable, Sendable {
             fn.scope.applications = .all
         }
         return fn
+    }
+}
+
+extension KeyCode {
+    /// Keys whose Ctrl shortcuts stay on Ctrl whatever the choice: on a Mac
+    /// keyboard fn turns them into other keys. Arrows, Home, F-keys and the
+    /// like report fn by themselves (fn+← is Home, so fn+Home reads as
+    /// Home), and fn+⌫ arrives as ⌦, so an fn+⌫ trigger could never fire.
+    var keepsControl: Bool {
+        carriesImplicitFunctionFlag || self == .delete
     }
 }

@@ -47,6 +47,17 @@ import Testing
         #expect(match(.function, KeyCombo(.home)) == .key(combo: KeyCombo([.command], .leftArrow)))
     }
 
+    /// fn+⌫ arrives as ⌦, so an fn+⌫ trigger could never fire (KB-231).
+    @Test func deleteWordKeepsCtrl() {
+        let deleteWord = Action.key(combo: KeyCombo([.option], .delete))
+        for key in ControlKey.allCases {
+            #expect(match(key, KeyCombo([.control], .delete)) == deleteWord, "\(key)")
+            #expect(match(key, KeyCombo([.function], .delete)) == nil, "\(key)")
+        }
+        #expect(ControlKey.function.trigger(of: rules.first { $0.id == "nav.deleteWord" }!)
+                == .key(combo: KeyCombo([.control], .delete)), "Shown with Ctrl")
+    }
+
     @Test func otherRulesAreUntouched() {
         let untouched = rules.filter {
             if case .key(let combo) = $0.trigger { !combo.modifiers.contains(.control) } else { true }

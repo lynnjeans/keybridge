@@ -1161,6 +1161,54 @@
         }
       }
     },
+    "Ctrl shortcuts in every group are pressed with Ctrl, as on Windows. For example, Ctrl+C copies." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのグループの Ctrl ショートカットを Windows と同じく Ctrl で押します。例：Ctrl+C でコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有分组里的 Ctrl 快捷键都用 Ctrl 按，和 Windows 一样。例如 Ctrl+C 复制。"
+          }
+        }
+      }
+    },
+    "Ctrl shortcuts in every group are pressed with fn; Ctrl keeps its Mac meaning. For example, fn+C copies. %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのグループの Ctrl ショートカットを fn で押します。Ctrl は Mac 本来の役割のままです。例：fn+C でコピー。%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有分组里的 Ctrl 快捷键都改用 fn 按，Ctrl 保持 Mac 原本的作用。例如 fn+C 复制。%@"
+          }
+        }
+      }
+    },
+    "Ctrl shortcuts in every group work with Ctrl and with fn. For example, Ctrl+C and fn+C copy. %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのグループの Ctrl ショートカットは Ctrl でも fn でも押せます。例：Ctrl+C でも fn+C でもコピー。%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有分组里的 Ctrl 快捷键用 Ctrl 和 fn 都可以按。例如 Ctrl+C 和 fn+C 都能复制。%@"
+          }
+        }
+      }
+    },
     "Ctrl+C and Ctrl+V copy and paste." : {
       "localizations" : {
         "ja" : {
@@ -1173,38 +1221,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ctrl+C 和 Ctrl+V 可以复制、粘贴。"
-          }
-        }
-      }
-    },
-    "Ctrl+C and fn+C both copy. In terminals only fn does. %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ctrl+C と fn+C のどちらでもコピーできます。ターミナルでは fn のみです。%@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ctrl+C 和 fn+C 都能复制；在终端里只有 fn 可以。%@"
-          }
-        }
-      }
-    },
-    "Ctrl+C copies, as on Windows." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Windows と同じく Ctrl+C でコピー。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ctrl+C 复制，和 Windows 一样。"
           }
         }
       }
@@ -6182,6 +6198,22 @@
         }
       }
     },
+    "With arrows, Home, End and ⌫ it stays Ctrl, since fn+← is Home and fn+⌫ is ⌦." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "矢印キー、Home、End、⌫ との組み合わせは Ctrl のままです。fn+← は Home、fn+⌫ は ⌦ になるためです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配方向键、Home、End 和 ⌫ 的仍用 Ctrl，因为 fn+← 就是 Home，fn+⌫ 就是 ⌦。"
+          }
+        }
+      }
+    },
     "Word Document" : {
       "localizations" : {
         "ja" : {
@@ -6194,22 +6226,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Word 文档"
-          }
-        }
-      }
-    },
-    "Word moves stay Ctrl+← / →, since fn+← is Home on a Mac keyboard." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "単語単位の移動は Ctrl+← / → のままです。Mac キーボードでは fn+← が Home になるためです。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按词移动仍用 Ctrl+← / →，因为 Mac 键盘上的 fn+← 就是 Home。"
           }
         }
       }
@@ -6392,22 +6408,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "按住 fn 或 Ctrl 滚动滚轮可以缩放页面。"
-          }
-        }
-      }
-    },
-    "fn+C copies, also in terminals. Ctrl keeps its Mac meaning, and fn takes the place of its 🌐 shortcuts. %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "fn+C でコピー（ターミナルでも可）。Ctrl は Mac 本来の役割のままで、fn 本来の 🌐 ショートカットは置き換えられます。%@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "fn+C 复制，在终端里也可以。Ctrl 保持 Mac 原本的作用，fn 会取代它自带的 🌐 快捷键。%@"
           }
         }
       }

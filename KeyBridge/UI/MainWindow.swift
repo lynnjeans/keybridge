@@ -260,14 +260,16 @@ private struct ControlKeyCard: View {
         }
     }
 
-    /// fn+← reaches the Mac as Home, so fn cannot stand in for Ctrl there.
-    private static let arrowNote = String(localized: "Word moves stay Ctrl+← / →, since fn+← is Home on a Mac keyboard.")
+    /// fn turns these keys into others, so fn cannot stand in for Ctrl with
+    /// them (`KeyCode.keepsControl`).
+    private static let keepsControlNote = String(localized: "With arrows, Home, End and ⌫ it stays Ctrl, since fn+← is Home and fn+⌫ is ⌦.")
 
+    /// What maps to what and one example, for every group at once.
     private var description: LocalizedStringKey {
         switch choice {
-        case .control: "Ctrl+C copies, as on Windows."
-        case .function: "fn+C copies, also in terminals. Ctrl keeps its Mac meaning, and fn takes the place of its 🌐 shortcuts. \(Self.arrowNote)"
-        case .both: "Ctrl+C and fn+C both copy. In terminals only fn does. \(Self.arrowNote)"
+        case .control: "Ctrl shortcuts in every group are pressed with Ctrl, as on Windows. For example, Ctrl+C copies."
+        case .function: "Ctrl shortcuts in every group are pressed with fn; Ctrl keeps its Mac meaning. For example, fn+C copies. \(Self.keepsControlNote)"
+        case .both: "Ctrl shortcuts in every group work with Ctrl and with fn. For example, Ctrl+C and fn+C copy. \(Self.keepsControlNote)"
         }
     }
 }
