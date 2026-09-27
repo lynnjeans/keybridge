@@ -306,9 +306,9 @@ private struct WinAltCard: View {
     private var description: LocalizedStringKey {
         switch choice {
         case .pcKeyboard:
-            "Win+L is pressed as ⌘L, Alt+F4 as ⌥F4."
+            "Win maps to ⌘ and Alt to ⌥. For example, Win+L is ⌘L."
         case .macPosition:
-            "Win+L is pressed as ⌥L, Alt+F4 as ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow."
+            "Win maps to ⌥ and Alt to ⌘. For example, Win+L is ⌥L."
         }
     }
 }

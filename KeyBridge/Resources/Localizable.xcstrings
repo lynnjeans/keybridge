@@ -5957,34 +5957,34 @@
         }
       }
     },
-    "Win+L is pressed as ⌘L, Alt+F4 as ⌥F4." : {
+    "Win maps to ⌘ and Alt to ⌥. For example, Win+L is ⌘L." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win+L は ⌘L、Alt+F4 は ⌥F4 で押します。"
+            "value" : "Win は ⌘、Alt は ⌥ に割り当てます。例：Win+L は ⌘L。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win+L 按 ⌘L，Alt+F4 按 ⌥F4。"
+            "value" : "Win 映射为 ⌘，Alt 映射为 ⌥。例如 Win+L 就是 ⌘L。"
           }
         }
       }
     },
-    "Win+L is pressed as ⌥L, Alt+F4 as ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
+    "Win maps to ⌥ and Alt to ⌘. For example, Win+L is ⌥L." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win+L は ⌥L、Alt+F4 は ⌘F4 で押します。Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
+            "value" : "Win は ⌥、Alt は ⌘ に割り当てます。例：Win+L は ⌥L。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win+L 按 ⌥L，Alt+F4 按 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
+            "value" : "Win 映射为 ⌥，Alt 映射为 ⌘。例如 Win+L 就是 ⌥L。"
           }
         }
       }
