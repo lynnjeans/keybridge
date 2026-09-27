@@ -32,6 +32,11 @@ struct Configuration: Hashable, Sendable {
     /// means on, the default, so this needs no migration.
     var dockClickMinimizes = true
 
+    /// Whether a left click with the Windows Ctrl key goes out as ⌘+click
+    /// (KB-222). Off until switched on: with Ctrl it replaces macOS's
+    /// Ctrl+click for the shortcut menu. Absent from an older file means off.
+    var ctrlClickSelects = false
+
     /// The rules in effect: the user's custom rules, then the preset's groups
     /// that are on with the user's changes, pressed with the chosen control
     /// key. A switched-off group contributes nothing, even where the user has
@@ -151,6 +156,7 @@ struct Configuration: Hashable, Sendable {
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection, dockClickMinimizes
+        case ctrlClickSelects
     }
 
     init(from decoder: Decoder) throws {
@@ -161,6 +167,7 @@ extension Configuration: Codable {
         controlKey = try container.decodeIfPresent(ControlKey.self, forKey: .controlKey) ?? .control
         wheelDirection = try container.decodeIfPresent(WheelDirection.self, forKey: .wheelDirection) ?? .system
         dockClickMinimizes = try container.decodeIfPresent(Bool.self, forKey: .dockClickMinimizes) ?? true
+        ctrlClickSelects = try container.decodeIfPresent(Bool.self, forKey: .ctrlClickSelects) ?? false
     }
 
     func encode(to encoder: Encoder) throws {
@@ -173,5 +180,7 @@ extension Configuration: Codable {
         try container.encode(controlKey, forKey: .controlKey)
         try container.encode(wheelDirection, forKey: .wheelDirection)
         try container.encode(dockClickMinimizes, forKey: .dockClickMinimizes)
+        // Left out while off, so the file only changes for those who use it.
+        if ctrlClickSelects { try container.encode(true, forKey: .ctrlClickSelects) }
     }
 }

@@ -1225,6 +1225,38 @@
         }
       }
     },
+    "Ctrl+click adds to a selection and opens a link in a new tab, as ⌘+click does on a Mac. Ctrl+click then no longer opens the shortcut menu; the right button and a two-finger click still do." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ctrl+クリックで選択に追加したり、リンクを新しいタブで開いたりできます。Mac の ⌘+クリックと同じです。オンにすると Ctrl+クリックではショートカットメニューが開かなくなります。右ボタンや 2 本指のクリックでは引き続き開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ctrl+点击可加选文件、在新标签页打开链接，相当于 Mac 上的 ⌘+点击。开启后 Ctrl+点击不再弹出快捷菜单；鼠标右键和触控板双指点按仍然可以。"
+          }
+        }
+      }
+    },
+    "Ctrl-click like on Windows" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows と同じ Ctrl+クリック"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ctrl+点击和 Windows 一样"
+          }
+        }
+      }
+    },
     "Custom Rules" : {
       "localizations" : {
         "ja" : {
@@ -6248,6 +6280,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "fn+C 复制，在终端里也可以。Ctrl 保持 Mac 原本的作用，fn 会取代它自带的 🌐 快捷键。%@"
+          }
+        }
+      }
+    },
+    "fn+click adds to a selection and opens a link in a new tab, as ⌘+click does on a Mac. fn stands in for Ctrl, as on the Shortcuts page." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fn+クリックで選択に追加したり、リンクを新しいタブで開いたりできます。Mac の ⌘+クリックと同じです。「ショートカット」ページと同じく、fn が Ctrl の代わりです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fn+点击可加选文件、在新标签页打开链接，相当于 Mac 上的 ⌘+点击。fn 代替 Ctrl，与「快捷键」页一致。"
+          }
+        }
+      }
+    },
+    "fn+click and Ctrl+click add to a selection and open a link in a new tab, as ⌘+click does on a Mac. Ctrl+click then no longer opens the shortcut menu; the right button and a two-finger click still do." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fn+クリックと Ctrl+クリックで選択に追加したり、リンクを新しいタブで開いたりできます。Mac の ⌘+クリックと同じです。オンにすると Ctrl+クリックではショートカットメニューが開かなくなります。右ボタンや 2 本指のクリックでは引き続き開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fn+点击和 Ctrl+点击可加选文件、在新标签页打开链接，相当于 Mac 上的 ⌘+点击。开启后 Ctrl+点击不再弹出快捷菜单；鼠标右键和触控板双指点按仍然可以。"
           }
         }
       }

@@ -77,10 +77,44 @@ struct MousePage: View {
                 .labelsHidden()
             }
         }
+
+        Card {
+            HStack(spacing: 12) {
+                IconTile(symbol: "cursorarrow.click.2", tint: .blue, size: 30)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Ctrl-click like on Windows")
+                        .font(.headline)
+                    Text(ctrlClickNote)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Toggle("Ctrl-click like on Windows", isOn: Binding(
+                    get: { rules.ctrlClickSelects },
+                    set: { rules.setCtrlClickSelects($0) }
+                ))
+                .toggleStyle(.switch)
+                .labelsHidden()
+            }
+        }
     }
 }
 
 extension MousePage {
+    /// What the Ctrl-click switch does with the key the Shortcuts page's
+    /// Ctrl / fn choice names, and what it costs with Ctrl (KB-222).
+    private var ctrlClickNote: String {
+        switch rules.controlKey {
+        case .function:
+            String(localized: "fn+click adds to a selection and opens a link in a new tab, as ⌘+click does on a Mac. fn stands in for Ctrl, as on the Shortcuts page.")
+        case .control:
+            String(localized: "Ctrl+click adds to a selection and opens a link in a new tab, as ⌘+click does on a Mac. Ctrl+click then no longer opens the shortcut menu; the right button and a two-finger click still do.")
+        case .both:
+            String(localized: "fn+click and Ctrl+click add to a selection and open a link in a new tab, as ⌘+click does on a Mac. Ctrl+click then no longer opens the shortcut menu; the right button and a two-finger click still do.")
+        }
+    }
+
     /// Waits for a mouse button, then opens what it should do: the entry
     /// already using it, or a new custom rule pressed with it. Only buttons
     /// 3 and up reach the recorder; the left and right buttons never do.

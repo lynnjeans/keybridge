@@ -27,6 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         capture: { [dispatcher] recorder in dispatcher.recorder = recorder },
         applyWheelDirection: { [dispatcher] direction in dispatcher.wheelDirection = direction },
         applyDockClick: { [dockClick] minimizes in dockClick.isEnabled = minimizes },
+        applyCtrlClick: { [dispatcher] ctrlClick in dispatcher.ctrlClick = ctrlClick },
         apply: { [dispatcher] rules in dispatcher.rules = rules }
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)

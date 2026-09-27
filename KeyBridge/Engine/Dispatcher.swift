@@ -95,10 +95,16 @@ final class Dispatcher {
     /// Buttons pressed while recording, whose release is swallowed too.
     private var recordedButtons: Set<Int> = []
 
-    /// Sees every left button press and release, which always go on
-    /// unchanged: clicking the frontmost app's Dock icon minimizes its window
-    /// (`DockClick`).
+    /// Sees every left button press and release, as they arrived: clicking
+    /// the frontmost app's Dock icon minimizes its window (`DockClick`).
     var leftMouse: (@MainActor (CGEvent, CGEventType) -> Void)?
+
+    /// Ctrl+click as ⌘+click (KB-222); nil while switched off.
+    var ctrlClick: CtrlClick?
+
+    /// Whether the left button's current press was made a ⌘+click, so its
+    /// release is too.
+    private var clickIsCommand = false
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
         if let recorder, let disposition = record(event, type: type, into: recorder) {
@@ -121,6 +127,7 @@ final class Dispatcher {
             return scroll(event)
         case .leftMouseDown, .leftMouseUp:
             leftMouse?(event, type)
+            rewriteClick(event, type: type)
             return .passThrough
         default:
             return .passThrough
@@ -146,6 +153,28 @@ final class Dispatcher {
             return .consume
         default:
             return nil
+        }
+    }
+
+    /// Changes the flags of a left button event in place for Ctrl+click
+    /// (KB-222). The press decides; its release follows it, whatever is held
+    /// by then.
+    private func rewriteClick(_ event: CGEvent, type: CGEventType) {
+        if type == .leftMouseDown {
+            clickIsCommand = false
+            guard let ctrlClick else { return }
+            let flags = ctrlClick.rewrite(event.flags)
+            #if DEBUG
+            Logger.engine.notice(
+                "ctrlclick down flags=\(String(event.flags.rawValue, radix: 16), privacy: .public) fn=\(event.flags.contains(.maskSecondaryFn), privacy: .public) ctrl=\(event.flags.contains(.maskControl), privacy: .public) rewritten=\(flags != nil, privacy: .public)"
+            )
+            #endif
+            guard let flags else { return }
+            event.flags = flags
+            clickIsCommand = true
+        } else if clickIsCommand {
+            clickIsCommand = false
+            if let ctrlClick { event.flags = ctrlClick.release(event.flags) }
         }
     }
 

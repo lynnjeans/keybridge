@@ -102,6 +102,7 @@ extension DiagnosticReport {
             ("Zoom modifiers", rules.zoomModifiers.names.joined(separator: "+")),
             ("Wheel direction", rules.wheelDirection.rawValue),
             ("Dock click minimizes", rules.dockClickMinimizes ? "on" : "off"),
+            ("Ctrl+click selects", rules.ctrlClickSelects ? "on" : "off"),
             ("System shortcuts", SystemAction.allCases.map { function -> String in
                 switch SymbolicHotKeys.current().shortcut(for: function) {
                 case .combo(let combo): "\(function.rawValue) \(combo.caps(.mac).joined())"

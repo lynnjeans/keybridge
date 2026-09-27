@@ -21,6 +21,7 @@ final class RulesController {
     @ObservationIgnored private let apply: ([Rule]) -> Void
     @ObservationIgnored private let applyWheelDirection: (WheelDirection) -> Void
     @ObservationIgnored private let applyDockClick: (Bool) -> Void
+    @ObservationIgnored private let applyCtrlClick: (CtrlClick?) -> Void
     @ObservationIgnored private let capture: ((@MainActor (Trigger) -> Void)?) -> Void
 
     /// - Parameters:
@@ -36,6 +37,7 @@ final class RulesController {
         capture: @escaping ((@MainActor (Trigger) -> Void)?) -> Void = { _ in },
         applyWheelDirection: @escaping (WheelDirection) -> Void = { _ in },
         applyDockClick: @escaping (Bool) -> Void = { _ in },
+        applyCtrlClick: @escaping (CtrlClick?) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
@@ -43,6 +45,7 @@ final class RulesController {
         self.apply = apply
         self.applyWheelDirection = applyWheelDirection
         self.applyDockClick = applyDockClick
+        self.applyCtrlClick = applyCtrlClick
         self.capture = capture
         // Computed into locals first: `self` is off limits until every
         // stored property has a value.
@@ -53,6 +56,7 @@ final class RulesController {
         apply(rules)
         applyWheelDirection(loaded.wheelDirection)
         applyDockClick(loaded.dockClickMinimizes)
+        applyCtrlClick(loaded.ctrlClick)
     }
 
     /// Whether the preset is as it ships, with no group switched and no
@@ -105,6 +109,17 @@ final class RulesController {
         guard configuration.dockClickMinimizes != minimizes else { return }
         configuration.dockClickMinimizes = minimizes
         Logger.configuration.notice("Dock click minimizes: \(minimizes ? "on" : "off", privacy: .public)")
+        commit()
+    }
+
+    var ctrlClickSelects: Bool {
+        configuration.ctrlClickSelects
+    }
+
+    func setCtrlClickSelects(_ selects: Bool) {
+        guard configuration.ctrlClickSelects != selects else { return }
+        configuration.ctrlClickSelects = selects
+        Logger.configuration.notice("Ctrl+click selects: \(selects ? "on" : "off", privacy: .public)")
         commit()
     }
 
@@ -261,5 +276,13 @@ final class RulesController {
         apply(effectiveRules)
         applyWheelDirection(configuration.wheelDirection)
         applyDockClick(configuration.dockClickMinimizes)
+        applyCtrlClick(configuration.ctrlClick)
+    }
+}
+
+private extension Configuration {
+    /// What the engine needs: the key follows the Ctrl / fn choice.
+    var ctrlClick: CtrlClick? {
+        ctrlClickSelects ? CtrlClick(controlKey: controlKey) : nil
     }
 }

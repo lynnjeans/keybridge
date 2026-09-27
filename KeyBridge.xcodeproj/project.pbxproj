@@ -88,6 +88,7 @@
 		83413F653462D858EF9D9975 /* FocusedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342818B2B9994226304B401 /* FocusedElement.swift */; };
 		83B098FBCF43B11D0B662B0C /* SyntheticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B222FEA8CEA2D3560F815A6C /* SyntheticEvent.swift */; };
 		8858D898B53F84D42CBFB269 /* ScrollStepperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15087DE16390140942799307 /* ScrollStepperTests.swift */; };
+		895698611AF45C1BD6E0835D /* CtrlClickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD39F96B3BA4BFF713874B /* CtrlClickTests.swift */; };
 		8B714E010EF7A46A93F57F15 /* KeyRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = B468133EB5D247B76FBE8965 /* KeyRecording.swift */; };
 		8BCEA7AA4CC8C78D38BAD869 /* NewDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EFDDF4FA8FACE4A1C230AA /* NewDocument.swift */; };
 		8E0FBFB50DA527B208271E91 /* WindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84B286DBCE89F219CAAB5C /* WindowGeometry.swift */; };
@@ -100,6 +101,7 @@
 		96AB88C14A08C43B37739870 /* RuleMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8E64863C57D05FECB554B /* RuleMatcher.swift */; };
 		9AAF6A512F6B2B7D2E4DAE45 /* OverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B24DCD833DE67E0939EA386 /* OverviewPage.swift */; };
 		9B7B9A8A3C26C12B3BAFE434 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */; };
+		9E2B816EC5083E043804419A /* CtrlClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED978507529E7331F0BA6DE /* CtrlClick.swift */; };
 		9E32C5A2F863B85D9C4ECE19 /* PermissionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DA03C25A15A62CDD7258E /* PermissionMonitor.swift */; };
 		9EA500D3B1A82BCD990E3307 /* FinderFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E122739093811B6047A1D32 /* FinderFolder.swift */; };
 		A25A3AD1F2462659DC1CC380 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE958F089014CE0CCEA90025 /* ConfigurationStore.swift */; };
@@ -119,6 +121,7 @@
 		B07862A01FA1AEA844D12ADA /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A725A82C03775E1984FCAD69 /* ClipboardController.swift */; };
 		B0C7FF3F09641315C75BE6B1 /* FinderMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB119FD1EF6E5CB5BFECEAF /* FinderMenuTests.swift */; };
 		B20E655833AB58F34877BE9D /* SystemActionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9C624CC00946DA95041836 /* SystemActionPicker.swift */; };
+		B2690196A0DDADDC26CD1652 /* CtrlClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED978507529E7331F0BA6DE /* CtrlClick.swift */; };
 		B26B3942D0AAFC1BAECD8DA1 /* PathBoxPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC39DA1411A84055AF2F2D /* PathBoxPanel.swift */; };
 		B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0716DA00216F64009A16E9A /* ControlKeyTests.swift */; };
 		B49E9A452F204EAEA8BBE126 /* CustomRulesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */; };
@@ -226,6 +229,7 @@
 		2A0F549C1993272DD073C5EF /* FileLocationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLocationsTests.swift; sourceTree = "<group>"; };
 		2D3D0A952E4777A7CC3E8B01 /* FileLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLocations.swift; sourceTree = "<group>"; };
 		2E383F121E8ACFEFCFC43CF4 /* SystemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAction.swift; sourceTree = "<group>"; };
+		2ED978507529E7331F0BA6DE /* CtrlClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlClick.swift; sourceTree = "<group>"; };
 		30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardItem.swift; sourceTree = "<group>"; };
 		3115F289F5288F9D19031854 /* ClipboardSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardSearch.swift; sourceTree = "<group>"; };
 		32ACEB0B41CBD802C02C5FD4 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
@@ -313,6 +317,7 @@
 		D41BF86A97C1D2936EC49111 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineControllerTests.swift; sourceTree = "<group>"; };
 		DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabelTests.swift; sourceTree = "<group>"; };
+		DBCD39F96B3BA4BFF713874B /* CtrlClickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlClickTests.swift; sourceTree = "<group>"; };
 		DD867C4F572ECA5641FA840C /* PathBoxResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathBoxResolver.swift; sourceTree = "<group>"; };
 		DF9BA9A6519EF06B1C05F948 /* DispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatcherTests.swift; sourceTree = "<group>"; };
 		E132BEBB027CC54A18CBEBCA /* LayoutCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCheck.swift; sourceTree = "<group>"; };
@@ -341,6 +346,7 @@
 		0C459A1A8C76E5F1DC9F098C /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				2ED978507529E7331F0BA6DE /* CtrlClick.swift */,
 				6E9FAEF38FA76CE2D4EAA172 /* Dispatcher.swift */,
 				6CDA1B612033CB9C6BA0A37F /* DockClick.swift */,
 				5D253FFA3ED6784FFDE9938E /* DockWindow.swift */,
@@ -493,6 +499,7 @@
 				A7780A268C4CFC269CC2BB6A /* ClipboardTests.swift */,
 				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
 				C0716DA00216F64009A16E9A /* ControlKeyTests.swift */,
+				DBCD39F96B3BA4BFF713874B /* CtrlClickTests.swift */,
 				47B63EC2258A88FE5A42B0EB /* CustomRuleTests.swift */,
 				D063DAF87CDA6258065860D0 /* DiagnosticReportTests.swift */,
 				FE29AEFDEDFAB17E2E88DDC0 /* DispatcherActionTests.swift */,
@@ -725,6 +732,8 @@
 				C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */,
 				A514BBCBD41FBAFD95F8CED7 /* ControlKey.swift in Sources */,
 				B2F1643A7D12CF187B7E4423 /* ControlKeyTests.swift in Sources */,
+				B2690196A0DDADDC26CD1652 /* CtrlClick.swift in Sources */,
+				895698611AF45C1BD6E0835D /* CtrlClickTests.swift in Sources */,
 				969CAA3E91F97E8E4BD2D1A3 /* CustomRuleTests.swift in Sources */,
 				3E971AEC9CFF0B8B6A990A08 /* DiagnosticReport.swift in Sources */,
 				309449CEB90EA200DFFE855D /* DiagnosticReportTests.swift in Sources */,
@@ -819,6 +828,7 @@
 				2027926C27C6697B960913D0 /* Configuration.swift in Sources */,
 				A8E891C1961CD26F3A27E93B /* ConfigurationStore.swift in Sources */,
 				54E64666073B870126B46981 /* ControlKey.swift in Sources */,
+				9E2B816EC5083E043804419A /* CtrlClick.swift in Sources */,
 				B49E9A452F204EAEA8BBE126 /* CustomRulesPage.swift in Sources */,
 				AE5D23E59524AC72A9688B53 /* DiagnosticReport.swift in Sources */,
 				65D7BA65A24A69CB16E317F5 /* DiagnosticsCard.swift in Sources */,

@@ -143,6 +143,7 @@ targets:
       - path: KeyBridge/Engine/ScrollStepper.swift
       - path: KeyBridge/Engine/WheelDirection.swift
       - path: KeyBridge/Engine/DockClick.swift
+      - path: KeyBridge/Engine/CtrlClick.swift
       - path: KeyBridge/Window/WindowGeometry.swift
       - path: KeyBridge/Window/WindowAction.swift
       - path: KeyBridge/FileDialog/FileDialogAction.swift
