@@ -3705,22 +3705,6 @@
         }
       }
     },
-    "Only mouse wheels. Trackpad and Magic Mouse scrolling are left to the system." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "マウスホイールのみが対象です。トラックパッドと Magic Mouse のスクロールはシステムに任せます。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只作用于鼠标滚轮，触控板和妙控鼠标的滚动仍由系统处理。"
-          }
-        }
-      }
-    },
     "Only while Finder is in front: paste or type a path, Return to jump. Click to record a different shortcut." : {
       "localizations" : {
         "ja" : {
@@ -4857,18 +4841,18 @@
         }
       }
     },
-    "Rolling the wheel towards you moves down the page. The trackpad keeps natural scrolling." : {
+    "Rolling the wheel towards you moves down the page. The trackpad and a Magic Mouse keep natural scrolling." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ホイールを手前に回すとページが下に進みます。トラックパッドはナチュラルなスクロールのままです。"
+            "value" : "ホイールを手前に回すとページが下へ移動します。トラックパッドと Magic Mouse はナチュラルスクロールのままです。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "滚轮朝自己方向滚时页面向下。触控板仍保持自然滚动。"
+            "value" : "滚轮朝自己方向滚时页面向下。触控板和妙控鼠标仍保持自然滚动。"
           }
         }
       }

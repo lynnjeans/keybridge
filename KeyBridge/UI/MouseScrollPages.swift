@@ -173,10 +173,6 @@ struct ScrollPage: View {
             }
         }
 
-        Text("Only mouse wheels. Trackpad and Magic Mouse scrolling are left to the system.")
-            .font(.callout)
-            .foregroundStyle(.secondary)
-
         Card {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 12) {
@@ -215,7 +211,7 @@ struct ScrollPage: View {
     private var directionNote: LocalizedStringKey {
         let natural = UserDefaults.standard.object(forKey: "com.apple.swipescrolldirection") as? Bool ?? true
         return natural
-            ? "Rolling the wheel towards you moves down the page. The trackpad keeps natural scrolling."
+            ? "Rolling the wheel towards you moves down the page. The trackpad and a Magic Mouse keep natural scrolling."
             : "Natural scrolling is off in System Settings, so wheels already scroll this way."
     }
 
