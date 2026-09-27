@@ -68,6 +68,11 @@ struct MappingView: View {
                 .foregroundStyle(Color.accentColor)
             action
         }
+        // Always its own width. `AdaptiveRow` measures it and then proposes
+        // that width back, and rounding can leave it a fraction short; the
+        // HStack then squeezed the "+" between caps, the only text it could,
+        // until it vanished (Win+E → Finder read "Win E").
+        .fixedSize(horizontal: true, vertical: false)
     }
 
     @ViewBuilder private var trigger: some View {
