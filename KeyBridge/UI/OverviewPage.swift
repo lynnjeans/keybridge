@@ -84,7 +84,9 @@ struct OverviewPage: View {
                 : "Ctrl shortcuts are left alone in terminals, where Ctrl+C stops the running program.")
         }
         if rules.isEnabled(group: "winKey") {
-            notices.append("Windows key shortcuts are on, so ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken on a Mac keyboard too.")
+            notices.append(rules.modifierLayout == .pcKeyboard
+                ? "Windows key shortcuts are on, so ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken on a Mac keyboard too."
+                : "Windows key shortcuts are on with Win as ⌥, so ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps.")
         }
         return notices
     }

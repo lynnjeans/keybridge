@@ -124,6 +124,7 @@ struct CustomRuleEditor: View {
     let rules: RulesController
     let existing: Rule?
     @Environment(\.dismiss) private var dismiss
+    private var triggerStyle: KeyStyle { rules.modifierLayout.triggerStyle }
 
     @State private var name: String
     @State private var trigger: Trigger?
@@ -203,9 +204,9 @@ struct CustomRuleEditor: View {
                 TextField("Name", text: $name, prompt: Text("Optional"))
                 LabeledContent("When you press") {
                     RecorderField(isRecording: recording == .trigger, prompt: "Press keys or a mouse button…",
-                                  liveModifiers: recorder.modifiers, style: .windows) {
+                                  liveModifiers: recorder.modifiers, style: triggerStyle) {
                         switch trigger {
-                        case .key(let combo)?: KeyComboView(combo: combo, style: .windows)
+                        case .key(let combo)?: KeyComboView(combo: combo, style: triggerStyle)
                         case .mouseButton(let number, let modifiers)?: MouseButtonLabel(number: number, modifiers: modifiers)
                         default: Text("Click to record").foregroundStyle(.secondary)
                         }

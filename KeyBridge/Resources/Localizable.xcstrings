@@ -2873,6 +2873,22 @@
         }
       }
     },
+    "Mac keyboard" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac キーボード"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 键盘"
+          }
+        }
+      }
+    },
     "Map any key combination or mouse button to another shortcut or to an app — for example fn+C to ⌘C next to Ctrl+C, or Win+E to Finder." : {
       "localizations" : {
         "ja" : {
@@ -3449,6 +3465,22 @@
         }
       }
     },
+    "Off by default: also takes over ⌥ and a letter, which types characters on a Mac" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "既定ではオフ：Mac で文字入力に使う ⌥ と文字キーの組み合わせも使われます"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认关闭：也会占用 ⌥ 加字母，这在 Mac 上用来输入字符"
+          }
+        }
+      }
+    },
     "Off. Every key, click and scroll reaches apps unchanged." : {
       "localizations" : {
         "ja" : {
@@ -3973,6 +4005,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "概览"
+          }
+        }
+      }
+    },
+    "PC keyboard" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PC キーボード"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PC 键盘"
           }
         }
       }
@@ -5909,6 +5957,70 @@
         }
       }
     },
+    "Win and Alt keys" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win キーと Alt キー"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 键和 Alt 键"
+          }
+        }
+      }
+    },
+    "Win is ⌘ and Alt is ⌥, as a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PC キーボードが送るとおり、Win は ⌘、Alt は ⌥ です：Win+L は ⌘L、Alt+F4 は ⌥F4。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 是 ⌘，Alt 是 ⌥，和 PC 键盘传过来的一样：Win+L 就是 ⌘L，Alt+F4 就是 ⌥F4。"
+          }
+        }
+      }
+    },
+    "Win is ⌥ and Alt is ⌘, where they sit on a Mac keyboard: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac キーボード上の位置どおり、Win は ⌥、Alt は ⌘ です：Win+L は ⌥L、Alt+F4 は ⌘F4、Alt+Tab は Mac 標準の ⌘Tab。ウインドウのスナップは引き続き ⌥ と矢印キーです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 是 ⌥，Alt 是 ⌘，按它们在 Mac 键盘上的位置：Win+L 就是 ⌥L，Alt+F4 就是 ⌘F4，Alt+Tab 就是 Mac 自带的 ⌘Tab。窗口吸附仍然用 ⌥ 加方向键。"
+          }
+        }
+      }
+    },
+    "Win is ⌥ as you chose, so these shortcuts take ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, which type characters on a Mac (é, ¬, ∂; @ on some layouts), and tapping ⌥ on its own opens Apps." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win を ⌥ にしているため、これらのショートカットは ⌥L、⌥E、⌥D、⌥.、⌥⇧S を使います。これらは Mac では文字入力に使われます（é、¬、∂、一部の配列では @）。⌥ を単独で押すと「アプリ」が開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你选择了 Win 为 ⌥，所以这些快捷键会占用 ⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S。它们在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @），单按一下 ⌥ 也会打开“应用程序”。"
+          }
+        }
+      }
+    },
     "Window" : {
       "localizations" : {
         "ja" : {
@@ -6018,6 +6130,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows 标准"
+          }
+        }
+      }
+    },
+    "Windows key shortcuts are on with Win as ⌥, so ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows キーのショートカットがオンで Win は ⌥ のため、⌥L、⌥E、⌥D、⌥.、⌥⇧S では文字を入力できず、⌥ を単独で押すと「アプリ」が開きます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows 键快捷键已开启，Win 为 ⌥，所以 ⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再输入字符，单按 ⌥ 会打开“应用程序”。"
           }
         }
       }

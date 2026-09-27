@@ -11,6 +11,7 @@ struct RuleEditor: View {
     @State private var recording: Side?
     @State private var recorder = KeyRecorder()
     @Environment(\.dismiss) private var dismiss
+    private var triggerStyle: KeyStyle { rules.modifierLayout.triggerStyle }
 
     enum Side { case trigger, action }
 
@@ -121,14 +122,14 @@ struct RuleEditor: View {
         switch draft.trigger {
         case .key(let combo):
             RecorderField(isRecording: recording == .trigger, prompt: "Press a shortcut…",
-                          liveModifiers: recorder.modifiers, style: .windows) {
-                KeyComboView(combo: combo, style: .windows)
+                          liveModifiers: recorder.modifiers, style: triggerStyle) {
+                KeyComboView(combo: combo, style: triggerStyle)
             } action: {
                 toggleRecording(.trigger)
             }
         case .mouseButton(let number, let modifiers):
             RecorderField(isRecording: recording == .trigger, prompt: "Press a mouse button…",
-                          liveModifiers: recorder.modifiers, style: .windows) {
+                          liveModifiers: recorder.modifiers, style: triggerStyle) {
                 MouseButtonLabel(number: number, modifiers: modifiers)
             } action: {
                 toggleRecording(.trigger)
@@ -401,10 +402,11 @@ final class KeyRecorder {
 struct MouseButtonLabel: View {
     let number: Int
     var modifiers: Modifiers = []
+    @Environment(\.triggerStyle) private var triggerStyle
 
     var body: some View {
         HStack(spacing: 3) {
-            ForEach(modifiers.caps(.windows), id: \.self) { Keycap(text: $0, isModifier: true) }
+            ForEach(modifiers.caps(triggerStyle), id: \.self) { Keycap(text: $0, isModifier: true) }
             Label("Button \(number)", systemImage: "computermouse")
                 .labelStyle(.titleAndIcon)
                 .font(.system(size: 12, weight: .semibold))

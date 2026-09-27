@@ -17,7 +17,7 @@ struct RuleMatcher: Sendable {
 
     init(rules: [Rule]) {
         var byTrigger: [Trigger: [(offset: Int, rule: Rule)]] = [:]
-        for (offset, rule) in rules.enumerated() where rule.isEnabled {
+        for (offset, rule) in rules.enumerated() where rule.isEnabled && !rule.changesNothing {
             byTrigger[rule.trigger, default: []].append((offset, rule))
         }
         // When several rules share a trigger, the narrower scope wins: Ctrl+V
@@ -92,5 +92,13 @@ extension DeviceFilter {
         case .only(let devices):
             return device.map(devices.contains) ?? false
         }
+    }
+}
+
+private extension Rule {
+    /// A key turned into the same key, such as Alt+Tab → ⌘Tab when Alt is ⌘
+    /// (KB-226). Matching it would only swap the keystroke for a copy.
+    var changesNothing: Bool {
+        if case .key(let trigger) = trigger, case .key(let result) = action { trigger == result } else { false }
     }
 }

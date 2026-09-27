@@ -52,6 +52,8 @@ struct MainWindow: View {
             .id(page)
         }
         .frame(minWidth: 780, minHeight: 520)
+        // Which of ⌘ and ⌥ is called Win, on every page and in every sheet.
+        .environment(\.triggerStyle, rules.modifierLayout.triggerStyle)
         .showsInDock()
         #if DEBUG
         .onAppear { if let requested = LayoutCheck.page { page = requested } }
@@ -97,6 +99,7 @@ private struct ShortcutsPage: View {
     var body: some View {
         PresetBar(rules: rules, groups: Self.groups(of: rules.preset))
         ControlKeyCard(choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }))
+        WinAltCard(choice: Binding(get: { rules.modifierLayout }, set: { rules.setModifierLayout($0) }))
 
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
@@ -118,7 +121,7 @@ private struct ShortcutsPage: View {
         .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(.separator))
 
         ForEach(Self.groups(of: rules.preset)) { group in
-            let matches = Self.matching(rules.rules(inGroup: group.id), search, rules.controlKey)
+            let matches = Self.matching(rules.rules(inGroup: group.id), search, rules.controlKey, rules.modifierLayout)
             // A search hides the groups it found nothing in, so what is left
             // on screen is only what matched.
             if search.isEmpty || !matches.isEmpty {
@@ -155,10 +158,15 @@ private struct ShortcutsPage: View {
                 Button("Turn On") { rules.setGroup("winKey", enabled: true) }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard.")
+                switch rules.modifierLayout {
+                case .pcKeyboard:
+                    Text("A PC keyboard's Windows key reaches the Mac as ⌘, so these shortcuts also replace ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S on a Mac keyboard, and tapping ⌘ on its own opens Apps. Leave this off if you use a Mac keyboard.")
+                case .macPosition:
+                    Text("Win is ⌥ as you chose, so these shortcuts take ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, which type characters on a Mac (é, ¬, ∂; @ on some layouts), and tapping ⌥ on its own opens Apps.")
+                }
             }
 
-        if !search.isEmpty && Self.groups(of: rules.preset).allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey).isEmpty }) {
+        if !search.isEmpty && Self.groups(of: rules.preset).allSatisfy({ Self.matching(rules.rules(inGroup: $0.id), search, rules.controlKey, rules.modifierLayout).isEmpty }) {
             ContentUnavailableView.search(text: search)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 20)
@@ -179,12 +187,12 @@ private struct ShortcutsPage: View {
     }
 
     /// Entries whose name, or either side of the mapping, contains the text.
-    static func matching(_ rules: [Rule], _ search: String, _ controlKey: ControlKey) -> [Rule] {
+    static func matching(_ rules: [Rule], _ search: String, _ controlKey: ControlKey, _ layout: ModifierLayout) -> [Rule] {
         let query = search.trimmingCharacters(in: .whitespaces).lowercased()
         guard !query.isEmpty else { return rules }
         return rules.filter { rule in
             var haystack = [RuleNames.name(of: rule), rule.id]
-            if case .key(let combo) = controlKey.trigger(of: rule) { haystack += combo.caps(.windows) }
+            if case .key(let combo) = controlKey.trigger(of: rule) { haystack += combo.caps(layout.triggerStyle) }
             if case .key(let combo) = rule.action { haystack += combo.caps(.mac) }
             if case .systemAction(let function) = rule.action { haystack.append(function.name) }
             return haystack.contains { $0.lowercased().contains(query) }
@@ -262,6 +270,46 @@ private struct ControlKeyCard: View {
     }
 }
 
+/// Which Mac keys the Win and Alt shortcuts are pressed with (KB-226): as a
+/// PC keyboard sends them, or where they sit on a Mac keyboard.
+private struct WinAltCard: View {
+    @Binding var choice: ModifierLayout
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "command", tint: .pink, size: 34)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Win and Alt keys")
+                            .font(.headline)
+                        Text(description)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Picker("Win and Alt keys", selection: $choice) {
+                        Text("PC keyboard").tag(ModifierLayout.pcKeyboard)
+                        Text("Mac keyboard").tag(ModifierLayout.macPosition)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    .fixedSize()
+                }
+            }
+        }
+    }
+
+    private var description: LocalizedStringKey {
+        switch choice {
+        case .pcKeyboard:
+            "Win is ⌘ and Alt is ⌥, as a PC keyboard sends them: Win+L is ⌘L, Alt+F4 is ⌥F4."
+        case .macPosition:
+            "Win is ⌥ and Alt is ⌘, where they sit on a Mac keyboard: Win+L is ⌥L, Alt+F4 is ⌘F4, and Alt+Tab is the Mac's own ⌘Tab. Window snapping stays on ⌥ and an arrow."
+        }
+    }
+}
+
 /// One group: its switch, and its entries when expanded.
 struct GroupCard: View {
     let group: Preset.Group
@@ -276,6 +324,7 @@ struct GroupCard: View {
     /// when fn stands in for Ctrl.
     let displayTrigger: (Rule) -> Trigger
     let edit: (Rule) -> Void
+    @Environment(\.triggerStyle) private var triggerStyle
 
     var body: some View {
         Card {
@@ -310,7 +359,7 @@ struct GroupCard: View {
                 Text(countText)
                     .font(.callout)
                     .foregroundStyle(.secondary)
-                if let note = RuleNames.note(ofGroup: group.id) {
+                if let note = RuleNames.note(ofGroup: group.id, style: triggerStyle) {
                     Text(note)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -437,8 +486,10 @@ enum RuleNames {
     }
 
     /// A line under the group's name, for groups that need explaining.
-    static func note(ofGroup id: String) -> String? {
+    static func note(ofGroup id: String, style: KeyStyle = .windows) -> String? {
         switch id {
+        case "winKey" where style == .windowsByPosition:
+            String(localized: "Off by default: also takes over ⌥ and a letter, which types characters on a Mac")
         case "finder": String(localized: "Only in Finder, and not while renaming or searching")
         case "dialogs": String(localized: "Only in an open or save dialog (the list also in Finder), like Listary on Windows")
         case "winKey": String(localized: "Off by default: also takes over ⌘ shortcuts on a Mac keyboard")

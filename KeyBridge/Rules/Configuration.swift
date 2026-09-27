@@ -37,17 +37,28 @@ struct Configuration: Hashable, Sendable {
     /// Ctrl+click for the shortcut menu. Absent from an older file means off.
     var ctrlClickSelects = false
 
+    /// Which Mac keys play Win and Alt (KB-226). Absent from an older file
+    /// means a PC keyboard's, as the preset is written.
+    var modifierLayout: ModifierLayout = .pcKeyboard
+
     /// The rules in effect: the user's custom rules, then the preset's groups
-    /// that are on with the user's changes, pressed with the chosen control
-    /// key. A switched-off group contributes nothing, even where the user has
-    /// customised one of its entries — the group switch is the broader, later
-    /// decision. Custom rules are taken as recorded: the control key is a
-    /// setting for the preset.
+    /// that are on with the user's changes, pressed with the chosen Win/Alt
+    /// keys and control key. A switched-off group contributes nothing, even
+    /// where the user has customised one of its entries — the group switch is
+    /// the broader, later decision. Custom rules are taken as recorded: the
+    /// keys are a setting for the preset.
     func effectiveRules(of preset: Preset) -> [Rule] {
         let enabled = preset.groups
             .filter(isEnabled(group:))
-            .flatMap(\.rules)
-        return customRules + controlKey.apply(to: presetRules(base: enabled))
+            .flatMap(rules(of:))
+        return customRules + controlKey.apply(to: enabled)
+    }
+
+    /// A group's rules with the user's changes, pressed with the chosen Win
+    /// and Alt keys. Changes are kept in the preset's terms, Win as ⌘, so a
+    /// re-recorded Win+K stays Win+K when the choice changes.
+    func rules(of group: Preset.Group) -> [Rule] {
+        modifierLayout.apply(to: presetRules(base: group.rules), inGroup: group.id)
     }
 
     /// Whether a group is switched on: the user's choice, or else the
@@ -74,8 +85,8 @@ struct Configuration: Hashable, Sendable {
     /// Puts the preset back as it ships: every group at its default — the
     /// Windows key group off, the rest on — and every changed entry back to
     /// the preset's version. The user's own rules stay, and so do the
-    /// settings that are not part of the preset: the control key and the
-    /// wheel direction.
+    /// settings that are not part of the preset: the control key, the Win
+    /// and Alt keys and the wheel direction.
     mutating func restoreDefaults() {
         disabledGroups = []
         enabledGroups = []
@@ -156,7 +167,7 @@ struct Configuration: Hashable, Sendable {
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection, dockClickMinimizes
-        case ctrlClickSelects
+        case ctrlClickSelects, modifierLayout
     }
 
     init(from decoder: Decoder) throws {
@@ -168,6 +179,7 @@ extension Configuration: Codable {
         wheelDirection = try container.decodeIfPresent(WheelDirection.self, forKey: .wheelDirection) ?? .system
         dockClickMinimizes = try container.decodeIfPresent(Bool.self, forKey: .dockClickMinimizes) ?? true
         ctrlClickSelects = try container.decodeIfPresent(Bool.self, forKey: .ctrlClickSelects) ?? false
+        modifierLayout = try container.decodeIfPresent(ModifierLayout.self, forKey: .modifierLayout) ?? .pcKeyboard
     }
 
     func encode(to encoder: Encoder) throws {
@@ -182,5 +194,6 @@ extension Configuration: Codable {
         try container.encode(dockClickMinimizes, forKey: .dockClickMinimizes)
         // Left out while off, so the file only changes for those who use it.
         if ctrlClickSelects { try container.encode(true, forKey: .ctrlClickSelects) }
+        if modifierLayout != .pcKeyboard { try container.encode(modifierLayout, forKey: .modifierLayout) }
     }
 }

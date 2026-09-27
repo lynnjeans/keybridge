@@ -99,6 +99,7 @@ extension DiagnosticReport {
             ("Preset", rules.preset.id),
             ("Groups", groups.joined(separator: ", ")),
             ("Ctrl shortcuts pressed with", rules.controlKey.rawValue),
+            ("Win and Alt keys", rules.modifierLayout.rawValue),
             ("Zoom modifiers", rules.zoomModifiers.names.joined(separator: "+")),
             ("Wheel direction", rules.wheelDirection.rawValue),
             ("Dock click minimizes", rules.dockClickMinimizes ? "on" : "off"),

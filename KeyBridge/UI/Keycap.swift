@@ -43,7 +43,7 @@ struct KeyComboView: View {
             ForEach(Array(modifiers.enumerated()), id: \.offset) { _, cap in
                 Keycap(text: cap, isModifier: true)
                 // Windows writes Ctrl+C with a plus; macOS runs ⌘C together.
-                if style == .windows {
+                if style != .mac {
                     Text("+")
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(.tertiary)
@@ -58,6 +58,7 @@ struct KeyComboView: View {
 /// what the Mac receives.
 struct MappingView: View {
     let rule: Rule
+    @Environment(\.triggerStyle) private var triggerStyle
 
     var body: some View {
         HStack(spacing: 8) {
@@ -72,10 +73,10 @@ struct MappingView: View {
     @ViewBuilder private var trigger: some View {
         switch rule.trigger {
         case .key(let combo):
-            KeyComboView(combo: combo, style: .windows)
+            KeyComboView(combo: combo, style: triggerStyle)
         case .mouseButton(let number, let modifiers):
             HStack(spacing: 3) {
-                ForEach(Array(modifiers.caps(.windows).enumerated()), id: \.offset) { _, cap in
+                ForEach(Array(modifiers.caps(triggerStyle).enumerated()), id: \.offset) { _, cap in
                     Keycap(text: cap, isModifier: true)
                 }
                 Label("Button \(number)", systemImage: "computermouse")
@@ -85,7 +86,7 @@ struct MappingView: View {
             }
         case .scroll(let direction, let modifiers):
             HStack(spacing: 3) {
-                ForEach(Array(modifiers.caps(.windows).enumerated()), id: \.offset) { _, cap in
+                ForEach(Array(modifiers.caps(triggerStyle).enumerated()), id: \.offset) { _, cap in
                     Keycap(text: cap, isModifier: true)
                     Text("+")
                         .font(.system(size: 12, weight: .semibold))
@@ -136,4 +137,10 @@ private extension ScrollDirection {
         case .right: String(localized: "Scroll right")
         }
     }
+}
+
+extension EnvironmentValues {
+    /// How triggers are spelled on the Windows side: which of ⌘ and ⌥ is
+    /// Win follows the user's choice (KB-226). Set once for the main window.
+    @Entry var triggerStyle: KeyStyle = .windows
 }

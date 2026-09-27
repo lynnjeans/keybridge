@@ -77,8 +77,12 @@ extension KeyCode {
 /// How a combination is spelled: as the user's Windows keyboard says it, or
 /// as macOS does.
 enum KeyStyle: Sendable {
-    /// Ctrl, Alt, Shift, Win — the trigger side of a mapping.
+    /// Ctrl, Alt, Shift, Win — the trigger side of a mapping, with Win on ⌘
+    /// and Alt on ⌥ as a PC keyboard sends them.
     case windows
+    /// The same names for a Mac keyboard pressed by position (KB-226): Win
+    /// on ⌥, Alt on ⌘.
+    case windowsByPosition
     /// ⌃ ⌥ ⇧ ⌘ — the result side.
     case mac
 }
@@ -89,19 +93,20 @@ extension Modifiers {
         Self.capNames.filter { contains($0.modifier) }.map {
             switch style {
             case .windows: $0.windows
+            case .windowsByPosition: $0.byPosition
             case .mac: $0.mac
             }
         }
     }
 
-    private static let capNames: [(modifier: Modifiers, windows: String, mac: String)] = [
-        (.control, "Ctrl", "⌃"),
-        (.option, "Alt", "⌥"),
-        (.shift, "Shift", "⇧"),
+    private static let capNames: [(modifier: Modifiers, windows: String, byPosition: String, mac: String)] = [
+        (.control, "Ctrl", "Ctrl", "⌃"),
+        (.option, "Alt", "Win", "⌥"),
+        (.shift, "Shift", "Shift", "⇧"),
         // A PC keyboard's Win key arrives as command, and that is how the
         // Windows side of a mapping is written.
-        (.command, "Win", "⌘"),
-        (.function, "fn", "fn"),
+        (.command, "Win", "Alt", "⌘"),
+        (.function, "fn", "fn", "fn"),
     ]
 }
 

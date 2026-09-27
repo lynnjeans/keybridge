@@ -136,6 +136,19 @@ final class RulesController {
         commit()
     }
 
+    var modifierLayout: ModifierLayout {
+        configuration.modifierLayout
+    }
+
+    /// Chooses which keys the Win and Alt shortcuts are pressed with, saving
+    /// and taking effect at once.
+    func setModifierLayout(_ layout: ModifierLayout) {
+        guard configuration.modifierLayout != layout else { return }
+        configuration.modifierLayout = layout
+        Logger.configuration.notice("Modifier layout: \(layout.rawValue, privacy: .public)")
+        commit()
+    }
+
     /// The modifiers held while scrolling to zoom, as the zoom rules have
     /// them.
     var zoomModifiers: Modifiers {
@@ -175,10 +188,16 @@ final class RulesController {
     }
 
     /// The rules of one group, as shown under its card, whether or not the
-    /// group is switched on.
+    /// group is switched on: with the chosen Win and Alt keys, and before fn
+    /// stands in for Ctrl.
     func rules(inGroup group: String) -> [Rule] {
         guard let group = preset.groups.first(where: { $0.id == group }) else { return [] }
-        return configuration.presetRules(base: group.rules)
+        return configuration.rules(of: group)
+    }
+
+    /// The group a preset entry belongs to.
+    private func group(of id: String) -> Preset.Group? {
+        preset.groups.first { $0.rules.contains { $0.id == id } }
     }
 
     /// The user's own rules, in the order made.
@@ -203,20 +222,24 @@ final class RulesController {
         commit()
     }
 
-    /// The preset's version of an entry, before any change by the user.
+    /// The preset's version of an entry, before any change by the user, with
+    /// the chosen Win and Alt keys.
     func original(of id: String) -> Rule? {
-        preset.rules.first { $0.id == id }
+        guard let group = group(of: id), let rule = group.rules.first(where: { $0.id == id }) else { return nil }
+        return modifierLayout.apply(to: rule, inGroup: group.id)
     }
 
     func isCustomized(_ id: String) -> Bool {
         configuration.isCustomized(id)
     }
 
-    /// Saves the user's version of a preset entry and puts it into effect.
+    /// Saves the user's version of a preset entry, as shown with the chosen
+    /// Win and Alt keys, and puts it into effect.
     func update(_ rule: Rule) {
-        guard let original = original(of: rule.id) else { return }
+        guard let group = group(of: rule.id), let original = group.rules.first(where: { $0.id == rule.id }) else { return }
         let before = configuration
-        configuration.setRule(rule, original: original)
+        // Kept in the preset's terms; trading ⌘ and ⌥ again undoes the layout.
+        configuration.setRule(modifierLayout.apply(to: rule, inGroup: group.id), original: original)
         guard configuration != before else { return }
         Logger.configuration.notice(
             "Rule \(rule.id, privacy: .public) \(self.isCustomized(rule.id) ? "customized" : "back to default", privacy: .public)"
@@ -237,7 +260,7 @@ final class RulesController {
     /// no conflict — Ctrl+V moving files in Finder and pasting elsewhere is
     /// the point.
     func conflicts(with rule: Rule) -> [Rule] {
-        configuration.effectiveRules(base: preset.rules).filter {
+        (configuration.customRules + preset.groups.flatMap(configuration.rules(of:))).filter {
             $0.id != rule.id && $0.trigger == rule.trigger
                 && $0.scope.applications == rule.scope.applications
         }
