@@ -88,16 +88,23 @@ enum KeyStyle: Sendable {
 }
 
 extension Modifiers {
-    /// One cap per modifier, in canonical order.
+    /// One cap per modifier, in the order each side writes them: Apple's
+    /// ⌃ ⌥ ⇧ ⌘ on the Mac side, Microsoft's Win, Ctrl, Alt, Shift on the
+    /// Windows side (KB-232), with fn where Ctrl goes, since it stands in for
+    /// it: fn + Shift + G beside Ctrl + Shift + G, and Win + Shift + S.
     func caps(_ style: KeyStyle) -> [String] {
-        Self.capNames.filter { contains($0.modifier) }.map {
-            switch style {
-            case .windows: $0.windows
-            case .windowsByPosition: $0.byPosition
-            case .mac: $0.mac
+        switch style {
+        case .mac:
+            return Self.capNames.filter { contains($0.modifier) }.map(\.mac)
+        case .windows, .windowsByPosition:
+            let named = Self.capNames.filter { contains($0.modifier) }.map {
+                style == .windows ? $0.windows : $0.byPosition
             }
+            return named.sorted { Self.windowsOrder.firstIndex(of: $0)! < Self.windowsOrder.firstIndex(of: $1)! }
         }
     }
+
+    private static let windowsOrder = ["Win", "Ctrl", "fn", "Alt", "Shift"]
 
     private static let capNames: [(modifier: Modifiers, windows: String, byPosition: String, mac: String)] = [
         (.control, "Ctrl", "Ctrl", "⌃"),

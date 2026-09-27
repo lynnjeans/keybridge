@@ -58,4 +58,18 @@ import Testing
         let all = KeyCombo([.function, .command, .shift, .option, .control], .a)
         #expect(all.caps(.mac) == ["⌃", "⌥", "⇧", "⌘", "fn", "A"])
     }
+
+    /// Microsoft's order on the Windows side, fn where Ctrl goes (KB-232).
+    @Test func theWindowsSideIsWinCtrlAltShift() {
+        #expect(KeyCombo([.function, .shift], .g).caps(.windows) == ["fn", "Shift", "G"])
+        #expect(KeyCombo([.control, .shift], .g).caps(.windows) == ["Ctrl", "Shift", "G"])
+        #expect(KeyCombo([.shift, .command], .s).caps(.windows) == ["Win", "Shift", "S"])
+        #expect(KeyCombo([.control, .option], .forwardDelete).caps(.windows) == ["Ctrl", "Alt", "⌦"])
+        #expect(KeyCombo([.function, .command, .shift, .option, .control], .a).caps(.windows)
+                == ["Win", "Ctrl", "fn", "Alt", "Shift", "A"])
+        // Win is ⌥ and Alt is ⌘ by position; the order follows the names.
+        #expect(KeyCombo([.shift, .option], .s).caps(.windowsByPosition) == ["Win", "Shift", "S"])
+        #expect(KeyCombo([.control, .command], .forwardDelete).caps(.windowsByPosition) == ["Ctrl", "Alt", "⌦"])
+        #expect(KeyCombo([.shift, .command], .s).caps(.mac) == ["⇧", "⌘", "S"], "The Mac side is unchanged")
+    }
 }
