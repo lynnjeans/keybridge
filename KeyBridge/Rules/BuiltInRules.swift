@@ -95,6 +95,12 @@ enum BuiltInRules {
             outsideTerminals("browser.reopenTab", KeyCombo([.control, .shift], .t), KeyCombo([.shift, .command], .t)),
             outsideTerminals("browser.address", KeyCombo([.control], .l), KeyCombo([.command], .l)),
             outsideTerminals("browser.reload", KeyCombo([.control], .r), KeyCombo([.command], .r)),
+            // Page zoom by key (KB-225). Most document apps zoom with these
+            // too, so they are not limited to browsers. ⌘= is what apps
+            // expect for ⌘+, as with the scroll rules.
+            outsideTerminals("browser.zoomIn", KeyCombo([.control], .equal), KeyCombo([.command], .equal)),
+            outsideTerminals("browser.zoomOut", KeyCombo([.control], .minus), KeyCombo([.command], .minus)),
+            outsideTerminals("browser.zoomReset", KeyCombo([.control], .zero), KeyCombo([.command], .zero)),
         ]),
         .init(id: "system", rules: [
             rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),

@@ -38,6 +38,7 @@ extension KeyCode {
     static let x = KeyCode(kVK_ANSI_X)
     static let y = KeyCode(kVK_ANSI_Y)
     static let z = KeyCode(kVK_ANSI_Z)
+    static let zero = KeyCode(kVK_ANSI_0)
     static let three = KeyCode(kVK_ANSI_3)
     static let four = KeyCode(kVK_ANSI_4)
     static let equal = KeyCode(kVK_ANSI_Equal)

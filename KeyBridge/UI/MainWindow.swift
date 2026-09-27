@@ -504,6 +504,8 @@ enum RuleNames {
         "win.taskManager": String(localized: "Task Manager (Activity Monitor)"),
         "browser.newTab": String(localized: "New tab"), "browser.closeTab": String(localized: "Close tab"), "browser.reopenTab": String(localized: "Reopen closed tab"),
         "browser.address": String(localized: "Address bar"), "browser.reload": String(localized: "Reload"),
+        "browser.zoomIn": String(localized: "Zoom in"), "browser.zoomOut": String(localized: "Zoom out"),
+        "browser.zoomReset": String(localized: "Reset zoom"),
         "sys.forceQuit": String(localized: "Force Quit"),
         "winKey.start": String(localized: "Start menu (Apps)"),
         "winKey.lock": String(localized: "Lock screen"), "winKey.explorer": String(localized: "File Explorer (Finder)"),

@@ -4649,6 +4649,22 @@
         }
       }
     },
+    "Reset zoom" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ズームをリセット"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置缩放"
+          }
+        }
+      }
+    },
     "Restart to Switch Language" : {
       "localizations" : {
         "ja" : {

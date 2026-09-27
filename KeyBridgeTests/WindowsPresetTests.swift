@@ -10,6 +10,20 @@ import Testing
         matcher.match(.key(combo: combo), in: MatchContext(frontmostBundleID: bundleID), isEditingText: { typing })?.id
     }
 
+    /// Ctrl+=, Ctrl+- and Ctrl+0 zoom as on Windows (KB-225), outside
+    /// terminals, and follow the fn / Ctrl choice like the rest of the group.
+    @Test func zoomKeysZoomOutsideTerminals() {
+        let zoom: [(String, KeyCode)] = [("browser.zoomIn", .equal), ("browser.zoomOut", .minus), ("browser.zoomReset", .zero)]
+        for (id, key) in zoom {
+            #expect(match(KeyCombo([.control], key), in: "com.apple.Safari") == id)
+            #expect(match(KeyCombo([.control], key), in: "com.apple.Terminal") == nil, "\(id) in a terminal")
+            #expect(preset.rules.first { $0.id == id }?.action == .key(combo: KeyCombo([.command], key)))
+            let fnMode = RuleMatcher(rules: ControlKey.function.apply(to: BuiltInRules.all))
+            #expect(fnMode.match(.key(combo: KeyCombo([.function], key)),
+                                 in: MatchContext(frontmostBundleID: "com.apple.Safari"))?.id == id + ".fn")
+        }
+    }
+
     @Test func idsAreUnique() {
         let ids = preset.rules.map(\.id)
         #expect(Set(ids).count == ids.count)
