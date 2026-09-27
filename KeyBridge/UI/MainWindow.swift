@@ -173,11 +173,13 @@ private struct ShortcutsPage: View {
         }
     }
 
+    /// None: the page opens as a list of groups and their switches, all of
+    /// them in view (KB-228). A search shows its matches expanded anyway.
     private static var initiallyExpanded: Set<String> {
         #if DEBUG
         if LayoutCheck.expandsAllGroups { return Set(BuiltInRules.preset.groups.map(\.id)) }
         #endif
-        return ["editing"]
+        return []
     }
 
     /// The keyboard groups; mouse buttons and scrolling have pages of their
