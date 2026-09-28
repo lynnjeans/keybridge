@@ -18,9 +18,11 @@
 # Notarization needs a Developer ID signature and a notarytool keychain
 # profile, stored once with
 #   xcrun notarytool store-credentials keybridge-notary \
-#     --apple-id <Apple ID> --team-id <TEAMID> --password <app-specific password>
-# and named here as NOTARY_PROFILE=keybridge-notary. Without it the DMG is
-# signed but not notarized.
+#     --apple-id <Apple ID> --team-id <TEAMID>
+# (it asks for an app-specific password from account.apple.com) and named
+# here as NOTARY_PROFILE=keybridge-notary. The app and then the DMG are each
+# notarized and stapled. Without the profile the DMG is signed but not
+# notarized.
 #
 # Output in dist/: KeyBridge-<version>.dmg and KeyBridge-<version>.dmg.sha256
 # (the checksum the Homebrew cask needs). This script publishes nothing;
@@ -102,6 +104,33 @@ if [[ $identity != - ]]; then
 fi
 [[ -f $app/Contents/Resources/LICENSE ]] || fail "LICENSE is missing from the app (GPL-3.0 requires it)"
 
+notarize() {
+  local result id
+  result=$(xcrun notarytool submit $1 --keychain-profile $NOTARY_PROFILE --wait 2>&1) || true
+  print -- ${result##*Processing complete}
+  if [[ $result != *"status: Accepted"* ]]; then
+    id=$(print -- $result | awk '/^ *id:/ { print $2; exit }')
+    fail "notarization was not accepted; see: xcrun notarytool log ${id:-<submission id>} --keychain-profile $NOTARY_PROFILE"
+  fi
+}
+
+# The app gets its own ticket before it goes into the DMG. A ticket stapled
+# only to the DMG stays behind once the app is copied out, so Gatekeeper would
+# have to look it up online on first launch, and Sparkle's updates, which take
+# the app out of the DMG, would arrive without one.
+notarized=no
+[[ $identity != - && -n ${NOTARY_PROFILE:-} ]] && notarized=yes
+if [[ $notarized == yes ]]; then
+  step "Notarizing the app (this usually takes a few minutes)"
+  ditto -c -k --keepParent $app $work/KeyBridge.zip
+  notarize $work/KeyBridge.zip
+  xcrun stapler staple -q $app
+  xcrun stapler validate -q $app
+  # Apple's own pre-distribution check, which caught the unstapled app.
+  syspolicy_check distribution $app >/dev/null 2>&1 \
+    || fail "syspolicy_check rejects the app; run: syspolicy_check distribution $app"
+fi
+
 step "Packing $dmg"
 root=$work/dmg
 mkdir -p $root
@@ -111,19 +140,12 @@ rm -f $dmg
 hdiutil create -quiet -volname "KeyBridge $version" -srcfolder $root -fs HFS+ -format UDZO $dmg
 [[ $identity != - ]] && codesign --sign "$identity" --timestamp $dmg
 
-notarized=no
-if [[ $identity != - && -n ${NOTARY_PROFILE:-} ]]; then
-  step "Notarizing (this usually takes a few minutes)"
-  result=$(xcrun notarytool submit $dmg --keychain-profile $NOTARY_PROFILE --wait 2>&1) || true
-  print -- $result
-  if [[ $result != *"status: Accepted"* ]]; then
-    id=$(print -- $result | awk '/^ *id:/ { print $2; exit }')
-    fail "notarization was not accepted; see: xcrun notarytool log ${id:-<submission id>} --keychain-profile $NOTARY_PROFILE"
-  fi
+if [[ $notarized == yes ]]; then
+  step "Notarizing the DMG"
+  notarize $dmg
   xcrun stapler staple -q $dmg
   xcrun stapler validate -q $dmg
   spctl --assess --type open --context context:primary-signature $dmg
-  notarized=yes
 fi
 
 shasum -a 256 $dmg | awk '{ print $1 }' > $dmg.sha256
