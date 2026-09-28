@@ -43,7 +43,9 @@ git fetch -q origin main
 # An ad-hoc or unnotarized build must never reach the feed: installed copies
 # would replace themselves with it and lose their permissions, or be blocked
 # by Gatekeeper.
-codesign -dv --verbose=2 $dmg 2>&1 | grep -q "^Authority=Developer ID Application" \
+# (Read whole first; `| grep -q` under pipefail can fail a matching signature.)
+signature=$(codesign -dv --verbose=2 $dmg 2>&1)
+[[ $signature == *$'\n'"Authority=Developer ID Application"* ]] \
   || fail "$dmg is not signed with Developer ID"
 xcrun stapler validate -q $dmg || fail "$dmg is not notarized"
 for language in en zh-Hans ja; do

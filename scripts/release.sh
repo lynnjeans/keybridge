@@ -73,8 +73,11 @@ built=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $app/Conte
 [[ $built == $version ]] || fail "the app says version $built, project.yml says $version"
 codesign --verify --strict --deep $app
 if [[ $identity != - ]]; then
-  # Notarization rejects apps without the hardened runtime.
-  codesign -dvv $app 2>&1 | grep -q "flags=.*runtime" || fail "the app is not signed with the hardened runtime"
+  # Notarization rejects apps without the hardened runtime. The output is read
+  # whole first: `| grep -q` would stop reading early, and under pipefail the
+  # interrupted codesign fails the check.
+  signature=$(codesign -dvv $app 2>&1)
+  [[ $signature == *flags=*"(runtime)"* ]] || fail "the app is not signed with the hardened runtime"
 fi
 [[ -f $app/Contents/Resources/LICENSE ]] || fail "LICENSE is missing from the app (GPL-3.0 requires it)"
 
