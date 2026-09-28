@@ -68,16 +68,37 @@ xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Release
 app=$work/KeyBridge.xcarchive/Products/Applications/KeyBridge.app
 [[ -d $app ]] || fail "the archive has no KeyBridge.app"
 
+if [[ $identity != - ]]; then
+  # Xcode re-signs Sparkle.framework on copy but not the helpers inside it,
+  # which Sparkle ships ad-hoc signed; notarization rejects any of them. Re-sign
+  # inside out as Sparkle's documentation describes, then the app's own seal.
+  step "Signing Sparkle's helpers"
+  sparkle=$app/Contents/Frameworks/Sparkle.framework
+  resign() { codesign --force --sign "$identity" --options runtime --timestamp "$@" }
+  resign $sparkle/Versions/B/XPCServices/Installer.xpc
+  resign --preserve-metadata=entitlements $sparkle/Versions/B/XPCServices/Downloader.xpc
+  resign $sparkle/Versions/B/Autoupdate
+  resign $sparkle/Versions/B/Updater.app
+  resign $sparkle
+  resign --preserve-metadata=entitlements $app
+fi
+
 step "Checking the app"
 built=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $app/Contents/Info.plist)
 [[ $built == $version ]] || fail "the app says version $built, project.yml says $version"
 codesign --verify --strict --deep $app
 if [[ $identity != - ]]; then
-  # Notarization rejects apps without the hardened runtime. The output is read
-  # whole first: `| grep -q` would stop reading early, and under pipefail the
-  # interrupted codesign fails the check.
-  signature=$(codesign -dvv $app 2>&1)
-  [[ $signature == *flags=*"(runtime)"* ]] || fail "the app is not signed with the hardened runtime"
+  # Every piece of code in the bundle needs the Developer ID, a secure
+  # timestamp and the hardened runtime, or notarization rejects the upload.
+  # codesign's output is read whole first: `| grep -q` would stop reading
+  # early, and under pipefail the interrupted codesign fails the check.
+  for code in $app $app/Contents/PlugIns/*.appex(N) $app/Contents/Frameworks/*.framework(N) \
+      $app/Contents/Frameworks/*.framework/Versions/B/{XPCServices/*.xpc,*.app,Autoupdate}(N); do
+    signature=$(codesign -dvv $code 2>&1)
+    [[ $signature == *$'\n'"Authority=Developer ID Application"* ]] || fail "not signed with Developer ID: $code"
+    [[ $signature == *$'\n'"Timestamp="* ]] || fail "no secure timestamp: $code"
+    [[ $signature == *flags=*runtime* ]] || fail "not signed with the hardened runtime: $code"
+  done
 fi
 [[ -f $app/Contents/Resources/LICENSE ]] || fail "LICENSE is missing from the app (GPL-3.0 requires it)"
 
