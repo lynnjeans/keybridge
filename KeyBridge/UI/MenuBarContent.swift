@@ -12,15 +12,34 @@ struct MenuBarContent: View {
 
     private var permissions: PermissionMonitor { engine.permissions }
 
+    /// In the accent colour: a menu keeps a non-template image's colours.
+    private static var updateIcon: Image {
+        let symbol = NSImage(systemSymbolName: "arrow.down.circle.fill", accessibilityDescription: nil)!
+            .withSymbolConfiguration(.init(paletteColors: [.white, .controlAccentColor]))!
+        symbol.isTemplate = false
+        return Image(nsImage: symbol)
+    }
+
     var body: some View {
         // Where a scheduled check leaves a new version, next to the dot on
         // the icon, instead of opening a window on its own (KB-101).
         if let pending = updates.pending {
-            if pending.isDownloaded {
-                Button("Restart to Install KeyBridge \(pending.version)") { updates.installNow() }
-            } else {
-                Button("KeyBridge \(pending.version) Is Available…") { updates.checkForUpdates() }
+            // An icon and a "New" badge, since a menu item's text cannot be
+            // coloured or made bold.
+            Group {
+                if pending.isDownloaded {
+                    Button { updates.installNow() } label: {
+                        Label { Text("Restart to Install KeyBridge \(pending.version)") } icon: { Self.updateIcon }
+                    }
+                } else {
+                    Button { updates.checkForUpdates() } label: {
+                        Label { Text("KeyBridge \(pending.version) Is Available…") } icon: { Self.updateIcon }
+                    }
+                }
             }
+            // Its own key: plain "New" is Finder's New menu, 新建 in Chinese.
+            .badge(Text(String(localized: "update.badge", defaultValue: "New",
+                               comment: "Badge on the menu item for a new KeyBridge version")))
             Divider()
         }
 

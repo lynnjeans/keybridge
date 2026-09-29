@@ -6844,6 +6844,30 @@
         }
       }
     },
+    "update.badge" : {
+      "comment" : "Badge on the menu item for a new KeyBridge version",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "New"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新バージョン"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新版本"
+          }
+        }
+      }
+    },
     "⇧" : {
       "shouldTranslate" : false
     },
