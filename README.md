@@ -9,7 +9,15 @@ Windows-style clipboard history.
 
 Website: **[lynnjeans.github.io/keybridge](https://lynnjeans.github.io/keybridge/)** (English, 简体中文, 日本語)
 
-> Status: **pre-alpha — under active development.** Nothing is released yet.
+> **KeyBridge 1.0** is out. [Download it](https://github.com/lynnjeans/keybridge/releases/latest)
+> or install it with Homebrew:
+>
+> ```bash
+> brew install --cask lynnjeans/tap/keybridge
+> ```
+>
+> Open the disk image and double-click KeyBridge: it installs itself in Applications and
+> opens. From then on it keeps itself up to date.
 
 ---
 
@@ -32,7 +40,7 @@ can't see scroll events; BetterTouchTool can do scroll-to-keystroke but is close
 and weak on keyboard depth; LinearMouse and Mac Mouse Fix cover the mouse only.
 KeyBridge aims at the one audience none of them targets directly: **the migrant**.
 
-## Scope (v1.0)
+## What it does (v1.0)
 
 - Configurable **combo → combo** remapping engine (`Ctrl→⌘`, key swaps, `fn` combos — all just rules)
 - **Windows presets**, one click to apply, every entry still individually editable
@@ -41,10 +49,14 @@ KeyBridge aims at the one audience none of them targets directly: **the migrant*
 - **Scroll direction reversal**, mouse only, trackpad untouched
 - **Finder key suite** — `Delete`, `F2`, `Enter`, `Ctrl+X/V` move, `Backspace` up
 - **Clipboard history** with search, pinning, and password-manager exclusion
-- **Per-device** (VID/PID) and **per-app** scoping
+- **Per-app** scoping: a rule for every app, or just one
+- **Window snapping**: `⌥+←/→/↑` like `Win+←/→/↑`
+- **Finder right-click menu**: new document, copy path, open in Terminal
+- **Open and save dialogs**: `Ctrl+G` jumps to Finder's folder, `Ctrl+Shift+G` lists recent and favorite folders
+- **Automatic updates**, signed and checked daily
 - English / 简体中文 / 日本語
 
-Planned: window snapping (`Win+←/→/↑`) in v1.1.
+Planned: per-device rules (a PC keyboard and the built-in one treated differently).
 
 **Out of scope:** deep keyboard remapping — tap/hold dual-role keys, layers, chords. KeyBridge
 maps combinations to combinations (`Ctrl+C` → `⌘C`, `fn+C` → `⌘C`) and nothing more. That
