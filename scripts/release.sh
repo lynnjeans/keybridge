@@ -132,12 +132,19 @@ if [[ $notarized == yes ]]; then
 fi
 
 step "Packing $dmg"
-root=$work/dmg
-mkdir -p $root
-ditto $app $root/KeyBridge.app
-ln -s /Applications $root/Applications
-rm -f $dmg
-hdiutil create -quiet -volname "KeyBridge $version" -srcfolder $root -fs HFS+ -format UDZO $dmg
+# The DMG opens as a laid-out window: KeyBridge, an arrow, Applications
+# (KB-233). make-dmg.py writes Finder's window settings itself, so this needs
+# no Finder scripting and runs unattended. Its two packages are build tools
+# only, kept in a virtual environment under build/; nothing of them ends up in
+# the DMG.
+venv=build/dmg-venv
+if [[ ! -x $venv/bin/python ]] || ! $venv/bin/python -c "import ds_store, mac_alias" 2>/dev/null; then
+  python3 -m venv $venv
+  $venv/bin/pip install -q --disable-pip-version-check "ds-store==1.3.1" "mac-alias==2.2.2"
+fi
+swift scripts/dmg/background.swift $work
+tiffutil -cathidpicheck $work/background.png $work/background@2x.png -out $work/background.tiff 2>/dev/null
+$venv/bin/python scripts/dmg/make-dmg.py $app $work/background.tiff "KeyBridge $version" $dmg
 [[ $identity != - ]] && codesign --sign "$identity" --timestamp $dmg
 
 if [[ $notarized == yes ]]; then
