@@ -36,7 +36,7 @@ enum InstallLocation: Equatable {
     /// From a disk image or a translocated copy it cannot update itself and
     /// is gone once the disk image is ejected or Downloads is cleaned up, so
     /// the offer comes back on every launch. From any other folder it works,
-    /// and a "Do Not Move" there is final.
+    /// and a "Not Now" there is final.
     func offersMove(path: String, homeDirectory: String, declined: Bool) -> Bool {
         switch self {
         case .diskImage, .translocated:

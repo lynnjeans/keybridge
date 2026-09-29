@@ -26,7 +26,7 @@ struct UpdatesCard: View {
                         .foregroundStyle(.orange)
                         .fixedSize(horizontal: false, vertical: true)
                     // KeyBridge can do the move itself (KB-233).
-                    Button("Move to Applications Folder") { MoveToApplications.offer(location: updates.location) }
+                    Button("Install in Applications Folder") { MoveToApplications.offer(location: updates.location) }
                 }
 
                 VStack(alignment: .leading, spacing: 6) {

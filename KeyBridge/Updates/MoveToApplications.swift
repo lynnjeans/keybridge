@@ -11,7 +11,7 @@ import OSLog
 /// opens the copy and quits, as many Mac apps do.
 @MainActor
 enum MoveToApplications {
-    /// Remembers "Do Not Move" for a folder other than the disk image.
+    /// Remembers "Not Now" for a folder other than the disk image.
     static let declinedKey = "moveToApplicationsDeclined"
 
     /// Asks at launch when `location` calls for it. Returns true when the
@@ -35,12 +35,12 @@ enum MoveToApplications {
         Logger.updates.notice("Offering to move to Applications from \(String(describing: location), privacy: .public)")
         WindowID.activateKeyBridge()
         let alert = NSAlert()
-        alert.messageText = String(localized: "Move KeyBridge to the Applications folder?")
+        alert.messageText = String(localized: "Install KeyBridge in the Applications folder?")
         alert.informativeText = String(localized: "KeyBridge can update itself there, and keeps working after you eject the disk image or clean up Downloads.")
-        alert.addButton(withTitle: String(localized: "Move to Applications Folder"))
-        alert.addButton(withTitle: String(localized: "Do Not Move"))
+        alert.addButton(withTitle: String(localized: "Install"))
+        alert.addButton(withTitle: String(localized: "Not Now"))
         guard alert.runModal() == .alertFirstButtonReturn else {
-            Logger.updates.notice("Move declined")
+            Logger.updates.notice("Install declined")
             // From a disk image the question comes back next time on purpose.
             if location == .updatable { defaults.set(true, forKey: declinedKey) }
             return false
@@ -51,7 +51,7 @@ enum MoveToApplications {
         } catch {
             Logger.updates.error("Move failed: \(error.localizedDescription, privacy: .public)")
             let failure = NSAlert(error: error)
-            failure.messageText = String(localized: "KeyBridge could not be moved")
+            failure.messageText = String(localized: "KeyBridge could not be installed")
             failure.informativeText = String(localized: "Drag KeyBridge to the Applications folder yourself, then open it from there.")
                 + "\n\n" + error.localizedDescription
             failure.runModal()
@@ -96,8 +96,18 @@ enum MoveToApplications {
         let script = """
         while /bin/kill -0 "$1" 2>/dev/null; do /bin/sleep 0.2; done
         /usr/bin/open "$2"
-        [ -n "$3" ] && /usr/bin/hdiutil detach -quiet "$3"
-        exit 0
+        [ -z "$3" ] && exit 0
+        # Right after KeyBridge quits, the disk image can still be busy (Spotlight
+        # indexing it, Finder's window on it), so detaching is retried, and the
+        # last try forced: the image is read-only, nothing on it can be lost.
+        for force in "" "" "" "" "" "" "" "" "" -force; do
+            if /usr/bin/hdiutil detach -quiet $force "$3" 2>/dev/null; then
+                /usr/bin/logger -t KeyBridge "Ejected $3"
+                exit 0
+            fi
+            /bin/sleep 1
+        done
+        /usr/bin/logger -t KeyBridge "Could not eject $3"
         """
         let relaunch = Process()
         relaunch.executableURL = URL(filePath: "/bin/sh")

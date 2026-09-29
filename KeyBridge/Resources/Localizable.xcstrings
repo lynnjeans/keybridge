@@ -1513,22 +1513,6 @@
         }
       }
     },
-    "Do Not Move" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "移動しない"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不移动"
-          }
-        }
-      }
-    },
     "Document end" : {
       "localizations" : {
         "ja" : {
@@ -2457,6 +2441,54 @@
         }
       }
     },
+    "Install" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インストール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装"
+          }
+        }
+      }
+    },
+    "Install KeyBridge in the Applications folder?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を「アプリケーション」フォルダにインストールしますか？"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要把 KeyBridge 安装到“应用程序”文件夹吗？"
+          }
+        }
+      }
+    },
+    "Install in Applications Folder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「アプリケーション」フォルダにインストール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装到“应用程序”文件夹"
+          }
+        }
+      }
+    },
     "It can change keys, mouse buttons and scrolling before KeyBridge sees them, so some shortcuts may do nothing or the wrong thing. Quit it while you use KeyBridge, or turn off its settings that overlap." : {
       "localizations" : {
         "ja" : {
@@ -2697,18 +2729,18 @@
         }
       }
     },
-    "KeyBridge could not be moved" : {
+    "KeyBridge could not be installed" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KeyBridge を移動できませんでした"
+            "value" : "KeyBridge をインストールできませんでした"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法移动 KeyBridge"
+            "value" : "无法安装 KeyBridge"
           }
         }
       }
@@ -3193,22 +3225,6 @@
         }
       }
     },
-    "Move KeyBridge to the Applications folder?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KeyBridge を「アプリケーション」フォルダに移動しますか？"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要把 KeyBridge 移到“应用程序”文件夹吗？"
-          }
-        }
-      }
-    },
     "Move here" : {
       "localizations" : {
         "ja" : {
@@ -3253,22 +3269,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向右移动一个空间"
-          }
-        }
-      }
-    },
-    "Move to Applications Folder" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "「アプリケーション」フォルダに移動"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "移到“应用程序”文件夹"
           }
         }
       }
@@ -3621,6 +3621,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "还没有。可以在这里添加，或在列表中选中文件夹后按 ⌘D。"
+          }
+        }
+      }
+    },
+    "Not Now" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後で"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以后再说"
           }
         }
       }
