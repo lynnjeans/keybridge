@@ -42,7 +42,7 @@ func draw(scale: CGFloat) -> NSBitmapImageRep {
     // The hint, English first and stronger, the others as quieter echoes.
     let paragraph = NSMutableParagraphStyle()
     paragraph.alignment = .center
-    var top: CGFloat = 250
+    var top: CGFloat = 256
     for (index, hint) in hints.enumerated() {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: index == 0 ? 15 : 13, weight: index == 0 ? .semibold : .regular),

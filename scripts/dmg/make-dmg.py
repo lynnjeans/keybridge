@@ -25,7 +25,7 @@ from mac_alias import Alias
 # left. background.swift draws for the same numbers.
 WIDTH, HEIGHT = 520, 380
 TITLE_BAR = 28
-APP_CENTRE = (260, 150)
+APP_CENTRE = (260, 136)
 ICON_SIZE = 128
 
 
