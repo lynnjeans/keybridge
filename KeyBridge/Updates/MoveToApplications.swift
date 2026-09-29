@@ -60,12 +60,12 @@ enum MoveToApplications {
     }
 
     /// Copies the app to Applications, then quits; a small shell script
-    /// waits for that, opens the copy and cleans up where it came from.
+    /// waits for that, opens the copy and ejects the disk image it came from.
     private static func move() throws {
         let files = FileManager.default
         let running = Bundle.main.bundleURL
-        // A translocated copy is a read-only mirror; what the user sees in
-        // Finder is the original, which is what gets cleaned up.
+        // A translocated copy is a read-only mirror; the original tells
+        // whether it came from a disk image.
         let origin = originalURL(ofTranslocated: running) ?? running
         let folder = try destinationFolder()
         let destination = folder.appending(path: running.lastPathComponent, directoryHint: .isDirectory)
@@ -83,12 +83,14 @@ enum MoveToApplications {
         // would translocate it again. The user has already agreed to open it.
         try? run("/usr/bin/xattr", ["-d", "-r", "com.apple.quarantine", destination.path])
 
+        // A disk image is ejected once this copy has quit. A download is left
+        // where it is: Downloads, Desktop and Documents are protected, and
+        // touching them would put a "KeyBridge would like to access…" prompt
+        // in the middle of setting up permissions.
         let volume = (try? origin.resourceValues(forKeys: [.volumeIsReadOnlyKey, .volumeURLKey]))
         var eject = ""
         if volume?.volumeIsReadOnly == true, let url = volume?.volume, url.path.hasPrefix("/Volumes/") {
             eject = url.path
-        } else if origin != destination {
-            try? files.trashItem(at: origin, resultingItemURL: nil)
         }
 
         let script = """
