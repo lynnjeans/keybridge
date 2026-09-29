@@ -3,7 +3,8 @@
 A full pass through KeyBridge by hand, run on the release build before every release. Unit
 tests cover the rule logic; this covers what only a real Mac, real apps and real keyboards
 and mice can show. How to check things, and the traps that give confidently wrong results,
-are in [testing-notes.md](testing-notes.md).
+are in [testing-notes.md](testing-notes.md). Building, signing and publishing are in
+[releasing.md](releasing.md).
 
 **How to use it:** open a tracking issue for the release with this file as its body, then tick
 items off in the issue as you go:
