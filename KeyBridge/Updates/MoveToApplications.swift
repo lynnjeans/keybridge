@@ -1,22 +1,22 @@
 import AppKit
 import OSLog
 
-/// Offers to move KeyBridge into the Applications folder when it runs from
-/// somewhere else, and does the move (KB-233).
+/// Installs KeyBridge in the Applications folder when it runs from somewhere
+/// else (KB-233).
 ///
-/// People coming from Windows often open the app straight from its disk
-/// image or from Downloads. It works there for a while, but cannot update
-/// itself, and is gone once the disk image is ejected. Rather than leave
-/// them to find the Applications folder, KeyBridge copies itself there,
-/// opens the copy and quits, as many Mac apps do.
+/// The disk image holds only KeyBridge and says "Double-click KeyBridge to
+/// install": opened from there, it copies itself to Applications without
+/// asking, opens the copy, quits and ejects the disk image. Opened from
+/// anywhere else outside Applications, such as Downloads, it asks first.
+/// There it works for a while, but cannot update itself.
 @MainActor
 enum MoveToApplications {
     /// Remembers "Not Now" for a folder other than the disk image.
     static let declinedKey = "moveToApplicationsDeclined"
 
-    /// Asks at launch when `location` calls for it. Returns true when the
-    /// move is under way and this copy is about to quit, in which case the
-    /// caller should start nothing.
+    /// Installs, or asks to, at launch when `location` calls for it. Returns
+    /// true when the install is under way and this copy is about to quit, in
+    /// which case the caller should start nothing.
     static func offerAtLaunch(location: InstallLocation, defaults: UserDefaults = .standard) -> Bool {
         let bundle = Bundle.main.bundleURL
         #if DEBUG
@@ -25,14 +25,20 @@ enum MoveToApplications {
         #endif
         guard location.offersMove(path: bundle.path, homeDirectory: NSHomeDirectory(),
                                   declined: defaults.bool(forKey: declinedKey)) else { return false }
+        // Double-clicking KeyBridge in its disk image is what the window
+        // asks for to install it, so that is taken as the answer.
+        if isOnDiskImage(origin(of: bundle)) {
+            Logger.updates.notice("Opened from its disk image: installing")
+            return install()
+        }
         return offer(location: location, defaults: defaults)
     }
 
-    /// Asks, and moves if the user agrees. Also used by "Check for Updates…",
+    /// Asks, and installs if the user agrees. Also used by "Check for Updates…",
     /// which cannot work from a disk image or a translocated copy.
     @discardableResult
     static func offer(location: InstallLocation, defaults: UserDefaults = .standard) -> Bool {
-        Logger.updates.notice("Offering to move to Applications from \(String(describing: location), privacy: .public)")
+        Logger.updates.notice("Offering to install in Applications from \(String(describing: location), privacy: .public)")
         WindowID.activateKeyBridge()
         let alert = NSAlert()
         alert.messageText = String(localized: "Install KeyBridge in the Applications folder?")
@@ -45,11 +51,16 @@ enum MoveToApplications {
             if location == .updatable { defaults.set(true, forKey: declinedKey) }
             return false
         }
+        return install()
+    }
+
+    /// Installs and quits, or explains what went wrong and returns false.
+    private static func install() -> Bool {
         do {
             try move()
             return true
         } catch {
-            Logger.updates.error("Move failed: \(error.localizedDescription, privacy: .public)")
+            Logger.updates.error("Install failed: \(error.localizedDescription, privacy: .public)")
             let failure = NSAlert(error: error)
             failure.messageText = String(localized: "KeyBridge could not be installed")
             failure.informativeText = String(localized: "Drag KeyBridge to the Applications folder yourself, then open it from there.")
@@ -64,34 +75,35 @@ enum MoveToApplications {
     private static func move() throws {
         let files = FileManager.default
         let running = Bundle.main.bundleURL
-        // A translocated copy is a read-only mirror; the original tells
-        // whether it came from a disk image.
-        let origin = originalURL(ofTranslocated: running) ?? running
+        let source = origin(of: running)
         let folder = try destinationFolder()
         let destination = folder.appending(path: running.lastPathComponent, directoryHint: .isDirectory)
-        Logger.updates.notice("Moving \(origin.path, privacy: .public) to \(destination.path, privacy: .public)")
 
-        if files.fileExists(atPath: destination.path) {
-            quitCopy(at: destination)
-            // To the Trash rather than deleted, in case it was not ours to replace.
-            try files.trashItem(at: destination, resultingItemURL: nil)
+        let installed = files.fileExists(atPath: destination.path) ? buildNumber(of: destination) ?? "" : nil
+        if InstallLocation.replaces(installedBuild: installed, runningBuild: buildNumber(of: running) ?? "") {
+            Logger.updates.notice("Installing \(source.path, privacy: .public) as \(destination.path, privacy: .public)")
+            if installed != nil {
+                quitCopy(at: destination)
+                // To the Trash rather than deleted, in case it was not ours to replace.
+                try files.trashItem(at: destination, resultingItemURL: nil)
+            }
+            // ditto keeps the bundle exactly as signed: symlinks, extended
+            // attributes and all.
+            try run("/usr/bin/ditto", [running.path, destination.path])
+            // The copy keeps the download's quarantine flag, and with it macOS
+            // would translocate it again. The user has already agreed to open it.
+            try? run("/usr/bin/xattr", ["-d", "-r", "com.apple.quarantine", destination.path])
+        } else {
+            // An older disk image found again after KeyBridge has updated
+            // itself: the newer copy stays and is the one opened.
+            Logger.updates.notice("A newer KeyBridge (\(installed ?? "", privacy: .public)) is already in \(folder.path, privacy: .public); opening it")
         }
-        // ditto keeps the bundle exactly as signed: symlinks, extended
-        // attributes and all.
-        try run("/usr/bin/ditto", [running.path, destination.path])
-        // The copy keeps the download's quarantine flag, and with it macOS
-        // would translocate it again. The user has already agreed to open it.
-        try? run("/usr/bin/xattr", ["-d", "-r", "com.apple.quarantine", destination.path])
 
         // A disk image is ejected once this copy has quit. A download is left
         // where it is: Downloads, Desktop and Documents are protected, and
         // touching them would put a "KeyBridge would like to access…" prompt
         // in the middle of setting up permissions.
-        let volume = (try? origin.resourceValues(forKeys: [.volumeIsReadOnlyKey, .volumeURLKey]))
-        var eject = ""
-        if volume?.volumeIsReadOnly == true, let url = volume?.volume, url.path.hasPrefix("/Volumes/") {
-            eject = url.path
-        }
+        let eject = isOnDiskImage(source) ? volumePath(of: source) ?? "" : ""
 
         let script = """
         while /bin/kill -0 "$1" 2>/dev/null; do /bin/sleep 0.2; done
@@ -113,8 +125,31 @@ enum MoveToApplications {
         relaunch.executableURL = URL(filePath: "/bin/sh")
         relaunch.arguments = ["-c", script, "sh", String(ProcessInfo.processInfo.processIdentifier), destination.path, eject]
         try relaunch.run()
-        Logger.updates.notice("Moved; relaunching from Applications")
+        Logger.updates.notice("Installed; opening it from \(folder.path, privacy: .public)")
         NSApplication.shared.terminate(nil)
+    }
+
+    /// Where the app really is: a translocated copy is a read-only mirror of
+    /// it, which says nothing about whether it came from a disk image.
+    private static func origin(of bundle: URL) -> URL {
+        originalURL(ofTranslocated: bundle) ?? bundle
+    }
+
+    private static func isOnDiskImage(_ url: URL) -> Bool {
+        let values = try? url.resourceValues(forKeys: [.volumeIsReadOnlyKey])
+        return values?.volumeIsReadOnly == true && volumePath(of: url) != nil
+    }
+
+    /// The mounted volume holding `url`, when it is one under /Volumes.
+    private static func volumePath(of url: URL) -> String? {
+        guard let volume = (try? url.resourceValues(forKeys: [.volumeURLKey]))?.volume,
+              volume.path.hasPrefix("/Volumes/") else { return nil }
+        return volume.path
+    }
+
+    private static func buildNumber(of bundle: URL) -> String? {
+        let info = NSDictionary(contentsOf: bundle.appending(path: "Contents/Info.plist"))
+        return info?["CFBundleVersion"] as? String
     }
 
     /// /Applications, or ~/Applications for a user who may not write there.

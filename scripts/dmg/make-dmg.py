@@ -1,6 +1,8 @@
 """Packs KeyBridge.app into a DMG that opens as a laid-out window (KB-233):
-KeyBridge on the left, Applications on the right, the arrow and hint from
-background.swift behind them, and KeyBridge's icon on the volume.
+KeyBridge alone, the "Double-click KeyBridge to install" hint from
+background.swift under it, and KeyBridge's icon on the volume. There is no
+Applications shortcut to drag to: opened from its disk image, KeyBridge
+installs itself there and opens (MoveToApplications.swift).
 
     make-dmg.py <KeyBridge.app> <background.tiff> <volume name> <out.dmg>
 
@@ -19,13 +21,12 @@ import tempfile
 from ds_store import DSStore
 from mac_alias import Alias
 
-# The window's content size and the icon centres, in points from its top
+# The window's content size and the icon's centre, in points from its top
 # left. background.swift draws for the same numbers.
-WIDTH, HEIGHT = 600, 400
+WIDTH, HEIGHT = 520, 380
 TITLE_BAR = 28
-APP_CENTRE = (160, 160)
-APPLICATIONS_CENTRE = (440, 160)
-ICON_SIZE = 112
+APP_CENTRE = (260, 150)
+ICON_SIZE = 128
 
 
 def run(*command):
@@ -48,7 +49,6 @@ def main(app, background, volume_name, output):
         try:
             # ditto keeps the app exactly as signed and stapled.
             run("ditto", app, os.path.join(mount, app_name))
-            os.symlink("/Applications", os.path.join(mount, "Applications"))
             os.mkdir(os.path.join(mount, ".background"))
             picture = os.path.join(mount, ".background", "background.tiff")
             run("ditto", background, picture)
@@ -93,7 +93,6 @@ def write_view(mount, app_name, picture):
         store["."]["vSrn"] = ("long", 1)
         store["."]["icvl"] = ("type", b"icnv")
         store[app_name]["Iloc"] = APP_CENTRE
-        store["Applications"]["Iloc"] = APPLICATIONS_CENTRE
 
 
 if __name__ == "__main__":

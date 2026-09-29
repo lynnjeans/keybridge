@@ -53,6 +53,15 @@ enum InstallLocation: Equatable {
         return ["/Applications/", home + "/Applications/"].contains { path.hasPrefix($0) }
     }
 
+    /// Whether installing a copy of build `runningBuild` should replace the
+    /// one already in Applications (nil: none there). Not when that one is
+    /// newer: a disk image found again after KeyBridge has updated itself
+    /// must not take it back to an older version.
+    static func replaces(installedBuild: String?, runningBuild: String) -> Bool {
+        guard let installedBuild else { return true }
+        return installedBuild.compare(runningBuild, options: .numeric) != .orderedDescending
+    }
+
     /// What the user needs to do, or nil when nothing.
     var advice: String? {
         switch self {
