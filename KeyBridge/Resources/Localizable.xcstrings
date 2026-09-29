@@ -1513,6 +1513,22 @@
         }
       }
     },
+    "Do Not Move" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動しない"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不移动"
+          }
+        }
+      }
+    },
     "Document end" : {
       "localizations" : {
         "ja" : {
@@ -1589,6 +1605,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自动下载并安装更新"
+          }
+        }
+      }
+    },
+    "Drag KeyBridge to the Applications folder yourself, then open it from there." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を「アプリケーション」フォルダに手動でドラッグして、そこから開いてください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请手动把 KeyBridge 拖到“应用程序”文件夹，再从那里打开。"
           }
         }
       }
@@ -2633,6 +2665,22 @@
         }
       }
     },
+    "KeyBridge can update itself there, and keeps working after you eject the disk image or clean up Downloads." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そこに置くと KeyBridge は自動でアップデートでき、ディスクイメージを取り出したり「ダウンロード」フォルダを整理したりした後も使い続けられます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放在那里，KeyBridge 才能自动更新，推出磁盘映像或清理“下载”文件夹后也能继续使用。"
+          }
+        }
+      }
+    },
     "KeyBridge cannot be updated from the folder it was downloaded to. Move it to the Applications folder and open it from there." : {
       "localizations" : {
         "ja" : {
@@ -2645,6 +2693,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KeyBridge 留在下载时所在的文件夹里无法更新。请把它移到“应用程序”文件夹，再从那里打开。"
+          }
+        }
+      }
+    },
+    "KeyBridge could not be moved" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を移動できませんでした"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法移动 KeyBridge"
           }
         }
       }
@@ -3129,18 +3193,18 @@
         }
       }
     },
-    "Move KeyBridge to Applications" : {
+    "Move KeyBridge to the Applications folder?" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KeyBridge を「アプリケーション」フォルダに移動してください"
+            "value" : "KeyBridge を「アプリケーション」フォルダに移動しますか？"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请把 KeyBridge 移到“应用程序”文件夹"
+            "value" : "要把 KeyBridge 移到“应用程序”文件夹吗？"
           }
         }
       }
@@ -3189,6 +3253,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向右移动一个空间"
+          }
+        }
+      }
+    },
+    "Move to Applications Folder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「アプリケーション」フォルダに移動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移到“应用程序”文件夹"
           }
         }
       }

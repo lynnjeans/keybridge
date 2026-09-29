@@ -143,6 +143,7 @@
 		BD129928F49ACA10EE961887 /* WheelDirectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2282E9DB43AE3B51A2DBF60 /* WheelDirectionTests.swift */; };
 		C0BBF61391F51F5C76DAF050 /* SystemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383F121E8ACFEFCFC43CF4 /* SystemAction.swift */; };
 		C1C152854351274F0EE89CB8 /* ClipboardPrivacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95430AC46DCB9F2F35BB3D5E /* ClipboardPrivacy.swift */; };
+		C3A374EBA8B57F975374085A /* MoveToApplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2345F3BACEFFCE385AC73982 /* MoveToApplications.swift */; };
 		C3D89D672763F1105B3525E0 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */; };
 		C3E0804CB17B0565106A3204 /* LayoutCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E132BEBB027CC54A18CBEBCA /* LayoutCheck.swift */; };
 		C4706EEBBB48B95B11127B89 /* UpdatesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E77B262FE0613F56D85677 /* UpdatesCard.swift */; };
@@ -237,6 +238,7 @@
 		1EF5E2B9B7EE27FB663B83DD /* EventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTap.swift; sourceTree = "<group>"; };
 		20E3E3D09A24B8F80A6DFF47 /* EventTapSelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTapSelfTest.swift; sourceTree = "<group>"; };
 		21CF5A6AADC1A2FFE5631673 /* EngineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineController.swift; sourceTree = "<group>"; };
+		2345F3BACEFFCE385AC73982 /* MoveToApplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToApplications.swift; sourceTree = "<group>"; };
 		238B3FA6E5334809BEB0581B /* FileDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDialogTests.swift; sourceTree = "<group>"; };
 		251FB64A66A60043BE23FE52 /* ScrollStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStepper.swift; sourceTree = "<group>"; };
 		2561BA66378F4145D8A0F360 /* KeyBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				1B1DE6FBD539515BB252C73E /* InstallLocation.swift */,
+				2345F3BACEFFCE385AC73982 /* MoveToApplications.swift */,
 				020F5B6280C0CCE339E1A122 /* UpdateController.swift */,
 			);
 			path = Updates;
@@ -928,6 +931,7 @@
 				84BD8225F140355D66BD1B56 /* ModifierLayout.swift in Sources */,
 				2C40FFE3C22E1B6289E19410 /* ModifierTap.swift in Sources */,
 				F0CD21218EABAF2436795AA2 /* MouseScrollPages.swift in Sources */,
+				C3A374EBA8B57F975374085A /* MoveToApplications.swift in Sources */,
 				0E5B1B7D9A70F5B640DE24A0 /* NewDocument.swift in Sources */,
 				6154E0545939501866AA8601 /* OnboardingController.swift in Sources */,
 				794B13D3A36E4B4E3951CC8C /* OnboardingWindow.swift in Sources */,

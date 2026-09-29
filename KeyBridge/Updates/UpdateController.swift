@@ -69,12 +69,8 @@ final class UpdateController: NSObject {
     /// back an update found earlier, which is what the menu's
     /// "Is Available…" item does.
     func checkForUpdates() {
-        if let advice = location.advice {
-            WindowID.activateKeyBridge()
-            let alert = NSAlert()
-            alert.messageText = String(localized: "Move KeyBridge to Applications")
-            alert.informativeText = advice
-            alert.runModal()
+        if location != .updatable {
+            MoveToApplications.offer(location: location)
             return
         }
         // Sparkle's windows belong to KeyBridge, which as a menu bar app is

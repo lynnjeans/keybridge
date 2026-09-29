@@ -37,6 +37,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logLaunchState()
+        // Before anything starts: moving quits this copy and opens the one in
+        // Applications, which then starts properly, guide and all (KB-233).
+        if MoveToApplications.offerAtLaunch(location: updates.location) { return }
         // Reading the configuration installs the first set of rules.
         _ = rules.effectiveRules
         permissionMonitor.start()

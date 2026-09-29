@@ -27,4 +27,37 @@ import Testing
     @Test func aWritableFolderElsewhereIsUpdatable() {
         #expect(InstallLocation(path: "/Users/someone/Apps/KeyBridge.app", volumeIsReadOnly: false) == .updatable)
     }
+
+    // MARK: Offering to move (KB-233)
+
+    private let home = "/Users/someone"
+
+    @Test func aDiskImageOrTranslocatedCopyAlwaysOffers() {
+        let dmg = "/Volumes/KeyBridge 1.0/KeyBridge.app"
+        #expect(InstallLocation.diskImage.offersMove(path: dmg, homeDirectory: home, declined: false))
+        #expect(InstallLocation.diskImage.offersMove(path: dmg, homeDirectory: home, declined: true))
+        let copy = "/private/var/folders/xy/T/AppTranslocation/0A1B/d/KeyBridge.app"
+        #expect(InstallLocation.translocated.offersMove(path: copy, homeDirectory: home, declined: true))
+    }
+
+    @Test func applicationsFoldersNeverOffer() {
+        for path in ["/Applications/KeyBridge.app", "/Applications/Utilities/KeyBridge.app",
+                     "/Users/someone/Applications/KeyBridge.app"] {
+            #expect(!InstallLocation.updatable.offersMove(path: path, homeDirectory: home, declined: false), "\(path)")
+            #expect(!InstallLocation.updatable.offersMove(path: path, homeDirectory: home + "/", declined: false), "\(path)")
+        }
+    }
+
+    @Test func anotherFolderOffersUntilDeclined() {
+        let path = "/Users/someone/Desktop/KeyBridge.app"
+        #expect(InstallLocation.updatable.offersMove(path: path, homeDirectory: home, declined: false))
+        #expect(!InstallLocation.updatable.offersMove(path: path, homeDirectory: home, declined: true))
+    }
+
+    /// A folder whose name only starts like Applications is somewhere else.
+    @Test func lookalikeFoldersAreElsewhere() {
+        #expect(!InstallLocation.isInApplicationsFolder(path: "/Applications Old/KeyBridge.app", homeDirectory: home))
+        #expect(!InstallLocation.isInApplicationsFolder(path: "/Users/someone/ApplicationsBackup/KeyBridge.app", homeDirectory: home))
+        #expect(!InstallLocation.isInApplicationsFolder(path: "/Users/other/Applications/KeyBridge.app", homeDirectory: home))
+    }
 }

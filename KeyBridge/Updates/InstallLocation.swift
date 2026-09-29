@@ -30,6 +30,29 @@ enum InstallLocation: Equatable {
         }
     }
 
+    /// Whether KeyBridge should offer at launch to move itself into the
+    /// Applications folder (KB-233).
+    ///
+    /// From a disk image or a translocated copy it cannot update itself and
+    /// is gone once the disk image is ejected or Downloads is cleaned up, so
+    /// the offer comes back on every launch. From any other folder it works,
+    /// and a "Do Not Move" there is final.
+    func offersMove(path: String, homeDirectory: String, declined: Bool) -> Bool {
+        switch self {
+        case .diskImage, .translocated:
+            true
+        case .updatable:
+            !declined && !Self.isInApplicationsFolder(path: path, homeDirectory: homeDirectory)
+        }
+    }
+
+    /// Whether the app is in /Applications or ~/Applications, or a folder
+    /// inside either.
+    static func isInApplicationsFolder(path: String, homeDirectory: String) -> Bool {
+        let home = homeDirectory.hasSuffix("/") ? String(homeDirectory.dropLast()) : homeDirectory
+        return ["/Applications/", home + "/Applications/"].contains { path.hasPrefix($0) }
+    }
+
     /// What the user needs to do, or nil when nothing.
     var advice: String? {
         switch self {
