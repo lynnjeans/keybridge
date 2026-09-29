@@ -1,5 +1,5 @@
 // Draws the DMG window's background (KB-233): an arrow from where Finder
-// shows KeyBridge to where it shows Applications, and the hint underneath in
+// shows KeyBridge to where it shows Applications, and the steps underneath in
 // the three languages KeyBridge speaks. Sizes and positions must match
 // scripts/dmg/make-dmg.py.
 //
@@ -18,10 +18,11 @@ let appCentre = NSPoint(x: 160, y: 160)
 let applicationsCentre = NSPoint(x: 440, y: 160)
 let iconSize: CGFloat = 112
 
+// Both steps: dragging only copies, and nothing opens KeyBridge afterwards.
 let hints = [
-    "Drag KeyBridge to the Applications folder",
-    "将 KeyBridge 拖到“应用程序”文件夹",
-    "KeyBridge を「アプリケーション」フォルダへドラッグ",
+    "Drag KeyBridge to Applications, then open it from there",
+    "将 KeyBridge 拖到“应用程序”文件夹，再从那里打开",
+    "KeyBridge を「アプリケーション」へドラッグして、そこから開いてください",
 ]
 
 func draw(scale: CGFloat) -> NSBitmapImageRep {
