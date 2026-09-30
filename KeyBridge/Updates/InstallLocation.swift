@@ -56,10 +56,16 @@ enum InstallLocation: Equatable {
     /// Whether installing a copy of build `runningBuild` should replace the
     /// one already in Applications (nil: none there). Not when that one is
     /// newer: a disk image found again after KeyBridge has updated itself
-    /// must not take it back to an older version.
-    static func replaces(installedBuild: String?, runningBuild: String) -> Bool {
+    /// must not take it back to an older version. The same build is replaced
+    /// only when asked to (an explicit Install, which also repairs a damaged
+    /// copy), not when installing silently from the disk image.
+    static func replaces(installedBuild: String?, runningBuild: String, replacingSameBuild: Bool = true) -> Bool {
         guard let installedBuild else { return true }
-        return installedBuild.compare(runningBuild, options: .numeric) != .orderedDescending
+        switch installedBuild.compare(runningBuild, options: .numeric) {
+        case .orderedAscending: return true
+        case .orderedSame: return replacingSameBuild
+        case .orderedDescending: return false
+        }
     }
 
     /// What the user needs to do, or nil when nothing.

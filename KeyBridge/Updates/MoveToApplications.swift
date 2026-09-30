@@ -6,13 +6,40 @@ import OSLog
 ///
 /// The disk image holds only KeyBridge and says "Double-click KeyBridge to
 /// install": opened from there, it copies itself to Applications without
-/// asking, opens the copy, quits and ejects the disk image. Opened from
+/// asking, opens the copy, quits and ejects the disk image, all before the
+/// app itself starts (`installFromDiskImageBeforeLaunch`). Opened from
 /// anywhere else outside Applications, such as Downloads, it asks first.
 /// There it works for a while, but cannot update itself.
 @MainActor
 enum MoveToApplications {
     /// Remembers "Not Now" for a folder other than the disk image.
     static let declinedKey = "moveToApplicationsDeclined"
+
+    /// Opened from its disk image, installs and hands over to the installed
+    /// copy before the app starts. Returns true when the caller should exit
+    /// at once (KB-235).
+    ///
+    /// Nothing may ask macOS about permissions first: a check from the disk
+    /// image left Input Monitoring "denied" for the installed copy, with no
+    /// row in System Settings to switch on. The same build already installed
+    /// is opened rather than copied again, which also keeps a second launch
+    /// from the disk image, as happens right after Gatekeeper's dialog, from
+    /// replacing the copy the first one just opened. If the install fails,
+    /// the app starts from the disk image and `offerAtLaunch` says why.
+    static func installFromDiskImageBeforeLaunch() -> Bool {
+        #if DEBUG
+        guard ProcessInfo.processInfo.environment["KB_DEBUG_MOVE_OFFER"] != nil else { return false }
+        #endif
+        guard isOnDiskImage(origin(of: Bundle.main.bundleURL)) else { return false }
+        Logger.updates.notice("Opened from its disk image: installing before launch")
+        do {
+            try move(replacingSameBuild: false)
+            return true
+        } catch {
+            Logger.updates.error("Install before launch failed: \(error.localizedDescription, privacy: .public)")
+            return false
+        }
+    }
 
     /// Installs, or asks to, at launch when `location` calls for it. Returns
     /// true when the install is under way and this copy is about to quit, in
@@ -57,7 +84,8 @@ enum MoveToApplications {
     /// Installs and quits, or explains what went wrong and returns false.
     private static func install() -> Bool {
         do {
-            try move()
+            try move(replacingSameBuild: true)
+            NSApplication.shared.terminate(nil)
             return true
         } catch {
             Logger.updates.error("Install failed: \(error.localizedDescription, privacy: .public)")
@@ -70,9 +98,10 @@ enum MoveToApplications {
         }
     }
 
-    /// Copies the app to Applications, then quits; a small shell script
-    /// waits for that, opens the copy and ejects the disk image it came from.
-    private static func move() throws {
+    /// Copies the app to Applications and starts a small shell script that
+    /// waits for this process to end, opens the copy and ejects the disk
+    /// image it came from. The caller then quits.
+    private static func move(replacingSameBuild: Bool) throws {
         let files = FileManager.default
         let running = Bundle.main.bundleURL
         let source = origin(of: running)
@@ -80,7 +109,8 @@ enum MoveToApplications {
         let destination = folder.appending(path: running.lastPathComponent, directoryHint: .isDirectory)
 
         let installed = files.fileExists(atPath: destination.path) ? buildNumber(of: destination) ?? "" : nil
-        if InstallLocation.replaces(installedBuild: installed, runningBuild: buildNumber(of: running) ?? "") {
+        if InstallLocation.replaces(installedBuild: installed, runningBuild: buildNumber(of: running) ?? "",
+                                    replacingSameBuild: replacingSameBuild) {
             Logger.updates.notice("Installing \(source.path, privacy: .public) as \(destination.path, privacy: .public)")
             if installed != nil {
                 quitCopy(at: destination)
@@ -95,8 +125,9 @@ enum MoveToApplications {
             try? run("/usr/bin/xattr", ["-d", "-r", "com.apple.quarantine", destination.path])
         } else {
             // An older disk image found again after KeyBridge has updated
-            // itself: the newer copy stays and is the one opened.
-            Logger.updates.notice("A newer KeyBridge (\(installed ?? "", privacy: .public)) is already in \(folder.path, privacy: .public); opening it")
+            // itself, or this build already installed: that copy stays and
+            // is the one opened.
+            Logger.updates.notice("KeyBridge build \(installed ?? "", privacy: .public) is already in \(folder.path, privacy: .public); opening it")
         }
 
         // A disk image is ejected once this copy has quit. A download is left
@@ -126,7 +157,6 @@ enum MoveToApplications {
         relaunch.arguments = ["-c", script, "sh", String(ProcessInfo.processInfo.processIdentifier), destination.path, eject]
         try relaunch.run()
         Logger.updates.notice("Installed; opening it from \(folder.path, privacy: .public)")
-        NSApplication.shared.terminate(nil)
     }
 
     /// Where the app really is: a translocated copy is a read-only mirror of

@@ -79,4 +79,13 @@ import Testing
         #expect(!InstallLocation.replaces(installedBuild: "4", runningBuild: "3"))
         #expect(!InstallLocation.replaces(installedBuild: "10", runningBuild: "9"))
     }
+
+    /// Installing silently from the disk image opens the same build instead
+    /// of copying it again (KB-235).
+    @Test func keepsTheSameBuildWhenInstallingSilently() {
+        #expect(!InstallLocation.replaces(installedBuild: "3", runningBuild: "3", replacingSameBuild: false))
+        #expect(InstallLocation.replaces(installedBuild: "2", runningBuild: "3", replacingSameBuild: false))
+        #expect(InstallLocation.replaces(installedBuild: nil, runningBuild: "3", replacingSameBuild: false))
+        #expect(!InstallLocation.replaces(installedBuild: "4", runningBuild: "3", replacingSameBuild: false))
+    }
 }

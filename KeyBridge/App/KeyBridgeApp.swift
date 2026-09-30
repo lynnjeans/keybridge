@@ -1,7 +1,19 @@
 import OSLog
 import SwiftUI
 
+/// The entry point. Opened from its disk image, KeyBridge installs itself in
+/// Applications and hands over to that copy before anything else runs
+/// (KB-235): the app object's first property, the permission monitor, already
+/// asks macOS about Input Monitoring, and asking from the disk image left it
+/// "denied" with no row in System Settings for the installed copy.
 @main
+enum Launcher {
+    @MainActor static func main() {
+        if MoveToApplications.installFromDiskImageBeforeLaunch() { exit(0) }
+        KeyBridgeApp.main()
+    }
+}
+
 struct KeyBridgeApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
