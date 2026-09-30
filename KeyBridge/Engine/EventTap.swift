@@ -150,23 +150,29 @@ final class EventTap {
     /// (KB-236). So it stays off when the permission is gone or when it keeps
     /// being disabled, and the engine is told.
     private func recover(from type: CGEventType) {
-        guard let port else { return }
+        guard port != nil else { return }
         let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"
-        guard PermissionService.isAccessibilityGrantedNow() else {
-            Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) and Accessibility is no longer granted; leaving it off")
-            giveUp(.permissionLost)
-            return
-        }
         guard breaker.recordDisable(at: ProcessInfo.processInfo.systemUptime) else {
             Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) \(self.breaker.limit, privacy: .public) times within \(Int(self.breaker.window), privacy: .public) s; leaving it off")
             giveUp(.keepsTimingOut)
             return
         }
-        CGEvent.tapEnable(tap: port, enable: true)
-        recoveryCount += 1
-        Logger.eventTap.error(
-            "Event tap was disabled by the system (\(reason, privacy: .public)); re-enabled, recovery #\(self.recoveryCount, privacy: .public)"
-        )
+        // The tap stays disabled, and so out of the way of every event, while
+        // a fresh process says whether Accessibility is still there. That
+        // takes a moment, so it happens after this callback has returned.
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let port = self.port else { return }
+            guard PermissionService.statusesFromFreshProcess()?[.accessibility] != .denied else {
+                Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) and Accessibility is no longer granted; leaving it off")
+                self.onGiveUp?(.permissionLost)
+                return
+            }
+            CGEvent.tapEnable(tap: port, enable: true)
+            self.recoveryCount += 1
+            Logger.eventTap.error(
+                "Event tap was disabled by the system (\(reason, privacy: .public)); re-enabled, recovery #\(self.recoveryCount, privacy: .public)"
+            )
+        }
     }
 
     /// Leaves the handling to the engine, after this callback has returned:

@@ -9,6 +9,12 @@ import SwiftUI
 @main
 enum Launcher {
     @MainActor static func main() {
+        // KeyBridge asking itself about permissions from a fresh process
+        // (PermissionService.statusesFromFreshProcess).
+        if CommandLine.arguments.contains(PermissionService.reportArgument) {
+            print(PermissionService.report())
+            exit(0)
+        }
         if MoveToApplications.installFromDiskImageBeforeLaunch() { exit(0) }
         KeyBridgeApp.main()
     }

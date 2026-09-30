@@ -23,6 +23,11 @@ final class PermissionMonitor {
     @ObservationIgnored private var timer: Timer?
     @ObservationIgnored private var observer: NSObjectProtocol?
     @ObservationIgnored private var hasRequestedInputMonitoring = false
+    @ObservationIgnored private var pollsSinceFreshRead = 0
+
+    /// With every permission granted, one poll in this many asks a fresh
+    /// process: every 30 s at the usual 2 s poll.
+    static let freshReadInterval = 15
 
     init(service: PermissionService = PermissionService()) {
         self.service = service
@@ -71,11 +76,23 @@ final class PermissionMonitor {
     }
 
     /// Re-reads every permission and reports the ones that changed.
-    func refresh() {
+    ///
+    /// This process's own answers can be out of date (KB-236), so a process
+    /// started for the purpose is asked instead: on every poll while a
+    /// permission is missing, so a grant shows within seconds; every
+    /// `freshReadInterval`-th poll otherwise, to notice a revocation; and
+    /// whenever `fresh` is set.
+    func refresh(fresh: Bool = false) {
+        pollsSinceFreshRead += 1
+        var current = Dictionary(uniqueKeysWithValues: Permission.allCases.map { ($0, service.status(of: $0)) })
+        if fresh || !allGranted || pollsSinceFreshRead >= Self.freshReadInterval {
+            pollsSinceFreshRead = 0
+            if let statuses = service.freshStatuses() { current = statuses }
+        }
         var changed: Set<Permission> = []
         for permission in Permission.allCases {
             let old = status(of: permission)
-            let new = service.status(of: permission)
+            let new = current[permission] ?? .denied
             guard new != old else { continue }
             statuses[permission] = new
             changed.insert(permission)

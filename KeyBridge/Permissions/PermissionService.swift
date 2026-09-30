@@ -42,26 +42,34 @@ struct PermissionService: Sendable {
     private let isAccessibilityTrusted: @Sendable () -> Bool
     private let inputMonitoringAccess: @Sendable () -> IOHIDAccessType
     private let requestInputMonitoring: @Sendable () -> Bool
+    private let readInFreshProcess: @Sendable () -> [Permission: PermissionStatus]?
 
     init(
-        isAccessibilityTrusted: @escaping @Sendable () -> Bool = {
-            // Called for its side effect: it adds KeyBridge's row to the
-            // Settings list. Its answer is not trusted (see isAccessibilityGrantedNow).
-            _ = AXIsProcessTrusted()
-            return PermissionService.isAccessibilityGrantedNow()
-        },
+        isAccessibilityTrusted: @escaping @Sendable () -> Bool = { AXIsProcessTrusted() },
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
         },
         requestInputMonitoring: @escaping @Sendable () -> Bool = {
             IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
+        },
+        readInFreshProcess: @escaping @Sendable () -> [Permission: PermissionStatus]? = {
+            PermissionService.statusesFromFreshProcess()
         }
     ) {
         self.isAccessibilityTrusted = isAccessibilityTrusted
         self.inputMonitoringAccess = inputMonitoringAccess
         self.requestInputMonitoring = requestInputMonitoring
+        self.readInFreshProcess = readInFreshProcess
     }
 
+    /// Every status as a process started just now sees it, or nil if that
+    /// failed. See `statusesFromFreshProcess`.
+    func freshStatuses() -> [Permission: PermissionStatus]? {
+        readInFreshProcess()
+    }
+
+    /// The status as this process sees it. Right at launch that is the truth;
+    /// later it can be out of date (see `statusesFromFreshProcess`).
     func status(of permission: Permission) -> PermissionStatus {
         switch permission {
         case .accessibility:
@@ -92,18 +100,60 @@ struct PermissionService: Sendable {
         }
     }
 
-    /// Whether Accessibility is granted right now (KB-236).
+    /// The argument that makes KeyBridge print its permissions and exit
+    /// (see `Launcher`).
+    static let reportArgument = "--report-permissions"
+
+    /// Reads every status in a KeyBridge process started for just that
+    /// (KB-236).
     ///
-    /// `AXIsProcessTrusted()` goes stale in a running process on macOS 26:
-    /// after the switch in System Settings was turned off it kept answering
-    /// yes, and KeyBridge kept putting a tap that could no longer work back
-    /// in the path of every event, freezing the Mac; after it was turned on
-    /// it kept answering no. `CGPreflightPostEventAccess()` asks about what
-    /// the tap actually needs, posting and changing events, and does not
-    /// prompt. Creating a probe tap would answer too, but makes macOS show
-    /// its "would like to control this computer" alert when the answer is no.
-    static func isAccessibilityGrantedNow() -> Bool {
-        CGPreflightPostEventAccess()
+    /// On macOS 26 a running process can be told something out of date.
+    /// After the switch in System Settings › Accessibility was turned off,
+    /// `AXIsProcessTrusted()` kept answering yes, and KeyBridge kept putting
+    /// a tap that could no longer work back in the path of every event,
+    /// which froze the Mac. After a switch was turned on, the process kept
+    /// hearing no; `CGPreflightPostEventAccess()` went stale the same way.
+    /// A process started afterwards always got the true answer. So KeyBridge
+    /// runs its own executable with `reportArgument`: it prints the statuses
+    /// before the app starts and exits. It shows nothing and never prompts.
+    /// Gives up after two seconds.
+    static func statusesFromFreshProcess() -> [Permission: PermissionStatus]? {
+        // Only KeyBridge itself knows the argument; a test runner does not.
+        guard Bundle.main.bundleIdentifier?.hasPrefix("io.github.lynnjeans.KeyBridge") == true,
+              let executable = Bundle.main.executableURL else { return nil }
+        let process = Process()
+        process.executableURL = executable
+        process.arguments = [reportArgument]
+        let output = Pipe()
+        process.standardOutput = output
+        process.standardError = FileHandle.nullDevice
+        let finished = DispatchSemaphore(value: 0)
+        process.terminationHandler = { _ in finished.signal() }
+        do { try process.run() } catch { return nil }
+        guard finished.wait(timeout: .now() + 2) == .success else {
+            process.terminate()
+            Logger.permissions.error("The permission check in a fresh process did not answer")
+            return nil
+        }
+        let text = String(decoding: output.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)
+        return parseReport(text)
+    }
+
+    /// What the process started with `reportArgument` prints, one
+    /// `permission=status` pair per permission.
+    static func report(_ service: PermissionService = PermissionService()) -> String {
+        Permission.allCases.map { "\($0.rawValue)=\(service.status(of: $0).rawValue)" }.joined(separator: " ")
+    }
+
+    static func parseReport(_ text: String) -> [Permission: PermissionStatus]? {
+        var statuses: [Permission: PermissionStatus] = [:]
+        for pair in text.split(whereSeparator: \.isWhitespace) {
+            let parts = pair.split(separator: "=", maxSplits: 1).map(String.init)
+            guard parts.count == 2, let permission = Permission(rawValue: parts[0]),
+                  let status = PermissionStatus(rawValue: parts[1]) else { return nil }
+            statuses[permission] = status
+        }
+        return statuses.count == Permission.allCases.count ? statuses : nil
     }
 
     /// Whether every permission KeyBridge needs has been granted.

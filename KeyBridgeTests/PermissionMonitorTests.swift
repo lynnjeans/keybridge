@@ -7,6 +7,10 @@ final class FakePermissions: @unchecked Sendable {
     var inputMonitoring = kIOHIDAccessTypeUnknown
     /// The permissions the code under test asked the system for, in order.
     var requests: [Permission] = []
+    /// What a freshly started process would see; nil stands for a failed
+    /// check, which leaves this process's own answers in place.
+    var fresh: [Permission: PermissionStatus]?
+    var freshReads = 0
 
     var service: PermissionService {
         PermissionService(
@@ -15,6 +19,10 @@ final class FakePermissions: @unchecked Sendable {
             requestInputMonitoring: {
                 self.requests.append(.inputMonitoring)
                 return self.inputMonitoring == kIOHIDAccessTypeGranted
+            },
+            readInFreshProcess: {
+                self.freshReads += 1
+                return self.fresh
             }
         )
     }
@@ -104,5 +112,71 @@ final class FakePermissions: @unchecked Sendable {
         let monitor = PermissionMonitor(service: fake.service)
         monitor.requestInputMonitoringIfUndecided()
         #expect(fake.requests.isEmpty)
+    }
+
+    // MARK: Fresh-process reads (KB-236)
+
+    /// While a permission is missing, every refresh asks a fresh process, so
+    /// a grant the running process cannot see still shows.
+    @Test func aGrantSeenOnlyByAFreshProcessShows() {
+        let fake = FakePermissions()
+        let monitor = PermissionMonitor(service: fake.service)
+        fake.fresh = [.accessibility: .granted, .inputMonitoring: .granted]
+        monitor.refresh()
+        #expect(fake.freshReads == 1)
+        #expect(monitor.allGranted)
+    }
+
+    /// With everything granted, a fresh process is asked only now and then,
+    /// or when told to, and a revocation it sees wins over this process's
+    /// stale yes.
+    @Test func aRevocationShowsOnTheOccasionalFreshRead() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        fake.inputMonitoring = kIOHIDAccessTypeGranted
+        let monitor = PermissionMonitor(service: fake.service)
+        fake.fresh = [.accessibility: .denied, .inputMonitoring: .granted]
+        for _ in 1..<PermissionMonitor.freshReadInterval { monitor.refresh() }
+        #expect(fake.freshReads == 0)
+        #expect(monitor.allGranted)
+        monitor.refresh()
+        #expect(fake.freshReads == 1)
+        #expect(monitor.status(of: .accessibility) == .denied)
+    }
+
+    @Test func aFreshReadCanBeAskedFor() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        fake.inputMonitoring = kIOHIDAccessTypeGranted
+        let monitor = PermissionMonitor(service: fake.service)
+        fake.fresh = [.accessibility: .denied, .inputMonitoring: .granted]
+        monitor.refresh(fresh: true)
+        #expect(monitor.status(of: .accessibility) == .denied)
+    }
+
+    /// A failed fresh read leaves this process's own answers.
+    @Test func aFailedFreshReadFallsBack() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        let monitor = PermissionMonitor(service: fake.service)
+        monitor.refresh()
+        #expect(fake.freshReads == 1)
+        #expect(monitor.status(of: .accessibility) == .granted)
+    }
+
+    @Test func theReportRoundTrips() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        fake.inputMonitoring = kIOHIDAccessTypeDenied
+        let text = PermissionService.report(fake.service)
+        #expect(text == "accessibility=granted inputMonitoring=denied")
+        #expect(PermissionService.parseReport(text) == [.accessibility: .granted, .inputMonitoring: .denied])
+    }
+
+    @Test func aGarbledReportIsRejected() {
+        #expect(PermissionService.parseReport("") == nil)
+        #expect(PermissionService.parseReport("accessibility=granted") == nil)
+        #expect(PermissionService.parseReport("accessibility=maybe inputMonitoring=granted") == nil)
+        #expect(PermissionService.parseReport("dyld: error") == nil)
     }
 }

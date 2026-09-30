@@ -82,7 +82,7 @@ final class EngineController {
         tap.stop()
         switch reason {
         case .permissionLost:
-            permissions.refresh()
+            permissions.refresh(fresh: true)
             update()
         case .keepsTimingOut:
             pause(for: nil)
