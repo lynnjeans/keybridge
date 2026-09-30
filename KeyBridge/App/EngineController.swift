@@ -2,10 +2,19 @@ import Foundation
 import OSLog
 import Observation
 
+/// Why the event tap stayed off after the system disabled it (KB-236).
+enum TapGiveUpReason: Sendable {
+    /// Accessibility was revoked while the tap ran.
+    case permissionLost
+    /// The system kept disabling it for not answering in time.
+    case keepsTimingOut
+}
+
 /// What `EngineController` needs from the event tap; lets tests stand in for it.
 @MainActor
 protocol EventTapControlling: AnyObject {
     var isRunning: Bool { get }
+    var onGiveUp: ((TapGiveUpReason) -> Void)? { get set }
     @discardableResult func start() -> Bool
     func stop()
 }
@@ -60,6 +69,24 @@ final class EngineController {
         self.defaults = defaults
         isEnabled = defaults.object(forKey: Self.enabledKey) as? Bool ?? true
         permissions.onChange = { [weak self] _ in self?.update() }
+        tap.onGiveUp = { [weak self] reason in self?.tapGaveUp(reason) }
+    }
+
+    /// The tap stayed off after the system disabled it. It is stopped for
+    /// good either way, so no key is left held. A lost permission then shows
+    /// as missing, and the engine comes back by itself once it is granted
+    /// again. A tap that kept timing out pauses the engine until the user
+    /// resumes, since starting it again at once could freeze input again.
+    func tapGaveUp(_ reason: TapGiveUpReason) {
+        Logger.engine.error("The event tap stayed off (\(String(describing: reason), privacy: .public)); stopping the engine")
+        tap.stop()
+        switch reason {
+        case .permissionLost:
+            permissions.refresh()
+            update()
+        case .keepsTimingOut:
+            pause(for: nil)
+        }
     }
 
     /// Pauses for `duration`, or until `resume()` when nil.

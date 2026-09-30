@@ -30,6 +30,12 @@ final class EventTap {
     /// How many times the system disabled the tap and it was brought back.
     private(set) var recoveryCount = 0
 
+    /// Called, on a later turn of the main run loop, when a tap the system
+    /// disabled is left off: Accessibility is gone, or it keeps timing out.
+    var onGiveUp: ((TapGiveUpReason) -> Void)?
+
+    private var breaker = TapBreaker()
+
     var isRunning: Bool { port != nil }
 
     init(dispatcher: Dispatcher) {
@@ -59,6 +65,7 @@ final class EventTap {
         CGEvent.tapEnable(tap: port, enable: true)
         self.port = port
         self.source = source
+        breaker.reset()
 
         #if DEBUG
         startCounting()
@@ -136,20 +143,36 @@ final class EventTap {
 
     /// macOS disables a tap whose callback takes too long, and never turns it
     /// back on. Without this the app keeps running but silently stops working.
+    ///
+    /// But a tap that cannot work any more must not be brought back: while it
+    /// is enabled the system routes every event through it and waits for it
+    /// to time out, which froze all input when Accessibility was revoked
+    /// (KB-236). So it stays off when the permission is gone or when it keeps
+    /// being disabled, and the engine is told.
     private func recover(from type: CGEventType) {
         guard let port else { return }
-        // Revoking Accessibility also disables the tap. Re-enabling it then
-        // is pointless; the permission monitor stops the tap instead.
-        guard AXIsProcessTrusted() else {
-            Logger.eventTap.error("Event tap was disabled and Accessibility is no longer granted; not re-enabling")
+        let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"
+        guard PermissionService.canCreateActiveTap() else {
+            Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) and Accessibility is no longer granted; leaving it off")
+            giveUp(.permissionLost)
+            return
+        }
+        guard breaker.recordDisable(at: ProcessInfo.processInfo.systemUptime) else {
+            Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) \(self.breaker.limit, privacy: .public) times within \(Int(self.breaker.window), privacy: .public) s; leaving it off")
+            giveUp(.keepsTimingOut)
             return
         }
         CGEvent.tapEnable(tap: port, enable: true)
         recoveryCount += 1
-        let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"
         Logger.eventTap.error(
             "Event tap was disabled by the system (\(reason, privacy: .public)); re-enabled, recovery #\(self.recoveryCount, privacy: .public)"
         )
+    }
+
+    /// Leaves the handling to the engine, after this callback has returned:
+    /// stopping the tap invalidates the port the callback is running for.
+    private func giveUp(_ reason: TapGiveUpReason) {
+        DispatchQueue.main.async { [weak self] in self?.onGiveUp?(reason) }
     }
 
     private static func category(of type: CGEventType) -> Category? {

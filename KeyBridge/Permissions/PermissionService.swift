@@ -44,7 +44,12 @@ struct PermissionService: Sendable {
     private let requestInputMonitoring: @Sendable () -> Bool
 
     init(
-        isAccessibilityTrusted: @escaping @Sendable () -> Bool = { AXIsProcessTrusted() },
+        isAccessibilityTrusted: @escaping @Sendable () -> Bool = {
+            // Called for its side effect: it adds KeyBridge's row to the
+            // Settings list. Its answer is not trusted (see canCreateActiveTap).
+            _ = AXIsProcessTrusted()
+            return PermissionService.canCreateActiveTap()
+        },
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
         },
@@ -75,7 +80,7 @@ struct PermissionService: Sendable {
     /// the onboarding flow sends the user to the pane as well.
     ///
     /// Accessibility needs nothing here: the plain `AXIsProcessTrusted()`
-    /// check made at launch already adds the row. Its prompting variant is
+    /// call in every status check already adds the row. Its prompting variant is
     /// deliberately not used — its alert opens on top of the pane the guide
     /// has just opened, and lingers behind System Settings afterwards.
     /// Input Monitoring is different: checking does not add the row, only
@@ -85,6 +90,29 @@ struct PermissionService: Sendable {
         case .accessibility: break
         case .inputMonitoring: _ = requestInputMonitoring()
         }
+    }
+
+    /// Whether Accessibility is granted right now, judged by what it is
+    /// needed for: creating an active event tap (KB-236).
+    ///
+    /// `AXIsProcessTrusted()` goes stale in a running process on macOS 26:
+    /// after the switch in System Settings was turned off it kept answering
+    /// yes, and KeyBridge kept putting a tap that could no longer work back
+    /// in the path of every event, freezing the Mac; after it was turned on
+    /// it kept answering no. Whether the system lets a tap be created is
+    /// decided at the moment it is asked. The probe listens only for null
+    /// events, is never added to a run loop, and is thrown away at once.
+    static func canCreateActiveTap() -> Bool {
+        guard let probe = CGEvent.tapCreate(
+            tap: .cgSessionEventTap,
+            place: .tailAppendEventTap,
+            options: .defaultTap,
+            eventsOfInterest: CGEventMask(1 << CGEventType.null.rawValue),
+            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
+            userInfo: nil
+        ) else { return false }
+        CFMachPortInvalidate(probe)
+        return true
     }
 
     /// Whether every permission KeyBridge needs has been granted.

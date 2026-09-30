@@ -162,6 +162,7 @@ targets:
       - path: KeyBridge/Engine/DockClick.swift
       - path: KeyBridge/Engine/CtrlClick.swift
       - path: KeyBridge/Engine/ModifierTap.swift
+      - path: KeyBridge/Engine/TapBreaker.swift
       - path: KeyBridge/Window/WindowGeometry.swift
       - path: KeyBridge/Window/WindowAction.swift
       - path: KeyBridge/FileDialog/FileDialogAction.swift

@@ -5,6 +5,7 @@ import Testing
 @MainActor
 final class FakeTap: EventTapControlling {
     private(set) var isRunning = false
+    var onGiveUp: ((TapGiveUpReason) -> Void)?
     private(set) var starts = 0
     private(set) var stops = 0
 
@@ -148,5 +149,67 @@ final class FakeTap: EventTapControlling {
         engine.pause(for: nil)
         engine.update()
         #expect(!tap.isRunning)
+    }
+
+    // MARK: A tap the system keeps disabling (KB-236)
+
+    /// Accessibility revoked while running: the tap stops, the permission
+    /// shows as missing, and the engine returns once it is granted again,
+    /// without a pause to end.
+    @Test func aLostPermissionStopsTheTapUntilGranted() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        fake.accessibility = false
+        tap.onGiveUp?(.permissionLost)
+        #expect(!tap.isRunning)
+        #expect(!engine.isActive)
+        #expect(!engine.isPaused)
+        #expect(!engine.canEnable)
+        fake.accessibility = true
+        engine.permissions.refresh()
+        #expect(engine.isActive)
+    }
+
+    /// A tap that keeps timing out with every permission in place pauses the
+    /// engine, so it is not started straight back into the same stall.
+    @Test func aTapThatKeepsTimingOutPausesTheEngine() {
+        grantAll()
+        let (engine, _) = makeEngine()
+        tap.onGiveUp?(.keepsTimingOut)
+        #expect(!tap.isRunning)
+        #expect(engine.isPaused)
+        #expect(!engine.isActive)
+        engine.resume()
+        #expect(engine.isActive)
+    }
+}
+
+@Suite struct TapBreakerTests {
+    /// Whether re-enabling was allowed after each disable, in order.
+    private func answers(_ times: [TimeInterval], breaker: inout TapBreaker) -> [Bool] {
+        times.map { breaker.recordDisable(at: $0) }
+    }
+
+    @Test func allowsOccasionalDisables() {
+        var breaker = TapBreaker()
+        #expect(answers([0, 40, 80, 120], breaker: &breaker) == [true, true, true, true])
+    }
+
+    @Test func tripsOnTheThirdWithinTheWindow() {
+        var breaker = TapBreaker()
+        #expect(answers([100, 101, 102], breaker: &breaker) == [true, true, false])
+    }
+
+    /// Only disables within the last 30 s count.
+    @Test func oldDisablesAgeOut() {
+        var breaker = TapBreaker()
+        #expect(answers([0, 20, 31, 40], breaker: &breaker) == [true, true, true, false])
+    }
+
+    @Test func resetForgets() {
+        var breaker = TapBreaker()
+        _ = answers([0, 1], breaker: &breaker)
+        breaker.reset()
+        #expect(answers([2], breaker: &breaker) == [true])
     }
 }
