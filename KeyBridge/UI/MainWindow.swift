@@ -217,7 +217,7 @@ private struct PresetBar: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Preset: \(RuleNames.presetName(preset.id))")
                             .font(.headline)
-                        Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; mouse and scroll are on their own pages.")
+                        Text("^[\(groups.flatMap(\.rules).count) shortcut](inflect: true) in \(groups.count) groups; the mouse and its wheel are on the Mouse page.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)

@@ -6726,24 +6726,24 @@
         }
       }
     },
-    "^[%lld shortcut](inflect: true) in %lld groups; mouse and scroll are on their own pages." : {
+    "^[%lld shortcut](inflect: true) in %lld groups; the mouse and its wheel are on the Mouse page." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "^[%1$lld shortcut](inflect: true) in %2$lld groups; mouse and scroll are on their own pages."
+            "value" : "^[%1$lld shortcut](inflect: true) in %2$lld groups; the mouse and its wheel are on the Mouse page."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$lld グループに %1$lld 件のショートカット。マウスとスクロールは専用のページにあります。"
+            "value" : "%2$lld グループに %1$lld 件のショートカット。マウスとホイールは「マウス」ページにあります。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$lld 个快捷键，分 %2$lld 组；鼠标和滚轮在各自的页面。"
+            "value" : "%1$lld 个快捷键，分 %2$lld 组；鼠标和滚轮在“鼠标”页。"
           }
         }
       }
