@@ -20,7 +20,7 @@ step() { print -P "%B==> $1%b" }
 fail() { print -u2 "error: $1"; exit 1 }
 
 tap=lynnjeans/homebrew-tap
-path=Casks/keybridge.rb
+cask_file=Casks/keybridge.rb
 version=$(awk -F'"' '/MARKETING_VERSION:/ { print $2; exit }' project.yml)
 [[ -n $version ]] || fail "could not read the version from project.yml"
 checksum=dist/KeyBridge-$version.dmg.sha256
@@ -34,7 +34,8 @@ served=$(curl -fsSL $url | shasum -a 256 | awk '{ print $1 }') || fail "$url can
 gh repo view $tap >/dev/null 2>&1 || fail "github.com/$tap does not exist yet"
 
 # Sparkle updates KeyBridge in place, so `auto_updates` keeps `brew upgrade`
-# from fighting it. The minimum macOS matches the appcast's (scripts/appcast.py).
+# from fighting it. The minimum macOS matches the appcast's (scripts/appcast.py):
+# `:sonoma` means Sonoma or later.
 cask=$(cat <<EOF
 cask "keybridge" do
   version "$version"
@@ -42,7 +43,7 @@ cask "keybridge" do
 
   url "https://github.com/lynnjeans/keybridge/releases/download/v#{version}/KeyBridge-#{version}.dmg"
   name "KeyBridge"
-  desc "Windows keyboard shortcuts and mouse habits on macOS"
+  desc "Windows keyboard shortcuts and mouse habits"
   homepage "https://lynnjeans.github.io/keybridge/"
 
   livecheck do
@@ -51,7 +52,7 @@ cask "keybridge" do
   end
 
   auto_updates true
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "KeyBridge.app"
 
@@ -67,9 +68,9 @@ end
 EOF
 )
 
-step "Writing $path in $tap"
-existing=$(gh api repos/$tap/contents/$path --jq .sha 2>/dev/null || true)
-args=(-X PUT repos/$tap/contents/$path -f message="keybridge $version" -f content=$(print -rn -- "$cask"$'\n' | base64))
+step "Writing $cask_file in $tap"
+existing=$(gh api repos/$tap/contents/$cask_file --jq .sha 2>/dev/null || true)
+args=(-X PUT repos/$tap/contents/$cask_file -f message="keybridge $version" -f content=$(print -rn -- "$cask"$'\n' | base64))
 [[ -n $existing ]] && args+=(-f sha=$existing)
 gh api $args --jq .commit.html_url
 
