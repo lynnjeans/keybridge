@@ -39,6 +39,7 @@ struct MainWindow: View {
                     CustomRulesPage(rules: rules)
                 case .about:
                     AboutCard()
+                    SupportCard()
                     UpdatesCard(updates: updates)
                     LegalCard()
                     DiagnosticsCard {
@@ -617,6 +618,32 @@ private struct AboutCard: View {
                     Text("Built for people moving from Windows to the Mac.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+}
+
+/// About › the offer to sponsor (KB-104), in the words the website uses.
+/// Only a link: nothing is sent anywhere until someone clicks it.
+private struct SupportCard: View {
+    static let sponsorURL = URL(string: "https://github.com/sponsors/lynnjeans")!
+    @Environment(\.openURL) private var openURL
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "heart.fill", tint: .pink, size: 34)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Enjoying KeyBridge?")
+                            .font(.headline)
+                        Text("KeyBridge is free and open source, and it will stay that way. If it saves you some frustration, a sponsorship keeps the work going — never required, always appreciated.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Button("Sponsor on GitHub") { openURL(Self.sponsorURL) }
                 }
             }
         }

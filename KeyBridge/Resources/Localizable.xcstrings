@@ -1753,6 +1753,22 @@
         }
       }
     },
+    "Enjoying KeyBridge?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を気に入ったら"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "喜欢 KeyBridge？"
+          }
+        }
+      }
+    },
     "Esc to cancel" : {
       "localizations" : {
         "ja" : {
@@ -2789,6 +2805,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KeyBridge 未能启动"
+          }
+        }
+      }
+    },
+    "KeyBridge is free and open source, and it will stay that way. If it saves you some frustration, a sponsorship keeps the work going — never required, always appreciated." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge は無料でオープンソース、これからもそのままです。役に立っているなら、スポンサーが開発を支えます。必須ではありません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge 永远免费、开源。如果它帮你省下了一些烦躁，一份赞助能让它继续做下去——不必勉强，心意已领。"
           }
         }
       }
@@ -5765,6 +5797,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "源代码"
+          }
+        }
+      }
+    },
+    "Sponsor on GitHub" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub でスポンサー"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub 上赞助"
           }
         }
       }
