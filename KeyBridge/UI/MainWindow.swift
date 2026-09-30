@@ -296,8 +296,8 @@ private struct WinAltCard: View {
                     // keyboard someone has says less than where they reach
                     // for Win. The same in every language.
                     Picker("Win and Alt keys", selection: $choice) {
-                        Text(verbatim: "Win → ⌘ · Alt → ⌥").tag(ModifierLayout.pcKeyboard)
                         Text(verbatim: "Win → ⌥ · Alt → ⌘").tag(ModifierLayout.macPosition)
+                        Text(verbatim: "Win → ⌘ · Alt → ⌥").tag(ModifierLayout.pcKeyboard)
                     }
                     .pickerStyle(.segmented)
                     .labelsHidden()
