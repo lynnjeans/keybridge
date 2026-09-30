@@ -12,6 +12,8 @@ import Foundation
 ///   or `pathbox` (the path box, as ⌘L over Finder would open it).
 /// - `KB_DEBUG_PAGE`: a `Page` raw value, shown in the main window.
 /// - `KB_DEBUG_EXPAND_ALL`: every Shortcuts group starts expanded.
+/// - `KB_DEBUG_APPEARANCE`: `light` or `dark`, whatever the Mac's own
+///   appearance, for the website's screenshots (KB-105).
 ///
 /// `-NSDoubleLocalizedStrings YES` among the arguments doubles every string,
 /// a stand-in for a language longer than any shipped one.
@@ -23,6 +25,11 @@ enum LayoutCheck {
     static var expandsAllGroups: Bool { environment["KB_DEBUG_EXPAND_ALL"] != nil }
 
     static func showRequestedWindow(clipboardPanel: ClipboardPanelController, pathBox: PathBoxController) {
+        switch environment["KB_DEBUG_APPEARANCE"] {
+        case "light": NSApp.appearance = NSAppearance(named: .aqua)
+        case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
+        default: break
+        }
         guard let window = environment["KB_DEBUG_SHOW"] else { return }
         // The notifications are received by the menu bar icon, which SwiftUI
         // installs only after launch finishes.

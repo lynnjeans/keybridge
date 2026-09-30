@@ -46,6 +46,7 @@
     <nav class="site-nav" aria-label="セクション">
       <a href="#shortcuts">ショートカット</a>
       <a href="#clipboard">クリップボード</a>
+      <a href="#finder">Finder</a>
       <a href="#privacy">プライバシー</a>
       <a href="#download">ダウンロード</a>
       <a href="https://github.com/lynnjeans/keybridge">GitHub</a>
@@ -74,7 +75,7 @@
   <picture class="hero-shot">
     <source srcset="../screenshots/ja/shortcuts-dark.png" media="(prefers-color-scheme: dark)">
     <img src="../screenshots/ja/shortcuts-light.png" width="1760" height="1400"
-         alt="KeyBridge のショートカット画面：Windows 標準プリセット、Ctrl のショートカットに fn・Ctrl・両方のどれを使うかの選択、そして Ctrl+C を ⌘C、Ctrl+X を ⌘X、Ctrl+V を ⌘V、Ctrl+Z を ⌘Z、Ctrl+Y を ⇧⌘Z に割り当てる編集グループ。">
+         alt="KeyBridge のショートカット画面：9 グループ 57 件の Windows 標準プリセット、Ctrl のショートカットに fn・Ctrl・両方のどれを使うかの選択、Win と Alt を Mac のどのキーにするかの選択、そしてそれぞれにスイッチのある編集グループとテキスト移動グループ。">
   </picture>
 </div>
 
@@ -86,7 +87,7 @@
     </div>
     <div class="table-card">
       <table class="habits">
-        <caption>全部で 45 のショートカットを、グループごとにオン・オフできます。どれも変更でき、自分で追加することもできます。</caption>
+        <caption>全部で 57 のショートカットを、グループごとにオン・オフできます。どれも変更でき、自分で追加することもできます。</caption>
         <thead>
           <tr><th scope="col">Windows では</th><th scope="col">Mac では</th><th scope="col">KeyBridge なら</th></tr>
         </thead>
@@ -140,6 +141,11 @@
             <th scope="row"><kbd>PrtScn</kbd></th>
             <td class="without" data-label="Mac では：">何も起きない</td>
             <td class="with">スクリーンショットをクリップボードへ</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>←</kbd></span> <span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>→</kbd></span> <span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>↑</kbd></span></th>
+            <td class="without" data-label="Mac では：">別のキー：<span class="combo"><kbd>fn</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span>矢印キー</span>（macOS 15 以降）</td>
+            <td class="with"><span class="combo"><kbd>⌥</kbd><span class="plus">+</span>矢印キー</span>で画面の半分か全体に</td>
           </tr>
           <tr>
             <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></span> クリップボード履歴</th>
@@ -208,13 +214,54 @@
     </div>
     <picture>
       <source srcset="../screenshots/ja/clipboard-dark.png" media="(prefers-color-scheme: dark)">
-      <img src="../screenshots/ja/clipboard-light.png" width="760" height="984" loading="lazy"
+      <img src="../screenshots/ja/clipboard-light.png" width="760" height="920" loading="lazy"
            alt="クリップボード履歴パネル：検索欄の下に、ピンで固定したメモ、メールの一文、画像、リンク、PDF ファイル、テキストなど最近コピーした項目が、コピーした時刻とともに並んでいます。">
     </picture>
   </div>
 </section>
 
-<section id="privacy" class="alt" aria-labelledby="privacy-title">
+<section id="finder" class="alt" aria-labelledby="finder-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="finder-title">Finder を、エクスプローラーのように。</h2>
+      <p>エクスプローラーで使っていたキーとメニューが、Finder でも、ファイルを開く・保存するダイアログでもそのまま使えます。</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🗂️</div>
+        <h3>エクスプローラーのキー</h3>
+        <p><kbd>Delete</kbd>、<kbd>F2</kbd>、<kbd>Enter</kbd> で削除・名前の変更・開く。<kbd>Backspace</kbd> で一つ上のフォルダへ。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">✂️</div>
+        <h3>ファイルの切り取りと貼り付け</h3>
+        <p><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>X</kbd></span> のあと、別のフォルダで <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></span> を押すとファイルが移動します。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🖱️</div>
+        <h3>右クリックで新規作成</h3>
+        <p>テキスト、Word、Excel、PowerPoint の書類を作ったり、パスをコピーしたり、そのフォルダをターミナルで開いたりできます。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">📍</div>
+        <h3>パスを入力</h3>
+        <p><span class="combo"><kbd>⌘</kbd><kbd>L</kbd></span> でパスを入力・ペーストする欄が開きます。エクスプローラーのアドレスバーと同じです。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">💾</div>
+        <h3>開く・保存ダイアログ</h3>
+        <p><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></span> で Finder で開いているフォルダへ、<span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></span> で最近使ったフォルダとお気に入りの一覧へ。</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">⭐</div>
+        <h3>お気に入りのフォルダ</h3>
+        <p>Finder の右クリックメニューからフォルダを KeyBridge のお気に入りに追加すると、どのダイアログからもすぐに開けます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy" aria-labelledby="privacy-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="privacy-title">2 つのアクセス権と、その理由。</h2>
@@ -248,7 +295,7 @@
       <pre><code>brew install --cask lynnjeans/tap/keybridge</code></pre>
     </div>
     <ul class="notes">
-      <li>KeyBridge を開くと、2 つのアクセス権の設定を順に案内します。</li>
+      <li>ディスクイメージを開いて KeyBridge をダブルクリックすると、「アプリケーション」に自動でインストールされて開き、2 つのアクセス権の設定を順に案内します。</li>
       <li>Karabiner-Elements などを使っている場合は、KeyBridge の使用中は終了してください。同じキーを取り合わないようにするためです。</li>
     </ul>
   </div>
@@ -283,6 +330,14 @@
       <details>
         <summary>KeyBridge はインターネットに接続しますか？</summary>
         <p>アップデートの確認のために 1 日 1 回だけ接続します。この Web サイトにあるバージョン一覧を読み込むだけで、あなたや Mac に関する情報は送信しません。新しいバージョンは、あなたが選んだときにだけインストールされます。「情報」ページで「アップデートを自動的に確認」をオフにすれば、KeyBridge がインターネットに接続することはありません。</p>
+      </details>
+      <details>
+        <summary>Mac でファイルを切り取り・貼り付けするには？</summary>
+        <p>Finder にはファイルの「切り取り」がなく、⌘C でコピーしてから ⌥⌘V で移動します。KeyBridge を入れれば Ctrl+X と Ctrl+V でファイルを Windows と同じように移動でき、右クリックメニューから新規書類の作成やターミナルで開くこともできます。</p>
+      </details>
+      <details>
+        <summary>Win+← のようにウインドウを画面の半分に寄せられますか？</summary>
+        <p>できます。KeyBridge では ⌥+← と ⌥+→ で最前面のウインドウを左右半分に、⌥+↑ で画面いっぱいに、⌥+↓ で最小化します。Mac のキーボードでは ⌥ が Windows キーの位置にあります。macOS 15 以降は fn+Ctrl+矢印キーも標準で使えます。</p>
       </details>
     </div>
   </div>

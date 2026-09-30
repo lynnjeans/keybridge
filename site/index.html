@@ -46,6 +46,7 @@
     <nav class="site-nav" aria-label="Sections">
       <a href="#shortcuts">Shortcuts</a>
       <a href="#clipboard">Clipboard</a>
+      <a href="#finder">Finder</a>
       <a href="#privacy">Privacy</a>
       <a href="#download">Download</a>
       <a href="https://github.com/lynnjeans/keybridge">GitHub</a>
@@ -74,7 +75,7 @@
   <picture class="hero-shot">
     <source srcset="screenshots/en/shortcuts-dark.png" media="(prefers-color-scheme: dark)">
     <img src="screenshots/en/shortcuts-light.png" width="1760" height="1400"
-         alt="KeyBridge’s Shortcuts page: the Windows Standard preset, a choice between fn, Ctrl or both for Ctrl shortcuts, and the Editing group mapping Ctrl+C to ⌘C, Ctrl+X to ⌘X, Ctrl+V to ⌘V, Ctrl+Z to ⌘Z and Ctrl+Y to ⇧⌘Z.">
+         alt="KeyBridge’s Shortcuts page: the Windows Standard preset with 57 shortcuts in 9 groups, the choice of fn, Ctrl or both for Ctrl shortcuts, the choice of which Mac keys stand in for Win and Alt, and the Editing and Text Navigation groups, each with its own switch.">
   </picture>
 </div>
 
@@ -86,7 +87,7 @@
     </div>
     <div class="table-card">
       <table class="habits">
-        <caption>45 shortcuts in all, in groups you switch on and off. Change any of them, or add your own.</caption>
+        <caption>57 shortcuts in all, in groups you switch on and off. Change any of them, or add your own.</caption>
         <thead>
           <tr><th scope="col">On Windows</th><th scope="col">On a Mac</th><th scope="col">With KeyBridge</th></tr>
         </thead>
@@ -140,6 +141,11 @@
             <th scope="row"><kbd>PrtScn</kbd></th>
             <td class="without" data-label="On a Mac:">Nothing</td>
             <td class="with">Screenshot to the clipboard</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>←</kbd></span> <span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>→</kbd></span> <span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>↑</kbd></span></th>
+            <td class="without" data-label="On a Mac:">Different keys: <span class="combo"><kbd>fn</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span>arrows</span>, from macOS 15</td>
+            <td class="with">Half the screen or full, with <span class="combo"><kbd>⌥</kbd><span class="plus">+</span>arrows</span></td>
           </tr>
           <tr>
             <th scope="row"><span class="combo"><kbd>Win</kbd><span class="plus">+</span><kbd>V</kbd></span> clipboard history</th>
@@ -208,13 +214,54 @@
     </div>
     <picture>
       <source srcset="screenshots/en/clipboard-dark.png" media="(prefers-color-scheme: dark)">
-      <img src="screenshots/en/clipboard-light.png" width="760" height="984" loading="lazy"
+      <img src="screenshots/en/clipboard-light.png" width="760" height="920" loading="lazy"
            alt="The clipboard history panel: a search field above recent copies – a pinned note, an email line, an image, a link, a PDF file and a text snippet – each with the time it was copied.">
     </picture>
   </div>
 </section>
 
-<section id="privacy" class="alt" aria-labelledby="privacy-title">
+<section id="finder" class="alt" aria-labelledby="finder-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="finder-title">Finder, the File Explorer way.</h2>
+      <p>The keys and menus you used in File Explorer work in Finder and in every open and save dialog.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🗂️</div>
+        <h3>Explorer keys</h3>
+        <p><kbd>Delete</kbd>, <kbd>F2</kbd> and <kbd>Enter</kbd> delete, rename and open. <kbd>Backspace</kbd> goes up a folder.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">✂️</div>
+        <h3>Cut and paste files</h3>
+        <p><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>X</kbd></span>, then <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></span> in another folder, moves the files there.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">🖱️</div>
+        <h3>New in the right-click menu</h3>
+        <p>Create a text, Word, Excel or PowerPoint document, copy a path, or open Terminal right there.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">📍</div>
+        <h3>Type a path</h3>
+        <p><span class="combo"><kbd>⌘</kbd><kbd>L</kbd></span> opens a box to type or paste a path, like File Explorer’s address bar.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">💾</div>
+        <h3>Open and save dialogs</h3>
+        <p><span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>G</kbd></span> jumps to the folder open in Finder, and <span class="combo"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></span> lists recent and favorite folders.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" aria-hidden="true">⭐</div>
+        <h3>Favorite folders</h3>
+        <p>Add a folder to KeyBridge’s favorites from Finder’s right-click menu, and reach it from any dialog.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy" aria-labelledby="privacy-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="privacy-title">Two permissions, and why.</h2>
@@ -248,7 +295,7 @@
       <pre><code>brew install --cask lynnjeans/tap/keybridge</code></pre>
     </div>
     <ul class="notes">
-      <li>Open KeyBridge, and it walks you through the two permissions.</li>
+      <li>Open the disk image and double-click KeyBridge: it installs itself in Applications, opens, and walks you through the two permissions.</li>
       <li>Using Karabiner-Elements or a similar tool? Quit it while KeyBridge runs, so the two don’t fight over the same keys.</li>
     </ul>
   </div>
@@ -283,6 +330,14 @@
       <details>
         <summary>Does KeyBridge connect to the internet?</summary>
         <p>Only to check for updates, once a day. It reads the list of versions on this website and sends nothing about you or your Mac, and a new version installs only when you choose to. Turn off “Check for updates automatically” on the About page and KeyBridge never goes online.</p>
+      </details>
+      <details>
+        <summary>How do I cut and paste files on a Mac?</summary>
+        <p>Finder has no Cut for files: you copy with ⌘C, then move with ⌥⌘V. With KeyBridge, Ctrl+X and Ctrl+V move files as they did on Windows, and the right-click menu can create new documents and open Terminal in the folder.</p>
+      </details>
+      <details>
+        <summary>Can I snap windows to half the screen like Win+←?</summary>
+        <p>Yes. With KeyBridge, ⌥+← and ⌥+→ put the front window on the left or right half of the screen, ⌥+↑ fills the screen and ⌥+↓ minimizes. On a Mac keyboard, ⌥ sits where the Windows key is. macOS 15 and later also have fn+Ctrl+arrows built in.</p>
       </details>
     </div>
   </div>
