@@ -214,7 +214,7 @@ import Testing
 
     @Test func theShortcutDefaultsToCommandShiftCAndIsSaved() {
         let clipboard = ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store)
-        #expect(clipboard.hotKey == KeyCombo([.shift, .command], .c))
+        #expect(clipboard.hotKey == KeyCombo([.option], .v))
         clipboard.setHotKey(KeyCombo([.control, .option], .v))
         #expect(ClipboardController(pasteboard: pasteboard, defaults: defaults, store: store).hotKey
                 == KeyCombo([.control, .option], .v))

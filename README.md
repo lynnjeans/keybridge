@@ -4,7 +4,7 @@
 
 KeyBridge lets people who just moved from Windows to macOS keep their muscle memory:
 `Ctrl+C` still copies, `Home`/`End` still jump to line start/end, mouse side buttons still
-go back and forward, `Ctrl`/`fn` + scroll still zooms the page, and `⌘⇧C` brings up a
+go back and forward, `Ctrl`/`fn` + scroll still zooms the page, and `⌥V` brings up a
 Windows-style clipboard history.
 
 Website: **[lynnjeans.github.io/keybridge](https://lynnjeans.github.io/keybridge/)** (English, 简体中文, 日本語)

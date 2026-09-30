@@ -38,9 +38,11 @@ final class ClipboardController {
     /// Why the shortcut does not work, when it does not.
     private(set) var hotKeyProblem: String?
 
-    /// ⌘⇧C, as in Maccy: ⌘⇧V, closer to Win+V, is Paste and Match Style in
-    /// many apps.
-    static let defaultHotKey = KeyCombo([.shift, .command], .c)
+    /// ⌥V (KB-238): on a Mac keyboard ⌥ sits where the Windows key is, so
+    /// this is Win+V by position. ⌘⇧V would be closer by name but is Paste
+    /// and Match Style in many apps. ⌥V types a character on many layouts
+    /// (√ on US English); whoever needs it records another shortcut.
+    static let defaultHotKey = KeyCombo([.option], .v)
 
     /// Shows or hides the history panel; set by the app, which owns it.
     @ObservationIgnored var togglePanel: (@MainActor () -> Void)?

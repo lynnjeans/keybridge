@@ -209,7 +209,7 @@ On Shortcuts › "Press Ctrl shortcuts with":
 
 - [ ] Clipboard page: switch the history on → copy text in TextEdit, an image (Preview) and a
       file (Finder) → all three appear in the history, newest first.
-- [ ] ⌘⇧C (or the recorded shortcut) in any app → the panel opens at the pointer, in front
+- [ ] ⌥V (or the recorded shortcut) in any app → the panel opens at the pointer, in front
       of the app, **without** taking over the app's menu bar.
 - [ ] Type to search → the list narrows. ↑ / ↓ move the selection; Enter pastes it into the
       app that was in front; Esc closes. Clicking outside also closes.
