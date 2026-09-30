@@ -30,7 +30,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .overview: String(localized: "See everything at a glance, and switch to the Windows feel in one click.")
         case .shortcuts: String(localized: "Switch whole preset groups on and off, or expand them to fine-tune each entry.")
-        case .mouse: String(localized: "Buttons, the wheel and zoom. The wheel settings are for the mouse only; the trackpad is left alone.")
+        case .mouse: String(localized: "The wheel, zoom and buttons. The wheel settings are for the mouse only; the trackpad is left alone.")
         case .clipboard: String(localized: "Bring up your copy history at any time, like Win+V on Windows.")
         case .finder: String(localized: "Right-click menu, a path box, and open and save dialogs that jump to where Finder is.")
         case .devices: String(localized: "Each keyboard and mouse can be set up on its own.")

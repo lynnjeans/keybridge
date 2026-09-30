@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Everything the mouse does, in the order people reach for it (KB-237):
-/// its buttons, its wheel, and clicking the Dock. The wheel settings used to
+/// its wheel, its buttons, and clicking the Dock. The wheel settings used to
 /// be a Scroll page of their own.
 struct MousePage: View {
     let rules: RulesController
@@ -17,12 +17,14 @@ struct MousePage: View {
     }
 
     var body: some View {
+        // The wheel first: every mouse has one, while side buttons and
+        // Ctrl-click are for some (user's call).
+        PageSection("Wheel")
+        WheelSettings(rules: rules)
+
         PageSection("Buttons")
         sideButtons
         ctrlClick
-
-        PageSection("Wheel")
-        WheelSettings(rules: rules)
 
         PageSection("Dock")
         dockClick

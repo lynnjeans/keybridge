@@ -777,22 +777,6 @@
         }
       }
     },
-    "Buttons, the wheel and zoom. The wheel settings are for the mouse only; the trackpad is left alone." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン、ホイール、拡大・縮小。ホイールの設定はマウスだけに適用され、トラックパッドはそのままです。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按键、滚轮和缩放。滚轮设置只作用于鼠标，触控板不受影响。"
-          }
-        }
-      }
-    },
     "Cancel" : {
       "localizations" : {
         "ja" : {
@@ -6091,6 +6075,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法设置这个快捷键，请换一个。"
+          }
+        }
+      }
+    },
+    "The wheel, zoom and buttons. The wheel settings are for the mouse only; the trackpad is left alone." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホイール、拡大・縮小、ボタン。ホイールの設定はマウスだけに適用され、トラックパッドはそのままです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滚轮、缩放和按键。滚轮设置只作用于鼠标，触控板不受影响。"
           }
         }
       }
