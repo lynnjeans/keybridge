@@ -30,8 +30,6 @@ struct MainWindow: View {
                     ShortcutsPage(rules: rules)
                 case .mouse:
                     MousePage(rules: rules)
-                case .scroll:
-                    ScrollPage(rules: rules)
                 case .clipboard:
                     ClipboardPage(clipboard: clipboard, rules: rules)
                 case .finder:
@@ -184,8 +182,8 @@ private struct ShortcutsPage: View {
         return []
     }
 
-    /// The keyboard groups; mouse buttons and scrolling have pages of their
-    /// own.
+    /// The keyboard groups; mouse buttons and scrolling are on the Mouse
+    /// page.
     static func groups(of preset: Preset) -> [Preset.Group] {
         preset.groups.filter { !["mouse", "scroll"].contains($0.id) }
     }

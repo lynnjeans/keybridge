@@ -192,11 +192,11 @@ On Shortcuts › "Press Ctrl shortcuts with":
       that button's number, and it now goes back.
 - [ ] The left and right buttons work normally throughout.
 
-## 12. Scroll
+## 12. Mouse wheel
 
 - [ ] **[mouse]** fn + wheel up / down → the page zooms in / out in Safari and Chrome, like
       ⌘+ / ⌘−.
-- [ ] **[mouse]** Scroll page › "Hold while scrolling": choose Ctrl → Ctrl+wheel zooms, and
+- [ ] **[mouse]** Mouse page › Wheel › "Hold while scrolling": choose Ctrl → Ctrl+wheel zooms, and
       the warning about macOS screen zoom appears. Choose Custom… and tick two modifiers →
       zoom needs both.
 - [ ] **[mouse]** Windows scroll direction **on**, with natural scrolling on in System

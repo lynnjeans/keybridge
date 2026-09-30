@@ -761,6 +761,38 @@
         }
       }
     },
+    "Buttons" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键"
+          }
+        }
+      }
+    },
+    "Buttons, the wheel and zoom. The wheel settings are for the mouse only; the trackpad is left alone." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン、ホイール、拡大・縮小。ホイールの設定はマウスだけに適用され、トラックパッドはそのままです。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键、滚轮和缩放。滚轮设置只作用于鼠标，触控板不受影响。"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "ja" : {
@@ -1509,6 +1541,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "对话框操作"
+          }
+        }
+      }
+    },
+    "Dock" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dock"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "程序坞"
           }
         }
       }
@@ -5689,22 +5737,6 @@
         }
       }
     },
-    "Side-button mapping and button actions." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サイドボタンの割り当てとボタンの動作。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "侧键映射与按键动作。"
-          }
-        }
-      }
-    },
     "Snap to the left half" : {
       "localizations" : {
         "ja" : {
@@ -6277,6 +6309,22 @@
         }
       }
     },
+    "Wheel" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホイール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滚轮"
+          }
+        }
+      }
+    },
     "When you press" : {
       "localizations" : {
         "ja" : {
@@ -6594,22 +6642,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的规则优先于预设：同一个快捷键以你的规则为准。"
-          }
-        }
-      }
-    },
-    "Zoom and direction. Mouse only; the trackpad is left alone." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ズームと方向。マウスのみが対象で、トラックパッドには影響しません。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "缩放与方向，只作用于鼠标，不影响触控板。"
           }
         }
       }

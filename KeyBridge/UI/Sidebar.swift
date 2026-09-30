@@ -2,14 +2,14 @@ import SwiftUI
 
 /// A page of the main window, in sidebar order.
 enum Page: String, CaseIterable, Identifiable, Sendable {
-    case overview, shortcuts, mouse, scroll, clipboard, finder, devices
+    case overview, shortcuts, mouse, clipboard, finder, devices
     case customRules, about
 
     var id: Self { self }
 
     /// The pages listed above the Advanced heading.
     // Devices waits for per-device rules in v1.1 (#98).
-    static let primary: [Page] = [.overview, .shortcuts, .mouse, .scroll, .clipboard, .finder]
+    static let primary: [Page] = [.overview, .shortcuts, .mouse, .clipboard, .finder]
     static let advanced: [Page] = [.customRules, .about]
 
     var title: String {
@@ -17,7 +17,6 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .overview: String(localized: "Overview")
         case .shortcuts: String(localized: "Shortcuts")
         case .mouse: String(localized: "Mouse")
-        case .scroll: String(localized: "Scroll")
         case .clipboard: String(localized: "Clipboard")
         case .finder: String(localized: "Finder")
         case .devices: String(localized: "Devices")
@@ -31,8 +30,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .overview: String(localized: "See everything at a glance, and switch to the Windows feel in one click.")
         case .shortcuts: String(localized: "Switch whole preset groups on and off, or expand them to fine-tune each entry.")
-        case .mouse: String(localized: "Side-button mapping and button actions.")
-        case .scroll: String(localized: "Zoom and direction. Mouse only; the trackpad is left alone.")
+        case .mouse: String(localized: "Buttons, the wheel and zoom. The wheel settings are for the mouse only; the trackpad is left alone.")
         case .clipboard: String(localized: "Bring up your copy history at any time, like Win+V on Windows.")
         case .finder: String(localized: "Right-click menu, a path box, and open and save dialogs that jump to where Finder is.")
         case .devices: String(localized: "Each keyboard and mouse can be set up on its own.")
@@ -46,7 +44,6 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .overview: "square.grid.2x2.fill"
         case .shortcuts: "keyboard.fill"
         case .mouse: "computermouse.fill"
-        case .scroll: "arrow.up.and.down"
         case .clipboard: "list.clipboard.fill"
         case .finder: "folder.fill"
         case .devices: "desktopcomputer"
@@ -61,7 +58,6 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .overview: .green
         case .shortcuts: .indigo
         case .mouse: .orange
-        case .scroll: .teal
         case .clipboard: .purple
         case .finder: .blue
         case .devices: .pink

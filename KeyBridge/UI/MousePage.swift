@@ -1,6 +1,8 @@
 import SwiftUI
 
-/// The side buttons: which button does what, each entry editable.
+/// Everything the mouse does, in the order people reach for it (KB-237):
+/// its buttons, its wheel, and clicking the Dock. The wheel settings used to
+/// be a Scroll page of their own.
 struct MousePage: View {
     let rules: RulesController
     @State private var editing: Rule?
@@ -15,6 +17,18 @@ struct MousePage: View {
     }
 
     var body: some View {
+        PageSection("Buttons")
+        sideButtons
+        ctrlClick
+
+        PageSection("Wheel")
+        WheelSettings(rules: rules)
+
+        PageSection("Dock")
+        dockClick
+    }
+
+    @ViewBuilder private var sideButtons: some View {
         Card {
             VStack(spacing: 0) {
                 HStack(spacing: 12) {
@@ -56,7 +70,9 @@ struct MousePage: View {
             .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
             .sheet(item: $editingAdded) { CustomRuleEditor(rules: rules, existing: $0.rule, trigger: $0.trigger) }
             .onDisappear { stopAdding() }
+    }
 
+    private var dockClick: some View {
         Card {
             HStack(spacing: 12) {
                 IconTile(symbol: "dock.rectangle", tint: .indigo, size: 30)
@@ -77,7 +93,9 @@ struct MousePage: View {
                 .labelsHidden()
             }
         }
+    }
 
+    private var ctrlClick: some View {
         Card {
             HStack(spacing: 12) {
                 IconTile(symbol: "cursorarrow.click.2", tint: .blue, size: 30)
@@ -142,8 +160,9 @@ extension MousePage {
     }
 }
 
-/// Page zoom with modifier + wheel, and which modifier that is.
-struct ScrollPage: View {
+/// The wheel's direction, and page zoom with modifier + wheel and which
+/// modifier that is. Mouse only: the trackpad is left alone.
+struct WheelSettings: View {
     let rules: RulesController
     @State private var editing: Rule?
     /// Shows the modifier checkboxes even when the choice is a single key.
@@ -281,6 +300,25 @@ struct ScrollPage: View {
     private static let customizable: [(Modifiers, LocalizedStringKey)] = [
         ([.control], "Ctrl"), ([.option], "⌥"), ([.shift], "⇧"), ([.command], "⌘"), ([.function], "fn"),
     ]
+}
+
+/// A heading over a few cards on a page, like the group titles in System
+/// Settings.
+struct PageSection: View {
+    let title: LocalizedStringKey
+
+    init(_ title: LocalizedStringKey) {
+        self.title = title
+    }
+
+    var body: some View {
+        Text(title)
+            .font(.headline)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 6)
+            .accessibilityAddTraits(.isHeader)
+    }
 }
 
 /// A group's on/off switch, saving at once.
