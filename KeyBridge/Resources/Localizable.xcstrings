@@ -633,6 +633,22 @@
         }
       }
     },
+    "Available once KeyBridge is in the Applications folder." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を「アプリケーション」フォルダに入れると使えます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把 KeyBridge 放进“应用程序”文件夹后才能开启。"
+          }
+        }
+      }
+    },
     "Back" : {
       "localizations" : {
         "ja" : {
@@ -2953,6 +2969,22 @@
         }
       }
     },
+    "KeyBridge starts when you log in, so your shortcuts work right after a restart." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に KeyBridge が起動するので、再起動後すぐにショートカットが使えます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后 KeyBridge 自动启动，重启后快捷键马上可用。"
+          }
+        }
+      }
+    },
     "Keyboard paused by Secure Input" : {
       "localizations" : {
         "ja" : {
@@ -4137,6 +4169,22 @@
         }
       }
     },
+    "Open KeyBridge at login" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に KeyBridge を開く"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时打开 KeyBridge"
+          }
+        }
+      }
+    },
     "Open KeyBridge…" : {
       "localizations" : {
         "ja" : {
@@ -4181,6 +4229,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开键盘快捷键设置…"
+          }
+        }
+      }
+    },
+    "Open Login Items Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン項目の設定を開く"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开登录项设置"
           }
         }
       }
@@ -4245,6 +4309,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开应用"
+          }
+        }
+      }
+    },
+    "Open at Login" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に開く"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时打开"
           }
         }
       }
@@ -6904,6 +6984,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS 可以用 Ctrl+滚动缩放整个屏幕（辅助功能 › 缩放 ›「使用滚动手势与修饰键来缩放」）。如果它开着，就会优先生效，页面不会缩放：请改用 fn，或关掉它。"
+          }
+        }
+      }
+    },
+    "macOS did not make the change. It can be made under System Settings › General › Login Items & Extensions." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS が変更を行いませんでした。「システム設定 › 一般 › ログイン項目と機能拡張」で変更できます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 没有完成更改。可以在“系统设置 › 通用 › 登录项与扩展”中更改。"
           }
         }
       }

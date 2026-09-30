@@ -66,7 +66,8 @@ extension DiagnosticReport {
         rules: RulesController,
         secureInput: SecureInputMonitor,
         otherRemappers: OtherRemapperMonitor,
-        clipboard: ClipboardController
+        clipboard: ClipboardController,
+        loginItem: LoginItem
     ) async -> DiagnosticReport {
         let generated = Date.now
         let info = Bundle.main.infoDictionary
@@ -92,6 +93,8 @@ extension DiagnosticReport {
         state.append(("Secure Input", secureInput.holder.map {
             "on, held by \($0.bundleID ?? $0.appName ?? "an unknown process")"
         } ?? "off"))
+        loginItem.refresh()
+        state.append(("Open at login", loginItem.summary))
         state.append(("Other remappers running", otherRemappers.running.isEmpty ? "none" : otherRemappers.running.joined(separator: ", ")))
 
         let groups = rules.preset.groups.map { "\($0.id) \(rules.isEnabled(group: $0.id) ? "on" : "off")" }

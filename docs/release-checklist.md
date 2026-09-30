@@ -61,8 +61,13 @@ Start from a clean slate: quit KeyBridge, then
       else to click.
 - [ ] Step 2 Input Monitoring → it is granted with no action, or after one switch in System
       Settings. The guide reaches **Ready**; the menu bar icon is no longer faded.
-- [ ] "Start Using KeyBridge" closes the guide. Quit and reopen KeyBridge → the guide does not
-      come back.
+- [ ] The Ready step has **Open KeyBridge at login** ticked. "Start Using KeyBridge" closes the
+      guide, and KeyBridge is listed under System Settings › General › Login Items &
+      Extensions › Open at Login. Quit and reopen KeyBridge → the guide does not come back.
+- [ ] Overview › Open at Login is on. Off → KeyBridge leaves the list in System Settings; on →
+      it is back. Remove it in System Settings, click KeyBridge's window → the switch is off.
+- [ ] With Open at Login on, restart the Mac → the ⌘ icon appears in the menu bar with no
+      window, not faded, and Ctrl+C copies.
 - [ ] Double-click KeyBridge in Finder while it runs → the main window opens in front, on
       Overview.
 - [ ] The menu bar icon's menu → Open KeyBridge… → the main window opens **in front of** the

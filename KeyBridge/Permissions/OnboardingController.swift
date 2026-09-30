@@ -39,6 +39,13 @@ final class OnboardingController {
     static let stepCount = Step.allCases.count
 
     let permissions: PermissionMonitor
+    let loginItem: LoginItem
+
+    /// The closing step's Open at Login choice (KB-242), applied by
+    /// `finish()`. Ticked on a first run; when the guide is opened again
+    /// later it shows what the system has, so nobody who has been through
+    /// the guide is registered without asking.
+    var opensAtLogin: Bool
 
     /// The step the user is on: the first permission still missing, or the
     /// closing step when there is none.
@@ -69,6 +76,7 @@ final class OnboardingController {
 
     init(
         permissions: PermissionMonitor,
+        loginItem: LoginItem,
         service: PermissionService = PermissionService(),
         defaults: UserDefaults = .standard,
         openURL: @escaping @MainActor (URL) -> Void = { NSWorkspace.shared.open($0) },
@@ -77,6 +85,8 @@ final class OnboardingController {
         }
     ) {
         self.permissions = permissions
+        self.loginItem = loginItem
+        opensAtLogin = defaults.bool(forKey: Self.completedKey) ? loginItem.isEnabled : true
         self.service = service
         self.defaults = defaults
         self.openURL = openURL
@@ -107,6 +117,10 @@ final class OnboardingController {
     /// Opens the guide. Also the way back in from the menu bar and the
     /// Overview once the first run is over.
     func open() {
+        if hasCompleted {
+            loginItem.refresh()
+            opensAtLogin = loginItem.isEnabled
+        }
         presentGuide()
     }
 
@@ -142,6 +156,14 @@ final class OnboardingController {
         // A silent grant is already in place; show it now rather than on the
         // next poll.
         permissions.refresh()
+    }
+
+    /// The closing step's button: applies the Open at Login choice and marks
+    /// the guide done. A copy outside Applications is not offered the choice,
+    /// and `LoginItem` does nothing for it.
+    func finish() {
+        loginItem.set(opensAtLogin)
+        complete()
     }
 
     /// Marks the guide done so it does not come back on the next launch.

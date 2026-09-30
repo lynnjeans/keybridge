@@ -10,7 +10,12 @@ struct OnboardingWindow: View {
     let onboarding: OnboardingController
     @Environment(\.dismiss) private var dismiss
 
-    private var step: OnboardingController.Step { onboarding.step }
+    private var step: OnboardingController.Step {
+        #if DEBUG
+        if let step = LayoutCheck.onboardingStep { return step }
+        #endif
+        return onboarding.step
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -59,9 +64,16 @@ struct OnboardingWindow: View {
     @ViewBuilder private var footer: some View {
         HStack {
             if step == .ready {
+                // Next to the button that applies it (KB-242).
+                if onboarding.loginItem.isAvailable {
+                    Toggle("Open KeyBridge at login", isOn: Binding(
+                        get: { onboarding.opensAtLogin }, set: { onboarding.opensAtLogin = $0 }
+                    ))
+                    .toggleStyle(.checkbox)
+                }
                 Spacer()
                 Button("Start Using KeyBridge") {
-                    onboarding.complete()
+                    onboarding.finish()
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)

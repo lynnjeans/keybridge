@@ -5,6 +5,7 @@ import Testing
 @MainActor
 @Suite struct OnboardingControllerTests {
     let fake = FakePermissions()
+    let loginItems = FakeLoginItems()
     let defaults: UserDefaults
 
     /// Every URL the guide sent the user to, and every time it was opened.
@@ -25,10 +26,11 @@ import Testing
         fake.inputMonitoring = kIOHIDAccessTypeGranted
     }
 
-    func makeController() -> (OnboardingController, PermissionMonitor) {
+    func makeController(inApplications: Bool = true) -> (OnboardingController, PermissionMonitor) {
         let monitor = PermissionMonitor(service: fake.service)
         let controller = OnboardingController(
             permissions: monitor,
+            loginItem: LoginItem(isAvailable: inApplications, system: loginItems.system),
             service: fake.service,
             defaults: defaults,
             openURL: { [record] in record.urls.append($0) },
@@ -153,5 +155,67 @@ import Testing
         controller.complete()
         controller.open()
         #expect(record.presentations == 1, "The menu bar and the Overview lead back in")
+    }
+
+    // MARK: Open at Login (KB-242)
+
+    @Test func finishingAFirstRunOpensKeyBridgeAtLogin() {
+        grantAll()
+        let (controller, _) = makeController()
+        #expect(controller.opensAtLogin, "Ticked unless the user unticks it")
+        controller.finish()
+        #expect(loginItems.calls == ["register"])
+        #expect(controller.hasCompleted)
+    }
+
+    @Test func finishingWithTheChoiceUntickedRegistersNothing() {
+        grantAll()
+        let (controller, _) = makeController()
+        controller.opensAtLogin = false
+        controller.finish()
+        #expect(loginItems.calls.isEmpty)
+        #expect(controller.hasCompleted)
+    }
+
+    @Test func aFirstRunThatNeedsNoGuideRegistersNothing() {
+        grantAll()
+        let (controller, _) = makeController()
+        #expect(!controller.shouldOpenAtLaunch())
+        #expect(controller.hasCompleted)
+        #expect(loginItems.calls.isEmpty, "Nobody was asked")
+    }
+
+    @Test func theGuideOpenedAgainShowsWhatTheSystemHas() {
+        grantAll()
+        defaults.set(true, forKey: OnboardingController.completedKey)
+        let (controller, _) = makeController()
+        #expect(!controller.opensAtLogin, "Someone who finished the guide before is not signed up by it")
+        controller.finish()
+        #expect(loginItems.calls.isEmpty)
+
+        loginItems.isEnabled = true
+        controller.open()
+        #expect(controller.opensAtLogin, "Switched on elsewhere since")
+        controller.opensAtLogin = false
+        controller.finish()
+        #expect(loginItems.calls == ["unregister"], "Unticking it there is a choice like any other")
+    }
+
+    @Test func aCopyOutsideApplicationsIsNotRegisteredByTheGuide() {
+        grantAll()
+        let (controller, _) = makeController(inApplications: false)
+        controller.finish()
+        #expect(loginItems.calls.isEmpty)
+        #expect(loginItems.reads == 0)
+        #expect(controller.hasCompleted)
+    }
+
+    @Test func aRefusedLoginItemDoesNotHoldUpTheGuide() {
+        grantAll()
+        loginItems.refuses = true
+        let (controller, _) = makeController()
+        controller.finish()
+        #expect(controller.hasCompleted)
+        #expect(controller.loginItem.hasFailed, "The Overview says so")
     }
 }

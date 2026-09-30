@@ -44,7 +44,8 @@ struct KeyBridgeApp: App {
                 clipboard: appDelegate.clipboard,
                 pathBox: appDelegate.pathBox,
                 quickSwitch: appDelegate.quickSwitch,
-                updates: appDelegate.updates
+                updates: appDelegate.updates,
+                loginItem: appDelegate.loginItem
             )
         }
         .defaultSize(width: 880, height: 600)

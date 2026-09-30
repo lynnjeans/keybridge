@@ -13,6 +13,7 @@ struct MainWindow: View {
     let pathBox: PathBoxController
     let quickSwitch: QuickSwitch
     let updates: UpdateController
+    let loginItem: LoginItem
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -25,7 +26,7 @@ struct MainWindow: View {
                 switch page {
                 case .overview:
                     OverviewPage(engine: engine, onboarding: onboarding, rules: rules, secureInput: secureInput,
-                                 otherRemappers: otherRemappers) { page = $0 }
+                                 otherRemappers: otherRemappers, loginItem: loginItem) { page = $0 }
                 case .shortcuts:
                     ShortcutsPage(rules: rules)
                 case .mouse:
@@ -44,7 +45,8 @@ struct MainWindow: View {
                     LegalCard()
                     DiagnosticsCard {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
-                                                 otherRemappers: otherRemappers, clipboard: clipboard)
+                                                 otherRemappers: otherRemappers, clipboard: clipboard,
+                                                 loginItem: loginItem)
                     }
                 default:
                     ComingSoon(page: page)

@@ -301,6 +301,8 @@ screenshotted in each language:
 | `KB_DEBUG_SHOW` | `main`, `onboarding`, `clipboard` (the history panel) or `pathbox` (the path box, filled in as ⌘L would fill it — open Finder on a folder first) opens a second after launch |
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
+| `KB_DEBUG_STEP` | The setup guide shows this step whatever the permissions say: `accessibility`, `inputMonitoring`, `ready`. A build that lacks the permissions cannot reach `ready` otherwise. Add `-onboardingCompleted NO` to the arguments to see it as on a first run |
+| `KB_DEBUG_LOGINITEM` | `on` or `off`: Open at Login starts that way and can be switched, held in memory only — this Mac's login items are not touched (see [Open at Login](#open-at-login)) |
 | `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/KeyBridge`; the website's screenshots use it (`scripts/site/screenshots.sh`) |
 
 ```bash
@@ -501,6 +503,35 @@ Things to know:
   Finder loads.
 - A menu item chosen through Accessibility is not a user action, so macOS may refuse to
   activate KeyBridge for the update window; whether it takes the keyboard needs a real click.
+
+## Open at Login
+
+`SMAppService.mainApp` on macOS 26.6, measured with a throwaway app in two folders (KB-242):
+
+- **One login item per bundle identifier, not per copy.** Registered from copy A, copy B reads
+  `.enabled` too, and unregistering from B removes it.
+- **The item moves to whichever copy last asked about it.** Reading `SMAppService.mainApp.status`
+  from copy B is enough: the item then opens B at login. Launching B moves nothing if B never
+  asks. This is why only the copy in the Applications folder asks (`LoginItem.isAvailable`): a
+  Debug build that read the status at launch took the login item away from the installed app,
+  and that build has none of its permissions.
+- **An item added by hand** (System Settings › General › Login Items & Extensions, or the Dock
+  menu) is the same record: it reads as `.enabled` and `unregister()` removes it. It keeps
+  pointing at the copy that was picked until a copy asks.
+- **An app that was never registered reads `.notFound`**, and `.notRegistered` only after it has
+  been registered once. Compare with `.enabled`, not with `.notRegistered`.
+
+Checking it:
+
+- The launch log says which copy runs and what it found: `Open at login: on, running from
+  /Applications/KeyBridge.app` (category `permissions`), or `not asked` from a copy elsewhere.
+- Where the item points, without a password:
+  `osascript -e 'tell application "System Events" to get path of every login item'`. It trails
+  a change by a second or two.
+- `sfltool dumpbtm` shows the full record, but asks for an administrator password on every
+  call.
+- A Debug build shows the switch unavailable. `KB_DEBUG_LOGINITEM=on` or `off` gives it one that
+  is held in memory; the real one needs a build in Applications.
 
 ## Menu bar on macOS 26
 

@@ -32,7 +32,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)
     lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
-    lazy var onboarding = OnboardingController(permissions: permissionMonitor)
+    let loginItem: LoginItem = {
+        #if DEBUG
+        if let standIn = LayoutCheck.loginItem { return standIn }
+        #endif
+        return LoginItem(isAvailable: LoginItem.isInApplicationsFolder)
+    }()
+    lazy var onboarding = OnboardingController(permissions: permissionMonitor, loginItem: loginItem)
     let updates = UpdateController()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -90,7 +96,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Task { [self] in
                 try? await Task.sleep(for: .seconds(3))
                 let report = await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
-                                                            otherRemappers: otherRemappers, clipboard: clipboard)
+                                                            otherRemappers: otherRemappers, clipboard: clipboard,
+                                                            loginItem: loginItem)
                 try? report.text.write(toFile: path, atomically: true, encoding: .utf8)
             }
         }
@@ -133,6 +140,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 "\(permission.rawValue, privacy: .public): \(status.rawValue, privacy: .public)"
             )
         }
+        // Which copy this is matters as much: a login item can point at
+        // another one, and one signed differently has none of these grants.
+        Logger.permissions.notice(
+            "Open at login: \(self.loginItem.summary, privacy: .public), running from \(Bundle.main.bundlePath, privacy: .public)"
+        )
     }
 }
 

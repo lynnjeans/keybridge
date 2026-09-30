@@ -175,6 +175,7 @@ targets:
       - path: KeyBridge/PathBox/PathBoxResolver.swift
       - path: KeyBridge/PathBox/FinderFolderPicker.swift
       - path: KeyBridge/App/EngineController.swift
+      - path: KeyBridge/App/LoginItem.swift
       - path: KeyBridge/App/DiagnosticReport.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
       - path: KeyBridge/FinderMenu/FinderMenuHandler.swift

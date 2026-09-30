@@ -9,6 +9,7 @@ struct OverviewPage: View {
     let rules: RulesController
     let secureInput: SecureInputMonitor
     let otherRemappers: OtherRemapperMonitor
+    let loginItem: LoginItem
     let open: (Page) -> Void
 
     var body: some View {
@@ -53,6 +54,8 @@ struct OverviewPage: View {
         } else {
             PermissionsCard(permissions: engine.permissions, onboarding: onboarding)
         }
+
+        LoginItemCard(loginItem: loginItem)
 
         ForEach(Array(notices.enumerated()), id: \.offset) { _, notice in
             Label {
@@ -135,6 +138,57 @@ private struct PermissionsSummary: View {
                     .background(.green.opacity(0.14), in: Capsule())
             }
         }
+    }
+}
+
+/// Whether KeyBridge opens at login (KB-242). The switch shows what the
+/// system has, read again whenever the window comes back into view, so a
+/// change made in System Settings is not missed.
+private struct LoginItemCard: View {
+    let loginItem: LoginItem
+
+    var body: some View {
+        Card {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 14) {
+                    IconTile(symbol: "power", tint: .teal, size: 34)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Open at Login")
+                            .font(.headline)
+                        Text(detail)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 8)
+                    Toggle("Open at Login", isOn: Binding(
+                        get: { loginItem.isEnabled },
+                        set: { loginItem.set($0) }
+                    ))
+                    .toggleStyle(.switch)
+                    .labelsHidden()
+                    .disabled(!loginItem.isAvailable)
+                }
+                if loginItem.hasFailed {
+                    Label("macOS did not make the change. It can be made under System Settings › General › Login Items & Extensions.",
+                          systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Button("Open Login Items Settings") { LoginItem.openSystemSettings() }
+                }
+            }
+        }
+        .onAppear { loginItem.refresh() }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            loginItem.refresh()
+        }
+    }
+
+    private var detail: LocalizedStringKey {
+        loginItem.isAvailable
+            ? "KeyBridge starts when you log in, so your shortcuts work right after a restart."
+            : "Available once KeyBridge is in the Applications folder."
     }
 }
 
