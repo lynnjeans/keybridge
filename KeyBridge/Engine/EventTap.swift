@@ -152,7 +152,7 @@ final class EventTap {
     private func recover(from type: CGEventType) {
         guard let port else { return }
         let reason = type == .tapDisabledByTimeout ? "timeout" : "user input"
-        guard PermissionService.canCreateActiveTap() else {
+        guard PermissionService.isAccessibilityGrantedNow() else {
             Logger.eventTap.error("Event tap was disabled (\(reason, privacy: .public)) and Accessibility is no longer granted; leaving it off")
             giveUp(.permissionLost)
             return

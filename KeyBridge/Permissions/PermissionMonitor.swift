@@ -22,6 +22,7 @@ final class PermissionMonitor {
     @ObservationIgnored private let service: PermissionService
     @ObservationIgnored private var timer: Timer?
     @ObservationIgnored private var observer: NSObjectProtocol?
+    @ObservationIgnored private var hasRequestedInputMonitoring = false
 
     init(service: PermissionService = PermissionService()) {
         self.service = service
@@ -37,11 +38,36 @@ final class PermissionMonitor {
         observer = NotificationCenter.default.addObserver(
             forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main
         ) { [weak self] _ in
-            MainActor.assumeIsolated { self?.refresh() }
+            MainActor.assumeIsolated { self?.poll() }
         }
         timer = Timer.scheduledTimer(withTimeInterval: pollInterval, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.refresh() }
+            MainActor.assumeIsolated { self?.poll() }
         }
+        poll()
+    }
+
+    private func poll() {
+        refresh()
+        requestInputMonitoringIfUndecided()
+    }
+
+    /// Asks for Input Monitoring once per run, as soon as Accessibility is
+    /// granted and Input Monitoring was never decided (KB-236).
+    ///
+    /// Only asking puts KeyBridge in the Input Monitoring list, and with
+    /// Accessibility granted macOS usually grants it silently. The guide used
+    /// to be the only place that asked, so after its first run, or with
+    /// the permissions reset, the list stayed empty and the user had to add
+    /// KeyBridge with + by hand.
+    func requestInputMonitoringIfUndecided() {
+        guard status(of: .accessibility) == .granted,
+              status(of: .inputMonitoring) == .notDetermined,
+              !hasRequestedInputMonitoring
+        else { return }
+        hasRequestedInputMonitoring = true
+        service.request(.inputMonitoring)
+        Logger.permissions.notice("Requested inputMonitoring: Accessibility is granted and it was never decided")
+        refresh()
     }
 
     /// Re-reads every permission and reports the ones that changed.

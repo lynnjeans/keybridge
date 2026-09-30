@@ -46,9 +46,9 @@ struct PermissionService: Sendable {
     init(
         isAccessibilityTrusted: @escaping @Sendable () -> Bool = {
             // Called for its side effect: it adds KeyBridge's row to the
-            // Settings list. Its answer is not trusted (see canCreateActiveTap).
+            // Settings list. Its answer is not trusted (see isAccessibilityGrantedNow).
             _ = AXIsProcessTrusted()
-            return PermissionService.canCreateActiveTap()
+            return PermissionService.isAccessibilityGrantedNow()
         },
         inputMonitoringAccess: @escaping @Sendable () -> IOHIDAccessType = {
             IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
@@ -92,27 +92,18 @@ struct PermissionService: Sendable {
         }
     }
 
-    /// Whether Accessibility is granted right now, judged by what it is
-    /// needed for: creating an active event tap (KB-236).
+    /// Whether Accessibility is granted right now (KB-236).
     ///
     /// `AXIsProcessTrusted()` goes stale in a running process on macOS 26:
     /// after the switch in System Settings was turned off it kept answering
     /// yes, and KeyBridge kept putting a tap that could no longer work back
     /// in the path of every event, freezing the Mac; after it was turned on
-    /// it kept answering no. Whether the system lets a tap be created is
-    /// decided at the moment it is asked. The probe listens only for null
-    /// events, is never added to a run loop, and is thrown away at once.
-    static func canCreateActiveTap() -> Bool {
-        guard let probe = CGEvent.tapCreate(
-            tap: .cgSessionEventTap,
-            place: .tailAppendEventTap,
-            options: .defaultTap,
-            eventsOfInterest: CGEventMask(1 << CGEventType.null.rawValue),
-            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
-            userInfo: nil
-        ) else { return false }
-        CFMachPortInvalidate(probe)
-        return true
+    /// it kept answering no. `CGPreflightPostEventAccess()` asks about what
+    /// the tap actually needs, posting and changing events, and does not
+    /// prompt. Creating a probe tap would answer too, but makes macOS show
+    /// its "would like to control this computer" alert when the answer is no.
+    static func isAccessibilityGrantedNow() -> Bool {
+        CGPreflightPostEventAccess()
     }
 
     /// Whether every permission KeyBridge needs has been granted.

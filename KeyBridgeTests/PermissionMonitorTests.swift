@@ -71,4 +71,38 @@ final class FakePermissions: @unchecked Sendable {
         monitor.refresh()
         #expect(reports.isEmpty)
     }
+
+    // MARK: Asking for Input Monitoring outside the guide (KB-236)
+
+    @Test func asksForInputMonitoringOnceAccessibilityIsGranted() {
+        let fake = FakePermissions()
+        let monitor = PermissionMonitor(service: fake.service)
+        monitor.requestInputMonitoringIfUndecided()
+        #expect(fake.requests.isEmpty)
+        fake.accessibility = true
+        monitor.refresh()
+        fake.inputMonitoring = kIOHIDAccessTypeGranted
+        monitor.requestInputMonitoringIfUndecided()
+        // The request's answer is read straight away.
+        #expect(fake.requests == [.inputMonitoring])
+    }
+
+    @Test func asksOnlyOncePerRun() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        let monitor = PermissionMonitor(service: fake.service)
+        monitor.requestInputMonitoringIfUndecided()
+        monitor.requestInputMonitoringIfUndecided()
+        #expect(fake.requests == [.inputMonitoring])
+    }
+
+    /// A refusal is the user's; asking again would do nothing anyway.
+    @Test func doesNotAskAfterARefusal() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        fake.inputMonitoring = kIOHIDAccessTypeDenied
+        let monitor = PermissionMonitor(service: fake.service)
+        monitor.requestInputMonitoringIfUndecided()
+        #expect(fake.requests.isEmpty)
+    }
 }
