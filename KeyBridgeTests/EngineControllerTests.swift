@@ -70,7 +70,8 @@ final class FakeTap: EventTapControlling {
         let (engine, monitor) = makeEngine()
 
         fake.inputMonitoring = kIOHIDAccessTypeDenied
-        monitor.refresh()
+        // With everything granted, only a fresh read notices a revocation.
+        monitor.refresh(fresh: true)
         #expect(!engine.isActive)
         #expect(tap.stops == 1)
         #expect(engine.isEnabled, "The user's choice survives the revocation")

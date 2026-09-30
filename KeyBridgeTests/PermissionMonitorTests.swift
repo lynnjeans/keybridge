@@ -62,7 +62,7 @@ final class FakePermissions: @unchecked Sendable {
         monitor.onChange = { reports.append($0) }
 
         fake.accessibility = false
-        monitor.refresh()
+        monitor.refresh(fresh: true)
 
         #expect(reports == [[.accessibility]])
         #expect(monitor.status(of: .accessibility) == .denied)
@@ -89,9 +89,7 @@ final class FakePermissions: @unchecked Sendable {
         #expect(fake.requests.isEmpty)
         fake.accessibility = true
         monitor.refresh()
-        fake.inputMonitoring = kIOHIDAccessTypeGranted
         monitor.requestInputMonitoringIfUndecided()
-        // The request's answer is read straight away.
         #expect(fake.requests == [.inputMonitoring])
     }
 
@@ -178,5 +176,20 @@ final class FakePermissions: @unchecked Sendable {
         #expect(PermissionService.parseReport("accessibility=granted") == nil)
         #expect(PermissionService.parseReport("accessibility=maybe inputMonitoring=granted") == nil)
         #expect(PermissionService.parseReport("dyld: error") == nil)
+    }
+
+    /// Between fresh reads this process's own, possibly stale, answers are
+    /// not read, so a status cannot flap between the two sources.
+    @Test func staleAnswersBetweenFreshReadsAreIgnored() {
+        let fake = FakePermissions()
+        fake.accessibility = true
+        fake.inputMonitoring = kIOHIDAccessTypeGranted
+        let monitor = PermissionMonitor(service: fake.service)
+        fake.inputMonitoring = kIOHIDAccessTypeUnknown
+        var reports: [Set<Permission>] = []
+        monitor.onChange = { reports.append($0) }
+        for _ in 1..<PermissionMonitor.freshReadInterval { monitor.refresh() }
+        #expect(reports.isEmpty)
+        #expect(monitor.allGranted)
     }
 }

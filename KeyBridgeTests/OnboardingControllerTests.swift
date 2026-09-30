@@ -63,7 +63,7 @@ import Testing
         #expect(controller.step == .ready)
 
         fake.accessibility = false
-        monitor.refresh()
+        monitor.refresh(fresh: true)
         #expect(controller.step == .accessibility)
     }
 

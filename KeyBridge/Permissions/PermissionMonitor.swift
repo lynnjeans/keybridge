@@ -64,15 +64,19 @@ final class PermissionMonitor {
     /// to be the only place that asked, so after its first run, or with
     /// the permissions reset, the list stayed empty and the user had to add
     /// KeyBridge with + by hand.
+    ///
+    /// "Never decided" is read in this process: that is the permission
+    /// record itself, which a fresh process does not report (it answers
+    /// whether KeyBridge may listen, which Accessibility can already allow).
     func requestInputMonitoringIfUndecided() {
         guard status(of: .accessibility) == .granted,
-              status(of: .inputMonitoring) == .notDetermined,
-              !hasRequestedInputMonitoring
+              !hasRequestedInputMonitoring,
+              service.status(of: .inputMonitoring) == .notDetermined
         else { return }
         hasRequestedInputMonitoring = true
         service.request(.inputMonitoring)
         Logger.permissions.notice("Requested inputMonitoring: Accessibility is granted and it was never decided")
-        refresh()
+        refresh(fresh: true)
     }
 
     /// Re-reads every permission and reports the ones that changed.
@@ -82,13 +86,17 @@ final class PermissionMonitor {
     /// permission is missing, so a grant shows within seconds; every
     /// `freshReadInterval`-th poll otherwise, to notice a revocation; and
     /// whenever `fresh` is set.
+    ///
+    /// Between fresh reads nothing is read at all: this process's answers
+    /// only stand in when a fresh read fails. Mixing the two made Input
+    /// Monitoring flap between granted (fresh) and not determined (stale),
+    /// stopping and restarting the tap.
     func refresh(fresh: Bool = false) {
         pollsSinceFreshRead += 1
-        var current = Dictionary(uniqueKeysWithValues: Permission.allCases.map { ($0, service.status(of: $0)) })
-        if fresh || !allGranted || pollsSinceFreshRead >= Self.freshReadInterval {
-            pollsSinceFreshRead = 0
-            if let statuses = service.freshStatuses() { current = statuses }
-        }
+        guard fresh || !allGranted || pollsSinceFreshRead >= Self.freshReadInterval else { return }
+        pollsSinceFreshRead = 0
+        let current = service.freshStatuses()
+            ?? Dictionary(uniqueKeysWithValues: Permission.allCases.map { ($0, service.status(of: $0)) })
         var changed: Set<Permission> = []
         for permission in Permission.allCases {
             let old = status(of: permission)
