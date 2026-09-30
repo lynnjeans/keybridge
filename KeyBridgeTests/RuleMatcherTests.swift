@@ -98,6 +98,9 @@ import Testing
             mouseCursorPosition: .zero, mouseButton: .center
         ))
         event.setIntegerValueField(.mouseEventButtonNumber, value: 3)
+        // An event made without a source may carry whatever modifier is held
+        // on the Mac while the test runs; this one failed once that way.
+        event.flags = []
         #expect(Trigger(event: event, type: .otherMouseDown) == .mouseButton(number: 4))
     }
 
