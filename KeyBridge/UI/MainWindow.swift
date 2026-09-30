@@ -56,10 +56,38 @@ struct MainWindow: View {
         // Which of ⌘ and ⌥ is called Win, on every page and in every sheet.
         .environment(\.triggerStyle, rules.modifierLayout.triggerStyle)
         .showsInDock()
+        // A page asked for from outside, such as About from the menu bar
+        // (KB-240): at once when the window is open, or as it opens.
+        .onAppear { page = PageRequest.take() ?? page }
+        .onReceive(NotificationCenter.default.publisher(for: .showPage)) { _ in
+            if let requested = PageRequest.take() { page = requested }
+        }
         #if DEBUG
         .onAppear { if let requested = LayoutCheck.page { page = requested } }
         #endif
     }
+}
+
+/// A page the main window should show next (KB-240). Set before the window
+/// is opened, then either the open window hears `.showPage` or a newly
+/// created one finds the request as it appears.
+@MainActor
+enum PageRequest {
+    private static var pending: Page?
+
+    static func show(_ page: Page) {
+        pending = page
+        NotificationCenter.default.post(name: .showPage, object: nil)
+    }
+
+    static func take() -> Page? {
+        defer { pending = nil }
+        return pending
+    }
+}
+
+extension Notification.Name {
+    static let showPage = Notification.Name("KeyBridgeShowPage")
 }
 
 /// A page's title and subtitle above its content, scrolling as one.

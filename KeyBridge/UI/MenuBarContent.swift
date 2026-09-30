@@ -90,6 +90,12 @@ struct MenuBarContent: View {
         }
         .keyboardShortcut(",")
 
+        Button("About KeyBridge") {
+            PageRequest.show(.about)
+            openWindow(id: WindowID.main)
+            WindowID.bringToFront(WindowID.main)
+        }
+
         Button("Check for Updates…") { updates.checkForUpdates() }
             .disabled(!updates.canCheckForUpdates)
 

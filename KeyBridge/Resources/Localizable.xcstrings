@@ -249,6 +249,22 @@
         }
       }
     },
+    "About KeyBridge" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge について"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 KeyBridge"
+          }
+        }
+      }
+    },
     "Accessibility" : {
       "localizations" : {
         "ja" : {
