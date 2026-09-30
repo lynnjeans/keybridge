@@ -366,7 +366,7 @@ again:
 
 - **A mouse and a trackpad are told apart by `kCGMouseEventSubtype`**: a trackpad stamps its
   movement with 3 (touch), a mouse leaves 0. Public, and the only distinction a session tap
-  gets — an event carries no device.
+  gets for the pointer. (A key event does say which keyboard sent it: see Keyboards below.)
 - **The delta in a mouse-moved event is what the pointer actually did.** Summing
   `kCGMouseEventDeltaX/Y` over a movement and summing the change in `location` over the same
   movement gave 1944 against 1943: the acceleration curve is applied before the tap sees
@@ -381,6 +381,51 @@ again:
   3 s and in 1 s, the same stretch reported 10490/11136 with the curve on and 13379/14173 with
   it nominally off — a ratio of 1.06 either way. On current macOS the per-device curve lives
   in the HID service layer (`IOHIDServiceClient`), which is private API.
+
+## Keyboards
+
+Measured for KB-021 on macOS 26.6, a MacBook Air's own keyboard next to a Bluetooth PC keyboard,
+with `scripts/spikes/keyboard-attribution`: a listen-only event tap beside an `IOHIDManager`,
+which knows the device of every key value. 345 tap events typed on the two keyboards in turns,
+226 of them paired with a HID value, 18 changes of keyboard.
+
+- **An event says which keyboard sent it, in a field nobody documents.** Integer field 87, which
+  `CGEventField` does not name, holds the registry entry ID of the HID event service that sent
+  the event: `AppleHIDKeyboardEventDriverV2` for the built-in keyboard, `AppleUserHIDEventService`
+  for a Bluetooth one. That entry has `Product`, `VendorID`, `ProductID` and `Built-In`, and
+  walking up the service plane from it reaches the `IOHIDDevice` the HID value came from: 226 of
+  226. `KeyboardSource` reads it. The ID changes every time a keyboard reconnects.
+- **An event posted by software has 0 in field 87**, and carries the current keyboard type
+  rather than its own. The field can be set on an event, which is how the unit tests use it.
+- **`kCGKeyboardEventKeyboardType` tells a built-in keyboard from a PC one and no more.** 91
+  for the built-in keyboard and 40 for the PC keyboard on every event; two generic external
+  keyboards would both say 40.
+- **The event's timestamp is not the HID value's.** Never equal; the event is stamped about
+  1.2 ms after the value on the built-in keyboard and about 5 ms after on Bluetooth, so the two
+  cannot be paired by exact time.
+- **The HID value reached its callback before the event reached the tap, every time**, by
+  1.26 ms at the median and by 0.056 ms at the least (3–10 ms on Bluetooth). "The keyboard of
+  the latest key-down value" named the right keyboard for 113 of 113 key presses and for 18 of
+  18 first presses after changing keyboards. This is the route to take if field 87 ever stops
+  holding a registry ID: documented API only, at the price of a second listener for every key
+  and of a race it has to keep winning.
+- **A registry lookup by entry ID takes 0.1–1 ms**, a miss 0.2–0.7 ms. `KeyboardSource` makes
+  one for each sender and remembers the answer.
+- The built-in keyboard's fn key is not on the keyboard usage page, so an `IOHIDManager`
+  matching keyboards does not report it.
+
+To measure again, on another macOS version for instance (both tools only listen, and print no
+key codes; the terminal they run in needs Accessibility and Input Monitoring):
+
+```bash
+swiftc -O scripts/spikes/keyboard-attribution/main.swift -o /tmp/keyboard-attribution
+/tmp/keyboard-attribution --fields      # type on each keyboard in turn; pkill -TERM keyboard-attribution ends it with the report
+```
+
+```bash
+swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
+/tmp/keyboard-source-check              # prints the keyboard each time it changes, as KeyboardSource sees it
+```
 
 ## Posting test events
 

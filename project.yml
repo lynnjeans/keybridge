@@ -163,6 +163,7 @@ targets:
       - path: KeyBridge/Engine/CtrlClick.swift
       - path: KeyBridge/Engine/ModifierTap.swift
       - path: KeyBridge/Engine/TapBreaker.swift
+      - path: KeyBridge/Engine/KeyboardSource.swift
       - path: KeyBridge/Window/WindowGeometry.swift
       - path: KeyBridge/Window/WindowAction.swift
       - path: KeyBridge/FileDialog/FileDialogAction.swift
