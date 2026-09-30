@@ -6,6 +6,26 @@
     <description>KeyBridge updates</description>
     <language>en</language>
     <item>
+      <title>KeyBridge 1.0.1</title>
+      <pubDate>Wed, 30 Sep 2026 07:05:46 GMT</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Menu bar&lt;/b&gt;: the menu has About KeyBridge, above Quit KeyBridge.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Sponsoring&lt;/b&gt;: the About page has a way to support KeyBridge on GitHub, if you enjoy it.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;菜单栏&lt;/b&gt;：菜单里新增“关于 KeyBridge”，在“退出 KeyBridge”上方。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;赞助&lt;/b&gt;：“关于”页新增赞助入口。喜欢 KeyBridge 的话，可以在 GitHub 上支持它。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;メニューバー&lt;/b&gt;：メニューに「KeyBridge について」を追加しました（「KeyBridge を終了」の上）。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;スポンサー&lt;/b&gt;：「情報」ページから、GitHub で KeyBridge を支援できるようになりました。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/keybridge/releases/download/v1.0.1/KeyBridge-1.0.1.dmg" length="4745302" type="application/octet-stream" sparkle:edSignature="oXvOFBUYQAFqwpBf9pHtXTlb6iPLHe0aZvZxsGQeE7HK1tgYK9TJxynoOB/aBt0SOp5EUmN0NTliAJBUK9zpDg==" />
+    </item>
+    <item>
       <title>KeyBridge 1.0.0</title>
       <pubDate>Wed, 30 Sep 2026 01:36:27 GMT</pubDate>
       <sparkle:version>3</sparkle:version>
