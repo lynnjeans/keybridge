@@ -140,12 +140,24 @@ rewrites them and shows up as an unrelated diff.
   `~/Library/Application Support/KeyBridge/config.json`: a `schemaVersion` and a list of
   `overrides`. No file means nothing has been changed. It is read once at launch, so after
   editing it by hand, relaunch KeyBridge. The launch logs one line in the `configuration`
-  category: `No configuration file…`, `Configuration loaded: n override(s)`, or a migration or
-  error message.
+  category: `No configuration file…`, `Configuration loaded: n override(s), n keyboard(s) with
+  settings of their own`, or a migration or error message.
 - An override holds a **complete** rule — the synthesized decoder does not fill in missing
   fields — so copy a rule's encoded form rather than writing one from memory. A `modified`
   rule replaces the built-in rule with the same `id` (`edit.copy`, `mouse.back`, …; see
   `BuiltInRules.swift`); `"isEnabled": false` switches it off. A `custom` rule is added.
+- `keyboards` (KB-243) gives a keyboard its own `controlKey` (`control`, `fn`, `both`) and/or
+  `modifierLayout` (`pc`, `mac`); a keyboard not listed, or a setting left out, follows the
+  general one. A keyboard is named by `vendorID` and `productID` (decimal), plus
+  `"isBuiltIn": true` for the Mac's own keyboard, which has 0 for both; `name` is only for
+  showing. The IDs are in the diagnostic report's Keyboards line (hexadecimal there). For
+  example, a PC keyboard pressing Ctrl shortcuts with Ctrl and Win as ⌘ while the MacBook's
+  keyboard uses fn and Win as ⌥:
+
+  ```json
+  "controlKey": "fn", "modifierLayout": "mac",
+  "keyboards": [{"vendorID": 14, "productID": 13330, "name": "RK-KB5.0", "controlKey": "control", "modifierLayout": "pc"}]
+  ```
 - A file KeyBridge cannot use is renamed `config.unreadable-<date>.json` and the built-in rules
   are used; a file from an older version is upgraded in place with the original kept as
   `config.v<n>.json`; a file from a newer version is read but never overwritten. To start

@@ -57,7 +57,7 @@ struct ConfigurationStore: Sendable {
         case .missing:
             Logger.configuration.notice("No configuration file; using the built-in rules")
         case .loaded:
-            Logger.configuration.notice("Configuration loaded: \(result.configuration.overrides.count, privacy: .public) override(s)")
+            Logger.configuration.notice("Configuration loaded: \(result.configuration.overrides.count, privacy: .public) override(s), \(result.configuration.keyboards.count, privacy: .public) keyboard(s) with settings of their own")
         case .migrated(let version):
             Logger.configuration.notice("Configuration migrated from version \(version, privacy: .public) to \(Configuration.currentVersion, privacy: .public): \(result.configuration.overrides.count, privacy: .public) override(s)")
         case .unreadable(let backup):
