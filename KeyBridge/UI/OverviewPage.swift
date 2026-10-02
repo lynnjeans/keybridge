@@ -13,7 +13,8 @@ struct OverviewPage: View {
     let open: (Page) -> Void
 
     var body: some View {
-        ModeCard(engine: engine, controlKey: rules.controlKey)
+        // Keyboards that differ copy with either: "Ctrl or fn".
+        ModeCard(engine: engine, controlKey: rules.controlKeysInUse.count > 1 ? .both : rules.controlKey)
 
         if engine.isActive, let holder = secureInput.holder {
             SecureInputNotice(holder: holder, isLingering: secureInput.isLingering)
@@ -81,15 +82,25 @@ struct OverviewPage: View {
     /// applies.
     private var notices: [LocalizedStringKey] {
         var notices: [LocalizedStringKey] = []
+        // One notice for each way a keyboard is set up (KB-076): with a
+        // MacBook on fn and a PC keyboard on Ctrl, both are true.
         if rules.exceptionApps.contains(where: BuiltInRules.terminals.contains) {
-            notices.append(rules.controlKey == .function
-                ? "Home, End and Ctrl+arrow keys are left alone in terminals; fn shortcuts work there too."
-                : "Ctrl shortcuts are left alone in terminals, where Ctrl+C stops the running program.")
+            let keys = rules.controlKeysInUse
+            if keys.contains(.function) {
+                notices.append("Home, End and Ctrl+arrow keys are left alone in terminals; fn shortcuts work there too.")
+            }
+            if keys.contains(.control) || keys.contains(.both) {
+                notices.append("Ctrl shortcuts are left alone in terminals, where Ctrl+C stops the running program.")
+            }
         }
         if rules.isEnabled(group: "winKey") {
-            notices.append(rules.modifierLayout == .pcKeyboard
-                ? "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too."
-                : "Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps.")
+            let layouts = rules.modifierLayoutsInUse
+            if layouts.contains(.pcKeyboard) {
+                notices.append("Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too.")
+            }
+            if layouts.contains(.macPosition) {
+                notices.append("Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps.")
+            }
         }
         return notices
     }

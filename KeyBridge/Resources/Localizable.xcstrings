@@ -777,6 +777,22 @@
         }
       }
     },
+    "Built-in Keyboard" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内蔵キーボード"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内建键盘"
+          }
+        }
+      }
+    },
     "Button %lld" : {
       "localizations" : {
         "ja" : {
@@ -805,6 +821,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "按键"
+          }
+        }
+      }
+    },
+    "By keyboard" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードごと"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键盘分别设置"
           }
         }
       }
@@ -3769,6 +3801,22 @@
         }
       }
     },
+    "Not connected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未接続"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未连接"
+          }
+        }
+      }
+    },
     "Nothing copied yet" : {
       "localizations" : {
         "ja" : {
@@ -5365,6 +5413,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "滚轮朝自己方向滚时页面向下。触控板和妙控鼠标仍保持自然滚动。"
+          }
+        }
+      }
+    },
+    "Same as above" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上と同じ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同上"
           }
         }
       }

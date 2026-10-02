@@ -29,7 +29,7 @@ struct MainWindow: View {
                     OverviewPage(engine: engine, onboarding: onboarding, rules: rules, secureInput: secureInput,
                                  otherRemappers: otherRemappers, loginItem: loginItem) { page = $0 }
                 case .shortcuts:
-                    ShortcutsPage(rules: rules)
+                    ShortcutsPage(rules: rules, keyboards: keyboards)
                 case .mouse:
                     MousePage(rules: rules)
                 case .clipboard:
@@ -122,6 +122,7 @@ private struct PageContent<Content: View>: View {
 /// entry as "what you press → what the Mac gets", and a search field.
 private struct ShortcutsPage: View {
     let rules: RulesController
+    let keyboards: KeyboardList
     @State private var search = ""
     @State private var expanded: Set<String> = Self.initiallyExpanded
     /// The entry open in the editor sheet.
@@ -130,8 +131,19 @@ private struct ShortcutsPage: View {
 
     var body: some View {
         PresetBar(rules: rules, groups: Self.groups(of: rules.preset))
-        ControlKeyCard(choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }))
-        WinAltCard(choice: Binding(get: { rules.modifierLayout }, set: { rules.setModifierLayout($0) }))
+        let choices = KeyboardChoices(connected: keyboards.connected, withSettings: rules.keyboardSettings)
+        ControlKeyCard(
+            choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }),
+            keyboards: choices,
+            keyboardChoice: { rules.configuration.settings(for: $0.id)?.controlKey },
+            setKeyboardChoice: { rules.setControlKey($0, for: $1) }
+        )
+        WinAltCard(
+            choice: Binding(get: { rules.modifierLayout }, set: { rules.setModifierLayout($0) }),
+            keyboards: choices,
+            keyboardChoice: { rules.configuration.settings(for: $0.id)?.modifierLayout },
+            setKeyboardChoice: { rules.setModifierLayout($0, for: $1) }
+        )
 
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
@@ -264,9 +276,27 @@ private struct PresetBar: View {
 /// Which key the Ctrl shortcuts are pressed with.
 private struct ControlKeyCard: View {
     @Binding var choice: ControlKey
+    /// A row per keyboard once there are two (KB-076).
+    let keyboards: KeyboardChoices
+    let keyboardChoice: (Keyboard) -> ControlKey?
+    let setKeyboardChoice: (ControlKey?, Keyboard) -> Void
 
     var body: some View {
         Card {
+            VStack(alignment: .leading, spacing: 14) {
+                header
+                if keyboards.isShown {
+                    Divider()
+                    KeyboardRows(choices: keyboards, options: [
+                        (.function, Text("fn")), (.control, Text("Ctrl")), (.both, Text("Both")),
+                    ], value: keyboardChoice, setValue: setKeyboardChoice)
+                    .padding(.leading, 48)
+                }
+            }
+        }
+    }
+
+    private var header: some View {
             HStack(spacing: 14) {
                 IconTile(symbol: "globe", tint: .indigo, size: 34)
                 AdaptiveRow {
@@ -289,7 +319,6 @@ private struct ControlKeyCard: View {
                     .fixedSize()
                 }
             }
-        }
     }
 
     /// fn turns these keys into others, so fn cannot stand in for Ctrl with
@@ -310,9 +339,27 @@ private struct ControlKeyCard: View {
 /// PC keyboard sends them, or where they sit on a Mac keyboard.
 private struct WinAltCard: View {
     @Binding var choice: ModifierLayout
+    let keyboards: KeyboardChoices
+    let keyboardChoice: (Keyboard) -> ModifierLayout?
+    let setKeyboardChoice: (ModifierLayout?, Keyboard) -> Void
 
     var body: some View {
         Card {
+            VStack(alignment: .leading, spacing: 14) {
+                header
+                if keyboards.isShown {
+                    Divider()
+                    KeyboardRows(choices: keyboards, options: [
+                        (.macPosition, Text(verbatim: "Win → ⌥ · Alt → ⌘")),
+                        (.pcKeyboard, Text(verbatim: "Win → ⌘ · Alt → ⌥")),
+                    ], value: keyboardChoice, setValue: setKeyboardChoice)
+                    .padding(.leading, 48)
+                }
+            }
+        }
+    }
+
+    private var header: some View {
             HStack(spacing: 14) {
                 IconTile(symbol: "command", tint: .pink, size: 34)
                 AdaptiveRow {
@@ -336,7 +383,6 @@ private struct WinAltCard: View {
                     .fixedSize()
                 }
             }
-        }
     }
 
     private var description: LocalizedStringKey {

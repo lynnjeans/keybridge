@@ -23,6 +23,7 @@
 		1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7297D61F8E6943745351 /* KeyCombo.swift */; };
 		170A5700422D9AB305C41DEE /* PathBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D876685E7767C4DF29FBAEC /* PathBoxController.swift */; };
 		173EF017C7B2F1BF1DDC5B3A /* OtherRemapperMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8C22F5CFA7BBE22239F4C5 /* OtherRemapperMonitor.swift */; };
+		1996BA3442D8439E617830DF /* KeyboardRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F58F9D1866F3D99AFBB483 /* KeyboardRows.swift */; };
 		19E2BC68837D322095AC2C1F /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3DCFF3175605C83D7B44 /* Scope.swift */; };
 		1B35B38B6E69F163D8062248 /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C045757621DA8A83B0E8BC /* ClipboardMonitor.swift */; };
 		1B97BFB873708FD8EB3B7764 /* RulesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */; };
@@ -49,6 +50,7 @@
 		35B4AEDA44D7293C6012B9FC /* SupportFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7CF2F1C9CBF97451BD52FD /* SupportFolder.swift */; };
 		3626971F22EE09BEC94F3C0F /* KeyboardSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260733274D12FC9C4BD9DA6A /* KeyboardSourceTests.swift */; };
 		39641AA827A1C5A005D4466D /* WindowElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BE6AB336C4CB1BA19416 /* WindowElement.swift */; };
+		3AAC5B8EEF164C8C77085DC7 /* KeyboardChoicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9121117D4D51A8EB24FE05D /* KeyboardChoicesTests.swift */; };
 		3E32C8A84256148DD82349BE /* OnboardingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */; };
 		3E971AEC9CFF0B8B6A990A08 /* DiagnosticReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11600CF9269C9EF897B4579E /* DiagnosticReport.swift */; };
 		3EDB6F47656E0A8AB2D4B821 /* InstallLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1DE6FBD539515BB252C73E /* InstallLocation.swift */; };
@@ -110,6 +112,7 @@
 		8BCEA7AA4CC8C78D38BAD869 /* NewDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EFDDF4FA8FACE4A1C230AA /* NewDocument.swift */; };
 		8E0FBFB50DA527B208271E91 /* WindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84B286DBCE89F219CAAB5C /* WindowGeometry.swift */; };
 		8F026E6B2E2F6C873B1FA097 /* FileDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238B3FA6E5334809BEB0581B /* FileDialogTests.swift */; };
+		8FA0E3E6AA4CC34712F0409D /* KeyboardChoices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2DB68C81121E322F049189 /* KeyboardChoices.swift */; };
 		912C020783005C132B70314C /* RuleMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A708101ECE6E17C111DFA441 /* RuleMatcherTests.swift */; };
 		92AFE7DE8899B2B214A29D16 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
 		9442D9C9BC1CD2C960621472 /* FinderFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9CB0143163E921D561FAE8 /* FinderFolderTests.swift */; };
@@ -166,6 +169,7 @@
 		CA8ADD2A48AAE0299C5746F6 /* WindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84B286DBCE89F219CAAB5C /* WindowGeometry.swift */; };
 		CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0A9C5EAC893363675EAF /* Keycap.swift */; };
 		CC0F81B296CC344023B4CC44 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
+		CD065311EF6B81BE69EFF749 /* KeyboardChoices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2DB68C81121E322F049189 /* KeyboardChoices.swift */; };
 		D3B7AEE697CDBDCF64EF7DED /* RulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754B68EC7A37AE26CECC5C6 /* RulesController.swift */; };
 		D48D84229B7A4417A394335C /* ClipboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7780A268C4CFC269CC2BB6A /* ClipboardTests.swift */; };
 		D5253BB0F467B15081C32DCE /* WindowsPresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F82CCDE4B6CECB35739037 /* WindowsPresetTests.swift */; };
@@ -259,6 +263,7 @@
 		27813615EC3AE0E12EACF3F0 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
 		2A0F549C1993272DD073C5EF /* FileLocationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLocationsTests.swift; sourceTree = "<group>"; };
 		2D3D0A952E4777A7CC3E8B01 /* FileLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLocations.swift; sourceTree = "<group>"; };
+		2E2DB68C81121E322F049189 /* KeyboardChoices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardChoices.swift; sourceTree = "<group>"; };
 		2E383F121E8ACFEFCFC43CF4 /* SystemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAction.swift; sourceTree = "<group>"; };
 		2ED978507529E7331F0BA6DE /* CtrlClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlClick.swift; sourceTree = "<group>"; };
 		30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardItem.swift; sourceTree = "<group>"; };
@@ -357,6 +362,8 @@
 		D1A1FEF07E1F62E9E0F60548 /* BuiltInRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInRules.swift; sourceTree = "<group>"; };
 		D41BF86A97C1D2936EC49111 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineControllerTests.swift; sourceTree = "<group>"; };
+		D8F58F9D1866F3D99AFBB483 /* KeyboardRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRows.swift; sourceTree = "<group>"; };
+		D9121117D4D51A8EB24FE05D /* KeyboardChoicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardChoicesTests.swift; sourceTree = "<group>"; };
 		DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCodeLabelTests.swift; sourceTree = "<group>"; };
 		DBCD39F96B3BA4BFF713874B /* CtrlClickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlClickTests.swift; sourceTree = "<group>"; };
 		DD867C4F572ECA5641FA840C /* PathBoxResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathBoxResolver.swift; sourceTree = "<group>"; };
@@ -541,6 +548,8 @@
 				626672FC8FE90DCFB309CE4B /* FileDialogActionPicker.swift */,
 				4C14BAFD30FBE36BC7BC7D68 /* FinderMenuCard.swift */,
 				944CCA9CCA9243F51745519C /* FinderPage.swift */,
+				2E2DB68C81121E322F049189 /* KeyboardChoices.swift */,
+				D8F58F9D1866F3D99AFBB483 /* KeyboardRows.swift */,
 				708C0A9C5EAC893363675EAF /* Keycap.swift */,
 				8289E77DDADD9A2D9D5B6FD7 /* LanguagePicker.swift */,
 				E132BEBB027CC54A18CBEBCA /* LayoutCheck.swift */,
@@ -581,6 +590,7 @@
 				AE9CB0143163E921D561FAE8 /* FinderFolderTests.swift */,
 				6FB119FD1EF6E5CB5BFECEAF /* FinderMenuTests.swift */,
 				420E6642586046AA077CE0B1 /* InstallLocationTests.swift */,
+				D9121117D4D51A8EB24FE05D /* KeyboardChoicesTests.swift */,
 				B4C68D93B131B4BD17AA1CFC /* KeyboardListTests.swift */,
 				260733274D12FC9C4BD9DA6A /* KeyboardSourceTests.swift */,
 				DACB321F279D9C7CA78106A6 /* KeyCodeLabelTests.swift */,
@@ -844,6 +854,8 @@
 				4BBA3228CD04B0CDB593B527 /* KeyCodeLabelTests.swift in Sources */,
 				719C30053F65C4A2AC2C6CBA /* KeyCombo.swift in Sources */,
 				506B3F1B922AC2420E1B1062 /* KeyRecording.swift in Sources */,
+				CD065311EF6B81BE69EFF749 /* KeyboardChoices.swift in Sources */,
+				3AAC5B8EEF164C8C77085DC7 /* KeyboardChoicesTests.swift in Sources */,
 				BB6DEA979C7EE30B754F2DCC /* KeyboardList.swift in Sources */,
 				EBA5138773648E9A84D891C7 /* KeyboardListTests.swift in Sources */,
 				4B4B739BE43B4433ED193226 /* KeyboardSource.swift in Sources */,
@@ -956,7 +968,9 @@
 				48172EC3EC7D66545B713D43 /* KeyCodeLabel.swift in Sources */,
 				1705151A11975DF807D7F80D /* KeyCombo.swift in Sources */,
 				8B714E010EF7A46A93F57F15 /* KeyRecording.swift in Sources */,
+				8FA0E3E6AA4CC34712F0409D /* KeyboardChoices.swift in Sources */,
 				FF6373AA0A918CCCB4D37661 /* KeyboardList.swift in Sources */,
+				1996BA3442D8439E617830DF /* KeyboardRows.swift in Sources */,
 				0E75DEE1B00ACB53695E433E /* KeyboardSource.swift in Sources */,
 				CAC06B4DE1622AB4D046190F /* Keycap.swift in Sources */,
 				A668B7C231D3996BA42F3444 /* LanguagePicker.swift in Sources */,

@@ -160,6 +160,18 @@ final class RulesController {
         configuration.keyboards
     }
 
+    /// Every control key in effect somewhere: the general one, which any
+    /// keyboard without its own follows, and each keyboard's own. What the
+    /// Overview says covers them all.
+    var controlKeysInUse: Set<ControlKey> {
+        Set([controlKey] + keyboardSettings.compactMap(\.controlKey))
+    }
+
+    /// The same for the Win and Alt keys.
+    var modifierLayoutsInUse: Set<ModifierLayout> {
+        Set([modifierLayout] + keyboardSettings.compactMap(\.modifierLayout))
+    }
+
     /// Gives a keyboard its own control key, or nil to follow the general
     /// one, saving and taking effect at once.
     func setControlKey(_ key: ControlKey?, for keyboard: Keyboard) {
