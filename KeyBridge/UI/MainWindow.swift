@@ -135,14 +135,14 @@ private struct ShortcutsPage: View {
         ControlKeyCard(
             choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }),
             keyboards: choices,
-            keyboardChoice: { rules.configuration.settings(for: $0.id)?.controlKey },
-            setKeyboardChoice: { rules.setControlKey($0, for: $1) }
+            keyboardChoice: { rules.configuration.controlKey(for: $0.id) },
+            setKeyboardChoice: { rules.chooseControlKey($0, for: $1) }
         )
         WinAltCard(
             choice: Binding(get: { rules.modifierLayout }, set: { rules.setModifierLayout($0) }),
             keyboards: choices,
-            keyboardChoice: { rules.configuration.settings(for: $0.id)?.modifierLayout },
-            setKeyboardChoice: { rules.setModifierLayout($0, for: $1) }
+            keyboardChoice: { rules.configuration.modifierLayout(for: $0.id) },
+            setKeyboardChoice: { rules.chooseModifierLayout($0, for: $1) }
         )
 
         HStack(spacing: 10) {
@@ -273,52 +273,67 @@ private struct PresetBar: View {
     }
 }
 
-/// Which key the Ctrl shortcuts are pressed with.
+/// Which key the Ctrl shortcuts are pressed with: one choice, or with two
+/// keyboards or more, one for each (KB-076).
 private struct ControlKeyCard: View {
     @Binding var choice: ControlKey
-    /// A row per keyboard once there are two (KB-076).
     let keyboards: KeyboardChoices
-    let keyboardChoice: (Keyboard) -> ControlKey?
-    let setKeyboardChoice: (ControlKey?, Keyboard) -> Void
+    /// What a keyboard uses: its own choice, or else the general one.
+    let keyboardChoice: (Keyboard) -> ControlKey
+    let setKeyboardChoice: (ControlKey, Keyboard) -> Void
 
     var body: some View {
         Card {
-            VStack(alignment: .leading, spacing: 14) {
-                header
-                if keyboards.isShown {
-                    Divider()
-                    KeyboardRows(choices: keyboards, options: [
-                        (.function, Text("fn")), (.control, Text("Ctrl")), (.both, Text("Both")),
-                    ], value: keyboardChoice, setValue: setKeyboardChoice)
-                    .padding(.leading, 48)
+            if keyboards.isShown {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 14) {
+                        icon
+                        heading(perKeyboardDescription)
+                    }
+                    ForEach(keyboards.entries) { entry in
+                        Divider()
+                        KeyboardRow(
+                            entry: entry,
+                            example: Self.example(keyboardChoice(entry.keyboard)),
+                            value: Binding(get: { keyboardChoice(entry.keyboard) },
+                                           set: { setKeyboardChoice($0, entry.keyboard) })
+                        ) { options }
+                        .padding(.leading, 48)
+                    }
+                }
+            } else {
+                HStack(spacing: 14) {
+                    icon
+                    AdaptiveRow {
+                        heading(Text(description))
+                        Picker("Press Ctrl shortcuts with", selection: $choice) { options }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                            .fixedSize()
+                    }
                 }
             }
         }
     }
 
-    private var header: some View {
-            HStack(spacing: 14) {
-                IconTile(symbol: "globe", tint: .indigo, size: 34)
-                AdaptiveRow {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Press Ctrl shortcuts with")
-                            .font(.headline)
-                        Text(description)
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    // In the order the keys sit on a Mac keyboard: fn, then Ctrl.
-                    Picker("Press Ctrl shortcuts with", selection: $choice) {
-                        Text("fn").tag(ControlKey.function)
-                        Text("Ctrl").tag(ControlKey.control)
-                        Text("Both").tag(ControlKey.both)
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .fixedSize()
-                }
-            }
+    private var icon: some View { IconTile(symbol: "globe", tint: .indigo, size: 34) }
+
+    private func heading(_ description: Text) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Press Ctrl shortcuts with")
+                .font(.headline)
+            description
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    // In the order the keys sit on a Mac keyboard: fn, then Ctrl.
+    @ViewBuilder private var options: some View {
+        Text("fn").tag(ControlKey.function)
+        Text("Ctrl").tag(ControlKey.control)
+        Text("Both").tag(ControlKey.both)
     }
 
     /// fn turns these keys into others, so fn cannot stand in for Ctrl with
@@ -333,56 +348,87 @@ private struct ControlKeyCard: View {
         case .both: "Ctrl shortcuts in every group work with Ctrl and with fn. For example, Ctrl+C and fn+C copy. \(Self.keepsControlNote)"
         }
     }
+
+    /// With a row per keyboard, the examples are in the rows; the note on
+    /// arrows stays while a keyboard presses them with fn.
+    private var perKeyboardDescription: Text {
+        let usesFn = keyboards.entries.contains { keyboardChoice($0.keyboard) != .control }
+        return usesFn
+            ? Text("Each keyboard presses the Ctrl shortcuts with its own key. \(Self.keepsControlNote)")
+            : Text("Each keyboard presses the Ctrl shortcuts with its own key.")
+    }
+
+    static func example(_ key: ControlKey) -> Text {
+        switch key {
+        case .control: Text("For example, Ctrl+C copies.")
+        case .function: Text("For example, fn+C copies.")
+        case .both: Text("For example, Ctrl+C and fn+C copy.")
+        }
+    }
 }
 
 /// Which Mac keys the Win and Alt shortcuts are pressed with (KB-226): as a
-/// PC keyboard sends them, or where they sit on a Mac keyboard.
+/// PC keyboard sends them, or where they sit on a Mac keyboard. One choice,
+/// or with two keyboards or more, one for each (KB-076).
 private struct WinAltCard: View {
     @Binding var choice: ModifierLayout
     let keyboards: KeyboardChoices
-    let keyboardChoice: (Keyboard) -> ModifierLayout?
-    let setKeyboardChoice: (ModifierLayout?, Keyboard) -> Void
+    let keyboardChoice: (Keyboard) -> ModifierLayout
+    let setKeyboardChoice: (ModifierLayout, Keyboard) -> Void
 
     var body: some View {
         Card {
-            VStack(alignment: .leading, spacing: 14) {
-                header
-                if keyboards.isShown {
-                    Divider()
-                    KeyboardRows(choices: keyboards, options: [
-                        (.macPosition, Text(verbatim: "Win → ⌥ · Alt → ⌘")),
-                        (.pcKeyboard, Text(verbatim: "Win → ⌘ · Alt → ⌥")),
-                    ], value: keyboardChoice, setValue: setKeyboardChoice)
-                    .padding(.leading, 48)
+            if keyboards.isShown {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 14) {
+                        icon
+                        heading(Text("Which Mac keys Win and Alt are on each keyboard."))
+                    }
+                    ForEach(keyboards.entries) { entry in
+                        Divider()
+                        KeyboardRow(
+                            entry: entry,
+                            example: Self.example(keyboardChoice(entry.keyboard)),
+                            value: Binding(get: { keyboardChoice(entry.keyboard) },
+                                           set: { setKeyboardChoice($0, entry.keyboard) })
+                        ) { options }
+                        .padding(.leading, 48)
+                    }
+                }
+            } else {
+                HStack(spacing: 14) {
+                    icon
+                    AdaptiveRow {
+                        heading(Text(description))
+                        Picker("Win and Alt keys", selection: $choice) { options }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                            .fixedSize()
+                    }
                 }
             }
         }
     }
 
-    private var header: some View {
-            HStack(spacing: 14) {
-                IconTile(symbol: "command", tint: .pink, size: 34)
-                AdaptiveRow {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Win and Alt keys")
-                            .font(.headline)
-                        Text(description)
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    // Both keys named in each option, and no keyboard: which
-                    // keyboard someone has says less than where they reach
-                    // for Win. The same in every language.
-                    Picker("Win and Alt keys", selection: $choice) {
-                        Text(verbatim: "Win → ⌥ · Alt → ⌘").tag(ModifierLayout.macPosition)
-                        Text(verbatim: "Win → ⌘ · Alt → ⌥").tag(ModifierLayout.pcKeyboard)
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .fixedSize()
-                }
-            }
+    private var icon: some View { IconTile(symbol: "command", tint: .pink, size: 34) }
+
+    private func heading(_ description: Text) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Win and Alt keys")
+                .font(.headline)
+            description
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    // Both keys named in each option, and no keyboard: which keyboard
+    // someone has says less than where they reach for Win. The same in
+    // every language.
+    @ViewBuilder private var options: some View {
+        Text(verbatim: "Win → ⌥ · Alt → ⌘").tag(ModifierLayout.macPosition)
+        Text(verbatim: "Win → ⌘ · Alt → ⌥").tag(ModifierLayout.pcKeyboard)
     }
 
     private var description: LocalizedStringKey {
@@ -391,6 +437,13 @@ private struct WinAltCard: View {
             "Win maps to ⌘ and Alt to ⌥. For example, Win+L is ⌘L."
         case .macPosition:
             "Win maps to ⌥ and Alt to ⌘. For example, Win+L is ⌥L."
+        }
+    }
+
+    static func example(_ layout: ModifierLayout) -> Text {
+        switch layout {
+        case .pcKeyboard: Text("For example, Win+L is ⌘L.")
+        case .macPosition: Text("For example, Win+L is ⌥L.")
         }
     }
 }

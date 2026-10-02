@@ -1,44 +1,37 @@
 import SwiftUI
 
-/// A row per keyboard under a card's choice: "Same as above", or one of the
-/// card's options for that keyboard alone.
-struct KeyboardRows<Value: Hashable>: View {
-    let choices: KeyboardChoices
-    /// The card's options, as its segmented control shows them.
-    let options: [(value: Value, label: Text)]
-    let value: (Keyboard) -> Value?
-    let setValue: (Value?, Keyboard) -> Void
+/// One keyboard's own row in a card (KB-076): its name, what it does with an
+/// example, and the card's options as a segmented control showing what the
+/// keyboard really uses — never "the same as" something else on the page,
+/// which left the user to work out what that was.
+struct KeyboardRow<Value: Hashable, Options: View>: View {
+    let entry: KeyboardChoices.Entry
+    /// One example of what the chosen value does on this keyboard.
+    let example: Text
+    @Binding var value: Value
+    @ViewBuilder let options: Options
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("By keyboard")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
-            ForEach(choices.entries) { entry in
-                AdaptiveRow(minFlexibleWidth: 160) {
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(entry.keyboard.displayName)
-                        if !entry.isConnected {
-                            Text("Not connected")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+        AdaptiveRow(minFlexibleWidth: 160) {
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(entry.keyboard.displayName)
+                        .fontWeight(.medium)
+                    if !entry.isConnected {
+                        Text("Not connected")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
-                    Picker(entry.keyboard.displayName, selection: Binding(
-                        get: { value(entry.keyboard) },
-                        set: { setValue($0, entry.keyboard) }
-                    )) {
-                        Text("Same as above").tag(Value?.none)
-                        Divider()
-                        ForEach(options.indices, id: \.self) { index in
-                            options[index].label.tag(Optional(options[index].value))
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    .labelsHidden()
-                    .fixedSize()
                 }
+                example
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            Picker(entry.keyboard.displayName, selection: $value) { options }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .fixedSize()
         }
     }
 }

@@ -160,6 +160,18 @@ final class RulesController {
         configuration.keyboards
     }
 
+    /// What a keyboard's row sets (KB-076): the keyboard then uses `key`.
+    /// Matching the general choice leaves it following that one, so a
+    /// keyboard only has a setting of its own while it differs.
+    func chooseControlKey(_ key: ControlKey, for keyboard: Keyboard) {
+        setControlKey(key == controlKey ? nil : key, for: keyboard)
+    }
+
+    /// The same for the Win and Alt keys.
+    func chooseModifierLayout(_ layout: ModifierLayout, for keyboard: Keyboard) {
+        setModifierLayout(layout == modifierLayout ? nil : layout, for: keyboard)
+    }
+
     /// Every control key in effect somewhere: the general one, which any
     /// keyboard without its own follows, and each keyboard's own. What the
     /// Overview says covers them all.

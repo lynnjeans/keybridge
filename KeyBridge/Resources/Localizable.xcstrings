@@ -825,22 +825,6 @@
         }
       }
     },
-    "By keyboard" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "キーボードごと"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按键盘分别设置"
-          }
-        }
-      }
-    },
     "Cancel" : {
       "localizations" : {
         "ja" : {
@@ -1721,6 +1705,38 @@
         }
       }
     },
+    "Each keyboard presses the Ctrl shortcuts with its own key." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ctrl ショートカットを押すキーをキーボードごとに選びます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每把键盘用各自选定的键按 Ctrl 快捷键。"
+          }
+        }
+      }
+    },
+    "Each keyboard presses the Ctrl shortcuts with its own key. %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ctrl ショートカットを押すキーをキーボードごとに選びます。%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每把键盘用各自选定的键按 Ctrl 快捷键。%@"
+          }
+        }
+      }
+    },
     "Edit" : {
       "localizations" : {
         "ja" : {
@@ -2277,6 +2293,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5 分钟"
+          }
+        }
+      }
+    },
+    "For example, Ctrl+C and fn+C copy." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Ctrl+C でも fn+C でもコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Ctrl+C 和 fn+C 都能复制。"
+          }
+        }
+      }
+    },
+    "For example, Ctrl+C copies." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Ctrl+C でコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Ctrl+C 复制。"
+          }
+        }
+      }
+    },
+    "For example, Win+L is ⌘L." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Win+L は ⌘L。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Win+L 就是 ⌘L。"
+          }
+        }
+      }
+    },
+    "For example, Win+L is ⌥L." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Win+L は ⌥L。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Win+L 就是 ⌥L。"
+          }
+        }
+      }
+    },
+    "For example, fn+C copies." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：fn+C でコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 fn+C 复制。"
           }
         }
       }
@@ -5417,22 +5513,6 @@
         }
       }
     },
-    "Same as above" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上と同じ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "同上"
-          }
-        }
-      }
-    },
     "Save" : {
       "localizations" : {
         "ja" : {
@@ -6545,6 +6625,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "按下"
+          }
+        }
+      }
+    },
+    "Which Mac keys Win and Alt are on each keyboard." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードごとに、Win と Alt を Mac のどのキーに割り当てるかを選びます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 和 Alt 在每把键盘上对应哪个 Mac 键。"
           }
         }
       }
