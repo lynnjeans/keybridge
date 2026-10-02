@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var pathBoxPanel = PathBoxPanelController()
     lazy var quickSwitch = QuickSwitch(locations: FileLocations())
     let frontmost = FrontmostApplication()
+    let keyboards = KeyboardList()
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
@@ -51,6 +52,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         permissionMonitor.start()
         secureInput.start()
         otherRemappers.start()
+        keyboards.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
         pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show(startingAt: FinderFolder.currentPath()) }
         // A system hot key never reaches the app in front, so the path box
@@ -97,7 +99,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 try? await Task.sleep(for: .seconds(3))
                 let report = await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                             otherRemappers: otherRemappers, clipboard: clipboard,
-                                                            loginItem: loginItem)
+                                                            loginItem: loginItem, keyboards: keyboards)
                 try? report.text.write(toFile: path, atomically: true, encoding: .utf8)
             }
         }

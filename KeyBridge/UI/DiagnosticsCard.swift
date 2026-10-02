@@ -67,7 +67,8 @@ extension DiagnosticReport {
         secureInput: SecureInputMonitor,
         otherRemappers: OtherRemapperMonitor,
         clipboard: ClipboardController,
-        loginItem: LoginItem
+        loginItem: LoginItem,
+        keyboards: KeyboardList
     ) async -> DiagnosticReport {
         let generated = Date.now
         let info = Bundle.main.infoDictionary
@@ -80,6 +81,7 @@ extension DiagnosticReport {
             ("macOS", systemVersion),
             ("Model", hardwareModel),
             ("Preferred languages", Locale.preferredLanguages.joined(separator: ", ")),
+            ("Keyboards", keyboards.connected.isEmpty ? "none found" : keyboards.connected.map(\.description).joined(separator: ", ")),
         ])
 
         var state: [(label: String, value: String)] = Permission.allCases.map {

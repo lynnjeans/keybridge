@@ -21,7 +21,8 @@ struct Keyboard: Hashable, Codable, Sendable {
         productID = properties[Keyboard.productIDKey] as? Int ?? 0
         // Some keyboards pad their name: "RK-KB5.0 ".
         name = (properties[Keyboard.nameKey] as? String ?? "").trimmingCharacters(in: .whitespaces)
-        isBuiltIn = properties[Keyboard.builtInKey] as? Bool ?? false
+        // A boolean on the event service, a number on some devices.
+        isBuiltIn = (properties[Keyboard.builtInKey] as? NSNumber)?.boolValue ?? false
     }
 
     init(vendorID: Int, productID: Int, name: String, isBuiltIn: Bool) {
@@ -35,6 +36,28 @@ struct Keyboard: Hashable, Codable, Sendable {
     static let productIDKey = "ProductID"
     static let nameKey = "Product"
     static let builtInKey = "Built-In"
+    /// Everything a keyboard is read from, on an event service or a device.
+    static let registryKeys = [vendorKey, productIDKey, nameKey, builtInKey]
+
+    /// What a setting is kept under (KB-243): the model, not the name, which
+    /// a keyboard may report padded or a user may change. The built-in
+    /// keyboard reports no vendor or product at all; being built in is what
+    /// tells it apart.
+    struct ID: Hashable, Codable, Sendable {
+        let vendorID: Int
+        let productID: Int
+        let isBuiltIn: Bool
+    }
+
+    var id: ID { ID(vendorID: vendorID, productID: productID, isBuiltIn: isBuiltIn) }
+}
+
+extension Keyboard: CustomStringConvertible {
+    /// For the log and the diagnostic report: "RK-KB5.0 (0x000e/0x3412)",
+    /// "Apple Internal Keyboard / Trackpad (built-in)".
+    var description: String {
+        isBuiltIn ? "\(name) (built-in)" : String(format: "%@ (0x%04x/0x%04x)", name, vendorID, productID)
+    }
 }
 
 /// Tells which keyboard a key event came from (KB-021).
@@ -101,7 +124,7 @@ final class KeyboardSource {
             return nil
         }
         var properties: [String: Any] = [:]
-        for key in [Keyboard.vendorKey, Keyboard.productIDKey, Keyboard.nameKey, Keyboard.builtInKey] {
+        for key in Keyboard.registryKeys {
             properties[key] = IORegistryEntryCreateCFProperty(entry, key as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
         }
         return Keyboard(properties: properties)

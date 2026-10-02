@@ -415,6 +415,20 @@ which knows the device of every key value. 345 tap events typed on the two keybo
   one for each sender and remembers the answer.
 - The built-in keyboard's fn key is not on the keyboard usage page, so an `IOHIDManager`
   matching keyboards does not report it.
+- **A modifier pressed on its own names its keyboard too** (KB-020, 2026-10-02): field 87 of
+  the `flagsChanged` event gave the right keyboard for 22 of 22 — fn, Ctrl, Option, Command and
+  Shift on the built-in keyboard, Ctrl, Win, Alt and Shift on the Bluetooth one.
+- **A click or a scroll names the mouse**, not the keyboard a modifier is held on: 14 clicks and
+  40 scrolls with Ctrl held on the Bluetooth keyboard all named the Razer ProClick, whose event
+  service has a vendor and product like any keyboard's. So what follows a keyboard for mouse
+  events has to be the keyboard of the last modifier (KB-243), never the event's own sender.
+- **Listing the connected keyboards** (`KeyboardList`): an `IOHIDManager` matching Generic
+  Desktop keyboards and keypads, never opened (being told about devices needs no permission).
+  The device's `Product`, `VendorID`, `ProductID` and `Built-In` are those of the event service
+  beneath it, so a device and an event name the same `Keyboard`; the built-in keyboard has no
+  vendor or product in either. The ProClick matches too, through its keyboard collection; its
+  `PrimaryUsage` is 2 (mouse) rather than 6, which is how it is left out. Switching a Bluetooth
+  keyboard off and on reports it gone and back within a second, sometimes flapping once.
 
 To measure again, on another macOS version for instance (both tools only listen, and print no
 key codes; the terminal they run in needs Accessibility and Input Monitoring):
@@ -426,7 +440,8 @@ swiftc -O scripts/spikes/keyboard-attribution/main.swift -o /tmp/keyboard-attrib
 
 ```bash
 swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
-/tmp/keyboard-source-check              # prints the keyboard each time it changes, as KeyboardSource sees it
+/tmp/keyboard-source-check              # prints the keyboard each time it changes, as KeyboardSource sees it,
+                                        # each modifier pressed alone, and the senders of clicks and scrolls
 ```
 
 ## Posting test events

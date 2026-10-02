@@ -14,6 +14,7 @@ struct MainWindow: View {
     let quickSwitch: QuickSwitch
     let updates: UpdateController
     let loginItem: LoginItem
+    let keyboards: KeyboardList
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -46,7 +47,7 @@ struct MainWindow: View {
                     DiagnosticsCard {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard,
-                                                 loginItem: loginItem)
+                                                 loginItem: loginItem, keyboards: keyboards)
                     }
                 default:
                     ComingSoon(page: page)
