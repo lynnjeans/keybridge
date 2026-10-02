@@ -41,24 +41,74 @@ struct Configuration: Hashable, Sendable {
     /// means a PC keyboard's, as the preset is written.
     var modifierLayout: ModifierLayout = .pcKeyboard
 
+    /// Keyboards with a control key or Win and Alt keys of their own
+    /// (KB-243); every other keyboard follows the two settings above. Absent
+    /// from an older file means none, so this needs no migration.
+    var keyboards: [KeyboardSettings] = []
+
+    /// The control key a keyboard's Ctrl shortcuts are pressed with: its own,
+    /// or the general one.
+    func controlKey(for keyboard: Keyboard.ID?) -> ControlKey {
+        settings(for: keyboard)?.controlKey ?? controlKey
+    }
+
+    /// The keys a keyboard's Win and Alt shortcuts are pressed with: its own,
+    /// or the general ones.
+    func modifierLayout(for keyboard: Keyboard.ID?) -> ModifierLayout {
+        settings(for: keyboard)?.modifierLayout ?? modifierLayout
+    }
+
+    func settings(for keyboard: Keyboard.ID?) -> KeyboardSettings? {
+        guard let keyboard else { return nil }
+        return keyboards.first { $0.id == keyboard }
+    }
+
+    /// Gives a keyboard its own control key, or nil to have it follow the
+    /// general one. A keyboard left with nothing of its own is forgotten.
+    mutating func setControlKey(_ key: ControlKey?, for keyboard: Keyboard) {
+        changeSettings(for: keyboard) { $0.controlKey = key }
+    }
+
+    /// Gives a keyboard its own Win and Alt keys, or nil to have it follow
+    /// the general ones.
+    mutating func setModifierLayout(_ layout: ModifierLayout?, for keyboard: Keyboard) {
+        changeSettings(for: keyboard) { $0.modifierLayout = layout }
+    }
+
+    private mutating func changeSettings(for keyboard: Keyboard, _ change: (inout KeyboardSettings) -> Void) {
+        var settings = self.settings(for: keyboard.id) ?? KeyboardSettings(keyboard: keyboard)
+        // The name as the keyboard last gave it, for showing it unplugged.
+        settings.name = keyboard.name
+        change(&settings)
+        keyboards.removeAll { $0.id == keyboard.id }
+        if !settings.isEmpty { keyboards.append(settings) }
+    }
+
     /// The rules in effect: the user's custom rules, then the preset's groups
     /// that are on with the user's changes, pressed with the chosen Win/Alt
     /// keys and control key. A switched-off group contributes nothing, even
     /// where the user has customised one of its entries — the group switch is
     /// the broader, later decision. Custom rules are taken as recorded: the
     /// keys are a setting for the preset.
-    func effectiveRules(of preset: Preset) -> [Rule] {
+    ///
+    /// For a keyboard with settings of its own (KB-243), those keys instead.
+    func effectiveRules(of preset: Preset, for keyboard: Keyboard.ID? = nil) -> [Rule] {
+        let layout = modifierLayout(for: keyboard)
         let enabled = preset.groups
             .filter(isEnabled(group:))
-            .flatMap(rules(of:))
-        return customRules + controlKey.apply(to: enabled)
+            .flatMap { rules(of: $0, layout: layout) }
+        return customRules + controlKey(for: keyboard).apply(to: enabled)
     }
 
     /// A group's rules with the user's changes, pressed with the chosen Win
     /// and Alt keys. Changes are kept in the preset's terms, Win as ⌘, so a
     /// re-recorded Win+K stays Win+K when the choice changes.
     func rules(of group: Preset.Group) -> [Rule] {
-        modifierLayout.apply(to: presetRules(base: group.rules), inGroup: group.id)
+        rules(of: group, layout: modifierLayout)
+    }
+
+    private func rules(of group: Preset.Group, layout: ModifierLayout) -> [Rule] {
+        layout.apply(to: presetRules(base: group.rules), inGroup: group.id)
     }
 
     /// Whether a group is switched on: the user's choice, or else the
@@ -167,7 +217,7 @@ struct Configuration: Hashable, Sendable {
 extension Configuration: Codable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, overrides, disabledGroups, enabledGroups, controlKey, wheelDirection, dockClickMinimizes
-        case ctrlClickSelects, modifierLayout
+        case ctrlClickSelects, modifierLayout, keyboards
     }
 
     init(from decoder: Decoder) throws {
@@ -180,6 +230,7 @@ extension Configuration: Codable {
         dockClickMinimizes = try container.decodeIfPresent(Bool.self, forKey: .dockClickMinimizes) ?? true
         ctrlClickSelects = try container.decodeIfPresent(Bool.self, forKey: .ctrlClickSelects) ?? false
         modifierLayout = try container.decodeIfPresent(ModifierLayout.self, forKey: .modifierLayout) ?? .pcKeyboard
+        keyboards = try container.decodeIfPresent([KeyboardSettings].self, forKey: .keyboards) ?? []
     }
 
     func encode(to encoder: Encoder) throws {
@@ -195,5 +246,62 @@ extension Configuration: Codable {
         // Left out while off, so the file only changes for those who use it.
         if ctrlClickSelects { try container.encode(true, forKey: .ctrlClickSelects) }
         if modifierLayout != .pcKeyboard { try container.encode(modifierLayout, forKey: .modifierLayout) }
+        if !keyboards.isEmpty { try container.encode(keyboards, forKey: .keyboards) }
+    }
+}
+
+/// What one keyboard has of its own (KB-243). Kept by model, as `Keyboard.ID`
+/// tells keyboards apart, so it outlasts unplugging; nil follows the general
+/// setting. Written flat, so the file reads as it would be typed:
+///
+///     {"vendorID": 14, "productID": 13330, "name": "RK-KB5.0", "controlKey": "control"}
+struct KeyboardSettings: Hashable, Codable, Sendable {
+    var vendorID: Int
+    var productID: Int
+    /// Written only for the built-in keyboard.
+    var isBuiltIn: Bool
+    /// As the keyboard last gave it; only for showing.
+    var name: String
+    var controlKey: ControlKey?
+    var modifierLayout: ModifierLayout?
+
+    init(keyboard: Keyboard, controlKey: ControlKey? = nil, modifierLayout: ModifierLayout? = nil) {
+        vendorID = keyboard.vendorID
+        productID = keyboard.productID
+        isBuiltIn = keyboard.isBuiltIn
+        name = keyboard.name
+        self.controlKey = controlKey
+        self.modifierLayout = modifierLayout
+    }
+
+    var id: Keyboard.ID { Keyboard.ID(vendorID: vendorID, productID: productID, isBuiltIn: isBuiltIn) }
+
+    var keyboard: Keyboard { Keyboard(vendorID: vendorID, productID: productID, name: name, isBuiltIn: isBuiltIn) }
+
+    /// Nothing of its own: the keyboard follows the general settings.
+    var isEmpty: Bool { controlKey == nil && modifierLayout == nil }
+
+    private enum CodingKeys: String, CodingKey {
+        case vendorID, productID, isBuiltIn, name, controlKey, modifierLayout
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        vendorID = try container.decodeIfPresent(Int.self, forKey: .vendorID) ?? 0
+        productID = try container.decodeIfPresent(Int.self, forKey: .productID) ?? 0
+        isBuiltIn = try container.decodeIfPresent(Bool.self, forKey: .isBuiltIn) ?? false
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        controlKey = try container.decodeIfPresent(ControlKey.self, forKey: .controlKey)
+        modifierLayout = try container.decodeIfPresent(ModifierLayout.self, forKey: .modifierLayout)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(vendorID, forKey: .vendorID)
+        try container.encode(productID, forKey: .productID)
+        if isBuiltIn { try container.encode(true, forKey: .isBuiltIn) }
+        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(controlKey, forKey: .controlKey)
+        try container.encodeIfPresent(modifierLayout, forKey: .modifierLayout)
     }
 }

@@ -22,12 +22,15 @@ final class RulesController {
     @ObservationIgnored private let applyWheelDirection: (WheelDirection) -> Void
     @ObservationIgnored private let applyDockClick: (Bool) -> Void
     @ObservationIgnored private let applyCtrlClick: (CtrlClick?) -> Void
+    @ObservationIgnored private let applyKeyboards: ([Keyboard.ID: Dispatcher.KeyboardProfile]) -> Void
     @ObservationIgnored private let capture: ((@MainActor (Trigger) -> Void)?) -> Void
 
     /// - Parameters:
     ///   - apply: hands the engine the rules it should run with.
     ///   - applyWheelDirection: tells the engine which way wheels scroll.
     ///   - applyDockClick: tells the engine whether Dock clicks minimize.
+    ///   - applyKeyboards: hands the engine what each keyboard with settings
+    ///     of its own runs with (KB-243).
     ///   - capture: points the engine's key presses at a recorder, or back
     ///     at the rules with nil.
     init(
@@ -38,6 +41,7 @@ final class RulesController {
         applyWheelDirection: @escaping (WheelDirection) -> Void = { _ in },
         applyDockClick: @escaping (Bool) -> Void = { _ in },
         applyCtrlClick: @escaping (CtrlClick?) -> Void = { _ in },
+        applyKeyboards: @escaping ([Keyboard.ID: Dispatcher.KeyboardProfile]) -> Void = { _ in },
         apply: @escaping ([Rule]) -> Void = { _ in }
     ) {
         self.preset = preset
@@ -46,6 +50,7 @@ final class RulesController {
         self.applyWheelDirection = applyWheelDirection
         self.applyDockClick = applyDockClick
         self.applyCtrlClick = applyCtrlClick
+        self.applyKeyboards = applyKeyboards
         self.capture = capture
         // Computed into locals first: `self` is off limits until every
         // stored property has a value.
@@ -57,6 +62,7 @@ final class RulesController {
         applyWheelDirection(loaded.wheelDirection)
         applyDockClick(loaded.dockClickMinimizes)
         applyCtrlClick(loaded.ctrlClick)
+        applyKeyboards(loaded.keyboardProfiles(of: preset))
     }
 
     /// Whether the preset is as it ships, with no group switched and no
@@ -146,6 +152,31 @@ final class RulesController {
         guard configuration.modifierLayout != layout else { return }
         configuration.modifierLayout = layout
         Logger.configuration.notice("Modifier layout: \(layout.rawValue, privacy: .public)")
+        commit()
+    }
+
+    /// Keyboards with settings of their own, as last saved (KB-243).
+    var keyboardSettings: [KeyboardSettings] {
+        configuration.keyboards
+    }
+
+    /// Gives a keyboard its own control key, or nil to follow the general
+    /// one, saving and taking effect at once.
+    func setControlKey(_ key: ControlKey?, for keyboard: Keyboard) {
+        let before = configuration
+        configuration.setControlKey(key, for: keyboard)
+        guard configuration != before else { return }
+        Logger.configuration.notice("Control key for \(keyboard.description, privacy: .public): \(key?.rawValue ?? "general", privacy: .public)")
+        commit()
+    }
+
+    /// Gives a keyboard its own Win and Alt keys, or nil to follow the
+    /// general ones.
+    func setModifierLayout(_ layout: ModifierLayout?, for keyboard: Keyboard) {
+        let before = configuration
+        configuration.setModifierLayout(layout, for: keyboard)
+        guard configuration != before else { return }
+        Logger.configuration.notice("Modifier layout for \(keyboard.description, privacy: .public): \(layout?.rawValue ?? "general", privacy: .public)")
         commit()
     }
 
@@ -300,6 +331,7 @@ final class RulesController {
         applyWheelDirection(configuration.wheelDirection)
         applyDockClick(configuration.dockClickMinimizes)
         applyCtrlClick(configuration.ctrlClick)
+        applyKeyboards(configuration.keyboardProfiles(of: preset))
     }
 }
 
@@ -307,5 +339,18 @@ private extension Configuration {
     /// What the engine needs: the key follows the Ctrl / fn choice.
     var ctrlClick: CtrlClick? {
         ctrlClickSelects ? CtrlClick(controlKey: controlKey) : nil
+    }
+
+    /// The same for each keyboard with settings of its own. A keyboard
+    /// listed twice in a hand-edited file counts once, as the first.
+    func keyboardProfiles(of preset: Preset) -> [Keyboard.ID: Dispatcher.KeyboardProfile] {
+        var profiles: [Keyboard.ID: Dispatcher.KeyboardProfile] = [:]
+        for settings in keyboards where !settings.isEmpty && profiles[settings.id] == nil {
+            profiles[settings.id] = Dispatcher.KeyboardProfile(
+                rules: effectiveRules(of: preset, for: settings.id),
+                ctrlClick: ctrlClickSelects ? CtrlClick(controlKey: controlKey(for: settings.id)) : nil
+            )
+        }
+        return profiles
     }
 }

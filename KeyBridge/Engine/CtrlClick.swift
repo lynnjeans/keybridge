@@ -26,7 +26,7 @@ struct CtrlClick: Equatable, Sendable {
 
     /// The flags the release of a rewritten press goes out with: ⌘ still,
     /// even when the key was let go of first, so the app sees one ⌘+click.
-    func release(_ flags: CGEventFlags) -> CGEventFlags {
+    static func release(_ flags: CGEventFlags) -> CGEventFlags {
         flags.subtracting([.maskControl, .maskSecondaryFn]).union(.maskCommand)
     }
 }

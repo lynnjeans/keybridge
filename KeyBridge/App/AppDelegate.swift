@@ -15,11 +15,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let frontmost = FrontmostApplication()
     let keyboards = KeyboardList()
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
+    /// Which keyboard a key came from, for keyboards with settings of their
+    /// own (KB-243).
+    let keyboardSource = KeyboardSource()
     lazy var dispatcher = Dispatcher(
         frontmostBundleID: { [frontmost] in frontmost.bundleID },
         isEditingText: FocusedElement.isEditingText,
         isInFileDialog: FileDialog.isFocused,
-        fileDialog: { [quickSwitch] in quickSwitch.perform($0) }
+        fileDialog: { [quickSwitch] in quickSwitch.perform($0) },
+        keyboard: { [keyboardSource] in keyboardSource.keyboard(of: $0) }
     )
     /// The preset, the user's changes to it, and the rules that result. It
     /// hands each new set straight to the dispatcher, so a switch flipped in
@@ -29,6 +33,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         applyWheelDirection: { [dispatcher] direction in dispatcher.wheelDirection = direction },
         applyDockClick: { [dockClick] minimizes in dockClick.isEnabled = minimizes },
         applyCtrlClick: { [dispatcher] ctrlClick in dispatcher.ctrlClick = ctrlClick },
+        applyKeyboards: { [dispatcher] profiles in dispatcher.keyboardProfiles = profiles },
         apply: { [dispatcher] rules in dispatcher.rules = rules }
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)

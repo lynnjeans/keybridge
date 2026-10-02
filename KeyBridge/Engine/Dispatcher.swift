@@ -18,12 +18,37 @@ final class Dispatcher {
         case replace(CGEvent)
     }
 
-    /// The effective rules.
+    /// The effective rules, for every keyboard without settings of its own.
     var rules: [Rule] = [] {
         didSet { matcher = RuleMatcher(rules: rules) }
     }
 
     private var matcher = RuleMatcher(rules: [])
+
+    /// What a keyboard with a control key or Win and Alt keys of its own runs
+    /// with (KB-243), prepared whenever the configuration changes so that a
+    /// key press costs a lookup and nothing more.
+    struct KeyboardProfile: Equatable {
+        var rules: [Rule]
+        var ctrlClick: CtrlClick?
+    }
+
+    /// Per keyboard; empty for everyone who has not set one, who then pay
+    /// nothing for it: no event is asked which keyboard it came from.
+    var keyboardProfiles: [Keyboard.ID: KeyboardProfile] = [:] {
+        didSet { keyboardMatchers = keyboardProfiles.mapValues { RuleMatcher(rules: $0.rules) } }
+    }
+
+    private var keyboardMatchers: [Keyboard.ID: RuleMatcher] = [:]
+
+    /// The keyboard an event came from (`KeyboardSource`); nil when it
+    /// cannot be told, and the general rules apply.
+    private let keyboard: @MainActor (CGEvent) -> Keyboard?
+
+    /// The keyboard the last modifier was pressed on. Clicks, scrolling and
+    /// a modifier tapped alone follow it: a click names the mouse it came
+    /// from, never the keyboard the modifier is held on (measured, KB-020).
+    private var modifierKeyboard: Keyboard.ID?
 
     /// Which way mouse wheels scroll.
     var wheelDirection = WheelDirection.system
@@ -84,8 +109,10 @@ final class Dispatcher {
         snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) },
         fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in },
         now: @escaping @MainActor () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
-        isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() }
+        isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() },
+        keyboard: @escaping @MainActor (CGEvent) -> Keyboard? = { _ in nil }
     ) {
+        self.keyboard = keyboard
         self.now = now
         self.isSecureInputOn = isSecureInputOn
         self.frontmostBundleID = frontmostBundleID
@@ -120,6 +147,9 @@ final class Dispatcher {
     private var clickIsCommand = false
 
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
+        if type == .flagsChanged, !keyboardProfiles.isEmpty, let keyboard = keyboard(event) {
+            modifierKeyboard = keyboard.id
+        }
         let tapped = modifierTap(event, type: type)
         if let recorder {
             if let tapped {
@@ -176,7 +206,7 @@ final class Dispatcher {
     /// posted for it does not arrive while the modifier still counts as held.
     private func modifierTapped(_ key: KeyCode) {
         let trigger = Trigger.key(combo: KeyCombo(key))
-        guard let rule = matcher.match(
+        guard let rule = matcher(for: modifierKeyboard).match(
             trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
             isEditingText: isEditingText, isInFileDialog: isInFileDialog
         ) else { return }
@@ -212,12 +242,14 @@ final class Dispatcher {
     private func rewriteClick(_ event: CGEvent, type: CGEventType) {
         if type == .leftMouseDown {
             clickIsCommand = false
-            guard let ctrlClick, let flags = ctrlClick.rewrite(event.flags) else { return }
+            guard let ctrlClick = ctrlClick(for: keyboardID(of: event, type: type)),
+                  let flags = ctrlClick.rewrite(event.flags) else { return }
             event.flags = flags
             clickIsCommand = true
         } else if clickIsCommand {
             clickIsCommand = false
-            if let ctrlClick { event.flags = ctrlClick.release(event.flags) }
+            // Whichever keyboard's setting made the press a ⌘+click.
+            event.flags = CtrlClick.release(event.flags)
         }
     }
 
@@ -381,10 +413,30 @@ final class Dispatcher {
 
     private func match(_ event: CGEvent, type: CGEventType) -> Rule? {
         guard let trigger = Trigger(event: event, type: type) else { return nil }
-        return matcher.match(
+        return matcher(for: keyboardID(of: event, type: type)).match(
             trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
             isEditingText: isEditingText, isInFileDialog: isInFileDialog
         )
+    }
+
+    /// The keyboard whose settings apply to `event`: a key's own keyboard,
+    /// and for a click or scroll the one the last modifier was pressed on.
+    /// Nobody is asked while no keyboard has settings of its own.
+    private func keyboardID(of event: CGEvent, type: CGEventType) -> Keyboard.ID? {
+        guard !keyboardProfiles.isEmpty else { return nil }
+        switch type {
+        case .keyDown, .keyUp: return keyboard(event)?.id
+        default: return modifierKeyboard
+        }
+    }
+
+    private func matcher(for keyboard: Keyboard.ID?) -> RuleMatcher {
+        keyboard.flatMap { keyboardMatchers[$0] } ?? matcher
+    }
+
+    private func ctrlClick(for keyboard: Keyboard.ID?) -> CtrlClick? {
+        if let keyboard, let profile = keyboardProfiles[keyboard] { return profile.ctrlClick }
+        return ctrlClick
     }
 
     private static func launch(_ bundleID: String) {
