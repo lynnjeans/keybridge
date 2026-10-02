@@ -6,6 +6,26 @@
     <description>KeyBridge updates</description>
     <language>en</language>
     <item>
+      <title>KeyBridge 1.1</title>
+      <pubDate>Fri, 02 Oct 2026 10:17:59 GMT</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Open at Login&lt;/b&gt;: KeyBridge starts when you log in. New installs have it ticked in the setup guide; if you already use KeyBridge, switch it on on the Overview page.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Each keyboard its own way&lt;/b&gt;: a MacBook's keyboard and an external PC keyboard can each press the Ctrl shortcuts and Win/Alt their own way, on the Shortcuts page. A PC keyboard uses Ctrl and its own Win key as soon as it is plugged in.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;登录时打开&lt;/b&gt;：开机登录后 KeyBridge 自动启动。新装时在设置向导里默认勾选；已经在用的话，到“概览”页打开。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;每把键盘分别设置&lt;/b&gt;：MacBook 键盘和外接 PC 键盘可以各用各的 Ctrl 键和 Win/Alt 键，在“快捷键”页设置。PC 键盘插上就用 Ctrl，Win 键就是 Win。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;ログイン時に開く&lt;/b&gt;：ログインすると KeyBridge が自動的に起動します。新しくインストールした場合はセットアップの最後でオンになっています。すでに使っている場合は「概要」ページでオンにしてください。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;キーボードごとの設定&lt;/b&gt;：MacBook のキーボードと外付けの PC キーボードで、Ctrl のショートカットと Win/Alt のキーを別々に設定できます（「ショートカット」ページ）。PC キーボードは接続してすぐ、Ctrl と刻印どおりの Win キーで使えます。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/keybridge/releases/download/v1.1/KeyBridge-1.1.dmg" length="4844110" type="application/octet-stream" sparkle:edSignature="dKJh8rrk/ZvqZ7mSgc7CoBaWkrIK+Lvxs52E4ZfPPqBFtBhwcgKiu9GE3ggaMWjjaKXjGhPfRvObozjVpn8iCg==" />
+    </item>
+    <item>
       <title>KeyBridge 1.0.1</title>
       <pubDate>Wed, 30 Sep 2026 07:05:46 GMT</pubDate>
       <sparkle:version>4</sparkle:version>
