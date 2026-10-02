@@ -314,6 +314,7 @@ screenshotted in each language:
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
 | `KB_DEBUG_STEP` | The setup guide shows this step whatever the permissions say: `accessibility`, `inputMonitoring`, `ready`. A build that lacks the permissions cannot reach `ready` otherwise. Add `-onboardingCompleted NO` to the arguments to see it as on a first run |
+| `KB_DEBUG_KEYBOARDS` | `pc` (one PC keyboard, as on a Mac mini), `mac` (the built-in keyboard only) or `both`: the Shortcuts page's per-keyboard rows show these instead of the keyboards connected (KB-076). Display only; the engine still uses the real ones |
 | `KB_DEBUG_LOGINITEM` | `on` or `off`: Open at Login starts that way and can be switched, held in memory only — this Mac's login items are not touched (see [Open at Login](#open-at-login)) |
 | `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/KeyBridge`; the website's screenshots use it (`scripts/site/screenshots.sh`) |
 

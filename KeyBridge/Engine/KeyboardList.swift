@@ -19,6 +19,9 @@ final class KeyboardList {
     /// Built-in first, then by name; one entry per model.
     private(set) var connected: [Keyboard] = []
 
+    /// Told the list each time it changes, for the engine.
+    @ObservationIgnored var onChange: (([Keyboard]) -> Void)?
+
     @ObservationIgnored private var devices: [IOHIDDevice: Keyboard] = [:]
     @ObservationIgnored private var manager: IOHIDManager?
 
@@ -78,6 +81,7 @@ final class KeyboardList {
         let list = Self.list(Array(devices.values))
         guard list != connected else { return }
         connected = list
+        onChange?(list)
         Logger.keyboards.notice("Keyboards: \(list.map(\.description).joined(separator: ", "), privacy: .public)")
     }
 

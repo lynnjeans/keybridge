@@ -47,15 +47,31 @@ struct Configuration: Hashable, Sendable {
     var keyboards: [KeyboardSettings] = []
 
     /// The control key a keyboard's Ctrl shortcuts are pressed with: its own,
-    /// or the general one.
+    /// or else its default.
     func controlKey(for keyboard: Keyboard.ID?) -> ControlKey {
-        settings(for: keyboard)?.controlKey ?? controlKey
+        settings(for: keyboard)?.controlKey ?? defaultControlKey(for: keyboard)
     }
 
     /// The keys a keyboard's Win and Alt shortcuts are pressed with: its own,
-    /// or the general ones.
+    /// or else its default.
     func modifierLayout(for keyboard: Keyboard.ID?) -> ModifierLayout {
-        settings(for: keyboard)?.modifierLayout ?? modifierLayout
+        settings(for: keyboard)?.modifierLayout ?? defaultModifierLayout(for: keyboard)
+    }
+
+    /// What a keyboard with no control key of its own uses. A PC keyboard
+    /// has no fn key that reaches the Mac, so Ctrl, whatever the general
+    /// choice, which is for the Mac's own keys (user's call, 2026-10-02): a
+    /// PC keyboard plugged in next to a MacBook set to fn works at once.
+    func defaultControlKey(for keyboard: Keyboard.ID?) -> ControlKey {
+        if let keyboard, !keyboard.hasMacKeys { return .control }
+        return controlKey
+    }
+
+    /// Likewise, a PC keyboard's Win and Alt keys work as printed: its Win
+    /// key sends ⌘.
+    func defaultModifierLayout(for keyboard: Keyboard.ID?) -> ModifierLayout {
+        if let keyboard, !keyboard.hasMacKeys { return .pcKeyboard }
+        return modifierLayout
     }
 
     func settings(for keyboard: Keyboard.ID?) -> KeyboardSettings? {
@@ -91,7 +107,7 @@ struct Configuration: Hashable, Sendable {
     /// the broader, later decision. Custom rules are taken as recorded: the
     /// keys are a setting for the preset.
     ///
-    /// For a keyboard with settings of its own (KB-243), those keys instead.
+    /// For a given keyboard (KB-243), that keyboard's keys instead.
     func effectiveRules(of preset: Preset, for keyboard: Keyboard.ID? = nil) -> [Rule] {
         let layout = modifierLayout(for: keyboard)
         let enabled = preset.groups

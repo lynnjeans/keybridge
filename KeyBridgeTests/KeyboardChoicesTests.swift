@@ -55,24 +55,4 @@ import Testing
         #expect(rules.keyboardSettings.isEmpty)
         #expect(rules.controlKeysInUse == [.function])
     }
-
-    @Test func choosingWhatEveryoneUsesKeepsNothingOfItsOwn() {
-        let folder = FileManager.default.temporaryDirectory.appending(path: "KeyBridgeTests-\(UUID().uuidString)")
-        let rules = RulesController(store: ConfigurationStore(fileURL: folder.appending(path: "config.json")))
-        rules.setControlKey(.function)
-        rules.chooseControlKey(.control, for: Self.external)
-        #expect(rules.configuration.controlKey(for: Self.external.id) == .control)
-        #expect(rules.keyboardSettings.count == 1)
-        // The built-in keyboard's row set to what it already uses.
-        rules.chooseControlKey(.function, for: Self.builtIn)
-        #expect(rules.keyboardSettings.count == 1, "Nothing written for a keyboard that does not differ")
-        rules.chooseModifierLayout(.pcKeyboard, for: Self.external)
-        rules.chooseModifierLayout(.macPosition, for: Self.external)
-        #expect(rules.configuration.settings(for: Self.external.id)?.modifierLayout == .macPosition)
-        rules.chooseModifierLayout(.pcKeyboard, for: Self.external)
-        #expect(rules.configuration.settings(for: Self.external.id)?.modifierLayout == nil, "Back to the general one")
-        // Back to what everyone uses: the keyboard follows the general choice again.
-        rules.chooseControlKey(.function, for: Self.external)
-        #expect(rules.keyboardSettings.isEmpty)
-    }
 }

@@ -14,6 +14,9 @@ import Foundation
 /// - `KB_DEBUG_EXPAND_ALL`: every Shortcuts group starts expanded.
 /// - `KB_DEBUG_STEP`: the guide shows `accessibility`, `inputMonitoring` or
 ///   `ready`, whatever the permissions say.
+/// - `KB_DEBUG_KEYBOARDS`: `pc` (one PC keyboard, as on a Mac mini), `mac`
+///   (the built-in one only) or `both`, in place of those connected, for the
+///   Shortcuts page's per-keyboard rows (KB-076).
 /// - `KB_DEBUG_LOGINITEM`: `on` or `off`; Open at Login starts that way and
 ///   can be switched, without this Mac's login items being touched. Without
 ///   it a copy outside Applications shows the switch unavailable.
@@ -28,6 +31,18 @@ enum LayoutCheck {
 
     static var page: Page? { environment["KB_DEBUG_PAGE"].flatMap(Page.init(rawValue:)) }
     static var expandsAllGroups: Bool { environment["KB_DEBUG_EXPAND_ALL"] != nil }
+
+    /// The keyboards the Shortcuts page shows, in place of those connected.
+    static var keyboards: [Keyboard]? {
+        let builtIn = Keyboard(vendorID: 0, productID: 0, name: "Apple Internal Keyboard / Trackpad", isBuiltIn: true)
+        let pc = Keyboard(vendorID: 0x046D, productID: 0xC31C, name: "Logitech USB Keyboard", isBuiltIn: false)
+        switch environment["KB_DEBUG_KEYBOARDS"] {
+        case "pc": return [pc]
+        case "mac": return [builtIn]
+        case "both": return [builtIn, pc]
+        default: return nil
+        }
+    }
 
     /// The guide's step, whatever the permissions say.
     static var onboardingStep: OnboardingController.Step? {

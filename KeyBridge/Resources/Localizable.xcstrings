@@ -633,6 +633,22 @@
         }
       }
     },
+    "As printed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刻印どおり"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键帽"
+          }
+        }
+      }
+    },
     "Available once KeyBridge is in the Applications folder." : {
       "localizations" : {
         "ja" : {
@@ -2361,34 +2377,34 @@
         }
       }
     },
-    "For example, Win+L: press the Alt key (⌥) and L." : {
+    "For example, Win+L: press the Alt key and L." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "例：Win+L は Alt キー（⌥）と L。"
+            "value" : "例：Win+L は Alt キーと L。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "例如 Win+L：按 Alt 键（⌥）和 L。"
+            "value" : "例如 Win+L：按 Alt 键和 L。"
           }
         }
       }
     },
-    "For example, Win+L: press the Win key (⌘) and L." : {
+    "For example, Win+L: press the Win key and L." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "例：Win+L は Win キー（⌘）と L。"
+            "value" : "例：Win+L は Win キーと L。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "例如 Win+L：按 Win 键（⌘）和 L。"
+            "value" : "例如 Win+L：按 Win 键和 L。"
           }
         }
       }
@@ -3845,6 +3861,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "还没有自定义规则"
+          }
+        }
+      }
+    },
+    "No fn key, so Ctrl shortcuts are pressed with Ctrl. For example, Ctrl+C copies." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fn キーがないため、Ctrl ショートカットは Ctrl で押します。例：Ctrl+C でコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有 fn 键，Ctrl 快捷键就用 Ctrl 按。例如 Ctrl+C 复制。"
           }
         }
       }
@@ -6447,6 +6479,22 @@
         }
       }
     },
+    "This keyboard has no fn key, so Ctrl shortcuts are pressed with Ctrl, as on Windows. For example, Ctrl+C copies." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このキーボードには fn キーがないため、Ctrl ショートカットは Windows と同じく Ctrl で押します。例：Ctrl+C でコピー。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这把键盘没有 fn 键，Ctrl 快捷键和在 Windows 上一样用 Ctrl 按。例如 Ctrl+C 复制。"
+          }
+        }
+      }
+    },
     "This page is not built yet. What KeyBridge does today is on the Overview." : {
       "localizations" : {
         "ja" : {
@@ -6661,18 +6709,18 @@
         }
       }
     },
-    "Which Mac keys Win and Alt are on each keyboard." : {
+    "Which keys Win and Alt are on each keyboard." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "キーボードごとに、Win と Alt を Mac のどのキーに割り当てるかを選びます。"
+            "value" : "キーボードごとに、Win と Alt をどのキーに割り当てるかを選びます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 和 Alt 在每把键盘上对应哪个 Mac 键。"
+            "value" : "Win 和 Alt 在每把键盘上对应哪个键。"
           }
         }
       }
@@ -6689,6 +6737,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Win 键和 Alt 键"
+          }
+        }
+      }
+    },
+    "Win and Alt swapped" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win と Alt を入れ替え"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win 与 Alt 对调"
           }
         }
       }

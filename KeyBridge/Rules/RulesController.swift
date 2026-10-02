@@ -62,7 +62,7 @@ final class RulesController {
         applyWheelDirection(loaded.wheelDirection)
         applyDockClick(loaded.dockClickMinimizes)
         applyCtrlClick(loaded.ctrlClick)
-        applyKeyboards(loaded.keyboardProfiles(of: preset))
+        applyKeyboards(loaded.keyboardProfiles(of: preset, connected: []))
     }
 
     /// Whether the preset is as it ships, with no group switched and no
@@ -161,27 +161,44 @@ final class RulesController {
     }
 
     /// What a keyboard's row sets (KB-076): the keyboard then uses `key`.
-    /// Matching the general choice leaves it following that one, so a
-    /// keyboard only has a setting of its own while it differs.
+    /// Matching the keyboard's default leaves it without a setting of its
+    /// own, so it only keeps one while it differs.
     func chooseControlKey(_ key: ControlKey, for keyboard: Keyboard) {
-        setControlKey(key == controlKey ? nil : key, for: keyboard)
+        setControlKey(key == configuration.defaultControlKey(for: keyboard.id) ? nil : key, for: keyboard)
     }
 
     /// The same for the Win and Alt keys.
     func chooseModifierLayout(_ layout: ModifierLayout, for keyboard: Keyboard) {
-        setModifierLayout(layout == modifierLayout ? nil : layout, for: keyboard)
+        setModifierLayout(layout == configuration.defaultModifierLayout(for: keyboard.id) ? nil : layout, for: keyboard)
     }
 
-    /// Every control key in effect somewhere: the general one, which any
-    /// keyboard without its own follows, and each keyboard's own. What the
+    /// The keyboards connected now (`KeyboardList`). A PC keyboard among them
+    /// gets rules of its own even with no setting of its own, since its
+    /// defaults differ from the general choice.
+    private(set) var connectedKeyboards: [Keyboard.ID] = []
+
+    func setConnectedKeyboards(_ keyboards: [Keyboard]) {
+        let ids = keyboards.map(\.id)
+        guard ids != connectedKeyboards else { return }
+        connectedKeyboards = ids
+        applyKeyboards(configuration.keyboardProfiles(of: preset, connected: ids))
+    }
+
+    /// Every keyboard known now: connected, or with settings of its own.
+    private var knownKeyboards: [Keyboard.ID] {
+        connectedKeyboards + keyboardSettings.map(\.id).filter { !connectedKeyboards.contains($0) }
+    }
+
+    /// Every control key in effect somewhere: the general one, which a key
+    /// from no known keyboard gets, and each known keyboard's. What the
     /// Overview says covers them all.
     var controlKeysInUse: Set<ControlKey> {
-        Set([controlKey] + keyboardSettings.compactMap(\.controlKey))
+        Set([controlKey] + knownKeyboards.map { configuration.controlKey(for: $0) })
     }
 
     /// The same for the Win and Alt keys.
     var modifierLayoutsInUse: Set<ModifierLayout> {
-        Set([modifierLayout] + keyboardSettings.compactMap(\.modifierLayout))
+        Set([modifierLayout] + knownKeyboards.map { configuration.modifierLayout(for: $0) })
     }
 
     /// Gives a keyboard its own control key, or nil to follow the general
@@ -355,7 +372,7 @@ final class RulesController {
         applyWheelDirection(configuration.wheelDirection)
         applyDockClick(configuration.dockClickMinimizes)
         applyCtrlClick(configuration.ctrlClick)
-        applyKeyboards(configuration.keyboardProfiles(of: preset))
+        applyKeyboards(configuration.keyboardProfiles(of: preset, connected: connectedKeyboards))
     }
 }
 
@@ -365,14 +382,16 @@ private extension Configuration {
         ctrlClickSelects ? CtrlClick(controlKey: controlKey) : nil
     }
 
-    /// The same for each keyboard with settings of its own. A keyboard
-    /// listed twice in a hand-edited file counts once, as the first.
-    func keyboardProfiles(of preset: Preset) -> [Keyboard.ID: Dispatcher.KeyboardProfile] {
+    /// The same for each keyboard that presses differently from the general
+    /// choice: one with settings of its own, or a connected PC keyboard on
+    /// its defaults. Every other keyboard is served by the general rules.
+    func keyboardProfiles(of preset: Preset, connected: [Keyboard.ID]) -> [Keyboard.ID: Dispatcher.KeyboardProfile] {
         var profiles: [Keyboard.ID: Dispatcher.KeyboardProfile] = [:]
-        for settings in keyboards where !settings.isEmpty && profiles[settings.id] == nil {
-            profiles[settings.id] = Dispatcher.KeyboardProfile(
-                rules: effectiveRules(of: preset, for: settings.id),
-                ctrlClick: ctrlClickSelects ? CtrlClick(controlKey: controlKey(for: settings.id)) : nil
+        for id in keyboards.map(\.id) + connected where profiles[id] == nil {
+            guard controlKey(for: id) != controlKey || modifierLayout(for: id) != modifierLayout else { continue }
+            profiles[id] = Dispatcher.KeyboardProfile(
+                rules: effectiveRules(of: preset, for: id),
+                ctrlClick: ctrlClickSelects ? CtrlClick(controlKey: controlKey(for: id)) : nil
             )
         }
         return profiles

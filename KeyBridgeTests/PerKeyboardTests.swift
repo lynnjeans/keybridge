@@ -119,15 +119,17 @@ import Testing
         #expect(hand.controlKey(for: Self.external.id) == .function)
     }
 
-    @Test func aKeyboardWithNothingOfItsOwnFollowsTheGeneralSettings() {
+    static let magicKeyboard = Keyboard(vendorID: 0x004C, productID: 0x0267, name: "Magic Keyboard", isBuiltIn: false)
+
+    @Test func aMacKeyboardWithNothingOfItsOwnFollowsTheGeneralSettings() {
         var configuration = Configuration()
         configuration.controlKey = .both
         configuration.modifierLayout = .macPosition
         configuration.setControlKey(.function, for: Self.builtIn)
         #expect(configuration.controlKey(for: Self.builtIn.id) == .function)
         #expect(configuration.modifierLayout(for: Self.builtIn.id) == .macPosition, "Not set for it, so the general one")
-        #expect(configuration.controlKey(for: Self.external.id) == .both)
-        #expect(configuration.controlKey(for: nil) == .both)
+        #expect(configuration.controlKey(for: Self.magicKeyboard.id) == .both)
+        #expect(configuration.controlKey(for: nil) == .both, "A key from no known keyboard")
 
         configuration.setControlKey(nil, for: Self.builtIn)
         #expect(configuration.keyboards.isEmpty, "Nothing of its own left, so it is forgotten")
@@ -143,7 +145,49 @@ import Testing
         #expect(configuration.keyboards.first?.controlKey == .function)
     }
 
+    @Test func aPCKeyboardDefaultsToCtrlAndItsPrintedKeys() {
+        var configuration = Configuration()
+        configuration.controlKey = .function
+        configuration.modifierLayout = .macPosition
+        // No fn key reaches the Mac from it, and its Win key sends ⌘.
+        #expect(configuration.controlKey(for: Self.external.id) == .control)
+        #expect(configuration.modifierLayout(for: Self.external.id) == .pcKeyboard)
+        configuration.setModifierLayout(.macPosition, for: Self.external)
+        #expect(configuration.modifierLayout(for: Self.external.id) == .macPosition, "Its own setting wins")
+    }
+
     // MARK: - Keys
+
+    @Test func aPCKeyboardPluggedInNextToAMacBookOnFnWorksAtOnce() async throws {
+        let (dispatcher, rules) = makeEngine { rules in
+            rules.setControlKey(.function)
+            rules.setModifierLayout(.macPosition)
+            rules.setGroup("winKey", enabled: true)
+        }
+        rules.setConnectedKeyboards([Self.builtIn, Self.external])
+        #expect(rules.keyboardSettings.isEmpty, "Nothing written to the file")
+        #expect(try press(dispatcher, .c, .maskControl, from: Self.externalSender) == [.command])
+        #expect(try press(dispatcher, .c, .maskSecondaryFn, from: Self.builtInSender) == [.command])
+        #expect(try press(dispatcher, .c, .maskControl, from: Self.builtInSender) == nil)
+        // Its Win key, which sends ⌘, alone opens Apps.
+        _ = dispatcher.process(try modifier(.command, Self.leftCommand, from: Self.externalSender), type: .flagsChanged)
+        _ = dispatcher.process(try modifier(.command, [], from: Self.externalSender), type: .flagsChanged)
+        try await Task.sleep(for: .milliseconds(50))
+        #expect(record.opened.count == 1)
+        #expect(rules.controlKeysInUse == [.function, .control])
+    }
+
+    @Test func choosingAKeyboardsDefaultKeepsNothingOfItsOwn() {
+        let (_, rules) = makeEngine { $0.setControlKey(.function) }
+        rules.chooseControlKey(.control, for: Self.external)
+        #expect(rules.keyboardSettings.isEmpty, "Ctrl is already a PC keyboard's default")
+        rules.chooseModifierLayout(.macPosition, for: Self.external)
+        #expect(rules.configuration.settings(for: Self.external.id)?.modifierLayout == .macPosition)
+        rules.chooseControlKey(.control, for: Self.builtIn)
+        #expect(rules.configuration.settings(for: Self.builtIn.id)?.controlKey == .control)
+        rules.chooseControlKey(.function, for: Self.builtIn)
+        #expect(rules.configuration.settings(for: Self.builtIn.id) == nil, "Back to the general fn")
+    }
 
     @Test func eachKeyboardPressesCtrlShortcutsItsOwnWay() throws {
         let (dispatcher, _) = makeEngine { rules in

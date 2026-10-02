@@ -57,6 +57,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         permissionMonitor.start()
         secureInput.start()
         otherRemappers.start()
+        keyboards.onChange = { [rules] in rules.setConnectedKeyboards($0) }
         keyboards.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
         pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show(startingAt: FinderFolder.currentPath()) }

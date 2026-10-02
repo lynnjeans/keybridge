@@ -50,6 +50,19 @@ struct Keyboard: Hashable, Codable, Sendable {
     }
 
     var id: ID { ID(vendorID: vendorID, productID: productID, isBuiltIn: isBuiltIn) }
+
+    /// See `ID.hasMacKeys`.
+    var hasMacKeys: Bool { id.hasMacKeys }
+}
+
+extension Keyboard.ID {
+    /// Whether its keys are printed ⌘ and ⌥, as Apple's are; any other is
+    /// taken for a PC keyboard, printed Win and Alt, with no fn key that
+    /// reaches the Mac. Told by Apple's vendor IDs (USB and Bluetooth). A
+    /// third-party Mac-layout keyboard counts as a PC one.
+    var hasMacKeys: Bool {
+        isBuiltIn || vendorID == 0x05AC || vendorID == 0x004C
+    }
 }
 
 extension Keyboard: CustomStringConvertible {

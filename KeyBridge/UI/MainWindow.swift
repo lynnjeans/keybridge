@@ -129,9 +129,16 @@ private struct ShortcutsPage: View {
     @State private var editing: Rule?
     @State private var confirmingWinKey = false
 
+    private var connectedKeyboards: [Keyboard] {
+        #if DEBUG
+        if let keyboards = LayoutCheck.keyboards { return keyboards }
+        #endif
+        return keyboards.connected
+    }
+
     var body: some View {
         PresetBar(rules: rules, groups: Self.groups(of: rules.preset))
-        let choices = KeyboardChoices(connected: keyboards.connected, withSettings: rules.keyboardSettings)
+        let choices = KeyboardChoices(connected: connectedKeyboards, withSettings: rules.keyboardSettings)
         ControlKeyCard(
             choice: Binding(get: { rules.controlKey }, set: { rules.setControlKey($0) }),
             keyboards: choices,
@@ -274,11 +281,12 @@ private struct PresetBar: View {
 }
 
 /// Which key the Ctrl shortcuts are pressed with: one choice, or with two
-/// keyboards or more, one for each (KB-076).
+/// keyboards or more, one for each (KB-076). A PC keyboard has no fn key
+/// that reaches the Mac, so it is Ctrl there, with nothing to choose.
 private struct ControlKeyCard: View {
     @Binding var choice: ControlKey
     let keyboards: KeyboardChoices
-    /// What a keyboard uses: its own choice, or else the general one.
+    /// What a keyboard uses: its own choice, or else its default.
     let keyboardChoice: (Keyboard) -> ControlKey
     let setKeyboardChoice: (ControlKey, Keyboard) -> Void
 
@@ -292,14 +300,28 @@ private struct ControlKeyCard: View {
                     }
                     ForEach(keyboards.entries) { entry in
                         Divider()
-                        KeyboardRow(
-                            entry: entry,
-                            example: Self.example(keyboardChoice(entry.keyboard)),
-                            value: Binding(get: { keyboardChoice(entry.keyboard) },
-                                           set: { setKeyboardChoice($0, entry.keyboard) })
-                        ) { options }
+                        Group {
+                            if entry.keyboard.hasMacKeys {
+                                KeyboardRow(
+                                    entry: entry,
+                                    example: Self.example(keyboardChoice(entry.keyboard)),
+                                    value: Binding(get: { keyboardChoice(entry.keyboard) },
+                                                   set: { setKeyboardChoice($0, entry.keyboard) })
+                                ) { options }
+                            } else {
+                                KeyboardRow(entry: entry, example: Text("No fn key, so Ctrl shortcuts are pressed with Ctrl. For example, Ctrl+C copies.")) {
+                                    FixedValue(text: "Ctrl")
+                                }
+                            }
+                        }
                         .padding(.leading, 48)
                     }
+                }
+            } else if let only = keyboards.entries.first, !only.keyboard.hasMacKeys {
+                HStack(spacing: 14) {
+                    icon
+                    heading(Text("This keyboard has no fn key, so Ctrl shortcuts are pressed with Ctrl, as on Windows. For example, Ctrl+C copies."))
+                    Spacer(minLength: 0)
                 }
             } else {
                 HStack(spacing: 14) {
@@ -370,6 +392,10 @@ private struct ControlKeyCard: View {
 /// Which Mac keys the Win and Alt shortcuts are pressed with (KB-226): as a
 /// PC keyboard sends them, or where they sit on a Mac keyboard. One choice,
 /// or with two keyboards or more, one for each (KB-076).
+///
+/// A PC keyboard is spoken of in its own keys (user's call, 2026-10-02): its
+/// Win key already reads Win, so the choice there is "as printed" or
+/// "swapped", and ⌘ and ⌥, which it has none of, are not named.
 private struct WinAltCard: View {
     @Binding var choice: ModifierLayout
     let keyboards: KeyboardChoices
@@ -382,17 +408,27 @@ private struct WinAltCard: View {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 14) {
                         icon
-                        heading(Text("Which Mac keys Win and Alt are on each keyboard."))
+                        heading(Text("Which keys Win and Alt are on each keyboard."))
                     }
                     ForEach(keyboards.entries) { entry in
                         Divider()
                         KeyboardRow(
                             entry: entry,
                             example: Self.example(keyboardChoice(entry.keyboard), on: entry.keyboard),
-                            value: Binding(get: { keyboardChoice(entry.keyboard) },
-                                           set: { setKeyboardChoice($0, entry.keyboard) })
-                        ) { options }
+                            value: binding(for: entry.keyboard)
+                        ) { options(for: entry.keyboard) }
                         .padding(.leading, 48)
+                    }
+                }
+            } else if let only = keyboards.entries.first, !only.keyboard.hasMacKeys {
+                HStack(spacing: 14) {
+                    icon
+                    AdaptiveRow {
+                        heading(Self.example(keyboardChoice(only.keyboard), on: only.keyboard))
+                        Picker("Win and Alt keys", selection: binding(for: only.keyboard)) { options(for: only.keyboard) }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                            .fixedSize()
                     }
                 }
             } else {
@@ -400,7 +436,7 @@ private struct WinAltCard: View {
                     icon
                     AdaptiveRow {
                         heading(Text(description))
-                        Picker("Win and Alt keys", selection: $choice) { options }
+                        Picker("Win and Alt keys", selection: $choice) { macOptions }
                             .pickerStyle(.segmented)
                             .labelsHidden()
                             .fixedSize()
@@ -423,10 +459,23 @@ private struct WinAltCard: View {
         }
     }
 
+    private func binding(for keyboard: Keyboard) -> Binding<ModifierLayout> {
+        Binding(get: { keyboardChoice(keyboard) }, set: { setKeyboardChoice($0, keyboard) })
+    }
+
+    @ViewBuilder private func options(for keyboard: Keyboard) -> some View {
+        if keyboard.hasMacKeys {
+            macOptions
+        } else {
+            Text("As printed").tag(ModifierLayout.pcKeyboard)
+            Text("Win and Alt swapped").tag(ModifierLayout.macPosition)
+        }
+    }
+
     // Both keys named in each option, and no keyboard: which keyboard
     // someone has says less than where they reach for Win. The same in
     // every language.
-    @ViewBuilder private var options: some View {
+    @ViewBuilder private var macOptions: some View {
         Text(verbatim: "Win → ⌥ · Alt → ⌘").tag(ModifierLayout.macPosition)
         Text(verbatim: "Win → ⌘ · Alt → ⌥").tag(ModifierLayout.pcKeyboard)
     }
@@ -440,16 +489,26 @@ private struct WinAltCard: View {
         }
     }
 
-    /// In the keys printed on that keyboard: ⌘ and ⌥ on a Mac one; on a PC
-    /// one, whose Win key already reads Win, which key to press, with what
-    /// it sends in brackets (user's call, 2026-10-02).
+    /// In the keys printed on that keyboard.
     static func example(_ layout: ModifierLayout, on keyboard: Keyboard) -> Text {
         switch (layout, keyboard.hasMacKeys) {
         case (.pcKeyboard, true): Text("For example, Win+L is ⌘L.")
         case (.macPosition, true): Text("For example, Win+L is ⌥L.")
-        case (.pcKeyboard, false): Text("For example, Win+L: press the Win key (⌘) and L.")
-        case (.macPosition, false): Text("For example, Win+L: press the Alt key (⌥) and L.")
+        case (.pcKeyboard, false): Text("For example, Win+L: press the Win key and L.")
+        case (.macPosition, false): Text("For example, Win+L: press the Alt key and L.")
         }
+    }
+}
+
+/// A value with nothing to choose, where a row would have its control.
+private struct FixedValue: View {
+    let text: LocalizedStringKey
+
+    var body: some View {
+        Text(text)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 6))
     }
 }
 

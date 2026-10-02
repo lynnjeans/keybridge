@@ -4,12 +4,12 @@ import SwiftUI
 /// example, and the card's options as a segmented control showing what the
 /// keyboard really uses — never "the same as" something else on the page,
 /// which left the user to work out what that was.
-struct KeyboardRow<Value: Hashable, Options: View>: View {
+struct KeyboardRow<Trailing: View>: View {
     let entry: KeyboardChoices.Entry
-    /// One example of what the chosen value does on this keyboard.
+    /// One example of what the keyboard does with what is chosen.
     let example: Text
-    @Binding var value: Value
-    @ViewBuilder let options: Options
+    /// The card's control for this keyboard, or a value with no choice.
+    @ViewBuilder let trailing: Trailing
 
     var body: some View {
         AdaptiveRow(minFlexibleWidth: 160) {
@@ -28,10 +28,23 @@ struct KeyboardRow<Value: Hashable, Options: View>: View {
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Picker(entry.keyboard.displayName, selection: $value) { options }
+            trailing
+        }
+    }
+}
+
+extension KeyboardRow {
+    /// A row whose control is the card's options as a segmented control,
+    /// set to what the keyboard really uses.
+    init<Value: Hashable, Options: View>(
+        entry: KeyboardChoices.Entry, example: Text, value: Binding<Value>,
+        @ViewBuilder options: () -> Options
+    ) where Trailing == AnyView {
+        self.init(entry: entry, example: example) {
+            AnyView(Picker(entry.keyboard.displayName, selection: value) { options() }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                .fixedSize()
+                .fixedSize())
         }
     }
 }
