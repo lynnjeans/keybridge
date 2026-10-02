@@ -28,6 +28,13 @@ import Testing
         #expect(plugged.entries.count == 2, "Connected and with settings is one row")
     }
 
+    @Test func appleKeyboardsHaveMacKeys() {
+        #expect(Self.builtIn.hasMacKeys)
+        #expect(Keyboard(vendorID: 0x05AC, productID: 0x029C, name: "Magic Keyboard", isBuiltIn: false).hasMacKeys)
+        #expect(Keyboard(vendorID: 0x004C, productID: 0x0267, name: "Magic Keyboard", isBuiltIn: false).hasMacKeys)
+        #expect(!Self.external.hasMacKeys, "RK-KB5.0 is printed Win and Alt")
+    }
+
     @Test func theBuiltInKeyboardIsCalledThat() {
         #expect(Self.builtIn.displayName != Self.builtIn.name)
         #expect(Self.external.displayName == "RK-KB5.0")

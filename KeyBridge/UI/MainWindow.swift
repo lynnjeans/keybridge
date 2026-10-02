@@ -388,7 +388,7 @@ private struct WinAltCard: View {
                         Divider()
                         KeyboardRow(
                             entry: entry,
-                            example: Self.example(keyboardChoice(entry.keyboard)),
+                            example: Self.example(keyboardChoice(entry.keyboard), on: entry.keyboard),
                             value: Binding(get: { keyboardChoice(entry.keyboard) },
                                            set: { setKeyboardChoice($0, entry.keyboard) })
                         ) { options }
@@ -440,10 +440,15 @@ private struct WinAltCard: View {
         }
     }
 
-    static func example(_ layout: ModifierLayout) -> Text {
-        switch layout {
-        case .pcKeyboard: Text("For example, Win+L is ⌘L.")
-        case .macPosition: Text("For example, Win+L is ⌥L.")
+    /// In the keys printed on that keyboard: ⌘ and ⌥ on a Mac one; on a PC
+    /// one, whose Win key already reads Win, which key to press, with what
+    /// it sends in brackets (user's call, 2026-10-02).
+    static func example(_ layout: ModifierLayout, on keyboard: Keyboard) -> Text {
+        switch (layout, keyboard.hasMacKeys) {
+        case (.pcKeyboard, true): Text("For example, Win+L is ⌘L.")
+        case (.macPosition, true): Text("For example, Win+L is ⌥L.")
+        case (.pcKeyboard, false): Text("For example, Win+L: press the Win key (⌘) and L.")
+        case (.macPosition, false): Text("For example, Win+L: press the Alt key (⌥) and L.")
         }
     }
 }

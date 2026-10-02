@@ -25,6 +25,14 @@ struct KeyboardChoices {
 }
 
 extension Keyboard {
+    /// Whether its keys are printed ⌘ and ⌥, as Apple's are; any other is
+    /// taken for a PC keyboard, printed Win and Alt. Told by Apple's vendor
+    /// IDs (USB and Bluetooth). A third-party Mac-layout keyboard counts as
+    /// a PC one; the examples for one still name ⌘ and ⌥, in brackets.
+    var hasMacKeys: Bool {
+        isBuiltIn || vendorID == 0x05AC || vendorID == 0x004C
+    }
+
     /// The name to show: the Mac's own keyboard calls itself "Apple Internal
     /// Keyboard / Trackpad", which says less than "Built-in Keyboard".
     var displayName: String {

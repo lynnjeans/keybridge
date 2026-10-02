@@ -2361,6 +2361,38 @@
         }
       }
     },
+    "For example, Win+L: press the Alt key (⌥) and L." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Win+L は Alt キー（⌥）と L。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Win+L：按 Alt 键（⌥）和 L。"
+          }
+        }
+      }
+    },
+    "For example, Win+L: press the Win key (⌘) and L." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：Win+L は Win キー（⌘）と L。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如 Win+L：按 Win 键（⌘）和 L。"
+          }
+        }
+      }
+    },
     "For example, fn+C copies." : {
       "localizations" : {
         "ja" : {
