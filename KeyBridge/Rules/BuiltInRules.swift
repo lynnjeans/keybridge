@@ -7,7 +7,6 @@
 /// - F1–F12 as standard function keys: an Apple keyboard's top row sends
 ///   media-key events, not F-key codes, so this is the system setting the
 ///   System group points to.
-/// - Win+V: the clipboard history has its own switch and hot key.
 enum BuiltInRules {
     /// Terminals, where Ctrl combinations are control characters for the
     /// shell (Ctrl+C interrupts, Ctrl+W deletes a word) and must arrive
@@ -106,9 +105,8 @@ enum BuiltInRules {
             rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
         // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘Tab,
-        // ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard. Off
-        // until the user asks, and limited to one keyboard once devices can be
-        // told apart.
+        // ⌘V, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard.
+        // Off until the user asks.
         .init(id: "winKey", rules: [
             // Win alone opens Start; Apps is macOS 26's nearest thing, a grid
             // of apps with a search field (KB-224). A tap only: ⌘ held for a
@@ -119,6 +117,13 @@ enum BuiltInRules {
             // takes ⌘Tab: Alt+Tab (⌥Tab, the `windows` group) switches apps.
             Rule(id: "winKey.taskView", trigger: .key(combo: KeyCombo([.command], .tab)),
                  action: .systemAction(.missionControl)),
+            // The clipboard history's own shortcut is a system hot key, ⌥V
+            // unless recorded otherwise, which does not follow the Win key
+            // (KB-245). This does, so Win+V opens it on every keyboard. Only
+            // while the history is on: otherwise ⌘V pastes as before. Paste
+            // on a PC keyboard is Ctrl+V, as on Windows.
+            Rule(id: "winKey.clipboard", trigger: .key(combo: KeyCombo([.command], .v)),
+                 action: .clipboardHistory),
             rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
             Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
                  action: .openApplication(bundleID: finderID)),

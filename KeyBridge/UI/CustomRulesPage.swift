@@ -54,6 +54,9 @@ struct CustomRulesPage: View {
             }
         }
         .sheet(item: $editing) { CustomRuleEditor(rules: rules, existing: $0.rule, trigger: $0.trigger) }
+        #if DEBUG
+        .onAppear { if LayoutCheck.opensRuleEditor { editing = EditedRule(rule: nil, trigger: .mouseButton(number: 4)) } }
+        #endif
     }
 }
 
@@ -142,7 +145,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app, system, window, fileDialog }
+    enum Result: Hashable { case keys, app, system, window, fileDialog, clipboard }
     enum Where: Hashable { case everywhere, only, except }
 
     /// - Parameter trigger: for a new rule, what it is pressed with, such as
@@ -171,6 +174,10 @@ struct CustomRuleEditor: View {
         case .fileDialog(let action)?:
             _result = State(initialValue: .fileDialog)
             _fileDialogAction = State(initialValue: action)
+            _combo = State(initialValue: nil)
+            _app = State(initialValue: nil)
+        case .clipboardHistory?:
+            _result = State(initialValue: .clipboard)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -220,8 +227,12 @@ struct CustomRuleEditor: View {
                     Text("System function").tag(Result.system)
                     Text("Window").tag(Result.window)
                     Text("File dialog").tag(Result.fileDialog)
+                    Text("Clipboard history").tag(Result.clipboard)
                 }
                 .pickerStyle(.segmented)
+                // At its full width: the sheet grows to fit it in a longer
+                // language rather than cutting the labels off (KB-245).
+                .fixedSize()
                 LabeledContent("") {
                     if result == .keys {
                         RecorderField(isRecording: recording == .action, prompt: "Press a shortcut…",
@@ -240,6 +251,8 @@ struct CustomRuleEditor: View {
                         WindowActionPicker(selection: $windowAction)
                     } else if result == .fileDialog {
                         FileDialogActionPicker(selection: $fileDialogAction)
+                    } else if result == .clipboard {
+                        ClipboardHistoryNote()
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -306,7 +319,7 @@ struct CustomRuleEditor: View {
             }
         }
         .padding(24)
-        .frame(width: 480)
+        .frame(minWidth: 480)
         .onDisappear(perform: stopRecording)
         .confirmationDialog("Delete this rule?", isPresented: $confirmingDelete) {
             Button("Delete", role: .destructive) {
@@ -333,6 +346,8 @@ struct CustomRuleEditor: View {
             action = .windowAction(windowAction)
         case .fileDialog:
             action = .fileDialog(fileDialogAction)
+        case .clipboard:
+            action = .clipboardHistory
         }
         let applications: ApplicationFilter
         switch where_ {

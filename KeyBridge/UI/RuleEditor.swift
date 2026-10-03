@@ -16,7 +16,7 @@ struct RuleEditor: View {
     enum Side { case trigger, action }
 
     /// A mouse button's result: keys, an app, or a system function (KB-051).
-    enum ResultKind: Hashable { case keys, app, system, window, fileDialog }
+    enum ResultKind: Hashable { case keys, app, system, window, fileDialog, clipboard }
 
     /// The keys to go back to when the result is switched from a system
     /// function to a shortcut.
@@ -96,7 +96,7 @@ struct RuleEditor: View {
             }
         }
         .padding(24)
-        .frame(width: 440)
+        .frame(minWidth: 440)
         .onDisappear(perform: stopRecording)
     }
 
@@ -156,6 +156,7 @@ struct RuleEditor: View {
                 case .systemAction(let function): SystemActionLabel(action: function)
                 case .windowAction(let snap): WindowActionLabel(snap: snap)
                 case .fileDialog(let action): FileDialogActionLabel(action: action)
+                case .clipboardHistory: ClipboardHistoryLabel()
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
@@ -168,6 +169,7 @@ struct RuleEditor: View {
                     Text("System function").tag(ResultKind.system)
                     Text("Window").tag(ResultKind.window)
                     Text("File dialog").tag(ResultKind.fileDialog)
+                    Text("Clipboard history").tag(ResultKind.clipboard)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -202,6 +204,8 @@ struct RuleEditor: View {
                         get: { action },
                         set: { draft.action = .fileDialog($0) }
                     ))
+                case .clipboardHistory:
+                    ClipboardHistoryNote()
                 }
             }
         }
@@ -216,6 +220,7 @@ struct RuleEditor: View {
                 case .systemAction: .system
                 case .windowAction: .window
                 case .fileDialog: .fileDialog
+                case .clipboardHistory: .clipboard
                 }
             },
             set: { kind in
@@ -234,6 +239,8 @@ struct RuleEditor: View {
                     draft.action = .windowAction(.leftHalf)
                 case .fileDialog:
                     draft.action = .fileDialog(.finderFolder)
+                case .clipboard:
+                    draft.action = .clipboardHistory
                 }
             }
         )

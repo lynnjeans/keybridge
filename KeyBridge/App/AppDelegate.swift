@@ -23,6 +23,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         isEditingText: FocusedElement.isEditingText,
         isInFileDialog: FileDialog.isFocused,
         fileDialog: { [quickSwitch] in quickSwitch.perform($0) },
+        isClipboardHistoryOn: { [weak self] in self?.clipboard.isEnabled ?? false },
+        toggleClipboardHistory: { [weak self] in self?.clipboardPanel.toggle() },
         keyboard: { [keyboardSource] in keyboardSource.keyboard(of: $0) }
     )
     /// The preset, the user's changes to it, and the rules that result. It

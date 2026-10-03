@@ -12,6 +12,8 @@ import Foundation
 ///   or `pathbox` (the path box, as ⌘L over Finder would open it).
 /// - `KB_DEBUG_PAGE`: a `Page` raw value, shown in the main window.
 /// - `KB_DEBUG_EXPAND_ALL`: every Shortcuts group starts expanded.
+/// - `KB_DEBUG_RULE_EDITOR`: the Custom Rules page opens the editor on a
+///   new rule, and the Mouse page on the back button (KB-245).
 /// - `KB_DEBUG_STEP`: the guide shows `accessibility`, `inputMonitoring` or
 ///   `ready`, whatever the permissions say.
 /// - `KB_DEBUG_KEYBOARDS`: `pc` (one PC keyboard, as on a Mac mini), `mac`
@@ -31,6 +33,7 @@ enum LayoutCheck {
 
     static var page: Page? { environment["KB_DEBUG_PAGE"].flatMap(Page.init(rawValue:)) }
     static var expandsAllGroups: Bool { environment["KB_DEBUG_EXPAND_ALL"] != nil }
+    static var opensRuleEditor: Bool { environment["KB_DEBUG_RULE_EDITOR"] != nil }
 
     /// The keyboards the Shortcuts page shows, in place of those connected.
     static var keyboards: [Keyboard]? {

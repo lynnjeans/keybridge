@@ -313,6 +313,7 @@ screenshotted in each language:
 | `KB_DEBUG_SHOW` | `main`, `onboarding`, `clipboard` (the history panel) or `pathbox` (the path box, filled in as ⌘L would fill it — open Finder on a folder first) opens a second after launch |
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
+| `KB_DEBUG_RULE_EDITOR` | With `KB_DEBUG_PAGE=customRules` the editor opens on a new rule for side button 4; with `mouse`, on the Back button |
 | `KB_DEBUG_STEP` | The setup guide shows this step whatever the permissions say: `accessibility`, `inputMonitoring`, `ready`. A build that lacks the permissions cannot reach `ready` otherwise. Add `-onboardingCompleted NO` to the arguments to see it as on a first run |
 | `KB_DEBUG_KEYBOARDS` | `pc` (one PC keyboard, as on a Mac mini), `mac` (the built-in keyboard only) or `both`: the Shortcuts page's per-keyboard rows show these instead of the keyboards connected (KB-076). Display only; the engine still uses the real ones |
 | `KB_DEBUG_LOGINITEM` | `on` or `off`: Open at Login starts that way and can be switched, held in memory only — this Mac's login items are not touched (see [Open at Login](#open-at-login)) |

@@ -6041,6 +6041,22 @@
         }
       }
     },
+    "Shows or hides the clipboard history, as its own shortcut does. Does nothing while the history is off." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリップボード履歴を表示または非表示にします（履歴のショートカットと同じ）。履歴がオフのときは何もしません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示或隐藏剪贴板历史，和它自己的快捷键一样。剪贴板历史关闭时不起作用。"
+          }
+        }
+      }
+    },
     "Side buttons" : {
       "localizations" : {
         "ja" : {
@@ -6757,18 +6773,18 @@
         }
       }
     },
-    "Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab." : {
+    "Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab. While the clipboard history is on, ⌘V opens it instead of pasting." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win は ⌘ のため、これらのショートカットは ⌘Tab、⌘L、⌘E、⌘D、⌘.、⌘⇧S を使い、⌘ を単独で押すと「アプリ」が開きます。⌘Tab は Mission Control を開くようになり、アプリの切り替えは ⌥Tab で行います。"
+            "value" : "Win は ⌘ のため、これらのショートカットは ⌘Tab、⌘L、⌘E、⌘D、⌘.、⌘⇧S を使い、⌘ を単独で押すと「アプリ」が開きます。⌘Tab は Mission Control を開くようになり、アプリの切り替えは ⌥Tab で行います。クリップボード履歴がオンのときは、⌘V でペーストせずに履歴を開きます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 映射为 ⌘，所以这些快捷键会占用 ⌘Tab、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 会打开“应用程序”。之后 ⌘Tab 打开调度中心，切换 App 请用 ⌥Tab。"
+            "value" : "Win 映射为 ⌘，所以这些快捷键会占用 ⌘Tab、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 会打开“应用程序”。之后 ⌘Tab 打开调度中心，切换 App 请用 ⌥Tab。剪贴板历史开启时，⌘V 会打开它而不是粘贴。"
           }
         }
       }
@@ -6934,18 +6950,18 @@
         }
       }
     },
-    "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too." : {
+    "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), ⌘V the clipboard history while it is on, and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンで Win は ⌘ です：⌘Tab で Mission Control が開き（アプリの切り替えは ⌥Tab）、⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
+            "value" : "Windows キーのショートカットがオンで Win は ⌘ です：⌘Tab で Mission Control が開き（アプリの切り替えは ⌥Tab）、クリップボード履歴がオンなら ⌘V で履歴が開き、⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，Win 为 ⌘：⌘Tab 打开调度中心（切换 App 用 ⌥Tab），⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
+            "value" : "Windows 键快捷键已开启，Win 为 ⌘：⌘Tab 打开调度中心（切换 App 用 ⌥Tab），⌘V 在剪贴板历史开启时打开它，⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
           }
         }
       }

@@ -35,16 +35,21 @@ struct RuleMatcher: Sendable {
     ///     since finding out means asking the frontmost application.
     ///   - isInFileDialog: asked only when a candidate rule acts on an open
     ///     or save dialog, for the same reason.
+    ///   - isClipboardHistoryOn: asked only when a candidate rule opens the
+    ///     clipboard history. While it is off, its key does what it did
+    ///     before: Win+V as ⌘V pastes (KB-245).
     func match(
         _ trigger: Trigger,
         in context: MatchContext,
         isEditingText: () -> Bool = { false },
-        isInFileDialog: () -> Bool = { false }
+        isInFileDialog: () -> Bool = { false },
+        isClipboardHistoryOn: () -> Bool = { false }
     ) -> Rule? {
         var editing: Bool?
         var inDialog: Bool?
         return candidates[trigger]?.first { rule in
             guard rule.scope.admits(context) else { return false }
+            if rule.action == .clipboardHistory, !isClipboardHistoryOn() { return false }
             if let dialogAction = rule.action.fileDialogAction,
                !(dialogAction.worksInFinder && context.frontmostBundleID == BuiltInRules.finderID) {
                 if inDialog == nil { inDialog = isInFileDialog() }

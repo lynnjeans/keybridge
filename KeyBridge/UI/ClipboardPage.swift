@@ -202,8 +202,11 @@ private struct HotKeyCard: View {
     }
 
     /// A KeyBridge rule with the same trigger, which the panel would shadow.
+    /// Win+V on ⌥V (KB-245) opens the history too, so it is no conflict.
     private var conflict: String? {
-        rules.effectiveRules.first { $0.isEnabled && $0.trigger == .key(combo: clipboard.hotKey) }
+        rules.effectiveRules.first {
+            $0.isEnabled && $0.trigger == .key(combo: clipboard.hotKey) && $0.action != .clipboardHistory
+        }
             .map { $0.name ?? RuleNames.name(of: $0) }
     }
 

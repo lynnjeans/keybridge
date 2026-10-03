@@ -178,6 +178,7 @@
 		D58CE66D36590C83A3B9363C /* ClipboardPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11218502FEED797A2687D64 /* ClipboardPanel.swift */; };
 		D600FDB64C3A7A7DFB40BE35 /* SystemActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51FB2F70FD8847354888212 /* SystemActionTests.swift */; };
 		D70A283D1C23C5F024F14803 /* EngineControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F496E4E2F71323B9BF86F /* EngineControllerTests.swift */; };
+		D83688FAD4706FD0BF7828E1 /* ClipboardHistoryRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E55C1FFF1E86929FBEFEECA /* ClipboardHistoryRuleTests.swift */; };
 		D9097B1C786ACDDBB31EC711 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251FB64A66A60043BE23FE52 /* ScrollStepper.swift */; };
 		DA4F345D4BF3CB07973CE841 /* FileLocationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0F549C1993272DD073C5EF /* FileLocationsTests.swift */; };
 		DDD3C2C8F7D32EFB5886C3B1 /* SecureInputMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A156E1AE0F1E299FC9AC65 /* SecureInputMonitorTests.swift */; };
@@ -190,6 +191,7 @@
 		E421522BA3A931884F0AB510 /* WheelDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE014E64C5E7702B70F7970C /* WheelDirection.swift */; };
 		E4CB683AD08E92E36D1CC5F6 /* WindowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD5FE88B8B90A7DD232FAB7 /* WindowAction.swift */; };
 		E6085F0D9E8793B81AACAE80 /* EngineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5A6AADC1A2FFE5631673 /* EngineController.swift */; };
+		E6260E944C8AAE8F01873FE4 /* ClipboardHistoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F056F8BE61FD0DB6CF639E8 /* ClipboardHistoryAction.swift */; };
 		E6B26C6D726578EB052F3AE7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0AFEB04AE9CFFFDF17C44A10 /* LICENSE */; };
 		E797509088BEB5921B15B9AD /* ClipboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CDF256A80D7781F2C4EDF0 /* ClipboardItem.swift */; };
 		EAED25C21F5527AF6826AD7D /* FileDialogAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E49D1694B82FDC4E8E81A16 /* FileDialogAction.swift */; };
@@ -240,6 +242,7 @@
 		08E77B262FE0613F56D85677 /* UpdatesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesCard.swift; sourceTree = "<group>"; };
 		0901980EBE4BBF714534B44E /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		0AFEB04AE9CFFFDF17C44A10 /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
+		0E55C1FFF1E86929FBEFEECA /* ClipboardHistoryRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHistoryRuleTests.swift; sourceTree = "<group>"; };
 		0EE62FD02DFC1366DCFB3F78 /* ClipboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStore.swift; sourceTree = "<group>"; };
 		0FD19BE2A7EFCF42C02C56D6 /* RulesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesControllerTests.swift; sourceTree = "<group>"; };
 		1146BA4FC00A62E0117F773D /* OtherRemapperMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherRemapperMonitorTests.swift; sourceTree = "<group>"; };
@@ -323,6 +326,7 @@
 		9D876685E7767C4DF29FBAEC /* PathBoxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathBoxController.swift; sourceTree = "<group>"; };
 		9DA38BD88E56746B3ABF0314 /* GlobalHotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKey.swift; sourceTree = "<group>"; };
 		9ED462AEC11B59DB1BA5F627 /* OnboardingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerTests.swift; sourceTree = "<group>"; };
+		9F056F8BE61FD0DB6CF639E8 /* ClipboardHistoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHistoryAction.swift; sourceTree = "<group>"; };
 		9FE994FF8A7150BE11B3A928 /* PathBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathBoxTests.swift; sourceTree = "<group>"; };
 		A438F6AC73F9A30FBE17ED6D /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
 		A56A2BB921F9FD98FFE325CE /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
@@ -540,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				4BD220CD7428299D2E24A20E /* AdaptiveRow.swift */,
+				9F056F8BE61FD0DB6CF639E8 /* ClipboardHistoryAction.swift */,
 				3C2DA3B8FB2535F5B89DA3E5 /* ClipboardPage.swift */,
 				C11218502FEED797A2687D64 /* ClipboardPanel.swift */,
 				3D66402A0BCE93EED7585813 /* CustomRulesPage.swift */,
@@ -575,6 +580,7 @@
 		9DA46AA64E58480D9D06E1D9 /* KeyBridgeTests */ = {
 			isa = PBXGroup;
 			children = (
+				0E55C1FFF1E86929FBEFEECA /* ClipboardHistoryRuleTests.swift */,
 				A7780A268C4CFC269CC2BB6A /* ClipboardTests.swift */,
 				AC6E6057419F04D112281DA2 /* ConfigurationTests.swift */,
 				C0716DA00216F64009A16E9A /* ControlKeyTests.swift */,
@@ -814,6 +820,7 @@
 				5B24EAF7E6993482CDD434D3 /* BuiltInRules.swift in Sources */,
 				C730A61269B677A3A9407A68 /* ClipboardController.swift in Sources */,
 				66A8E97CB829BBCF2162AF63 /* ClipboardHistory.swift in Sources */,
+				D83688FAD4706FD0BF7828E1 /* ClipboardHistoryRuleTests.swift in Sources */,
 				E797509088BEB5921B15B9AD /* ClipboardItem.swift in Sources */,
 				7FB988A51B09E7074419FA20 /* ClipboardMonitor.swift in Sources */,
 				4C9CF0564FB65F276CD1A67A /* ClipboardPrivacy.swift in Sources */,
@@ -927,6 +934,7 @@
 				B67B75BB2CC557FACE6A9F66 /* BuiltInRules.swift in Sources */,
 				B07862A01FA1AEA844D12ADA /* ClipboardController.swift in Sources */,
 				56E454804BB718D3F6D5F34B /* ClipboardHistory.swift in Sources */,
+				E6260E944C8AAE8F01873FE4 /* ClipboardHistoryAction.swift in Sources */,
 				A9099E73D29EA499A3BB1F62 /* ClipboardItem.swift in Sources */,
 				1B35B38B6E69F163D8062248 /* ClipboardMonitor.swift in Sources */,
 				F035AC9B8BEA29C0C5B72C77 /* ClipboardPage.swift in Sources */,

@@ -98,6 +98,9 @@ final class Dispatcher {
     private let snap: @MainActor (WindowAction) -> Void
     /// Acts on the open or save dialog in front. Injected for the same reason.
     private let fileDialog: @MainActor (FileDialogAction) -> Void
+    /// Whether the clipboard history is on, and showing or hiding it.
+    private let isClipboardHistoryOn: @MainActor () -> Bool
+    private let toggleClipboardHistory: @MainActor () -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
@@ -108,6 +111,8 @@ final class Dispatcher {
         systemShortcuts: @escaping @MainActor () -> SymbolicHotKeys = { SymbolicHotKeys.current() },
         snap: @escaping @MainActor (WindowAction) -> Void = { WindowElement.perform($0) },
         fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in },
+        isClipboardHistoryOn: @escaping @MainActor () -> Bool = { false },
+        toggleClipboardHistory: @escaping @MainActor () -> Void = {},
         now: @escaping @MainActor () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
         isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() },
         keyboard: @escaping @MainActor (CGEvent) -> Keyboard? = { _ in nil }
@@ -119,6 +124,8 @@ final class Dispatcher {
         self.isEditingText = isEditingText
         self.isInFileDialog = isInFileDialog
         self.fileDialog = fileDialog
+        self.isClipboardHistoryOn = isClipboardHistoryOn
+        self.toggleClipboardHistory = toggleClipboardHistory
         self.post = post
         self.openApplication = openApplication
         self.systemShortcuts = systemShortcuts
@@ -208,7 +215,8 @@ final class Dispatcher {
         let trigger = Trigger.key(combo: KeyCombo(key))
         guard let rule = matcher(for: modifierKeyboard).match(
             trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
-            isEditingText: isEditingText, isInFileDialog: isInFileDialog
+            isEditingText: isEditingText, isInFileDialog: isInFileDialog,
+            isClipboardHistoryOn: isClipboardHistoryOn
         ) else { return }
         record(rule)
         DispatchQueue.main.async { [self] in carryOut(rule.action) }
@@ -314,6 +322,8 @@ final class Dispatcher {
             move(position)
         case .fileDialog(let action):
             act(on: action)
+        case .clipboardHistory:
+            showClipboardHistory()
         }
     }
 
@@ -351,6 +361,12 @@ final class Dispatcher {
     /// takes keystrokes of its own and an Accessibility round trip.
     private func act(on action: FileDialogAction) {
         DispatchQueue.main.async { [self] in fileDialog(action) }
+    }
+
+    /// Shows or hides the history panel after the tap callback returns, as
+    /// its own shortcut would.
+    private func showClipboardHistory() {
+        DispatchQueue.main.async { [self] in toggleClipboardHistory() }
     }
 
     private func keyDown(_ event: CGEvent) -> Disposition {
@@ -394,6 +410,10 @@ final class Dispatcher {
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             act(on: action)
             return .consume
+        case .clipboardHistory:
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            showClipboardHistory()
+            return .consume
         }
     }
 
@@ -415,7 +435,8 @@ final class Dispatcher {
         guard let trigger = Trigger(event: event, type: type) else { return nil }
         return matcher(for: keyboardID(of: event, type: type)).match(
             trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
-            isEditingText: isEditingText, isInFileDialog: isInFileDialog
+            isEditingText: isEditingText, isInFileDialog: isInFileDialog,
+            isClipboardHistoryOn: isClipboardHistoryOn
         )
     }
 

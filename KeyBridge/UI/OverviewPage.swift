@@ -96,7 +96,7 @@ struct OverviewPage: View {
         if rules.isEnabled(group: "winKey") {
             let layouts = rules.modifierLayoutsInUse
             if layouts.contains(.pcKeyboard) {
-                notices.append("Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too.")
+                notices.append("Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), ⌘V the clipboard history while it is on, and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too.")
             }
             if layouts.contains(.macPosition) {
                 notices.append("Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps.")

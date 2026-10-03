@@ -48,4 +48,7 @@ enum Action: Codable, Hashable, Sendable {
     /// Takes the open or save dialog in front somewhere, such as Finder's
     /// folder (KB-217). Only matches while such a dialog has the keyboard.
     case fileDialog(FileDialogAction)
+    /// Shows or hides KeyBridge's clipboard history, as its own shortcut
+    /// does (KB-245). Only matches while the history is on.
+    case clipboardHistory
 }

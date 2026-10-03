@@ -120,6 +120,8 @@ struct MappingView: View {
             WindowActionLabel(snap: snap)
         case .fileDialog(let action):
             FileDialogActionLabel(action: action)
+        case .clipboardHistory:
+            ClipboardHistoryLabel()
         }
     }
 

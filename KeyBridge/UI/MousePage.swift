@@ -70,6 +70,9 @@ struct MousePage: View {
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
             .sheet(item: $editing) { RuleEditor(rules: rules, rule: $0) }
+            #if DEBUG
+            .onAppear { if LayoutCheck.opensRuleEditor { editing = rules.rules(inGroup: "mouse").first } }
+            #endif
             .sheet(item: $editingAdded) { CustomRuleEditor(rules: rules, existing: $0.rule, trigger: $0.trigger) }
             .onDisappear { stopAdding() }
     }
