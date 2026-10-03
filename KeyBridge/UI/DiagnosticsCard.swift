@@ -116,7 +116,7 @@ extension DiagnosticReport {
             ("Groups", groups.joined(separator: ", ")),
             ("Ctrl shortcuts pressed with", rules.controlKey.rawValue),
             ("Win and Alt keys", rules.modifierLayout.rawValue),
-            ("Per keyboard", rules.keyboardSettings.isEmpty ? "none" : rules.keyboardSettings.map {
+            ("Set per keyboard (see Keyboards in effect)", rules.keyboardSettings.isEmpty ? "nothing" : rules.keyboardSettings.map {
                 "\($0.keyboard.description): Ctrl shortcuts \($0.controlKey?.rawValue ?? "general"), Win and Alt \($0.modifierLayout?.rawValue ?? "general")"
             }.joined(separator: "; ")),
             ("Zoom modifiers", rules.zoomModifiers.names.joined(separator: "+")),
