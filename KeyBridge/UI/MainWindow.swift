@@ -15,6 +15,8 @@ struct MainWindow: View {
     let updates: UpdateController
     let loginItem: LoginItem
     let keyboards: KeyboardList
+    let recorder: DiagnosticRecorder
+    let logArchive: LogArchive
     /// Remembered across launches, so the window reopens where it was left.
     @SceneStorage("mainWindow.page") private var page: Page = .overview
 
@@ -44,10 +46,12 @@ struct MainWindow: View {
                     SupportCard()
                     UpdatesCard(updates: updates)
                     LegalCard()
-                    DiagnosticsCard {
+                    DiagnosticsCard(recorder: recorder) {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard,
-                                                 loginItem: loginItem, keyboards: keyboards)
+                                                 loginItem: loginItem, keyboards: keyboards,
+                                                 pathBox: pathBox, locations: quickSwitch.locations,
+                                                 updates: updates, recorder: recorder, logArchive: logArchive)
                     }
                 default:
                     ComingSoon(page: page)

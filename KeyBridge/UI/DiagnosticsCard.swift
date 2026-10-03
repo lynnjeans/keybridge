@@ -1,27 +1,33 @@
 import AppKit
+import FinderSync
 import OSLog
 import SwiftUI
 import UniformTypeIdentifiers
 
 /// Saves a diagnostic report for the user to attach to a problem report.
 struct DiagnosticsCard: View {
+    let recorder: DiagnosticRecorder
     let makeReport: () async -> DiagnosticReport
     @State private var isExporting = false
     @State private var failure: String?
 
     var body: some View {
         Card {
-            AdaptiveRow {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Diagnostics")
-                        .font(.headline)
-                    Text("A text file with KeyBridge's version, permissions, settings and log since launch, to attach to a problem report. Nothing you copied is included.")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: 14) {
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Diagnostics")
+                            .font(.headline)
+                        Text("A text file with KeyBridge's version, permissions, settings and the log of the last three days, to attach to a problem report. Nothing you copied is included.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Button(isExporting ? "Exporting…" : "Export Diagnostics…", action: export)
+                        .disabled(isExporting)
                 }
-                Button(isExporting ? "Exporting…" : "Export Diagnostics…", action: export)
-                    .disabled(isExporting)
+                Divider()
+                RecordingRow(recorder: recorder)
             }
         }
         .alert("The diagnostics could not be saved", isPresented: Binding(
@@ -68,7 +74,12 @@ extension DiagnosticReport {
         otherRemappers: OtherRemapperMonitor,
         clipboard: ClipboardController,
         loginItem: LoginItem,
-        keyboards: KeyboardList
+        keyboards: KeyboardList,
+        pathBox: PathBoxController,
+        locations: FileLocations,
+        updates: UpdateController,
+        recorder: DiagnosticRecorder,
+        logArchive: LogArchive
     ) async -> DiagnosticReport {
         let generated = Date.now
         let info = Bundle.main.infoDictionary
@@ -124,6 +135,28 @@ extension DiagnosticReport {
             ("Custom rules", "\(rules.customRules.count)"),
         ])
 
+        // What each connected keyboard actually runs with (KB-247).
+        let keyboardLines: [(label: String, value: String)] = keyboards.connected.isEmpty
+            ? [("Keyboards", "none found")]
+            : effectiveSettings(of: keyboards.connected, in: rules.configuration).enumerated().map {
+                (label: "Keyboard \($0.offset + 1)", value: $0.element)
+            }
+        let keyboardSection = Section(title: "Keyboards in effect", lines: keyboardLines)
+
+        let pathBoxState = (pathBox.isEnabled ? "on, " : "off, ") + pathBox.hotKey.caps(.mac).joined()
+            + (pathBox.hotKeyProblem.map { " (\($0))" } ?? "")
+        let lastCheck = updates.lastCheck.map { timestamp($0) } ?? "never"
+        let updateState = "checks automatically \(updates.checksAutomatically ? "yes" : "no"), "
+            + "downloads automatically \(updates.downloadsAutomatically ? "yes" : "no"), last check \(lastCheck)"
+        let naturalScrolling = UserDefaults.standard.object(forKey: "com.apple.swipescrolldirection") as? Bool ?? true
+        let other = Section(title: "Other settings", lines: [
+            ("Path box (Finder)", pathBoxState),
+            ("Recent folders listed", String(locations.recentLimit)),
+            ("Finder extension", FIFinderSyncController.isExtensionEnabled ? "enabled" : "not enabled"),
+            ("Updates", updateState),
+            ("Natural scrolling (System Settings)", naturalScrolling ? "on" : "off"),
+        ])
+
         // Settings only; the copies themselves stay on the Mac.
         let history = Section(title: "Clipboard history", lines: [
             ("Enabled", clipboard.isEnabled ? "yes" : "no"),
@@ -133,40 +166,71 @@ extension DiagnosticReport {
         ])
 
         let configuration = try? String(contentsOf: ConfigurationStore.defaultFileURL, encoding: .utf8)
-        let log = await Task.detached(priority: .userInitiated) { logSinceLaunch() }.value
+        let recording = recorder.startedAt.map {
+            Recording(started: $0, isRunning: recorder.isRecording, lines: recorder.lines)
+        }
+        let (log, earlier) = await Task.detached(priority: .userInitiated) {
+            (logSinceLaunch(), logArchive.earlierLaunches())
+        }.value
         return DiagnosticReport(
             generated: generated,
-            sections: [app, system, Section(title: "State", lines: state), settings, history],
+            sections: [app, system, Section(title: "State", lines: state), settings, keyboardSection, other, history],
             configuration: configuration,
-            log: log
+            recording: recording,
+            log: log,
+            earlierLaunches: earlier
         )
     }
 
     /// KeyBridge's own log entries since it was launched. Earlier launches
-    /// are out of reach: the log of other processes is not open to apps.
-    nonisolated static func logSinceLaunch(limit: Int = 5000) -> [String] {
-        do {
-            let store = try OSLogStore(scope: .currentProcessIdentifier)
-            let subsystem = Bundle.main.bundleIdentifier ?? "KeyBridge"
-            let entries = try store.getEntries(matching: NSPredicate(format: "subsystem == %@", subsystem))
-            let lines = entries.compactMap { entry -> String? in
-                guard let log = entry as? OSLogEntryLog else { return nil }
-                return "\(timestamp(log.date)) \(levelName(log.level)) [\(log.category)] \(log.composedMessage)"
+    /// come from `LogArchive`: the log of other processes is not open to apps.
+    nonisolated static func logSinceLaunch() -> [String] {
+        LogArchive.entries().map(\.line)
+    }
+}
+
+/// Starts and stops a diagnostic recording (KB-247), and says what it holds.
+private struct RecordingRow: View {
+    let recorder: DiagnosticRecorder
+
+    var body: some View {
+        AdaptiveRow {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Record Shortcuts")
+                    .font(.headline)
+                Text("When a shortcut does not do what you expect: start, press it again, then export. For five minutes KeyBridge notes each shortcut, the keyboard it came from, the app in front and what it became. Letters typed on their own are never noted.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                status
+                    .font(.callout)
+                    .monospacedDigit()
             }
-            return Array(lines.suffix(limit))
-        } catch {
-            return ["(the log could not be read: \(error.localizedDescription))"]
+            if recorder.isRecording {
+                Button("Stop Recording") { recorder.stop() }
+            } else {
+                Button("Start Recording") { recorder.start() }
+            }
         }
     }
 
-    private static func levelName(_ level: OSLogEntryLog.Level) -> String {
-        switch level {
-        case .debug: "debug"
-        case .info: "info"
-        case .notice: "notice"
-        case .error: "error"
-        case .fault: "fault"
-        default: "-"
+    @ViewBuilder private var status: some View {
+        if recorder.isRecording, let end = recorder.endsAt {
+            TimelineView(.periodic(from: .now, by: 1)) { context in
+                Label {
+                    Text("Recording: \(recorder.lines.count) noted, \(Self.remaining(until: end, from: context.date)) left")
+                } icon: {
+                    Image(systemName: "record.circle").foregroundStyle(.red)
+                }
+            }
+        } else if recorder.startedAt != nil {
+            Text("\(recorder.lines.count) shortcuts noted; they go into the next export.")
+                .foregroundStyle(.secondary)
         }
+    }
+
+    private static func remaining(until end: Date, from now: Date) -> String {
+        let seconds = max(0, Int(end.timeIntervalSince(now).rounded()))
+        return String(format: "%d:%02d", seconds / 60, seconds % 60)
     }
 }

@@ -28,7 +28,7 @@ struct KeyBridgeApp: App {
         // the app's only permanent presence and the way into everything else.
         MenuBarExtra {
             MenuBarContent(engine: appDelegate.engine, onboarding: appDelegate.onboarding, secureInput: appDelegate.secureInput,
-                           updates: appDelegate.updates)
+                           updates: appDelegate.updates, recorder: appDelegate.recorder)
         } label: {
             MenuBarIcon(isActive: appDelegate.engine.isActive && appDelegate.secureInput.holder == nil,
                         hasUpdate: appDelegate.updates.needsAttention, onboarding: appDelegate.onboarding)
@@ -46,7 +46,9 @@ struct KeyBridgeApp: App {
                 quickSwitch: appDelegate.quickSwitch,
                 updates: appDelegate.updates,
                 loginItem: appDelegate.loginItem,
-                keyboards: appDelegate.keyboards
+                keyboards: appDelegate.keyboards,
+                recorder: appDelegate.recorder,
+                logArchive: appDelegate.logArchive
             )
         }
         .defaultSize(width: 880, height: 600)

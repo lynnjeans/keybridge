@@ -139,6 +139,15 @@ final class Dispatcher {
     /// opening Control Center.
     var recorder: (@MainActor (Trigger) -> Void)?
 
+    /// While set, a diagnostic recording is running and every press worth
+    /// recording is described here (KB-247); nil otherwise, when nothing is
+    /// asked about it.
+    var trace: (@MainActor (DispatchTrace) -> Void)?
+
+    /// The keyboard of the last modifier change, as recorded: clicks and
+    /// modifier taps are told by it.
+    private var tracedModifierKeyboard: Keyboard?
+
     /// Buttons pressed while recording, whose release is swallowed too.
     private var recordedButtons: Set<Int> = []
 
@@ -156,6 +165,9 @@ final class Dispatcher {
     func process(_ event: CGEvent, type: CGEventType) -> Disposition {
         if type == .flagsChanged, !keyboardProfiles.isEmpty, let keyboard = keyboard(event) {
             modifierKeyboard = keyboard.id
+        }
+        if type == .flagsChanged, trace != nil {
+            tracedModifierKeyboard = keyboard(event)
         }
         let tapped = modifierTap(event, type: type)
         if let recorder {
@@ -213,11 +225,13 @@ final class Dispatcher {
     /// posted for it does not arrive while the modifier still counts as held.
     private func modifierTapped(_ key: KeyCode) {
         let trigger = Trigger.key(combo: KeyCombo(key))
-        guard let rule = matcher(for: modifierKeyboard).match(
+        let rule = matcher(for: modifierKeyboard).match(
             trigger, in: MatchContext(frontmostBundleID: frontmostBundleID()),
             isEditingText: isEditingText, isInFileDialog: isInFileDialog,
             isClipboardHistoryOn: isClipboardHistoryOn
-        ) else { return }
+        )
+        report(trigger, keyboard: .lastModifier(tracedModifierKeyboard), rule: rule)
+        guard let rule else { return }
         record(rule)
         DispatchQueue.main.async { [self] in carryOut(rule.action) }
     }
@@ -276,7 +290,11 @@ final class Dispatcher {
     /// A mouse button press triggers its action once, as a complete
     /// keystroke; holding the button does not repeat it.
     private func mouseDown(_ event: CGEvent) -> Disposition {
-        guard let rule = match(event, type: .otherMouseDown) else { return .passThrough }
+        let rule = match(event, type: .otherMouseDown)
+        if trace != nil, let trigger = Trigger(event: event, type: .otherMouseDown) {
+            report(trigger, keyboard: .lastModifier(tracedModifierKeyboard), rule: rule)
+        }
+        guard let rule else { return .passThrough }
         record(rule)
         heldButtons.insert(event.mouseButtonNumber)
         carryOut(rule.action)
@@ -387,7 +405,15 @@ final class Dispatcher {
         // A repeat that would match only now, because a modifier was pressed
         // while the key was already held, belongs to a press that went out
         // unchanged; it goes out unchanged too, without being matched.
-        guard !event.isAutorepeat, let rule = match(event, type: .keyDown) else { return .passThrough }
+        guard !event.isAutorepeat else { return .passThrough }
+        let rule = match(event, type: .keyDown)
+        if trace != nil, let trigger = Trigger(event: event, type: .keyDown) {
+            let sender = event.senderID
+            let attribution: DispatchTrace.KeyboardAttribution = sender == 0
+                ? .software : keyboard(event).map { .keyboard($0) } ?? .unknown(sender: sender)
+            report(trigger, keyboard: attribution, rule: rule)
+        }
+        guard let rule else { return .passThrough }
         record(rule)
 
         switch rule.action {
@@ -466,6 +492,13 @@ final class Dispatcher {
             return
         }
         NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
+    }
+
+    private func report(_ trigger: Trigger, keyboard: DispatchTrace.KeyboardAttribution, rule: Rule?) {
+        guard let trace else { return }
+        let entry = DispatchTrace(trigger: trigger, keyboard: keyboard,
+                                  frontmostBundleID: frontmostBundleID(), rule: rule)
+        if entry.isWorthRecording { trace(entry) }
     }
 
     private func record(_ rule: Rule) {

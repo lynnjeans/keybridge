@@ -39,6 +39,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         apply: { [dispatcher] rules in dispatcher.rules = rules }
     )
     lazy var eventTap = EventTap(dispatcher: dispatcher)
+    /// Notes shortcuts for a report while the user has it on (KB-247).
+    lazy var recorder = DiagnosticRecorder { [dispatcher] trace in dispatcher.trace = trace }
+    /// This launch's log, kept for the reports of later launches (KB-247).
+    let logArchive = LogArchive()
+    private var logArchiveTimer: Timer?
     lazy var engine = EngineController(permissions: permissionMonitor, tap: eventTap)
     let loginItem: LoginItem = {
         #if DEBUG
@@ -51,6 +56,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         logLaunchState()
+        startLogArchive()
         // Before anything starts: moving quits this copy and opens the one in
         // Applications, which then starts properly, guide and all (KB-233).
         if MoveToApplications.offerAtLaunch(location: updates.location) { return }
@@ -107,7 +113,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 try? await Task.sleep(for: .seconds(3))
                 let report = await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                             otherRemappers: otherRemappers, clipboard: clipboard,
-                                                            loginItem: loginItem, keyboards: keyboards)
+                                                            loginItem: loginItem, keyboards: keyboards,
+                                                            pathBox: pathBox, locations: quickSwitch.locations,
+                                                            updates: updates, recorder: recorder, logArchive: logArchive)
                 try? report.text.write(toFile: path, atomically: true, encoding: .utf8)
             }
         }
@@ -116,6 +124,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         eventTap.stop()
+        logArchive.copyNewEntries()
+    }
+
+    /// Copies the log into this launch's file every two minutes, off the
+    /// main thread, so a report made after a restart still has it.
+    private func startLogArchive() {
+        let archive = logArchive
+        DispatchQueue.global(qos: .utility).async {
+            archive.prune()
+            archive.copyNewEntries()
+        }
+        logArchiveTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+            DispatchQueue.global(qos: .utility).async { archive.copyNewEntries() }
+        }
     }
 
     /// Opening KeyBridge again while it runs, from Finder or Spotlight, shows

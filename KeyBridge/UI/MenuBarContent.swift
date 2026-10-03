@@ -8,6 +8,7 @@ struct MenuBarContent: View {
     let onboarding: OnboardingController
     let secureInput: SecureInputMonitor
     let updates: UpdateController
+    let recorder: DiagnosticRecorder
     @Environment(\.openWindow) private var openWindow
 
     private var permissions: PermissionMonitor { engine.permissions }
@@ -44,6 +45,16 @@ struct MenuBarContent: View {
         }
 
         Text(status)
+
+        // A recording runs for minutes, often with the window closed; this
+        // says so and ends it (KB-247).
+        if recorder.isRecording {
+            Button {
+                recorder.stop()
+            } label: {
+                Label("Recording Shortcuts — Stop", systemImage: "record.circle")
+            }
+        }
 
         Toggle("Windows Shortcut Mode", isOn: Binding(
             get: { engine.isEnabled && engine.canEnable },

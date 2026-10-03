@@ -263,8 +263,12 @@ General › Language & Region › Applications):
 - [ ] License and Third-Party Notices open in a sheet with the full text (the notices end with
       Sparkle's license); Source Code opens the public GitHub repository (not a 404).
 - [ ] Export Diagnostics… → the save panel starts in Downloads; saving shows the file in
-      Finder. The file has the right version, the permissions, the settings and the log since
-      launch, and **none** of the clipboard contents.
+      Finder. The file has the right version, the permissions, the settings, each keyboard's
+      settings in effect, the log since launch and earlier launches' logs, and **none** of the
+      clipboard contents.
+- [ ] Start Recording → the menu bar menu shows "Recording Shortcuts — Stop"; press ⌃W in Finder
+      and type a few letters; export → the Recording section lists ⌃W with its keyboard, app and
+      rule, and none of the letters. The recording stops by itself after five minutes.
 
 ## 17. Resources and updates
 

@@ -198,6 +198,22 @@
         }
       }
     },
+    "%lld shortcuts noted; they go into the next export." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 件のショートカットを記録しました。次の書き出しに含まれます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已记下 %lld 个快捷键，会包含在下次导出中。"
+          }
+        }
+      }
+    },
     "+" : {
       "shouldTranslate" : false
     },
@@ -217,18 +233,18 @@
         }
       }
     },
-    "A text file with KeyBridge's version, permissions, settings and log since launch, to attach to a problem report. Nothing you copied is included." : {
+    "A text file with KeyBridge's version, permissions, settings and the log of the last three days, to attach to a problem report. Nothing you copied is included." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KeyBridge のバージョン、権限、設定、起動後のログをまとめたテキストファイルです。問題の報告に添付してください。コピーした内容は含まれません。"
+            "value" : "KeyBridge のバージョン、権限、設定、過去 3 日間のログをまとめたテキストファイルです。問題の報告に添付してください。コピーした内容は含まれません。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一个文本文件，包含 KeyBridge 的版本、权限、设置和本次启动以来的日志，可附在问题反馈里。不包含你复制过的任何内容。"
+            "value" : "一个文本文件，包含 KeyBridge 的版本、权限、设置和最近三天的日志，可附在问题反馈里。不包含你复制过的任何内容。"
           }
         }
       }
@@ -5177,6 +5193,22 @@
         }
       }
     },
+    "Record Shortcuts" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを記録"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录快捷键"
+          }
+        }
+      }
+    },
     "Record this app's copies again" : {
       "localizations" : {
         "ja" : {
@@ -5189,6 +5221,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重新记录这个应用的复制内容"
+          }
+        }
+      }
+    },
+    "Recording Shortcuts — Stop" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを記録中 — 停止"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在记录快捷键 — 停止"
+          }
+        }
+      }
+    },
+    "Recording: %lld noted, %@ left" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録中：%lld 件、残り %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在记录：已记下 %lld 个，还剩 %@"
           }
         }
       }
@@ -6153,6 +6217,22 @@
         }
       }
     },
+    "Start Recording" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録を開始"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始记录"
+          }
+        }
+      }
+    },
     "Start Using KeyBridge" : {
       "localizations" : {
         "ja" : {
@@ -6203,6 +6283,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "第 %1$lld 步，共 %2$lld 步：%3$@"
+          }
+        }
+      }
+    },
+    "Stop Recording" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録を停止"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止记录"
           }
         }
       }
@@ -6705,6 +6801,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "滚轮"
+          }
+        }
+      }
+    },
+    "When a shortcut does not do what you expect: start, press it again, then export. For five minutes KeyBridge notes each shortcut, the keyboard it came from, the app in front and what it became. Letters typed on their own are never noted." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットが思いどおりに動かないとき：記録を開始し、もう一度押してから書き出します。5 分間、KeyBridge は各ショートカットと、そのキーボード、最前面のアプリ、何に変換されたかを記録します。単独で入力した文字は記録しません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快捷键没有按预期工作时：开始记录，再按一次那个快捷键，然后导出。五分钟内，KeyBridge 会记下每个快捷键、来自哪块键盘、当时最前面的应用，以及它被转成了什么。单独输入的字母永远不会被记下。"
           }
         }
       }

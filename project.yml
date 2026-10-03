@@ -156,6 +156,7 @@ targets:
       - path: KeyBridge/Engine/RuleMatcher.swift
       - path: KeyBridge/Engine/EventTrigger.swift
       - path: KeyBridge/Engine/Dispatcher.swift
+      - path: KeyBridge/Engine/DispatchTrace.swift
       - path: KeyBridge/Engine/SyntheticEvent.swift
       - path: KeyBridge/Engine/ScrollStepper.swift
       - path: KeyBridge/Engine/WheelDirection.swift
@@ -179,6 +180,8 @@ targets:
       - path: KeyBridge/App/EngineController.swift
       - path: KeyBridge/App/LoginItem.swift
       - path: KeyBridge/App/DiagnosticReport.swift
+      - path: KeyBridge/App/DiagnosticRecorder.swift
+      - path: KeyBridge/App/LogArchive.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
       - path: KeyBridge/FinderMenu/FinderMenuHandler.swift
       - path: KeyBridge/Updates/InstallLocation.swift

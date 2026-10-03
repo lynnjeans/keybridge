@@ -341,11 +341,24 @@ open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \
 
 About › Export Diagnostics… saves a text file for a user to attach to a problem report: version,
 macOS and Mac model, permissions, whether the engine runs, Secure Input, other remappers, a summary
-of the settings, the configuration file in full, and KeyBridge's log since launch. The clipboard
-history appears only as a count, and the home folder is written as `~`. The log comes from
-`OSLogStore(scope: .currentProcessIdentifier)`, so only the current launch is in it; reading it
-takes a second or more, which is why it runs off the main thread. For earlier launches, ask the user
-for `/usr/bin/log show --last 1h --predicate 'subsystem == "io.github.lynnjeans.KeyBridge"'`.
+of the settings, the settings each connected keyboard actually runs with and where they come from
+(its own, a PC keyboard's defaults, or general), settings kept outside the configuration file
+(path box, recent folders, Finder extension, updates, natural scrolling), the configuration file in
+full, the last recording, KeyBridge's log since launch and the logs of earlier launches. The
+clipboard history appears only as a count, and the home folder is written as `~`.
+
+- **Log.** `OSLogStore(scope: .currentProcessIdentifier)` holds only the current launch, so
+  `LogArchive` copies it every two minutes and at quit into
+  `~/Library/Application Support/KeyBridge/Logs/KeyBridge <launch time>.log`. Files older than three
+  days go at launch, then the oldest until the rest are within 5 MB; one launch stops writing at
+  5 MB. Reading the log takes a second or more, so it runs off the main thread.
+- **Recording (KB-247).** About › Diagnostics › Start Recording hands the dispatcher a `trace`
+  function for five minutes (or until stopped there or from the menu bar menu). Each press worth
+  recording becomes one line: time, combination, the keyboard it was taken for (`unknown (sender …)`
+  when the lookup failed, which means the general settings applied), the front app, and the rule
+  and its result or `no match`. A key with no modifier but Shift is left out unless a rule took it
+  or it is an F-key, Esc, Home, End or a page key, so typing cannot be read back. The lines stay in
+  memory and go into the next export.
 
 ## Karabiner-Elements and other HID-level remappers
 

@@ -15,13 +15,15 @@ import Testing
         #expect(text.hasPrefix("KeyBridge diagnostics\nGenerated: "))
         #expect(text.contains("\n## State\nEvent tap running: yes\n"))
         #expect(text.contains("\n## Configuration file\n{\n  \"version\" : 1\n}\n"))
-        #expect(text.hasSuffix("\n## Log since launch (2 entries)\none\ntwo\n"))
+        #expect(text.contains("\n## Log since launch (2 entries)\none\ntwo\n"))
+        #expect(text.hasSuffix("\n## Earlier launches (0, last three days)\n(none kept)\n"))
     }
 
     @Test func saysWhenThereIsNoConfigurationOrLog() {
         let text = DiagnosticReport(generated: Self.date, sections: [], configuration: nil, log: []).text
         #expect(text.contains("## Configuration file\n(none yet: the built-in defaults are in use)"))
         #expect(text.contains("## Log since launch (0 entries)\n(empty)"))
+        #expect(text.contains("## Recording\n(none made: "))
     }
 
     @Test func leavesTheAccountNameOut() {
