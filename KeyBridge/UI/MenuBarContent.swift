@@ -44,8 +44,6 @@ struct MenuBarContent: View {
             Divider()
         }
 
-        Text(status)
-
         // A recording runs for minutes, often with the window closed; this
         // says so and ends it (KB-247).
         if recorder.isRecording {
@@ -56,10 +54,17 @@ struct MenuBarContent: View {
             }
         }
 
-        Toggle("Windows Shortcut Mode", isOn: Binding(
+        // The master switch, with what is wrong underneath when something
+        // is; a status line of its own only repeated the checkmark (KB-249).
+        Toggle(isOn: Binding(
             get: { engine.isEnabled && engine.canEnable },
             set: { engine.isEnabled = $0 }
-        ))
+        )) {
+            Text("Enable KeyBridge")
+            if let problem {
+                Text(problem)
+            }
+        }
         .disabled(!engine.canEnable)
 
         if engine.isPaused {
@@ -69,8 +74,6 @@ struct MenuBarContent: View {
                 Button("For 5 Minutes") { engine.pause(for: 5 * 60) }
                 Button("For 15 Minutes") { engine.pause(for: 15 * 60) }
                 Button("For 1 Hour") { engine.pause(for: 60 * 60) }
-                Divider()
-                Button("Until I Resume") { engine.pause(for: nil) }
             }
             .disabled(!engine.isActive)
         }
@@ -101,17 +104,18 @@ struct MenuBarContent: View {
         }
         .keyboardShortcut(",")
 
-        Button("Check for Updates…") { updates.checkForUpdates() }
-            .disabled(!updates.canCheckForUpdates)
-
         Divider()
 
-        // With Quit, where menu bar apps usually keep it (user's call).
+        // With Quit, where menu bar apps usually keep it (user's call), and
+        // Check for Updates with it, as apps do (KB-249).
         Button("About KeyBridge") {
             PageRequest.show(.about)
             openWindow(id: WindowID.main)
             WindowID.bringToFront(WindowID.main)
         }
+
+        Button("Check for Updates…") { updates.checkForUpdates() }
+            .disabled(!updates.canCheckForUpdates)
 
         Button("Quit KeyBridge") {
             NSApplication.shared.terminate(nil)
@@ -119,20 +123,22 @@ struct MenuBarContent: View {
         .keyboardShortcut("q")
     }
 
-    /// One line on what KeyBridge is doing right now.
-    private var status: String {
+    /// What keeps KeyBridge from working right now, under the switch; nil
+    /// while it works, or while the user has it off, which the switch shows.
+    private var problem: String? {
         if !engine.canEnable { return String(localized: "KeyBridge needs permissions") }
-        if !engine.isEnabled { return String(localized: "KeyBridge is off") }
+        if !engine.isEnabled { return nil }
         if let until = engine.pausedUntil {
             return until == .distantFuture
                 ? String(localized: "Paused")
                 : String(localized: "Paused until \(until.formatted(date: .omitted, time: .shortened))")
         }
-        if engine.isActive, let holder = secureInput.holder {
+        if !engine.isActive { return String(localized: "KeyBridge could not start") }
+        if let holder = secureInput.holder {
             return holder.appName.map { String(localized: "Keyboard paused by Secure Input (\($0))") }
                 ?? String(localized: "Keyboard paused by Secure Input")
         }
-        return engine.isActive ? String(localized: "KeyBridge is on") : String(localized: "KeyBridge could not start")
+        return nil
     }
 
 }

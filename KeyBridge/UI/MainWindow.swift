@@ -859,7 +859,7 @@ struct ModeCard: View {
             HStack(alignment: .center, spacing: 14) {
                 IconTile(symbol: "command", tint: .accentColor, size: 40)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Windows Shortcut Mode")
+                    Text("Enable KeyBridge")
                         .font(.headline)
                     Text(detail)
                         .foregroundStyle(.secondary)
@@ -871,7 +871,7 @@ struct ModeCard: View {
                 }
                 // Shown off while it cannot run, even if the user left it on;
                 // it comes back on by itself once the permissions are granted.
-                Toggle("Windows Shortcut Mode", isOn: Binding(
+                Toggle("Enable KeyBridge", isOn: Binding(
                     get: { engine.isEnabled && engine.canEnable },
                     set: { engine.isEnabled = $0 }
                 ))

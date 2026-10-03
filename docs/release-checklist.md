@@ -89,12 +89,14 @@ Start from a clean slate: quit KeyBridge, then
 
 ## 3. Master switch, pause, menu bar
 
-- [ ] Overview › Windows Shortcut Mode **off** → Ctrl+C no longer copies in TextEdit, and the
+- [ ] Overview › Enable KeyBridge **off** → Ctrl+C no longer copies in TextEdit, and the
       side buttons and fn+scroll do nothing special. **On** → all work again.
 - [ ] Quit and reopen with the switch off → it stays off. Switch on, relaunch → on.
 - [ ] Menu bar › Pause › For 5 Minutes → remapping stops; the Overview says "Paused until
       <time>" with a Resume button. Resume → remapping is back at once.
-- [ ] Pause › Until I Resume → stays paused until Resume Now is chosen from the menu bar.
+- [ ] While paused, the menu bar menu shows "Paused until <time>" under Enable KeyBridge, and
+      Pause becomes Resume Now. In the normal state the menu has no status line: Enable
+      KeyBridge ✓, Pause | Open KeyBridge… | About KeyBridge, Check for Updates…, Quit KeyBridge.
 - [ ] Menu bar › Quit KeyBridge → the app quits, and keys behave as on a plain Mac.
 
 ## 4. Shortcuts: Editing group

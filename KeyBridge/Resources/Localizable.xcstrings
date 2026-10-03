@@ -729,18 +729,18 @@
         }
       }
     },
-    "Both permissions are granted, so Windows Shortcut Mode can be switched on. Your habits should work now:" : {
+    "Both permissions are granted, so KeyBridge can be switched on. Your habits should work now:" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "両方の権限が許可されたので、Windows ショートカットモードをオンにできます。いつもの操作がもう使えるはずです："
+            "value" : "両方の権限が許可されたので、KeyBridge を有効にできます。いつもの操作がもう使えるはずです："
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "两项权限都已授权，可以开启 Windows 快捷键模式了。你的习惯现在应该都能用了："
+            "value" : "两项权限都已授权，可以启用 KeyBridge 了。你的习惯现在应该都能用了："
           }
         }
       }
@@ -1845,6 +1845,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "表情与符号"
+          }
+        }
+      }
+    },
+    "Enable KeyBridge" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KeyBridge を有効にする"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 KeyBridge"
           }
         }
       }
@@ -3061,38 +3077,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KeyBridge 是自由软件：你可以按照 GNU 通用公共许可证第 3 版的条款再发布和修改它。本软件不提供任何担保。"
-          }
-        }
-      }
-    },
-    "KeyBridge is off" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KeyBridge はオフです"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KeyBridge 已关闭"
-          }
-        }
-      }
-    },
-    "KeyBridge is on" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KeyBridge はオンです"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KeyBridge 已开启"
           }
         }
       }
@@ -6719,22 +6703,6 @@
         }
       }
     },
-    "Until I Resume" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "再開するまで"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "直到手动恢复"
-          }
-        }
-      }
-    },
     "Updates" : {
       "localizations" : {
         "ja" : {
@@ -7026,22 +6994,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows 键"
-          }
-        }
-      }
-    },
-    "Windows Shortcut Mode" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Windows ショートカットモード"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Windows 快捷键模式"
           }
         }
       }

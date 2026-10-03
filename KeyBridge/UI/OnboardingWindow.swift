@@ -190,7 +190,7 @@ private struct ReadyStep: View {
             Label("KeyBridge is ready", systemImage: "checkmark.circle.fill")
                 .foregroundStyle(.green)
                 .font(.title2.bold())
-            Text("Both permissions are granted, so Windows Shortcut Mode can be switched on. Your habits should work now:")
+            Text("Both permissions are granted, so KeyBridge can be switched on. Your habits should work now:")
                 .fixedSize(horizontal: false, vertical: true)
             VStack(alignment: .leading, spacing: 8) {
                 Label("Ctrl+C and Ctrl+V copy and paste.", systemImage: "doc.on.doc")

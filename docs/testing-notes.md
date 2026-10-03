@@ -53,7 +53,7 @@ rewrites them and shows up as an unrelated diff.
   and mouse still working normally; granting it again should log `Event tap started`, and
   remapping works again without a restart. The menu bar dropdown shows the live state of both
   permissions.
-- The engine runs only while the master switch (Overview › Windows Shortcut Mode) is on **and**
+- The engine runs only while the master switch (Overview › Enable KeyBridge) is on **and**
   both permissions are granted. With a permission missing, the Overview shows "Action needed",
   the switch is greyed out with the reason below it, and the menu bar icon is faded. The switch
   is remembered across launches (`engineEnabled` in the app's user defaults); to reset it:
