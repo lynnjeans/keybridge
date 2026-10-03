@@ -319,7 +319,9 @@ struct CustomRuleEditor: View {
             }
         }
         .padding(24)
+        // Wider where the result picker needs it, as in Japanese (KB-245).
         .frame(minWidth: 480)
+        .fixedSize(horizontal: true, vertical: false)
         .onDisappear(perform: stopRecording)
         .confirmationDialog("Delete this rule?", isPresented: $confirmingDelete) {
             Button("Delete", role: .destructive) {

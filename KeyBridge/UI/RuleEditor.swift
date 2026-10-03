@@ -96,7 +96,9 @@ struct RuleEditor: View {
             }
         }
         .padding(24)
+        // Wider where the result picker needs it, as in Japanese (KB-245).
         .frame(minWidth: 440)
+        .fixedSize(horizontal: true, vertical: false)
         .onDisappear(perform: stopRecording)
     }
 
