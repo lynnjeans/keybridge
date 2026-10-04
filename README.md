@@ -54,7 +54,7 @@ others targets directly: **the migrant**.
 - **Each keyboard its own way**: a MacBook's keyboard and a PC keyboard can press Ctrl and
   Win/Alt differently
 - **Mouse side buttons** → back / forward or any shortcut
-- **Modifier + scroll → `⌘+` / `⌘−`** (page zoom) — the feature no free tool has
+- **Modifier + scroll → `⌘+` / `⌘−`** (page zoom), on from the start with `fn`, or `Ctrl` if you prefer; no separate mouse tool needed
 - **Scroll direction reversal**, mouse only, trackpad untouched
 - **Finder key suite** — `Delete`, `F2`, `Enter`, `Ctrl+X/V` move, `Backspace` up
 - **Clipboard history** on `Win+V` or `⌥V`, with search, pinning, and password-manager exclusion
