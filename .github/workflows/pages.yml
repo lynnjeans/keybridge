@@ -1,4 +1,4 @@
-# Publishes site/ to GitHub Pages, at https://lynnjeans.github.io/keybridge/,
+# Publishes site/ to GitHub Pages, at https://samekeys.com/,
 # whenever it changes on main. The site is plain HTML: nothing is built.
 name: Website
 

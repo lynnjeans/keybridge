@@ -1,4 +1,4 @@
-# KeyBridge
+# SameKeys
 
 [![Latest release](https://img.shields.io/github/v/release/lynnjeans/keybridge)](https://github.com/lynnjeans/keybridge/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/github/license/lynnjeans/keybridge)](LICENSE)
@@ -6,21 +6,21 @@
 
 **A Mac shortcut bridge for Windows users.**
 
-KeyBridge lets people who just moved from Windows to macOS keep their muscle memory:
+SameKeys lets people who just moved from Windows to macOS keep their muscle memory:
 `Ctrl+C` still copies, `Home`/`End` still jump to line start/end, mouse side buttons still
 go back and forward, `Ctrl`/`fn` + scroll still zooms the page, and `⌥V` brings up a
 Windows-style clipboard history.
 
-Website: **[lynnjeans.github.io/keybridge](https://lynnjeans.github.io/keybridge/)** (English, 简体中文, 日本語)
+Website: **[samekeys.com](https://samekeys.com/)** (English, 简体中文, 日本語)
 
-> [Download the latest KeyBridge](https://github.com/lynnjeans/keybridge/releases/latest)
+> [Download the latest SameKeys](https://github.com/lynnjeans/keybridge/releases/latest)
 > or install it with Homebrew:
 >
 > ```bash
 > brew install --cask lynnjeans/tap/keybridge
 > ```
 >
-> Open the disk image and double-click KeyBridge: it installs itself in Applications and
+> Open the disk image and double-click SameKeys: it installs itself in Applications and
 > opens. From then on it keeps itself up to date.
 
 ---
@@ -45,9 +45,9 @@ them starts from Windows habits. Karabiner-Elements owns deep keyboard remapping
 scroll events; BetterTouchTool covers a lot but is paid, closed source and built for
 power users; LinearMouse and Mac Mouse Fix cover the mouse only.
 
-**KeyBridge brings it all together in one app**, set up for Windows habits from the first
+**SameKeys brings it all together in one app**, set up for Windows habits from the first
 launch. That is why I made it: when I moved from Windows to the Mac, years of habits would not
-go away, and I did not want five apps to keep them. KeyBridge is for one audience none of the
+go away, and I did not want five apps to keep them. SameKeys is for one audience none of the
 others targets directly: **the migrant**.
 
 ## What it does
@@ -69,7 +69,7 @@ others targets directly: **the migrant**.
 - **Open at Login**, and **automatic updates**, signed and checked daily
 - English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Polski
 
-**Out of scope:** deep keyboard remapping — tap/hold dual-role keys, layers, chords. KeyBridge
+**Out of scope:** deep keyboard remapping — tap/hold dual-role keys, layers, chords. SameKeys
 maps combinations to combinations (`Ctrl+C` → `⌘C`, `fn+C` → `⌘C`) and nothing more. That
 keeps it on a single event tap with two permission toggles, instead of the root daemon and
 virtual keyboard driver that deep remapping requires. If you need those, use
@@ -81,10 +81,10 @@ Karabiner-Elements.
 - Two system permissions: **Accessibility** and **Input Monitoring**
 
 A sandboxed app can watch the keyboard and send keystrokes, but not use the Accessibility API,
-which KeyBridge needs to read other apps: whether you are typing in a text field before `Delete`
+which SameKeys needs to read other apps: whether you are typing in a text field before `Delete`
 deletes a file, Finder's folder for `Ctrl+G` in open and save dialogs, the window to snap. Nor is
 it clear that a sandboxed app may hold back the key you pressed, so that `Ctrl+C` is not also
-sent on as it is. KeyBridge is therefore distributed **outside the Mac App Store**, signed and
+sent on as it is. SameKeys is therefore distributed **outside the Mac App Store**, signed and
 notarized, via GitHub Releases and Homebrew Cask.
 
 ## Building
@@ -109,7 +109,7 @@ xcodegen generate
 
 ### Code signing
 
-KeyBridge needs Accessibility and Input Monitoring permissions, and macOS ties those grants
+SameKeys needs Accessibility and Input Monitoring permissions, and macOS ties those grants
 to the app's code signature. An ad-hoc signed build gets a new identity every time it is
 rebuilt, so the grants are lost on each build. To keep them, sign development builds with
 your own certificate — a free Apple ID is enough:
@@ -130,7 +130,7 @@ have to re-grant permissions after every build.
 
 Every string the UI shows lives in
 [`SameKeys/Resources/Localizable.xcstrings`](SameKeys/Resources/Localizable.xcstrings),
-KeyBridge's String Catalog, with English as the source language. Write UI text as
+SameKeys's String Catalog, with English as the source language. Write UI text as
 string literals in SwiftUI (`Text("…")`) or as `String(localized: "…")` where a `String`
 is needed; building in Xcode adds new strings to the catalog and lists missing
 translations. A command-line build only extracts them, so sync the catalog afterwards:
@@ -166,14 +166,14 @@ Design and planning documents live in [`docs/`](docs/).
 
 The product website is plain HTML in [`site/`](site/), one page per language, published to
 GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) whenever `site/`
-changes on `main`. Nothing is built. To preview it at the address it will have:
+changes on `main`, and served at [samekeys.com](https://samekeys.com/) (the domain is set in the
+repository's Pages settings). Nothing is built. To preview it:
 
 ```bash
-mkdir -p /tmp/pages && ln -sfn "$PWD/site" /tmp/pages/keybridge
-python3 -m http.server 8123 --directory /tmp/pages
+python3 -m http.server 8123 --directory site
 ```
 
-and open `http://localhost:8123/keybridge/`. The three pages share one stylesheet but not their
+and open `http://localhost:8123/`. The three pages share one stylesheet but not their
 markup: a change to one page's structure goes into all three.
 
 The screenshots come from the Debug build, with a fresh settings folder and an example
@@ -196,17 +196,17 @@ scripts/site/social-preview.sh
 
 ## License
 
-Copyright © 2026 Lei Sun and KeyBridge contributors.
+Copyright © 2026 Lei Sun and SameKeys contributors.
 
-KeyBridge is free software: you can redistribute it and/or modify it under the terms of the
+SameKeys is free software: you can redistribute it and/or modify it under the terms of the
 GNU General Public License as published by the Free Software Foundation, version 3. It is
 distributed in the hope that it will be useful, but **without any warranty**; without even
 the implied warranty of merchantability or fitness for a particular purpose. See
 [LICENSE](LICENSE) for the full terms.
 
-KeyBridge is free software and always will be. If it saves you some frustration,
+SameKeys is free software and always will be. If it saves you some frustration,
 donations are welcome, but never required: [sponsor the project on GitHub](https://github.com/sponsors/lynnjeans).
 
-The only third-party code in KeyBridge is [Sparkle](https://sparkle-project.org) (MIT), which
-handles automatic updates. It, the projects KeyBridge was designed after, and the ones whose
+The only third-party code in SameKeys is [Sparkle](https://sparkle-project.org) (MIT), which
+handles automatic updates. It, the projects SameKeys was designed after, and the ones whose
 licenses rule out reuse are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -1,6 +1,6 @@
 # Testing Notes
 
-How to verify KeyBridge's behaviour on a real Mac, and the traps that produce confidently
+How to verify SameKeys's behaviour on a real Mac, and the traps that produce confidently
 wrong results. Every item here cost at least one round of misdiagnosis during development.
 The pass to run before every release is [release-checklist.md](release-checklist.md).
 
@@ -11,16 +11,16 @@ check before the code.
 
 ## Unit tests
 
-Logic that needs no running app (the rule model so far) is covered by the `KeyBridgeTests`
+Logic that needs no running app (the rule model so far) is covered by the `SameKeysTests`
 bundle, written with Swift Testing. The bundle compiles the sources it tests itself rather than
-loading them from the app, so a test run never launches KeyBridge or starts its event tap.
+loading them from the app, so a test run never launches SameKeys or starts its event tap.
 
 ```bash
-xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Debug \
+xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -configuration Debug \
   -derivedDataPath build/DerivedData test
 ```
 
-When adding a folder whose code is tested, add it to the `KeyBridgeTests` sources in
+When adding a folder whose code is tested, add it to the `SameKeysTests` sources in
 `project.yml` and run `xcodegen generate`. Do the same after adding any file: entries added to
 `project.pbxproj` by hand build fine but carry made-up object IDs, so the next `xcodegen generate`
 rewrites them and shows up as an unrelated diff.
@@ -29,42 +29,42 @@ rewrites them and shows up as an unrelated diff.
 
 - **Launch with `open`**, never by running the binary from a terminal. macOS attributes
   permission checks to the responsible process; run from a terminal, that is the terminal, so
-  you end up testing the terminal's permissions instead of KeyBridge's.
+  you end up testing the terminal's permissions instead of SameKeys's.
 
   ```bash
-  open build/DerivedData/Build/Products/Debug/KeyBridge.app
+  open build/DerivedData/Build/Products/Debug/SameKeys.app
   ```
 
-- KeyBridge is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch —
+- SameKeys is a menu bar app (`LSUIElement`): no Dock icon, and no window opens at launch —
   except on a first run that still needs a permission, which opens the guide below. Its only
   permanent visible presence is the ⌘ icon in the menu bar.
 
 ## Permissions
 
-- KeyBridge needs **both** Accessibility and Input Monitoring. With Accessibility alone the
+- SameKeys needs **both** Accessibility and Input Monitoring. With Accessibility alone the
   event tap is still created, and modifier changes, mouse buttons and scrolling still arrive —
   but **ordinary key presses are silently withheld**. A run of Shift presses therefore looks
   like working keyboard input. That is why the debug counters report `keyboard` (key down/up)
   and `modifier` (flag changes) separately. Details in #69.
 - Permission changes are picked up while the app runs, by a check every 2 seconds and whenever
-  KeyBridge becomes active; each change is logged in the `permissions` category as
-  `accessibility: granted → denied`. To test, toggle KeyBridge in System Settings › Privacy &
+  SameKeys becomes active; each change is logged in the `permissions` category as
+  `accessibility: granted → denied`. To test, toggle SameKeys in System Settings › Privacy &
   Security while it runs. Revoking Accessibility should log `Event tap stopped` with the keyboard
   and mouse still working normally; granting it again should log `Event tap started`, and
   remapping works again without a restart. The menu bar dropdown shows the live state of both
   permissions.
-- The engine runs only while the master switch (Overview › Enable KeyBridge) is on **and**
+- The engine runs only while the master switch (Overview › Enable SameKeys) is on **and**
   both permissions are granted. With a permission missing, the Overview shows "Action needed",
   the switch is greyed out with the reason below it, and the menu bar icon is faded. The switch
   is remembered across launches (`engineEnabled` in the app's user defaults); to reset it:
 
   ```bash
-  defaults delete io.github.lynnjeans.KeyBridge engineEnabled
+  defaults delete io.github.lynnjeans.SameKeys engineEnabled
   ```
 
-- Opening KeyBridge again while it runs (double-click in Finder, or Spotlight) opens the main
+- Opening SameKeys again while it runs (double-click in Finder, or Spotlight) opens the main
   window — the way in when the notch hides the menu bar icon.
-- The first-run guide (Set Up KeyBridge) opens by itself on a first launch that is still missing
+- The first-run guide (Set Up SameKeys) opens by itself on a first launch that is still missing
   a permission, and walks Accessibility → Input Monitoring → Ready. Its step follows the live
   permission state, so granting one in System Settings moves the window on within the 2-second
   poll, with nothing to click. Once finished it does not return; the menu bar item and the
@@ -72,15 +72,15 @@ rewrites them and shows up as an unrelated diff.
   grants and the fact that the guide has been seen, then relaunch:
 
   ```bash
-  tccutil reset Accessibility io.github.lynnjeans.KeyBridge
-  tccutil reset ListenEvent io.github.lynnjeans.KeyBridge
-  defaults delete io.github.lynnjeans.KeyBridge onboardingCompleted
+  tccutil reset Accessibility io.github.lynnjeans.SameKeys
+  tccutil reset ListenEvent io.github.lynnjeans.SameKeys
+  defaults delete io.github.lynnjeans.SameKeys onboardingCompleted
   ```
 
   `tccutil reset` kills the running app, and `defaults` writes are cached per process, so quit
-  KeyBridge before running these or the old value is written back on quit.
+  SameKeys before running these or the old value is written back on quit.
 - The guide never shows a system permission alert. For Accessibility, the plain
-  `AXIsProcessTrusted()` check made at launch is enough to list KeyBridge in the pane; the
+  `AXIsProcessTrusted()` check made at launch is enough to list SameKeys in the pane; the
   prompting variant was dropped because its alert opened on top of the deep-linked pane and then
   lingered behind System Settings with a Deny button. Input Monitoring is different: checking
   (`IOHIDCheckAccess`) leaves its list empty, so the guide calls `IOHIDRequestAccess` itself as
@@ -91,25 +91,25 @@ rewrites them and shows up as an unrelated diff.
 - **With Accessibility already granted, macOS may grant Input Monitoring silently.** Observed on
   macOS 26: `IOHIDRequestAccess` returned granted within about 1.5 s with no alert and no row in
   the Input Monitoring list, and the tap received ordinary key presses (`keyboard=` counts above
-  zero). So "Granted" in KeyBridge with "No Items" in System Settings is not a detection bug, but
+  zero). So "Granted" in SameKeys with "No Items" in System Settings is not a detection bug, but
   the grant cannot be switched off there either — reset it with `tccutil reset ListenEvent`.
   The `tccd` log shows why: with Accessibility granted, the `kTCCServiceListenEvent` request is
-  answered "allowed" within milliseconds, without asking anyone — and KeyBridge never gets a row
+  answered "allowed" within milliseconds, without asking anyone — and SameKeys never gets a row
   of its own (a row seen in one run had been added by hand with "+"). Judge the grant by the
   `keyboard=` counter, not by the list.
 - **Once Input Monitoring reads `denied`, step 2 is a dead end.** `IOHIDRequestAccess` then does
   nothing — no alert, no row — so the pane stays at "No Items" however often the button is
   pressed. Seen in a process that had read `denied` while Accessibility was still missing and
   kept that value after Accessibility was granted — likely the same in-process staleness as
-  revocation below. After `tccutil reset ListenEvent io.github.lynnjeans.KeyBridge` and a
+  revocation below. After `tccutil reset ListenEvent io.github.lynnjeans.SameKeys` and a
   relaunch, the fresh process read `granted` straight away, with no request, because
   Accessibility was granted — and the guide skipped itself. The launch log line
   `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
 - **An explicit Input Monitoring "off" wins over Accessibility.** The silent grant above applies
-  only while Input Monitoring is undecided. Add KeyBridge to the list with "+" and switch it off,
+  only while Input Monitoring is undecided. Add SameKeys to the list with "+" and switch it off,
   and a fresh launch reads `inputMonitoring: denied` with Accessibility still on, so the engine
   does not start the tap.
-- **Changing an Input Monitoring switch relaunches KeyBridge.** System Settings offers to quit
+- **Changing an Input Monitoring switch relaunches SameKeys.** System Settings offers to quit
   and reopen the app; runningboard logs the relaunch with `com.apple.coreservices.uiagent` as the
   originator, and each change shows in the `tccd` log as
   `TCCDEvent: type=Modify, service=kTCCServiceListenEvent`. The new process reads the real
@@ -117,29 +117,29 @@ rewrites them and shows up as an unrelated diff.
   status — still to be checked (#126). Accessibility changes are picked up by the 2-second poll
   without a relaunch.
 - **System Settings' privacy lists refresh late.** Right after a grant, or after a deep link,
-  a pane can show "No Items" for a few seconds before KeyBridge's row appears. Wait, or reopen
+  a pane can show "No Items" for a few seconds before SameKeys's row appears. Wait, or reopen
   the pane, before concluding the row is missing.
-- **KeyBridge is not frontmost at launch, even when started from Finder**, and
+- **SameKeys is not frontmost at launch, even when started from Finder**, and
   `NSApplication.activate()` is refused while another app is frontmost. The guide therefore
   orders its own window front (`orderFrontRegardless`) when it appears and on every step change,
   so it is in view without being the active app. To check, list on-screen windows front to back
-  with `CGWindowListCopyWindowInfo` and look for `Set Up KeyBridge` first; the frontmost
+  with `CGWindowListCopyWindowInfo` and look for `Set Up SameKeys` first; the frontmost
   *application* stays whatever the user had before.
 - To confirm that grants survive a rebuild, build a bundle that genuinely differs. Swift builds
   are deterministic, so touching a source file can produce a byte-identical binary. Override the
   build number instead:
 
   ```bash
-  xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Debug \
+  xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -configuration Debug \
     -derivedDataPath build/DerivedData CURRENT_PROJECT_VERSION=99 build
   ```
 
 ## Configuration file
 
 - The user's changes to the built-in rules live in
-  `~/Library/Application Support/KeyBridge/config.json`: a `schemaVersion` and a list of
+  `~/Library/Application Support/SameKeys/config.json`: a `schemaVersion` and a list of
   `overrides`. No file means nothing has been changed. It is read once at launch, so after
-  editing it by hand, relaunch KeyBridge. The launch logs one line in the `configuration`
+  editing it by hand, relaunch SameKeys. The launch logs one line in the `configuration`
   category: `No configuration file…`, `Configuration loaded: n override(s), n keyboard(s) with
   settings of their own`, or a migration or error message.
 - An override holds a **complete** rule — the synthesized decoder does not fill in missing
@@ -158,10 +158,10 @@ rewrites them and shows up as an unrelated diff.
   "controlKey": "fn", "modifierLayout": "mac",
   "keyboards": [{"vendorID": 14, "productID": 13330, "name": "RK-KB5.0", "controlKey": "control", "modifierLayout": "pc"}]
   ```
-- A file KeyBridge cannot use is renamed `config.unreadable-<date>.json` and the built-in rules
+- A file SameKeys cannot use is renamed `config.unreadable-<date>.json` and the built-in rules
   are used; a file from an older version is upgraded in place with the original kept as
   `config.v<n>.json`; a file from a newer version is read but never overwritten. To start
-  clean, quit KeyBridge and delete the folder.
+  clean, quit SameKeys and delete the folder.
 
 ## Shortcuts page and group switches
 
@@ -184,7 +184,7 @@ rewrites them and shows up as an unrelated diff.
   nothing and reports no error. Always use the full path:
 
   ```bash
-  /usr/bin/log show --predicate 'subsystem == "io.github.lynnjeans.KeyBridge"' --last 10m --style compact
+  /usr/bin/log show --predicate 'subsystem == "io.github.lynnjeans.SameKeys"' --last 10m --style compact
   ```
 
 - Filter by `processID == <pid>` to separate one launch from the previous one, or pass
@@ -203,7 +203,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 
 | Variable | Effect |
 |---|---|
-| `KB_DEBUG_SELFTEST` | KeyBridge posts zero-delta scroll events itself: five stamped as its own, then plain ones |
+| `KB_DEBUG_SELFTEST` | SameKeys posts zero-delta scroll events itself: five stamped as its own, then plain ones |
 | `KB_DEBUG_STALL_ONCE` | The next event blocks the tap callback for 2 s, so macOS disables the tap and recovery can be observed |
 | `KB_DEBUG_MATCHTEST` | Installs two test rules on F19 (one everywhere, one Finder-only), brings Finder to the front and presses F19, switches back to the previous app and presses F19 again, then presses F20, which has no rule |
 | `KB_DEBUG_DIAGNOSTICS` | Three seconds after launch, writes the diagnostic report (About › Export Diagnostics…) to the path given, without the save panel |
@@ -211,9 +211,9 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
 | `KB_DEBUG_DIALOGJUMP` | Three seconds after launch, carries out the file dialog action it names — `finderFolder` (the default, as ⌃G: jumps the dialog in front to Finder's folder, KB-217) or `recentLocations` (as ⌃⇧G: shows the recent locations list over the dialog or Finder, KB-219) — and logs `dialogjump front=… dialog=true|false finder=… recent=…` in the `fileDialog` category. Open a dialog first and keep it in front (e.g. launch TextEdit, which opens with one); `where popup` in its AX tree then shows the new folder |
 | `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `pathBox` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
-| `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch KeyBridge first, then bring the app to test to the front |
+| `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch SameKeys first, then bring the app to test to the front |
 | `KB_DEBUG_APPCAST` | Checks for updates against the appcast at this URL instead of the website (KB-101). Without it, debug builds never check: their build number is 1, so they would replace themselves with the latest release. See [Testing updates](#testing-updates) |
-| `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch KeyBridge first and bring the app to test to the front within those three seconds |
+| `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch SameKeys first and bring the app to test to the front within those three seconds |
 
 - **A written Accessibility attribute does not read back changed straight away.** After setting
   `kAXMinimizedAttribute`, reading it in the same turn of the run loop still gives the old
@@ -257,16 +257,16 @@ Debug builds read these environment variables at launch. Pass them with `open --
   its items are not in Finder's AX tree while it tracks, so the extension's entries can be neither
   read nor pressed. Check the menu by hand. Since KB-254 the app carries out a
   `keybridge://finder/…` URL only when the Apple event comes from code signed as
-  `io.github.lynnjeans.KeyBridge.Finder` by KeyBridge's own team, so `open -g 'keybridge://…'` from
+  `io.github.lynnjeans.SameKeys.Finder` by SameKeys's own team, so `open -g 'keybridge://…'` from
   a shell is refused (`Ignored 1 keybridge:// request(s) from …` under `finderMenu`). To test the app
   side alone, build a tiny sandboxed app that calls `NSWorkspace.open(_:withApplicationAt:)` and
-  sign it with `codesign -s "Apple Development" -i io.github.lynnjeans.KeyBridge.Finder
+  sign it with `codesign -s "Apple Development" -i io.github.lynnjeans.SameKeys.Finder
   --entitlements <app-sandbox only>`; launch it with `open`, and keep it alive a few seconds after
   sending, since the check reads the sender's signature while it runs. Name the build under test
   explicitly (`withApplicationAt`, or `open -a <app> <url>`): otherwise Launch Services hands the
   URL to the copy in Applications, starting it if need be. The extension logs `items menu: N
-  selected, M folders` under the subsystem `io.github.lynnjeans.KeyBridge.Finder`; after a rebuild,
-  `pkill -x KeyBridgeFinder` so Finder starts the new one, and `pluginkit -m -v | grep -i keybridge`
+  selected, M folders` under the subsystem `io.github.lynnjeans.SameKeys.Finder`; after a rebuild,
+  `pkill -x SameKeysFinder` so Finder starts the new one, and `pluginkit -m -v | grep -i keybridge`
   shows which build is registered.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
@@ -282,7 +282,7 @@ built-in ones for that launch.
 
 `KB_DEBUG_REMAPTEST` checks what applications actually receive. It starts a debug-only
 listen-only tap placed after every other tap (the *downstream probe*), which logs only F17–F20,
-and remaps ⌃F19 → ⌥F18. Expected `Downstream:` lines (KeyBridge adds fn to the F18 it
+and remaps ⌃F19 → ⌥F18. Expected `Downstream:` lines (SameKeys adds fn to the F18 it
 creates, as the hardware does for F-keys; the self-test's own F20 is posted without it):
 
 1. ⌃F19 with two repeats, Ctrl released before F19: `F18 down`, `repeat`, `repeat`, `up`, each
@@ -305,7 +305,7 @@ events for a while after the fingers lift; that is momentum, and it must not mat
 
 `KB_DEBUG_TAPALONETEST` checks lone-modifier triggers (KB-224, Win alone) with the test rule
 "⌘ alone → F17". The shell cannot: System Events sends modifier changes with key code 0 instead of
-the key's own code (55 for left ⌘), and KeyBridge only counts a change that names a modifier key,
+the key's own code (55 for left ⌘), and SameKeys only counts a change that names a modifier key,
 as every keyboard's does. The four steps are 4 s apart, so each lands in its own report: left ⌘
 tapped (`Matched rules: selftest.tapAlone=1`), ⌘+F20 (no match), ⌘ held 1.5 s (no match), right
 ⌘ tapped (`selftest.tapAlone=1`). A match shows as `own=2` too, the F17 it posts.
@@ -325,10 +325,10 @@ screenshotted in each language:
 | `KB_DEBUG_STEP` | The setup guide shows this step whatever the permissions say: `accessibility`, `inputMonitoring`, `ready`. A build that lacks the permissions cannot reach `ready` otherwise. Add `-onboardingCompleted NO` to the arguments to see it as on a first run |
 | `KB_DEBUG_KEYBOARDS` | `pc` (one PC keyboard, as on a Mac mini), `mac` (the built-in keyboard only) or `both`: the Shortcuts page's per-keyboard rows show these instead of the keyboards connected (KB-076). Display only; the engine still uses the real ones |
 | `KB_DEBUG_LOGINITEM` | `on` or `off`: Open at Login starts that way and can be switched, held in memory only — this Mac's login items are not touched (see [Open at Login](#open-at-login)) |
-| `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/KeyBridge`; the website's screenshots use it (`scripts/site/screenshots.sh`) |
+| `KB_DEBUG_SUPPORT_FOLDER` | The configuration and clipboard history are read from and saved to this folder instead of `~/Library/Application Support/SameKeys`; the website's screenshots use it (`scripts/site/screenshots.sh`) |
 
 ```bash
-open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \
+open build/Build/Products/Debug/SameKeys.app --env KB_DEBUG_SHOW=main \
   --env KB_DEBUG_PAGE=shortcuts --env KB_DEBUG_EXPAND_ALL=1 \
   --args -AppleLanguages '(en)' -NSDoubleLocalizedStrings YES
 ```
@@ -338,7 +338,7 @@ open build/Build/Products/Debug/KeyBridge.app --env KB_DEBUG_SHOW=main \
   a bug.
 - Check at the smallest window, 780 pt wide, as well as the default 880. System Events can set the
   size and scroll the page:
-  `osascript -e 'tell application "System Events" to tell process "KeyBridge" to set size of window 1 to {780, 860}'`,
+  `osascript -e 'tell application "System Events" to tell process "SameKeys" to set size of window 1 to {780, 860}'`,
   then `set value of scroll bar 1 of scroll area 1 of group 2 of splitter group 1 of group 1 of window 1 to 0.5`.
 - Rows with a control beside text use `AdaptiveRow`: the text keeps a minimum width, and the
   control moves under it when it cannot. Groups of buttons use `WrappingControls`. A plain `HStack`
@@ -352,12 +352,12 @@ macOS and Mac model, permissions, whether the engine runs, Secure Input, other r
 of the settings, the settings each connected keyboard actually runs with and where they come from
 (its own, a PC keyboard's defaults, or general), settings kept outside the configuration file
 (path box, recent folders, Finder extension, updates, natural scrolling), the configuration file in
-full, the last recording, KeyBridge's log since launch and the logs of earlier launches. The
+full, the last recording, SameKeys's log since launch and the logs of earlier launches. The
 clipboard history appears only as a count, and the home folder is written as `~`.
 
 - **Log.** `OSLogStore(scope: .currentProcessIdentifier)` holds only the current launch, so
   `LogArchive` copies it every two minutes and at quit into
-  `~/Library/Application Support/KeyBridge/Logs/KeyBridge <launch time>.log`. Files older than three
+  `~/Library/Application Support/SameKeys/Logs/SameKeys <launch time>.log`. Files older than three
   days go at launch, then the oldest until the rest are within 5 MB; one launch stops writing at
   5 MB. Reading the log takes a second or more, so it runs off the main thread.
 - **Recording (KB-247).** About › Diagnostics › Start Recording hands the dispatcher a `trace`
@@ -371,20 +371,20 @@ clipboard history appears only as a count, and the home folder is written as `~`
 
 ## Karabiner-Elements and other HID-level remappers
 
-Tools that remap at the HID level, such as Karabiner-Elements, act before KeyBridge's event tap,
-so KeyBridge only ever sees their output. When checking a KeyBridge mapping by hand, make sure no
+Tools that remap at the HID level, such as Karabiner-Elements, act before SameKeys's event tap,
+so SameKeys only ever sees their output. When checking a SameKeys mapping by hand, make sure no
 such tool maps the same input — a Karabiner rule for the side buttons, for example, means
-KeyBridge never receives them, and a passing test would be Karabiner's. Events posted by the
+SameKeys never receives them, and a passing test would be Karabiner's. Events posted by the
 self-tests bypass these tools.
 
 ```bash
-open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Build/Products/Debug/KeyBridge.app
+open --env KB_DEBUG_SELFTEST=1 --env KB_DEBUG_STALL_ONCE=1 build/DerivedData/Build/Products/Debug/SameKeys.app
 ```
 
 Expected log: `own=5`, then `Event tap was disabled by the system (timeout); re-enabled,
 recovery #1`, then the later plain events still counted.
 
-KeyBridge names other remappers it finds running in a notice on the Overview (KB-043). It reads
+SameKeys names other remappers it finds running in a notice on the Overview (KB-043). It reads
 the user's own process list every 5 seconds — `NSWorkspace.runningApplications` does not list
 agents that launchd starts, which is where most of these tools do their work — and logs each
 change in the `permissions` category as `Other remappers running: …`. For Karabiner-Elements
@@ -475,7 +475,7 @@ swiftc -O scripts/spikes/keyboard-attribution/main.swift -o /tmp/keyboard-attrib
 ```
 
 ```bash
-swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
+swiftc -O SameKeys/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
 /tmp/keyboard-source-check              # prints the keyboard each time it changes, as KeyboardSource sees it,
                                         # each modifier pressed alone, and the senders of clicks and scrolls
 ```
@@ -491,7 +491,7 @@ swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-c
   print(CGPreflightPostEventAccess())   // false means posted events will vanish
   ```
 
-- Prefer posting from inside KeyBridge, which does hold the permission — that is what
+- Prefer posting from inside SameKeys, which does hold the permission — that is what
   `KB_DEBUG_SELFTEST` does.
 
 ## Code signing
@@ -501,7 +501,7 @@ swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-c
 - What macOS stores when a permission is granted is the app's designated requirement:
 
   ```bash
-  codesign -d -r- KeyBridge.app
+  codesign -d -r- SameKeys.app
   ```
 
   With a real certificate it names the bundle identifier and the certificate. With ad-hoc
@@ -509,7 +509,7 @@ swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-c
 - To check that a new build would still satisfy a previously granted permission:
 
   ```bash
-  codesign --verify -R="=<requirement from the old build>" KeyBridge.app
+  codesign --verify -R="=<requirement from the old build>" SameKeys.app
   ```
 
 - Hardened runtime shows as `flags=0x10000(runtime)`. Xcode applies it only when signing with a
@@ -522,20 +522,20 @@ Sparkle can be tried end to end on one Mac, without publishing anything (KB-101)
 1. Build the "new" version into its own folder, pack it and sign it with the update key:
 
    ```bash
-   xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build/update-test \
+   xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -derivedDataPath build/update-test \
      CURRENT_PROJECT_VERSION=2 MARKETING_VERSION=0.1.1 build
-   mkdir -p /tmp/kb-feed/dmg && ditto build/update-test/Build/Products/Debug/KeyBridge.app /tmp/kb-feed/dmg/KeyBridge.app
-   hdiutil create -quiet -volname "KeyBridge 0.1.1" -srcfolder /tmp/kb-feed/dmg -format UDZO /tmp/kb-feed/KeyBridge-0.1.1.dmg
-   build/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update --account keybridge -p /tmp/kb-feed/KeyBridge-0.1.1.dmg
+   mkdir -p /tmp/kb-feed/dmg && ditto build/update-test/Build/Products/Debug/SameKeys.app /tmp/kb-feed/dmg/SameKeys.app
+   hdiutil create -quiet -volname "SameKeys 0.1.1" -srcfolder /tmp/kb-feed/dmg -format UDZO /tmp/kb-feed/SameKeys-0.1.1.dmg
+   build/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update --account keybridge -p /tmp/kb-feed/SameKeys-0.1.1.dmg
    ```
 
 2. Write test notes (`en.html`, `zh-Hans.html`, `ja.html`) into a folder and add the DMG to a
    test appcast with `scripts/appcast.py --appcast /tmp/kb-feed/appcast.xml --url
-   http://127.0.0.1:8765/KeyBridge-0.1.1.dmg …`. `--critical` tries a critical update.
+   http://127.0.0.1:8765/SameKeys-0.1.1.dmg …`. `--critical` tries a critical update.
 3. Serve it: `python3 -m http.server 8765 --bind 127.0.0.1` in `/tmp/kb-feed`.
-4. Copy the current build somewhere writable, quit the running KeyBridge, and open the copy
+4. Copy the current build somewhere writable, quit the running SameKeys, and open the copy
    with `--env KB_DEBUG_APPCAST=http://127.0.0.1:8765/appcast.xml`.
-   `defaults delete io.github.lynnjeans.KeyBridge SULastCheckTime` first makes the scheduled
+   `defaults delete io.github.lynnjeans.SameKeys SULastCheckTime` first makes the scheduled
    check run straight after launch; `SUAutomaticallyUpdate -bool YES` tries automatic install.
 
 Things to know:
@@ -545,15 +545,15 @@ Things to know:
   exactly what an ad-hoc release would do to users.
 - After the relaunch the copy runs without `KB_DEBUG_APPCAST` (Sparkle starts it plainly), so it
   does not check again.
-- Sparkle's settings land in KeyBridge's own defaults domain. Afterwards delete every `SU…` key
+- Sparkle's settings land in SameKeys's own defaults domain. Afterwards delete every `SU…` key
   (`SUAutomaticallyUpdate`, `SUEnableAutomaticChecks`, `SUHasLaunchedBefore`, `SULastCheckTime`,
   `SUUpdateGroupIdentifier`, `SUSkippedVersion`), or a release installed later inherits them.
 - Launching a copy from another folder registers **its** Finder extension. Afterwards remove
   the test builds, `pluginkit -a` the extension of the build you use, and `pkill -x
-  KeyBridgeFinder`; `pluginkit -m -v -i io.github.lynnjeans.KeyBridge.Finder` shows which copy
+  SameKeysFinder`; `pluginkit -m -v -i io.github.lynnjeans.SameKeys.Finder` shows which copy
   Finder loads.
 - A menu item chosen through Accessibility is not a user action, so macOS may refuse to
-  activate KeyBridge for the update window; whether it takes the keyboard needs a real click.
+  activate SameKeys for the update window; whether it takes the keyboard needs a real click.
 
 ## Open at Login
 
@@ -575,7 +575,7 @@ Things to know:
 Checking it:
 
 - The launch log says which copy runs and what it found: `Open at login: on, running from
-  /Applications/KeyBridge.app` (category `permissions`), or `not asked` from a copy elsewhere.
+  /Applications/SameKeys.app` (category `permissions`), or `not asked` from a copy elsewhere.
 - Where the item points, without a password:
   `osascript -e 'tell application "System Events" to get path of every login item'`. It trails
   a change by a second or two.
@@ -587,14 +587,14 @@ Checking it:
 ## Menu bar on macOS 26
 
 - Third-party status items are hosted by **Control Center**, not by the app's own process.
-  Listing windows by KeyBridge's PID shows none even when the icon is plainly visible.
+  Listing windows by SameKeys's PID shows none even when the icon is plainly visible.
 - After the app quits, Control Center keeps an off-screen placeholder in its slot and swaps it
   for a live window on relaunch. Counting Control Center's status-level windows therefore gives
-  the same number whether KeyBridge is running or not, with a brief extra one during the swap.
+  the same number whether SameKeys is running or not, with a brief extra one during the swap.
 - To check for the icon programmatically, list windows at layer 25 owned by Control Center and
-  look for an on-screen one at KeyBridge's position. The reliable check is still to look.
+  look for an on-screen one at SameKeys's position. The reliable check is still to look.
 - **On a MacBook with a notch, a full menu bar silently hides the items that do not fit.** The
-  newest item is the leftmost, so a freshly launched KeyBridge is the first to vanish behind the
+  newest item is the leftmost, so a freshly launched SameKeys is the first to vanish behind the
   notch while running normally. Listing the layer-25 windows shows it with `onscreen=no` at an
   x position inside the notch (`NSScreen.auxiliaryTopLeftArea` / `auxiliaryTopRightArea` give
   its edges). Quit an app or turn off an item in System Settings › Menu Bar to make room.

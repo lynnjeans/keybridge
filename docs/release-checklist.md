@@ -1,6 +1,6 @@
 # Release Regression Checklist
 
-A full pass through KeyBridge by hand, run on the release build before every release. Unit
+A full pass through SameKeys by hand, run on the release build before every release. Unit
 tests cover the rule logic; this covers what only a real Mac, real apps and real keyboards
 and mice can show. How to check things, and the traps that give confidently wrong results,
 are in [testing-notes.md](testing-notes.md). Building, signing and publishing are in
@@ -26,7 +26,7 @@ gh issue create --title "Release regression pass: v<version>" --body-file docs/r
 
 | | |
 |---|---|
-| KeyBridge version (About) | |
+| SameKeys version (About) | |
 | Build | Release · signed · notarized? |
 | macOS version | |
 | Mac model | |
@@ -46,58 +46,58 @@ Before starting:
 
 ## 1. Install and first run
 
-Start from a clean slate: quit KeyBridge, then
-`tccutil reset Accessibility io.github.lynnjeans.KeyBridge`,
-`tccutil reset ListenEvent io.github.lynnjeans.KeyBridge`,
-`defaults delete io.github.lynnjeans.KeyBridge` and
-`rm -rf ~/Library/Application\ Support/KeyBridge`.
+Start from a clean slate: quit SameKeys, then
+`tccutil reset Accessibility io.github.lynnjeans.SameKeys`,
+`tccutil reset ListenEvent io.github.lynnjeans.SameKeys`,
+`defaults delete io.github.lynnjeans.SameKeys` and
+`rm -rf ~/Library/Application\ Support/SameKeys`.
 
 - [ ] Install the release build (DMG or `brew install --cask`) and open it → it opens without
       a Gatekeeper warning (notarized build), and the ⌘ icon appears in the menu bar, faded.
-- [ ] The "Set Up KeyBridge" guide opens by itself, **in front of** other windows, on step 1
+- [ ] The "Set Up SameKeys" guide opens by itself, **in front of** other windows, on step 1
       Accessibility.
 - [ ] Step 1's button → System Settings opens at Privacy & Security › Accessibility with
-      KeyBridge listed. Switch it on → the guide moves to step 2 within about 2 s, with nothing
+      SameKeys listed. Switch it on → the guide moves to step 2 within about 2 s, with nothing
       else to click.
 - [ ] Step 2 Input Monitoring → it is granted with no action, or after one switch in System
       Settings. The guide reaches **Ready**; the menu bar icon is no longer faded.
-- [ ] The Ready step has **Open KeyBridge at login** ticked. "Start Using KeyBridge" closes the
-      guide, and KeyBridge is listed under System Settings › General › Login Items &
-      Extensions › Open at Login. Quit and reopen KeyBridge → the guide does not come back.
-- [ ] Overview › Open at Login is on. Off → KeyBridge leaves the list in System Settings; on →
-      it is back. Remove it in System Settings, click KeyBridge's window → the switch is off.
+- [ ] The Ready step has **Open SameKeys at login** ticked. "Start Using SameKeys" closes the
+      guide, and SameKeys is listed under System Settings › General › Login Items &
+      Extensions › Open at Login. Quit and reopen SameKeys → the guide does not come back.
+- [ ] Overview › Open at Login is on. Off → SameKeys leaves the list in System Settings; on →
+      it is back. Remove it in System Settings, click SameKeys's window → the switch is off.
 - [ ] With Open at Login on, restart the Mac → the ⌘ icon appears in the menu bar with no
       window, not faded, and Ctrl+C copies.
-- [ ] Double-click KeyBridge in Finder while it runs → the main window opens in front, on
+- [ ] Double-click SameKeys in Finder while it runs → the main window opens in front, on
       Overview.
-- [ ] The menu bar icon's menu → Open KeyBridge… → the main window opens **in front of** the
+- [ ] The menu bar icon's menu → Open SameKeys… → the main window opens **in front of** the
       app you were in. Repeat five times from different apps.
-- [ ] While a window is open, KeyBridge has a Dock icon. Close the last window → the Dock icon
+- [ ] While a window is open, SameKeys has a Dock icon. Close the last window → the Dock icon
       goes away.
 
 ## 2. Permissions while running
 
-- [ ] System Settings › Accessibility: switch KeyBridge **off** → within about 2 s the Overview
+- [ ] System Settings › Accessibility: switch SameKeys **off** → within about 2 s the Overview
       shows "Action needed", the master switch greys out, the menu bar icon fades, and the
       keyboard and mouse still work normally (no stuck keys, nothing remapped).
 - [ ] Switch it back **on** → remapping works again without relaunching (Ctrl+C copies in
       TextEdit).
-- [ ] Input Monitoring: switch KeyBridge off and accept the relaunch System Settings offers →
-      KeyBridge reopens showing the missing permission. Switch it back on → it works again.
+- [ ] Input Monitoring: switch SameKeys off and accept the relaunch System Settings offers →
+      SameKeys reopens showing the missing permission. Switch it back on → it works again.
 - [ ] The menu bar menu lists the missing permission, and its "Open Settings…" item opens the
       right pane.
 
 ## 3. Master switch, pause, menu bar
 
-- [ ] Overview › Enable KeyBridge **off** → Ctrl+C no longer copies in TextEdit, and the
+- [ ] Overview › Enable SameKeys **off** → Ctrl+C no longer copies in TextEdit, and the
       side buttons and fn+scroll do nothing special. **On** → all work again.
 - [ ] Quit and reopen with the switch off → it stays off. Switch on, relaunch → on.
 - [ ] Menu bar › Pause › For 5 Minutes → remapping stops; the Overview says "Paused until
       <time>" with a Resume button. Resume → remapping is back at once.
-- [ ] While paused, the menu bar menu shows "Paused until <time>" under Enable KeyBridge, and
+- [ ] While paused, the menu bar menu shows "Paused until <time>" under Enable SameKeys, and
       Pause becomes Resume Now. In the normal state the menu has no status line: Enable
-      KeyBridge ✓, Pause | Open KeyBridge… | About KeyBridge, Check for Updates…, Quit KeyBridge.
-- [ ] Menu bar › Quit KeyBridge → the app quits, and keys behave as on a plain Mac.
+      SameKeys ✓, Pause | Open SameKeys… | About SameKeys, Check for Updates…, Quit SameKeys.
+- [ ] Menu bar › Quit SameKeys → the app quits, and keys behave as on a plain Mac.
 
 ## 4. Shortcuts: Editing group
 
@@ -144,8 +144,8 @@ In a Finder window with a scratch folder of test files:
       text field (Ctrl+V pastes text, Backspace deletes a character).
 - [ ] In a file Open/Save dialog of another app, these Finder keys do not apply.
 - [ ] Right-click the folder's background → New › Text Document creates "New Text Document.txt"
-      and starts renaming it; Open in Terminal opens Terminal there; Add to KeyBridge Favorites
-      puts the folder in the ⌃⇧G list. With KeyBridge quit, New › launches it and still works.
+      and starts renaming it; Open in Terminal opens Terminal there; Add to SameKeys Favorites
+      puts the folder in the ⌃⇧G list. With SameKeys quit, New › launches it and still works.
 - [ ] In Terminal, `open 'keybridge://finder/terminal?folder=/tmp'` → nothing opens (KB-254).
 
 ## 7. Shortcuts: Windows & Apps, Browser, System
@@ -228,7 +228,7 @@ On Shortcuts › "Press Ctrl shortcuts with":
 - [ ] Pin an item → it stays at the limit; unpin works. Remove one item; Clear History keeps
       pinned items.
 - [ ] Record a different panel shortcut → the new one opens the panel and the old one does not.
-      A shortcut already used by a KeyBridge rule shows a conflict warning.
+      A shortcut already used by a SameKeys rule shows a conflict warning.
 - [ ] Copy a password from Passwords (or 1Password) → it is **not** recorded. Add TextEdit
       under "Never record from" → its copies stop appearing; Restore Default List resets it.
 - [ ] Set "Keep" to 50 with more items copied → the oldest unpinned items drop.
@@ -279,25 +279,25 @@ Applications):
 
 ## 17. Resources and updates
 
-- [ ] Idle for 5 minutes with the main window closed → KeyBridge uses about 0 % CPU (Activity
+- [ ] Idle for 5 minutes with the main window closed → SameKeys uses about 0 % CPU (Activity
       Monitor) and a stable amount of memory.
 - [ ] Type quickly in a long document for a minute → no lag, no dropped or doubled keys.
 - [ ] Automatic updates, with the previous release installed in Applications and this build
       served from a local feed (see "Testing updates" in [testing-notes.md](testing-notes.md)):
       - [ ] The previous release finds this one on its own → a dot on the menu bar icon and
-            "KeyBridge <version> Is Available…" at the top of the menu; no window opens.
+            "SameKeys <version> Is Available…" at the top of the menu; no window opens.
       - [ ] Choose that item → the update window opens in front and takes the keyboard, with
             the release notes in the interface language.
-      - [ ] Install Update → KeyBridge relaunches as this version; Accessibility and Input
+      - [ ] Install Update → SameKeys relaunches as this version; Accessibility and Input
             Monitoring are still granted, no setup guide, shortcuts work at once, settings
             and clipboard history are kept, the Finder right-click menu still appears.
 - [ ] The update signing key is safe: `generate_keys --account keybridge -p` (Sparkle's tool)
       prints the `SUPublicEDKey` in `project.yml`, and the offline backup of the private key
-      is in the maintainer's password manager, under "KeyBridge Sparkle update key". Losing it
+      is in the maintainer's password manager, under "SameKeys Sparkle update key". Losing it
       means no installed copy can ever be updated again.
 - [ ] About › Updates shows the version, the last check and the two switches; Check for
-      Updates… says KeyBridge is up to date.
-- [ ] Opened straight from the DMG → About › Updates asks to move KeyBridge to Applications,
+      Updates… says SameKeys is up to date.
+- [ ] Opened straight from the DMG → About › Updates asks to move SameKeys to Applications,
       and Check for Updates… says the same instead of checking.
-- [ ] Delete KeyBridge from Applications (or `brew uninstall --cask keybridge`) → the keyboard
+- [ ] Delete SameKeys from Applications (or `brew uninstall --cask keybridge`) → the keyboard
       and mouse behave as on a plain Mac.

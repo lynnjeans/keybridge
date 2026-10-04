@@ -1,11 +1,11 @@
 # Third-Party Notices
 
-KeyBridge is Copyright © 2026 Lei Sun and KeyBridge contributors, and is licensed under
+SameKeys is Copyright © 2026 Lei Sun and SameKeys contributors, and is licensed under
 **GPL-3.0** (see [LICENSE](LICENSE)).
 
 ## Dependencies
 
-KeyBridge links against Apple's system frameworks (Foundation, AppKit, SwiftUI,
+SameKeys links against Apple's system frameworks (Foundation, AppKit, SwiftUI,
 CoreGraphics, ApplicationServices, IOKit, Carbon, OSLog and the like), which are part of
 macOS and fall under GPL-3.0's System Libraries exception, and includes one library:
 
@@ -22,7 +22,7 @@ copyright headers on any file derived from it.
 
 ## Artwork
 
-The word **Ctrl** on the app icon (`KeyBridge/Resources/AppIcon.icon/Assets/legends.svg`, and
+The word **Ctrl** on the app icon (`SameKeys/Resources/AppIcon.icon/Assets/legends.svg`, and
 the website's `site/favicon.svg`) is the outline of the text set in
 [Inter](https://github.com/rsms/inter) Bold, converted to a vector path; no font file is
 included. Inter is Copyright © 2016 The Inter Project Authors, licensed under the
@@ -33,7 +33,7 @@ artwork made with the font.
 
 ## Projects studied as references
 
-KeyBridge was designed after studying how the projects below approach the same problems.
+SameKeys was designed after studying how the projects below approach the same problems.
 No code from them is included; each is credited here as a courtesy, and all are
 license-compatible with GPL-3.0 should code ever be taken from them.
 
@@ -43,7 +43,7 @@ license-compatible with GPL-3.0 should code ever be taken from them.
 | [Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) | The Unlicense | Event handling patterns, HID device enumeration |
 | [Hammerspoon](https://github.com/Hammerspoon/hammerspoon) | MIT | Intercepting scroll events with an event tap and posting keystrokes (modifier + scroll → `⌘±`) |
 | [Scroll Reverser](https://github.com/pilotmoon/Scroll-Reverser) | Apache-2.0 | Scroll direction reversal, telling a mouse wheel from a trackpad |
-| [Maccy](https://github.com/p0deje/Maccy) | MIT | Clipboard history design; KeyBridge uses the same default shortcut, ⌘⇧C |
+| [Maccy](https://github.com/p0deje/Maccy) | MIT | Clipboard history design; SameKeys uses the same default shortcut, ⌘⇧C |
 
 ---
 
@@ -57,7 +57,7 @@ copy code from them.
 
 Studying their behaviour is fine; copying their source is not.
 
-**Checked 2026-09-19 (KB-103):** KeyBridge's Swift sources were compared line by line
+**Checked 2026-09-19 (KB-103):** SameKeys's Swift sources were compared line by line
 with the current source of both projects (github.com/Caldis/Mos and
 github.com/noah-nuebling/mac-mouse-fix, every `.swift`, `.m`, `.h`, `.mm` and `.c` file).
 No run of three or more consecutive lines matches either project. The only single lines in
@@ -70,7 +70,7 @@ common are standard Apple API idioms, such as `RunLoop.main.add(timer, forMode: 
 
 Names and logos of the projects above, and of Apple, Microsoft, Razer, Logitech and any
 other company, are the property of their respective owners and are **not** used as part of
-KeyBridge's own branding. KeyBridge names some of these tools only to tell users when one of
+SameKeys's own branding. SameKeys names some of these tools only to tell users when one of
 them is running alongside it.
 
 ---

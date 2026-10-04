@@ -1,4 +1,4 @@
-# KeyBridge Project Documentation
+# SameKeys Project Documentation
 
 These documents define **what** we are building and **why**. They are the basis for
 development; they do not track progress. Progress lives in
@@ -6,7 +6,7 @@ development; they do not track progress. Progress lives in
 
 ## Language convention
 
-KeyBridge targets an international audience, so **everything in this project is written in
+SameKeys targets an international audience, so **everything in this project is written in
 English**: documentation, issues, commit messages, code comments, and identifiers. The
 shipped application is localized separately (English, Simplified and Traditional Chinese,
 Japanese, Korean, German, French, Spanish, Brazilian Portuguese and Polish) through
@@ -49,7 +49,7 @@ its String Catalog — that is product content, not project language.
   (tap/hold, layers, chords) is **out of scope**: it needs a root daemon that seizes the
   keyboard plus a DriverKit virtual keyboard to re-emit input, which would trade two
   permission toggles for an admin-password install and a driver-extension approval.
-  KeyBridge only maps combinations to combinations, such as `Ctrl+C` or `fn+C` to `⌘C`.
+  SameKeys only maps combinations to combinations, such as `Ctrl+C` or `fn+C` to `⌘C`.
 - **Core interaction** — effective rules are the preset layer merged with a user override
   layer. Re-applying a preset **never** overwrites what the user has customized.
 - **Differentiator** — modifier + scroll wheel to `⌘+` / `⌘−` page zoom, which no other

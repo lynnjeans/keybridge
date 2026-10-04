@@ -1,4 +1,4 @@
-// KeyBridge website. Everything here is an enhancement: without it the page
+// SameKeys website. Everything here is an enhancement: without it the page
 // still reads, and the download button still leads to the Releases page.
 
 // The download button: straight to the latest release's disk image, with its

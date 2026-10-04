@@ -1,4 +1,4 @@
-# Releasing KeyBridge
+# Releasing SameKeys
 
 How a release is built and published.
 
@@ -18,7 +18,7 @@ How a release is built and published.
    ```
 
    This builds, signs and notarizes the app and then the DMG, staples both and writes
-   `dist/KeyBridge-<version>.dmg` with its `.sha256`.
+   `dist/SameKeys-<version>.dmg` with its `.sha256`.
 5. **Publish:**
 
    ```bash
