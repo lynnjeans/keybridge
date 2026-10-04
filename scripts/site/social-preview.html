@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- The image shown when a link to the website or the repository is shared.
+     Rendered at 1280×640, scale 2, by social-preview.sh, once per language:
+     social-preview.html?lang=en|zh-Hans|ja. icon.png is put next to this file
+     by the script. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>KeyBridge social preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+    color: #1d1d1f;
+    background:
+      radial-gradient(900px 600px at 105% 110%, #cfe3ff 0%, rgba(207,227,255,0) 70%),
+      radial-gradient(700px 500px at -10% -20%, #e8f1ff 0%, rgba(232,241,255,0) 70%),
+      #f7f9fc;
+    position: relative;
+  }
+  :lang(zh-Hans) body { font-family: -apple-system, "PingFang SC", sans-serif; }
+  :lang(ja) body { font-family: -apple-system, "Hiragino Sans", sans-serif; }
+  .left { position: absolute; left: 56px; top: 0; bottom: 0; width: 600px;
+          display: flex; flex-direction: column; justify-content: center; }
+  .brand { display: flex; align-items: center; gap: 22px; }
+  .brand img { width: 112px; height: 112px; margin: -8px -8px -8px -14px; }
+  .brand h1 { font-size: 64px; font-weight: 700; letter-spacing: -0.02em; }
+  .tagline { font-size: 38px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em;
+             margin-top: 28px; }
+  .sub { font-family: -apple-system, "PingFang SC", sans-serif;
+         font-size: 24px; color: #56565c; margin-top: 12px; }
+  .sub:empty { display: none; }
+  .keys { margin-top: 28px; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px;
+          align-items: center; font-size: 20px; color: #3a3a3f; }
+  .combo { display: flex; align-items: center; gap: 5px; color: #8e8e93; }
+  .word { color: #1d1d1f; font-size: 19px; font-weight: 600; }
+  kbd { font: 600 17px/1 -apple-system, sans-serif; color: #1d1d1f;
+        background: #fff; border: 1px solid #c7c7cc; border-bottom-width: 3px;
+        border-radius: 7px; padding: 6px 10px; min-width: 34px; text-align: center; }
+  :lang(zh-Hans) kbd { font-family: -apple-system, "PingFang SC", sans-serif; }
+  :lang(ja) kbd { font-family: -apple-system, "Hiragino Sans", sans-serif; }
+  :lang(ja) .tagline { font-size: 34px; }
+  :lang(ja) .keys { font-size: 18px; }
+  :lang(ja) .word { font-size: 17px; }
+  .fine { margin-top: 28px; font-size: 19px; color: #6e6e73; }
+  .shot { position: absolute; left: 616px; top: 48px; width: 700px;
+          border-radius: 14px; overflow: hidden;
+          box-shadow: 0 40px 80px -30px rgba(0, 40, 100, 0.45), 0 2px 10px rgba(0,0,0,0.08); }
+  .shot img { display: block; width: 100%; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="brand"><img src="icon.png" alt=""><h1>KeyBridge</h1></div>
+    <p class="tagline" id="tagline"></p>
+    <p class="sub" id="sub"></p>
+    <div class="keys">
+      <span class="combo"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span id="copy"></span>
+      <span class="combo"><kbd>Win</kbd>+<kbd>V</kbd></span><span id="clipboard"></span>
+      <span class="combo"><kbd>fn</kbd>+<span class="word" id="scroll"></span></span><span id="zoom"></span>
+      <span class="combo"><kbd id="wheelKey"></kbd></span><span id="wheel"></span>
+      <span class="combo"><kbd id="clickKey"></kbd></span><span id="finder"></span>
+    </div>
+    <p class="fine" id="fine"></p>
+  </div>
+  <div class="shot"><img id="shot" alt=""></div>
+<script>
+  const text = {
+    "en": {
+      tagline: "Your Windows shortcuts,<br>on your Mac.",
+      sub: "Windows 的快捷键，在 Mac 上照样用。",
+      copy: "Copy, paste, undo, save…", clipboard: "Clipboard history",
+      scroll: "scroll", zoom: "Zoom the page",
+      wheelKey: "Mouse wheel", wheel: "Windows direction; side buttons go back",
+      clickKey: "Right-click", finder: "New document, right in Finder",
+      fine: "Free and open source · macOS 14 or later",
+    },
+    "zh-Hans": {
+      tagline: "Windows 的快捷键，<br>在 Mac 上照样用。",
+      sub: "",
+      copy: "复制、粘贴、撤销、保存…", clipboard: "剪贴板历史",
+      scroll: "滚轮", zoom: "缩放网页",
+      wheelKey: "鼠标滚轮", wheel: "方向和 Windows 一致，侧键后退",
+      clickKey: "右键", finder: "在 Finder 里新建文档",
+      fine: "免费开源 · macOS 14 或更高版本",
+    },
+    "ja": {
+      tagline: "Windows のショートカットを、<br>Mac でも。",
+      sub: "",
+      copy: "コピー、ペースト、取り消し、保存…", clipboard: "クリップボード履歴",
+      scroll: "スクロール", zoom: "ページを拡大・縮小",
+      wheelKey: "マウスホイール", wheel: "Windows と同じ向き、サイドボタンで戻る",
+      clickKey: "右クリック", finder: "Finder で新規書類",
+      fine: "無料・オープンソース · macOS 14 以降",
+    },
+  };
+  const lang = new URLSearchParams(location.search).get("lang") || "en";
+  const t = text[lang];
+  document.documentElement.lang = lang;
+  for (const [id, value] of Object.entries(t)) document.getElementById(id).innerHTML = value;
+  document.getElementById("shot").src = `../../site/screenshots/${lang}/shortcuts-light.png`;
+</script>
+</body>
+</html>

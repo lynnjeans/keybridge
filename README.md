@@ -181,6 +181,16 @@ xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build
 scripts/site/screenshots.sh
 ```
 
+The image shown when a link to the website is shared is drawn from
+[`scripts/site/social-preview.html`](scripts/site/social-preview.html), with the app icon and
+each language's Shortcuts screenshot. Redo it after retaking the screenshots (it needs Google
+Chrome), and upload `site/assets/social/en.png` as the repository's social preview in its GitHub
+settings:
+
+```bash
+scripts/site/social-preview.sh
+```
+
 ## License
 
 Copyright © 2026 Lei Sun and KeyBridge contributors.
