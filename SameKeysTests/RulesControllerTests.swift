@@ -32,6 +32,21 @@ import Testing
         #expect(!controller.isEnabled(group: "winKey"), "Would take over ⌘ shortcuts on a Mac keyboard")
     }
 
+    @Test func theWindowsKeyGroupComesFirstAndWinsTies() {
+        let first = BuiltInRules.preset.groups.first
+        #expect(first?.id == "winKey", "First on the Shortcuts page (KB-266)")
+        #expect(first?.isEnabledByDefault == false)
+
+        // A later group's rule with the same trigger and scope loses to it.
+        let winV = BuiltInRules.preset.groups[0].rules.first { $0.id == "winKey.clipboard" }!
+        let rival = Rule(id: "other.paste", trigger: winV.trigger,
+                         action: .key(combo: KeyCombo([.command], .v)))
+        let matcher = RuleMatcher(rules: BuiltInRules.all + [rival])
+        let matched = matcher.match(winV.trigger, in: MatchContext(frontmostBundleID: "com.apple.TextEdit"),
+                                    isClipboardHistoryOn: { true })
+        #expect(matched?.id == winV.id)
+    }
+
     @Test func aGroupThatStartsOffCanBeSwitchedOn() {
         let controller = makeController(Applied())
         controller.setGroup("winKey", enabled: true)

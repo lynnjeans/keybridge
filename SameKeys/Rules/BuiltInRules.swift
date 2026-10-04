@@ -24,6 +24,38 @@ enum BuiltInRules {
     static let finderID = "com.apple.finder"
 
     static let preset = Preset(id: "windows-standard", groups: [
+        // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘Tab,
+        // ⌘V, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard.
+        // Off until the user asks. First in the list, so it is the first group
+        // the Shortcuts page shows, and first to match: where another group's
+        // rule of the same scope has the same trigger, this one wins (KB-266).
+        .init(id: "winKey", rules: [
+            // Win alone opens Start; Apps is macOS 26's nearest thing, a grid
+            // of apps with a search field (KB-224). A tap only: ⌘ held for a
+            // shortcut, or for longer than a second, is left alone.
+            Rule(id: "winKey.start", trigger: .key(combo: KeyCombo(.command)),
+                 action: .systemAction(.apps)),
+            // Task View, every window at a glance (KB-227). With Win on ⌘ this
+            // takes ⌘Tab: Alt+Tab (⌥Tab, the `windows` group) switches apps.
+            Rule(id: "winKey.taskView", trigger: .key(combo: KeyCombo([.command], .tab)),
+                 action: .systemAction(.missionControl)),
+            // The clipboard history's own shortcut is a system hot key, ⌥V
+            // unless recorded otherwise, which does not follow the Win key
+            // (KB-245). This does, so Win+V opens it on every keyboard. Only
+            // while the history is on: otherwise ⌘V pastes as before. Paste
+            // on a PC keyboard is Ctrl+V, as on Windows.
+            Rule(id: "winKey.clipboard", trigger: .key(combo: KeyCombo([.command], .v)),
+                 action: .clipboardHistory),
+            rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
+            Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
+                 action: .openApplication(bundleID: finderID)),
+            // Whatever Show Desktop is set to (F11 as shipped), so a changed
+            // shortcut keeps working.
+            Rule(id: "winKey.showDesktop", trigger: .key(combo: KeyCombo([.command], .d)),
+                 action: .systemAction(.showDesktop)),
+            rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
+            rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
+        ], isEnabledByDefault: false),
         .init(id: "editing", rules: [
             outsideTerminals("edit.copy", KeyCombo([.control], .c), KeyCombo([.command], .c)),
             outsideTerminals("edit.cut", KeyCombo([.control], .x), KeyCombo([.command], .x)),
@@ -104,36 +136,6 @@ enum BuiltInRules {
         .init(id: "system", rules: [
             rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
-        // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘Tab,
-        // ⌘V, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard.
-        // Off until the user asks.
-        .init(id: "winKey", rules: [
-            // Win alone opens Start; Apps is macOS 26's nearest thing, a grid
-            // of apps with a search field (KB-224). A tap only: ⌘ held for a
-            // shortcut, or for longer than a second, is left alone.
-            Rule(id: "winKey.start", trigger: .key(combo: KeyCombo(.command)),
-                 action: .systemAction(.apps)),
-            // Task View, every window at a glance (KB-227). With Win on ⌘ this
-            // takes ⌘Tab: Alt+Tab (⌥Tab, the `windows` group) switches apps.
-            Rule(id: "winKey.taskView", trigger: .key(combo: KeyCombo([.command], .tab)),
-                 action: .systemAction(.missionControl)),
-            // The clipboard history's own shortcut is a system hot key, ⌥V
-            // unless recorded otherwise, which does not follow the Win key
-            // (KB-245). This does, so Win+V opens it on every keyboard. Only
-            // while the history is on: otherwise ⌘V pastes as before. Paste
-            // on a PC keyboard is Ctrl+V, as on Windows.
-            Rule(id: "winKey.clipboard", trigger: .key(combo: KeyCombo([.command], .v)),
-                 action: .clipboardHistory),
-            rule("winKey.lock", KeyCombo([.command], .l), KeyCombo([.control, .command], .q)),
-            Rule(id: "winKey.explorer", trigger: .key(combo: KeyCombo([.command], .e)),
-                 action: .openApplication(bundleID: finderID)),
-            // Whatever Show Desktop is set to (F11 as shipped), so a changed
-            // shortcut keeps working.
-            Rule(id: "winKey.showDesktop", trigger: .key(combo: KeyCombo([.command], .d)),
-                 action: .systemAction(.showDesktop)),
-            rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
-            rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
-        ], isEnabledByDefault: false),
         // Win+←/→/↑ on Windows. The trigger is ⌥, not ⌘, because these are
         // arrow keys pressed by feel: on a Mac keyboard ⌥ sits where the Win
         // key sits on a PC one, and ⌘ where Alt does. ⌥+arrow is macOS's own

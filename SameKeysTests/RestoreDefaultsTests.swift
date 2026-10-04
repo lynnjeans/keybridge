@@ -49,8 +49,9 @@ import Testing
 
         // A later release changes the Editing group.
         var updated = BuiltInRules.preset
-        for index in updated.groups[0].rules.indices {
-            updated.groups[0].rules[index].scope = .everywhere
+        let editing = try #require(updated.groups.firstIndex { $0.id == "editing" })
+        for index in updated.groups[editing].rules.indices {
+            updated.groups[editing].rules[index].scope = .everywhere
         }
         let rules = RulesController(preset: updated, store: store).effectiveRules
         #expect(rules.first { $0.id == "edit.paste" }?.scope == .everywhere, "Untouched: the new value")
