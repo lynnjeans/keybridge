@@ -807,17 +807,20 @@ private struct AboutCard: View {
 
     var body: some View {
         Card {
-            HStack(spacing: 14) {
-                AppIcon(size: 40)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("KeyBridge")
-                        .font(.headline)
-                    Text(version)
-                        .foregroundStyle(.secondary)
-                    Text("Built for people moving from Windows to the Mac.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 14) {
+                    AppIcon(size: 40)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("KeyBridge")
+                            .font(.headline)
+                        Text(version)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                // Why KeyBridge exists, in its author's words (KB-250).
+                Text("When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. So I made KeyBridge to bring them along, and the Mac's own shortcuts keep working too.")
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
