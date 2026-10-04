@@ -356,9 +356,10 @@ clipboard history appears only as a count, and the home folder is written as `~`
   function for five minutes (or until stopped there or from the menu bar menu). Each press worth
   recording becomes one line: time, combination, the keyboard it was taken for (`unknown (sender …)`
   when the lookup failed, which means the general settings applied), the front app, and the rule
-  and its result or `no match`. A key with no modifier but Shift is left out unless a rule took it
-  or it is an F-key, Esc, Home, End or a page key, so typing cannot be read back. The lines stay in
-  memory and go into the next export.
+  and its result or `no match`. A key with no modifier but Shift and Option is left out unless a
+  rule took it or it is an F-key, Esc, Home, End or a page key, so typing cannot be read back:
+  Option types characters on a Mac: ą on Polish, @ on German, å on US English (KB-255). The
+  lines stay in memory and go into the next export.
 
 ## Karabiner-Elements and other HID-level remappers
 

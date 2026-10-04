@@ -26,15 +26,19 @@ struct DispatchTrace: Sendable {
     }
 
     /// Whether the press belongs in a recording. Plain typing never does:
-    /// a key with no modifier but Shift is left out unless a rule took it or
-    /// it is a function or navigation key, so what someone types cannot be
-    /// read back from a report.
+    /// a key with no modifier but Shift and Option is left out unless a rule
+    /// took it or it is a function or navigation key, so what someone types
+    /// cannot be read back from a report. Option counts as typing because on
+    /// a Mac it types characters: ą and ł on Polish, @ and [ on German.
     var isWorthRecording: Bool {
         guard case .key(let combo) = trigger else { return true }
-        if combo.isModifierAlone || !combo.modifiers.subtracting(.shift).isEmpty { return true }
+        if combo.isModifierAlone || !combo.modifiers.subtracting(Self.typingModifiers).isEmpty { return true }
         if rule != nil { return true }
         return combo.key.isFunctionOrNavigationKey
     }
+
+    /// Modifiers that change which character a key types.
+    private static let typingModifiers: Modifiers = [.shift, .option]
 
     /// One line of the report, such as
     /// `14:20:11.123 ⌃W  keyboard: RK-KB5.0 (0x000e/0x3412)  app: com.apple.finder  → browser.closeTab: ⌘W`.

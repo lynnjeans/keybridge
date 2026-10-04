@@ -26,6 +26,21 @@ import Testing
         #expect(!trace(KeyCombo(.leftArrow)).isWorthRecording)
     }
 
+    @Test func charactersTypedWithOptionAreTypingToo() {
+        #expect(!trace(KeyCombo([.option], .a)).isWorthRecording, "ą on Polish Pro")
+        #expect(!trace(KeyCombo([.option, .shift], .a)).isWorthRecording, "Ą")
+        #expect(!trace(KeyCombo([.option], .l)).isWorthRecording, "@ on German")
+        #expect(!trace(KeyCombo([.option], .four)).isWorthRecording)
+        #expect(!trace(KeyCombo([.option], .leftArrow)).isWorthRecording, "Word by word, while snapping is off")
+        let snap = Rule(id: "window.leftHalf", trigger: .key(combo: KeyCombo([.option], .leftArrow)),
+                        action: .windowAction(.leftHalf))
+        #expect(trace(KeyCombo([.option], .leftArrow), rule: snap).isWorthRecording, "A key a rule took")
+        #expect(trace(KeyCombo([.option], .f4)).isWorthRecording)
+        #expect(trace(KeyCombo(.option)).isWorthRecording, "Option tapped alone")
+        #expect(trace(KeyCombo([.option, .command], .a)).isWorthRecording)
+        #expect(trace(KeyCombo([.option, .control], .a)).isWorthRecording)
+    }
+
     @Test func shortcutsAndKeysThatTypeNothingAre() {
         #expect(trace(KeyCombo([.control], .w)).isWorthRecording)
         #expect(trace(KeyCombo([.function, .shift], .a)).isWorthRecording)
