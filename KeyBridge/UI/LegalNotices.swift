@@ -20,6 +20,12 @@ struct LegalCard: View {
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                    // The user's thanks to the tool the app was built with (KB-252).
+                    Text("Developed with the help of Claude Code, Anthropic's AI coding agent. Thank you.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 4)
                 }
                 WrappingControls {
                     Button("License") { showing = BundledText(file: "LICENSE", title: String(localized: "License")) }

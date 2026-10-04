@@ -5536,6 +5536,64 @@
         }
       }
     },
+    "Developed with the help of Claude Code, Anthropic's AI coding agent. Thank you." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entwickelt mit Unterstützung von Claude Code, dem KI-Coding-Agenten von Anthropic. Vielen Dank."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollado con la ayuda de Claude Code, el agente de programación con IA de Anthropic. Gracias."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Développé avec l’aide de Claude Code, l’agent de programmation IA d’Anthropic. Merci."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開発には Anthropic の AI コーディングエージェント Claude Code の力を借りました。感謝します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "개발 과정에서 Anthropic의 AI 코딩 에이전트 Claude Code의 도움을 받았습니다. 감사합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tworzone z pomocą Claude Code, agenta AI do programowania od Anthropic. Dziękuję."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desenvolvido com a ajuda do Claude Code, o agente de programação com IA da Anthropic. Obrigado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开发过程中使用了 Anthropic 的 AI 编程助手 Claude Code 辅助，在此致谢。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開發過程中使用了 Anthropic 的 AI 程式設計助理 Claude Code 輔助，在此致謝。"
+          }
+        }
+      }
+    },
     "Devices" : {
       "localizations" : {
         "de" : {
