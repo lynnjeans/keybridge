@@ -9,7 +9,7 @@ Windows-style clipboard history.
 
 Website: **[lynnjeans.github.io/keybridge](https://lynnjeans.github.io/keybridge/)** (English, 简体中文, 日本語)
 
-> **KeyBridge 1.0** is out. [Download it](https://github.com/lynnjeans/keybridge/releases/latest)
+> [Download the latest KeyBridge](https://github.com/lynnjeans/keybridge/releases/latest)
 > or install it with Homebrew:
 >
 > ```bash
@@ -35,28 +35,36 @@ macOS is missing, or does differently, a lot of what Windows users do by reflex:
 | `Ctrl` + scroll zooms a page | zooms the whole screen, or nothing |
 | `Win+V` clipboard history | doesn't exist |
 
-Existing tools each solve a slice: Karabiner-Elements owns deep keyboard remapping but
-can't see scroll events; BetterTouchTool can do scroll-to-keystroke but is closed source
-and weak on keyboard depth; LinearMouse and Mac Mouse Fix cover the mouse only.
-KeyBridge aims at the one audience none of them targets directly: **the migrant**.
+Today the fixes are scattered across separate apps: a key remapper for the keyboard, another
+tool for the mouse buttons and wheel, a clipboard manager, a window snapper, a Finder add-on.
+Each one has to be found, installed, granted permissions and set up from scratch, and none of
+them starts from Windows habits. Karabiner-Elements owns deep keyboard remapping but can't see
+scroll events; BetterTouchTool covers a lot but is paid, closed source and built for
+power users; LinearMouse and Mac Mouse Fix cover the mouse only.
 
-## What it does (v1.0)
+**KeyBridge brings it all together in one app**, set up for Windows habits from the first
+launch. That is why I made it: when I moved from Windows to the Mac, years of habits would not
+go away, and I did not want five apps to keep them. KeyBridge is for one audience none of the
+others targets directly: **the migrant**.
+
+## What it does
 
 - Configurable **combo → combo** remapping engine (`Ctrl→⌘`, key swaps, `fn` combos — all just rules)
 - **Windows presets**, one click to apply, every entry still individually editable
+- **Each keyboard its own way**: a MacBook's keyboard and a PC keyboard can press Ctrl and
+  Win/Alt differently
 - **Mouse side buttons** → back / forward or any shortcut
 - **Modifier + scroll → `⌘+` / `⌘−`** (page zoom) — the feature no free tool has
 - **Scroll direction reversal**, mouse only, trackpad untouched
 - **Finder key suite** — `Delete`, `F2`, `Enter`, `Ctrl+X/V` move, `Backspace` up
-- **Clipboard history** with search, pinning, and password-manager exclusion
+- **Clipboard history** on `Win+V` or `⌥V`, with search, pinning, and password-manager exclusion
 - **Per-app** scoping: a rule for every app, or just one
 - **Window snapping**: `⌥+←/→/↑` like `Win+←/→/↑`
 - **Finder right-click menu**: new document, copy path, open in Terminal
 - **Open and save dialogs**: `Ctrl+G` jumps to Finder's folder, `Ctrl+Shift+G` lists recent and favorite folders
-- **Automatic updates**, signed and checked daily
+- **Record Shortcuts**: when a shortcut misbehaves, record it and export what happened
+- **Open at Login**, and **automatic updates**, signed and checked daily
 - English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Polski
-
-Planned: per-device rules (a PC keyboard and the built-in one treated differently).
 
 **Out of scope:** deep keyboard remapping — tap/hold dual-role keys, layers, chords. KeyBridge
 maps combinations to combinations (`Ctrl+C` → `⌘C`, `fn+C` → `⌘C`) and nothing more. That
