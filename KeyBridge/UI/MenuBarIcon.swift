@@ -72,7 +72,9 @@ struct MenuBarIcon: View {
     /// Drawn here rather than taken from SF Symbols, so it is KeyBridge's own.
     private static func bridge() -> NSImage {
         let size = NSSize(width: 22, height: 16)
-        let deckY: CGFloat = 3.5, rise: CGFloat = 9.5
+        // The deck sits on the bottom edge, where the other menu bar icons
+        // end, rather than centred in the height (user's call).
+        let deckY: CGFloat = 1, rise: CGFloat = 9.5
         return NSImage(size: size, flipped: false) { _ in
             NSColor.black.set()
             let deckInset: CGFloat = 1.2
