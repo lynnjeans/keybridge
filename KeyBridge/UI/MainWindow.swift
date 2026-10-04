@@ -818,7 +818,7 @@ private struct AboutCard: View {
                     }
                 }
                 // Why KeyBridge exists, in its author's words (KB-250).
-                Text("When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. So I made KeyBridge to bring them along, and the Mac's own shortcuts keep working too.")
+                Text("When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. With KeyBridge, we get the Mac's efficiency and keep as many of our old habits as we can.")
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

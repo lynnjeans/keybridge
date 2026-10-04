@@ -6757,18 +6757,18 @@
         }
       }
     },
-    "When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. So I made KeyBridge to bring them along, and the Mac's own shortcuts keep working too." : {
+    "When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. With KeyBridge, we get the Mac's efficiency and keep as many of our old habits as we can." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows から Mac に乗り換えたとき、長年の習慣はすぐには抜けませんでした。Ctrl+C、マウスのサイドボタン、Ctrl+スクロールでの拡大、Win+V……Mac では別のキーになっているか、そもそもありません。そこで KeyBridge を作り、こうした習慣をそのまま持ち込めるようにしました。Mac 本来のショートカットもそのまま使えます。"
+            "value" : "Windows から Mac に乗り換えたとき、長年の習慣はすぐには抜けませんでした。Ctrl+C、マウスのサイドボタン、Ctrl+スクロールでの拡大、Win+V……Mac では別のキーになっているか、そもそもありません。KeyBridge があれば、Mac の効率の良さを味わいながら、これまでの操作習慣をできるだけそのまま保てます。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我从 Windows 换到 Mac 时，多年的习惯一时改不掉：Ctrl+C、鼠标侧键、Ctrl+滚轮缩放、Win+V……到了 Mac 上，不是换了键，就是根本没有。于是做了 KeyBridge，把这些习惯原样带过来，Mac 自己的快捷键也照样能用。"
+            "value" : "我从 Windows 换到 Mac 时，多年的习惯一时改不掉：Ctrl+C、鼠标侧键、Ctrl+滚轮缩放、Win+V……到了 Mac 上，不是换了键，就是根本没有。有了 KeyBridge，我们既可以享受 Mac 的高效，又可以尽可能多地保留原来的使用习惯。"
           }
         }
       }
