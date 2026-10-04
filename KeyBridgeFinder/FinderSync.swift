@@ -56,8 +56,8 @@ final class FinderSync: FIFinderSync {
             terminal.image = icon
         }
         menu.addItem(terminal)
-
-        menu.addItem(.separator())
+        // No separator: Finder on macOS 26 shows one an extension adds as an
+        // empty row (KB-256).
         menu.addItem(copyPathItem())
         menu.addItem(addFavoriteItem())
         return menu
