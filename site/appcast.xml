@@ -6,6 +6,26 @@
     <description>KeyBridge updates</description>
     <language>en</language>
     <item>
+      <title>KeyBridge 1.3</title>
+      <pubDate>Sun, 04 Oct 2026 06:10:14 GMT</pubDate>
+      <sparkle:version>7</sparkle:version>
+      <sparkle:shortVersionString>1.3</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Seven more languages&lt;/b&gt;: Traditional Chinese, Korean, German, French, Spanish, Brazilian Portuguese and Polish. KeyBridge follows your system language, or pick one from the language menu at the foot of the sidebar.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;A new menu bar icon&lt;/b&gt;: the ⌘ in the menu bar is now KeyBridge's own arch bridge.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;新增 7 种语言&lt;/b&gt;：繁体中文、韩语、德语、法语、西班牙语、葡萄牙语（巴西）和波兰语。会跟随系统语言，也可以在侧边栏底部的语言菜单里切换。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;新的菜单栏图标&lt;/b&gt;：菜单栏里的 ⌘ 换成了 KeyBridge 自己的拱桥。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;7 つの言語を追加&lt;/b&gt;：繁体字中国語、韓国語、ドイツ語、フランス語、スペイン語、ポルトガル語（ブラジル）、ポーランド語。システムの言語に合わせて切り替わり、サイドバー下部の言語メニューでも選べます。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;新しいメニューバーアイコン&lt;/b&gt;：メニューバーの ⌘ が KeyBridge 独自のアーチ橋になりました。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/keybridge/releases/download/v1.3/KeyBridge-1.3.dmg" length="5080746" type="application/octet-stream" sparkle:edSignature="WfGcazs35Vjx+CQyhOU3sQSuEktKuTEPj85t8b35uKHQovmWRdocoQbnVvWgpil4bK60WRzjMIcCxP4u18npDg==" />
+    </item>
+    <item>
       <title>KeyBridge 1.2</title>
       <pubDate>Sun, 04 Oct 2026 00:23:10 GMT</pubDate>
       <sparkle:version>6</sparkle:version>
@@ -47,26 +67,6 @@
   &lt;li&gt;&lt;b&gt;キーボードごとの設定&lt;/b&gt;：MacBook のキーボードと外付けの PC キーボードで、Ctrl のショートカットと Win/Alt のキーを別々に設定できます（「ショートカット」ページ）。PC キーボードは接続してすぐ、Ctrl と刻印どおりの Win キーで使えます。&lt;/li&gt;
 &lt;/ul&gt;</description>
       <enclosure url="https://github.com/lynnjeans/keybridge/releases/download/v1.1/KeyBridge-1.1.dmg" length="4844110" type="application/octet-stream" sparkle:edSignature="dKJh8rrk/ZvqZ7mSgc7CoBaWkrIK+Lvxs52E4ZfPPqBFtBhwcgKiu9GE3ggaMWjjaKXjGhPfRvObozjVpn8iCg==" />
-    </item>
-    <item>
-      <title>KeyBridge 1.0.1</title>
-      <pubDate>Wed, 30 Sep 2026 07:05:46 GMT</pubDate>
-      <sparkle:version>4</sparkle:version>
-      <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
-      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description xml:lang="en">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;Menu bar&lt;/b&gt;: the menu has About KeyBridge, above Quit KeyBridge.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Sponsoring&lt;/b&gt;: the About page has a way to support KeyBridge on GitHub, if you enjoy it.&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="zh-Hans">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;菜单栏&lt;/b&gt;：菜单里新增“关于 KeyBridge”，在“退出 KeyBridge”上方。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;赞助&lt;/b&gt;：“关于”页新增赞助入口。喜欢 KeyBridge 的话，可以在 GitHub 上支持它。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="ja">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;メニューバー&lt;/b&gt;：メニューに「KeyBridge について」を追加しました（「KeyBridge を終了」の上）。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;スポンサー&lt;/b&gt;：「情報」ページから、GitHub で KeyBridge を支援できるようになりました。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/lynnjeans/keybridge/releases/download/v1.0.1/KeyBridge-1.0.1.dmg" length="4745302" type="application/octet-stream" sparkle:edSignature="oXvOFBUYQAFqwpBf9pHtXTlb6iPLHe0aZvZxsGQeE7HK1tgYK9TJxynoOB/aBt0SOp5EUmN0NTliAJBUK9zpDg==" />
     </item>
   </channel>
 </rss>
