@@ -80,9 +80,12 @@ Karabiner-Elements.
 - macOS 14+ (developed against macOS 26)
 - Two system permissions: **Accessibility** and **Input Monitoring**
 
-KeyBridge needs global input interception, which cannot run inside the App Store sandbox.
-It is therefore distributed **outside the Mac App Store**, signed and notarized, via GitHub
-Releases and Homebrew Cask.
+A sandboxed app can watch the keyboard and send keystrokes, but not use the Accessibility API,
+which KeyBridge needs to read other apps: whether you are typing in a text field before `Delete`
+deletes a file, Finder's folder for `Ctrl+G` in open and save dialogs, the window to snap. Nor is
+it clear that a sandboxed app may hold back the key you pressed, so that `Ctrl+C` is not also
+sent on as it is. KeyBridge is therefore distributed **outside the Mac App Store**, signed and
+notarized, via GitHub Releases and Homebrew Cask.
 
 ## Building
 

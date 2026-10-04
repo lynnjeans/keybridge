@@ -40,9 +40,11 @@ its String Catalog — that is product content, not project language.
 - **Positioning** — a shortcut bridge for people migrating from Windows to macOS, not a
   general-purpose input tweaker.
 - **License** — GPL-3.0, funded by donations. No closed-source commercial edition.
-- **Distribution** — **not on the Mac App Store.** Global input interception cannot run
-  inside the App Store sandbox, so we ship a Developer ID signed and notarized build via
-  GitHub Releases and Homebrew Cask.
+- **Distribution** — **not on the Mac App Store.** The sandbox allows listening to input and
+  posting events, but not the Accessibility API (focused element, Finder's folder, window
+  frames), and Apple has not confirmed that a sandboxed event tap may swallow the original
+  key. So we ship a Developer ID signed and notarized build via GitHub Releases and Homebrew
+  Cask.
 - **Architecture** — a single CGEventTap engine, now and later. Deep keyboard remapping
   (tap/hold, layers, chords) is **out of scope**: it needs a root daemon that seizes the
   keyboard plus a DriverKit virtual keyboard to re-emit input, which would trade two
