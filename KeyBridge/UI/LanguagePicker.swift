@@ -8,7 +8,14 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case system = ""
     case english = "en"
     case simplifiedChinese = "zh-Hans"
+    case traditionalChinese = "zh-Hant"
     case japanese = "ja"
+    case korean = "ko"
+    case german = "de"
+    case french = "fr"
+    case spanish = "es"
+    case portuguese = "pt-BR"
+    case polish = "pl"
 
     var id: Self { self }
 
@@ -19,7 +26,14 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         case .system: String(localized: "Follow System")
         case .english: "English"
         case .simplifiedChinese: "简体中文"
+        case .traditionalChinese: "繁體中文"
         case .japanese: "日本語"
+        case .korean: "한국어"
+        case .german: "Deutsch"
+        case .french: "Français"
+        case .spanish: "Español"
+        case .portuguese: "Português (Brasil)"
+        case .polish: "Polski"
         }
     }
 

@@ -5,7 +5,7 @@ import Testing
 /// A string added without translations fails here, so the gap is seen before
 /// a release rather than by a user.
 @Suite struct LocalizationTests {
-    static let languages = ["zh-Hans", "ja"]
+    static let languages = ["zh-Hans", "zh-Hant", "ja", "ko", "de", "fr", "es", "pt-BR", "pl"]
 
     let strings: [String: [String: Any]] = {
         let url = URL(fileURLWithPath: #filePath)

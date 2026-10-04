@@ -8,7 +8,8 @@ development; they do not track progress. Progress lives in
 
 KeyBridge targets an international audience, so **everything in this project is written in
 English**: documentation, issues, commit messages, code comments, and identifiers. The
-shipped application is localized separately (English, Simplified Chinese, Japanese) through
+shipped application is localized separately (English, Simplified and Traditional Chinese,
+Japanese, Korean, German, French, Spanish, Brazilian Portuguese and Polish) through
 its String Catalog — that is product content, not project language.
 
 ## Documents

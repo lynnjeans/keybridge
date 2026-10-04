@@ -101,6 +101,7 @@ extension Modifiers {
                 style == .windows ? $0.windows : $0.byPosition
             }
             return named.sorted { Self.windowsOrder.firstIndex(of: $0)! < Self.windowsOrder.firstIndex(of: $1)! }
+                .map(KeyCode.printed)
         }
     }
 
@@ -122,7 +123,22 @@ extension KeyCode {
     /// in a lone-modifier trigger, are named as modifiers are: Win, not ⌘,
     /// on the Windows side.
     func label(_ style: KeyStyle) -> String {
-        modifier?.caps(style).first ?? label
+        if let modifier { return modifier.caps(style).first ?? label }
+        return style == .mac ? label : Self.printed(label)
+    }
+
+    /// What a PC keyboard in the interface language prints on the key, for
+    /// the Windows side: a German one says Strg, Umschalt, Pos1 and Ende
+    /// (KB-093…099). The Mac side keeps its symbols, and the diagnostic
+    /// report, written in English, uses the Mac side.
+    static func printed(_ name: String) -> String {
+        switch name {
+        case "Ctrl": String(localized: "Ctrl", comment: "The Ctrl key, as a PC keyboard in this language prints it")
+        case "Shift": String(localized: "keycap.shift", defaultValue: "Shift", comment: "The Shift key, as a PC keyboard in this language prints it")
+        case "Home": String(localized: "keycap.home", defaultValue: "Home", comment: "The Home key, as a PC keyboard in this language prints it")
+        case "End": String(localized: "keycap.end", defaultValue: "End", comment: "The End key, as a PC keyboard in this language prints it")
+        default: name
+        }
     }
 }
 

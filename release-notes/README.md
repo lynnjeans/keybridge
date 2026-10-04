@@ -22,5 +22,9 @@ KeyBridge's update window shows the one in the app's language. The English file 
 body of the GitHub release. The script refuses to publish while any of the three is missing
 or empty.
 
+KeyBridge itself speaks ten languages, but the notes are written in these three. Sparkle picks
+the one closest to the user's languages and falls back to the first, English, so a German or
+Korean user reads the English notes.
+
 Write for the people using KeyBridge, not for contributors: what changed for them, in plain
 words, most noticeable first. Leave out refactors and tests.

@@ -67,7 +67,7 @@ targets:
         LSApplicationCategoryType: public.app-category.utilities
         # The languages KeyBridge ships in (M9). Listing them lets macOS pick
         # one per app in System Settings › General › Language & Region.
-        CFBundleLocalizations: [en, zh-Hans, ja]
+        CFBundleLocalizations: [en, zh-Hans, zh-Hant, ja, ko, de, fr, es, pt-BR, pl]
         NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
         # The Finder extension hands each menu choice to the app as a
         # keybridge:// URL (FinderMenuRequest).

@@ -250,8 +250,9 @@ On Shortcuts › "Press Ctrl shortcuts with":
 
 ## 15. Languages and layout
 
-For each of **English, 简体中文 and 日本語** (sidebar language menu, or System Settings ›
-General › Language & Region › Applications):
+For each of **English, 简体中文 and 日本語**, and at least **Deutsch** (the longest) of the
+other seven (sidebar language menu, or System Settings › General › Language & Region ›
+Applications):
 
 - [ ] Switching applies at once; every page, the menu bar menu, the guide and the clipboard
       panel are in that language, with no English left over.

@@ -54,7 +54,7 @@ KeyBridge aims at the one audience none of them targets directly: **the migrant*
 - **Finder right-click menu**: new document, copy path, open in Terminal
 - **Open and save dialogs**: `Ctrl+G` jumps to Finder's folder, `Ctrl+Shift+G` lists recent and favorite folders
 - **Automatic updates**, signed and checked daily
-- English / 简体中文 / 日本語
+- English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Polski
 
 Planned: per-device rules (a PC keyboard and the built-in one treated differently).
 
