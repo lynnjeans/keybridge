@@ -1,17 +1,17 @@
 #!/bin/zsh
-# Updates KeyBridge/Resources/Localizable.xcstrings from the strings the last
+# Updates SameKeys/Resources/Localizable.xcstrings from the strings the last
 # build found in the source. Xcode does this by itself when building in the
 # IDE; command-line builds (xcodebuild) only extract, so run this after one.
 #
-#   xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build build
+#   xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -derivedDataPath build build
 #   scripts/sync-strings.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
-data=(build/Build/Intermediates.noindex/KeyBridge.build/Debug/KeyBridge.build/Objects-normal/*/*.stringsdata)
-xcrun xcstringstool sync KeyBridge/Resources/Localizable.xcstrings --stringsdata "${data[@]}"
+data=(build/Build/Intermediates.noindex/SameKeys.build/Debug/SameKeys.build/Objects-normal/*/*.stringsdata)
+xcrun xcstringstool sync SameKeys/Resources/Localizable.xcstrings --stringsdata "${data[@]}"
 python3 - <<'PY'
 import json
-path = "KeyBridge/Resources/Localizable.xcstrings"
+path = "SameKeys/Resources/Localizable.xcstrings"
 catalog = json.load(open(path))
 strings = catalog["strings"]
 # Keys made only of symbols (⌘, +, an empty label) read the same in every

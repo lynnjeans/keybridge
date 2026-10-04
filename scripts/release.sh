@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Builds a KeyBridge release: a Release build, signed, packed into a DMG,
+# Builds a SameKeys release: a Release build, signed, packed into a DMG,
 # and notarized and stapled when the credentials are there.
 #
 #   scripts/release.sh
@@ -24,7 +24,7 @@
 # notarized and stapled. Without the profile the DMG is signed but not
 # notarized.
 #
-# Output in dist/: KeyBridge-<version>.dmg and KeyBridge-<version>.dmg.sha256
+# Output in dist/: SameKeys-<version>.dmg and SameKeys-<version>.dmg.sha256
 # (the checksum the Homebrew cask needs). This script publishes nothing;
 # scripts/publish-release.sh uploads the DMG and adds it to the update feed.
 set -euo pipefail
@@ -54,21 +54,21 @@ if [[ $identity != - ]]; then
 fi
 
 work=build/release
-dmg=dist/KeyBridge-$version.dmg
+dmg=dist/SameKeys-$version.dmg
 rm -rf $work
 mkdir -p $work dist
 
-step "Building KeyBridge $version ($build), signed with: ${identity/#-/ad-hoc}"
+step "Building SameKeys $version ($build), signed with: ${identity/#-/ad-hoc}"
 sign_flags=()
 # A secure timestamp is required for notarization; ad-hoc signatures cannot have one.
 [[ $identity != - ]] && sign_flags=(OTHER_CODE_SIGN_FLAGS=--timestamp)
-xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -configuration Release \
-  -derivedDataPath $work/DerivedData -archivePath $work/KeyBridge.xcarchive \
+xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -configuration Release \
+  -derivedDataPath $work/DerivedData -archivePath $work/SameKeys.xcarchive \
   CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="$identity" DEVELOPMENT_TEAM="$team" \
   $sign_flags -quiet archive
 
-app=$work/KeyBridge.xcarchive/Products/Applications/KeyBridge.app
-[[ -d $app ]] || fail "the archive has no KeyBridge.app"
+app=$work/SameKeys.xcarchive/Products/Applications/SameKeys.app
+[[ -d $app ]] || fail "the archive has no SameKeys.app"
 
 if [[ $identity != - ]]; then
   # Xcode re-signs Sparkle.framework on copy but not the helpers inside it,
@@ -122,8 +122,8 @@ notarized=no
 [[ $identity != - && -n ${NOTARY_PROFILE:-} ]] && notarized=yes
 if [[ $notarized == yes ]]; then
   step "Notarizing the app (this usually takes a few minutes)"
-  ditto -c -k --keepParent $app $work/KeyBridge.zip
-  notarize $work/KeyBridge.zip
+  ditto -c -k --keepParent $app $work/SameKeys.zip
+  notarize $work/SameKeys.zip
   xcrun stapler staple -q $app
   xcrun stapler validate -q $app
   # Apple's own pre-distribution check, which caught the unstapled app.
@@ -132,7 +132,7 @@ if [[ $notarized == yes ]]; then
 fi
 
 step "Packing $dmg"
-# The DMG opens as a laid-out window: KeyBridge, an arrow, Applications
+# The DMG opens as a laid-out window: SameKeys, an arrow, Applications
 # (KB-233). make-dmg.py writes Finder's window settings itself, so this needs
 # no Finder scripting and runs unattended. Its two packages are build tools
 # only, kept in a virtual environment under build/; nothing of them ends up in
@@ -144,7 +144,7 @@ if [[ ! -x $venv/bin/python ]] || ! $venv/bin/python -c "import ds_store, mac_al
 fi
 swift scripts/dmg/background.swift $work
 tiffutil -cathidpicheck $work/background.png $work/background@2x.png -out $work/background.tiff 2>/dev/null
-$venv/bin/python scripts/dmg/make-dmg.py $app $work/background.tiff "KeyBridge $version" $dmg
+$venv/bin/python scripts/dmg/make-dmg.py $app $work/background.tiff "SameKeys $version" $dmg
 [[ $identity != - ]] && codesign --sign "$identity" --timestamp $dmg
 
 if [[ $notarized == yes ]]; then

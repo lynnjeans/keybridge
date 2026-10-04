@@ -1,10 +1,10 @@
-"""Packs KeyBridge.app into a DMG that opens as a laid-out window (KB-233):
-KeyBridge alone, the "Double-click KeyBridge to install" hint from
-background.swift under it, and KeyBridge's icon on the volume. There is no
-Applications shortcut to drag to: opened from its disk image, KeyBridge
+"""Packs SameKeys.app into a DMG that opens as a laid-out window (KB-233):
+SameKeys alone, the "Double-click SameKeys to install" hint from
+background.swift under it, and SameKeys's icon on the volume. There is no
+Applications shortcut to drag to: opened from its disk image, SameKeys
 installs itself there and opens (MoveToApplications.swift).
 
-    make-dmg.py <KeyBridge.app> <background.tiff> <volume name> <out.dmg>
+    make-dmg.py <SameKeys.app> <background.tiff> <volume name> <out.dmg>
 
 Finder's window settings are written straight into the volume's .DS_Store,
 so this needs no Finder scripting and runs unattended. It uses the ds_store

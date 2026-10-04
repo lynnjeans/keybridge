@@ -1,4 +1,4 @@
-# Builds KeyBridge and runs the unit tests on every pull request and on main.
+# Builds SameKeys and runs the unit tests on every pull request and on main.
 #
 # The tests need no permissions and never start the event tap: the test
 # bundle compiles the sources it tests itself (see project.yml). Signing falls
@@ -31,5 +31,5 @@ jobs:
 
       - name: Build and test
         run: |
-          xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge \
+          xcodebuild -project SameKeys.xcodeproj -scheme SameKeys \
             -destination 'platform=macOS' -derivedDataPath build test

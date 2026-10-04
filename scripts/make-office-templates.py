@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes the blank Office documents KeyBridge's Finder menu creates (KB-210).
+"""Writes the blank Office documents SameKeys's Finder menu creates (KB-210).
 
 Office cannot open an empty .docx, .xlsx or .pptx, so "New › Word Document"
 copies one of these instead. They are written by hand here, part by part,
@@ -15,7 +15,7 @@ Run from the repository root after changing anything below:
 import os
 import zipfile
 
-OUT = "KeyBridge/Resources/Templates"
+OUT = "SameKeys/Resources/Templates"
 
 XML = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
 PKG = "http://schemas.openxmlformats.org/package/2006"

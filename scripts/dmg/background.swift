@@ -1,5 +1,5 @@
-// Draws the DMG window's background (KB-233): the hint under KeyBridge's
-// icon, in the three languages KeyBridge speaks. Double-clicking KeyBridge in
+// Draws the DMG window's background (KB-233): the hint under SameKeys's
+// icon, in the three languages SameKeys speaks. Double-clicking SameKeys in
 // its disk image installs it in Applications and opens it. Sizes and
 // positions must match scripts/dmg/make-dmg.py.
 //
@@ -15,9 +15,9 @@ import AppKit
 let size = NSSize(width: 520, height: 380)
 
 let hints = [
-    "Double-click KeyBridge to install",
-    "双击 KeyBridge 即可安装",
-    "KeyBridge をダブルクリックしてインストール",
+    "Double-click SameKeys to install",
+    "双击 SameKeys 即可安装",
+    "SameKeys をダブルクリックしてインストール",
 ]
 
 func draw(scale: CGFloat) -> NSBitmapImageRep {

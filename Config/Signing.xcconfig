@@ -1,4 +1,4 @@
-// Code signing for KeyBridge.
+// Code signing for SameKeys.
 //
 // macOS remembers Accessibility and Input Monitoring grants by the app's code
 // signature. Ad-hoc signing produces a new identity on every build, so the

@@ -1,16 +1,16 @@
-# KeyBridge project definition for XcodeGen.
+# SameKeys project definition for XcodeGen.
 #
-# This file is the source of truth for the Xcode project. KeyBridge.xcodeproj is
+# This file is the source of truth for the Xcode project. SameKeys.xcodeproj is
 # generated from it and committed so a fresh clone builds with no extra tools,
 # but hand edits to the .xcodeproj are lost on the next regeneration. Change
 # settings here, then run:
 #
 #   xcodegen generate
 
-name: KeyBridge
+name: SameKeys
 
 options:
-  bundleIdPrefix: io.github.lynnjeans
+  bundleIdPrefix: com.samekeys
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
@@ -25,21 +25,21 @@ packages:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    MARKETING_VERSION: "1.3"
-    CURRENT_PROJECT_VERSION: "7"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
 
 targets:
-  KeyBridge:
+  SameKeys:
     type: application
     platform: macOS
     sources:
-      - path: KeyBridge
+      - path: SameKeys
         excludes:
           - Resources/Info.plist
           - Resources/Templates
       # Blank Office documents for the Finder menu, kept in a Templates folder
       # inside the app (scripts/make-office-templates.py).
-      - path: KeyBridge/Resources/Templates
+      - path: SameKeys/Resources/Templates
         type: folder
         buildPhase: resources
       # Shipped inside the app, as GPL-3.0 asks of every copy handed on, and
@@ -50,12 +50,12 @@ targets:
         buildPhase: resources
     dependencies:
       # The Finder right-click menu (KB-210), embedded in Contents/PlugIns.
-      - target: KeyBridgeFinder
+      - target: SameKeysFinder
       - package: Sparkle
     info:
-      path: KeyBridge/Resources/Info.plist
+      path: SameKeys/Resources/Info.plist
       properties:
-        CFBundleDisplayName: KeyBridge
+        CFBundleDisplayName: SameKeys
         # Read versions from build settings so MARKETING_VERSION and
         # CURRENT_PROJECT_VERSION are the single place to bump them. Left to
         # itself XcodeGen writes a hard-coded "1.0", and Sparkle compares these.
@@ -65,29 +65,29 @@ targets:
         # opened on demand from the menu bar item.
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.utilities
-        # The languages KeyBridge ships in (M9). Listing them lets macOS pick
+        # The languages SameKeys ships in (M9). Listing them lets macOS pick
         # one per app in System Settings › General › Language & Region.
         CFBundleLocalizations: [en, zh-Hans, zh-Hant, ja, ko, de, fr, es, pt-BR, pl]
-        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
+        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and SameKeys contributors. Licensed under GPL-3.0."
         # The Finder extension hands each menu choice to the app as a
-        # keybridge:// URL (FinderMenuRequest).
+        # samekeys:// URL (FinderMenuRequest).
         CFBundleURLTypes:
-          - CFBundleURLName: io.github.lynnjeans.KeyBridge.finder
-            CFBundleURLSchemes: [keybridge]
+          - CFBundleURLName: com.samekeys.SameKeys.finder
+            CFBundleURLSchemes: [samekeys]
         # Automatic updates (KB-101). The appcast is published with the
         # website; every update in it is signed with the EdDSA key whose public
         # half is below (private half: login keychain, account "keybridge").
         # Checks run daily without asking first, and nothing about the Mac is
         # sent with them.
-        SUFeedURL: https://lynnjeans.github.io/keybridge/appcast.xml
+        SUFeedURL: https://samekeys.com/appcast.xml
         SUPublicEDKey: "+mui14fQOOo10sFdbz8XnVClc/6jH9XYn9DNxEMq7nA="
         SUEnableAutomaticChecks: true
         SUScheduledCheckInterval: 86400
         SUEnableSystemProfiling: false
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge
-        PRODUCT_NAME: KeyBridge
+        PRODUCT_BUNDLE_IDENTIFIER: com.samekeys.SameKeys
+        PRODUCT_NAME: SameKeys
         # Resources/AppIcon.icon, made in Icon Composer: Liquid Glass on macOS
         # 26, and actool derives the flat icon macOS 14 and 15 show (KB-106).
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -109,34 +109,34 @@ targets:
     # Shared scheme, committed so command-line builds and CI can find it.
     scheme:
       testTargets:
-        - KeyBridgeTests
+        - SameKeysTests
 
   # The Finder right-click menu (KB-210). Finder only loads a sandboxed
   # extension, so it builds the menu and leaves the work to the app.
-  KeyBridgeFinder:
+  SameKeysFinder:
     type: app-extension
     platform: macOS
     sources:
-      - path: KeyBridgeFinder
+      - path: SameKeysFinder
         excludes:
           - Info.plist
           - "*.entitlements"
-      - path: KeyBridge/FinderMenu/NewDocument.swift
+      - path: SameKeys/FinderMenu/NewDocument.swift
     info:
-      path: KeyBridgeFinder/Info.plist
+      path: SameKeysFinder/Info.plist
       properties:
-        CFBundleDisplayName: KeyBridge Finder Menu
+        CFBundleDisplayName: SameKeys Finder Menu
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
-        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and KeyBridge contributors. Licensed under GPL-3.0."
+        NSHumanReadableCopyright: "Copyright © 2026 Lei Sun and SameKeys contributors. Licensed under GPL-3.0."
         NSExtension:
           NSExtensionPointIdentifier: com.apple.FinderSync
           NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).FinderSync"
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridge.Finder
-        PRODUCT_NAME: KeyBridgeFinder
-        CODE_SIGN_ENTITLEMENTS: KeyBridgeFinder/KeyBridgeFinder.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.samekeys.SameKeys.Finder
+        PRODUCT_NAME: SameKeysFinder
+        CODE_SIGN_ENTITLEMENTS: SameKeysFinder/SameKeysFinder.entitlements
         ENABLE_APP_SANDBOX: YES
         ENABLE_HARDENED_RUNTIME: YES
         SWIFT_EMIT_LOC_STRINGS: NO
@@ -146,49 +146,49 @@ targets:
 
   # Unit tests for logic that does not need a running app. The bundle compiles
   # the sources it tests itself instead of loading them from a host app, so a
-  # test run never launches KeyBridge or starts its event tap.
-  KeyBridgeTests:
+  # test run never launches SameKeys or starts its event tap.
+  SameKeysTests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - path: KeyBridgeTests
-      - path: KeyBridge/Rules
-      - path: KeyBridge/Engine/RuleMatcher.swift
-      - path: KeyBridge/Engine/EventTrigger.swift
-      - path: KeyBridge/Engine/Dispatcher.swift
-      - path: KeyBridge/Engine/DispatchTrace.swift
-      - path: KeyBridge/Engine/SyntheticEvent.swift
-      - path: KeyBridge/Engine/ScrollStepper.swift
-      - path: KeyBridge/Engine/WheelDirection.swift
-      - path: KeyBridge/Engine/DockClick.swift
-      - path: KeyBridge/Engine/CtrlClick.swift
-      - path: KeyBridge/Engine/ModifierTap.swift
-      - path: KeyBridge/Engine/TapBreaker.swift
-      - path: KeyBridge/Engine/KeyboardSource.swift
-      - path: KeyBridge/Engine/KeyboardList.swift
-      - path: KeyBridge/UI/KeyboardChoices.swift
-      - path: KeyBridge/Window/WindowGeometry.swift
-      - path: KeyBridge/Window/WindowAction.swift
-      - path: KeyBridge/FileDialog/FileDialogAction.swift
-      - path: KeyBridge/FileDialog/FinderRecentFolders.swift
-      - path: KeyBridge/FileDialog/FileLocations.swift
-      - path: KeyBridge/Window/WindowElement.swift
-      - path: KeyBridge/Permissions
-      - path: KeyBridge/Clipboard
-      - path: KeyBridge/PathBox/PathBoxResolver.swift
-      - path: KeyBridge/PathBox/FinderFolderPicker.swift
-      - path: KeyBridge/App/EngineController.swift
-      - path: KeyBridge/App/LoginItem.swift
-      - path: KeyBridge/App/DiagnosticReport.swift
-      - path: KeyBridge/App/DiagnosticRecorder.swift
-      - path: KeyBridge/App/LogArchive.swift
-      - path: KeyBridge/FinderMenu/NewDocument.swift
-      - path: KeyBridge/FinderMenu/FinderMenuHandler.swift
-      - path: KeyBridge/FinderMenu/FinderMenuSender.swift
-      - path: KeyBridge/Updates/InstallLocation.swift
+      - path: SameKeysTests
+      - path: SameKeys/Rules
+      - path: SameKeys/Engine/RuleMatcher.swift
+      - path: SameKeys/Engine/EventTrigger.swift
+      - path: SameKeys/Engine/Dispatcher.swift
+      - path: SameKeys/Engine/DispatchTrace.swift
+      - path: SameKeys/Engine/SyntheticEvent.swift
+      - path: SameKeys/Engine/ScrollStepper.swift
+      - path: SameKeys/Engine/WheelDirection.swift
+      - path: SameKeys/Engine/DockClick.swift
+      - path: SameKeys/Engine/CtrlClick.swift
+      - path: SameKeys/Engine/ModifierTap.swift
+      - path: SameKeys/Engine/TapBreaker.swift
+      - path: SameKeys/Engine/KeyboardSource.swift
+      - path: SameKeys/Engine/KeyboardList.swift
+      - path: SameKeys/UI/KeyboardChoices.swift
+      - path: SameKeys/Window/WindowGeometry.swift
+      - path: SameKeys/Window/WindowAction.swift
+      - path: SameKeys/FileDialog/FileDialogAction.swift
+      - path: SameKeys/FileDialog/FinderRecentFolders.swift
+      - path: SameKeys/FileDialog/FileLocations.swift
+      - path: SameKeys/Window/WindowElement.swift
+      - path: SameKeys/Permissions
+      - path: SameKeys/Clipboard
+      - path: SameKeys/PathBox/PathBoxResolver.swift
+      - path: SameKeys/PathBox/FinderFolderPicker.swift
+      - path: SameKeys/App/EngineController.swift
+      - path: SameKeys/App/LoginItem.swift
+      - path: SameKeys/App/DiagnosticReport.swift
+      - path: SameKeys/App/DiagnosticRecorder.swift
+      - path: SameKeys/App/LogArchive.swift
+      - path: SameKeys/FinderMenu/NewDocument.swift
+      - path: SameKeys/FinderMenu/FinderMenuHandler.swift
+      - path: SameKeys/FinderMenu/FinderMenuSender.swift
+      - path: SameKeys/Updates/InstallLocation.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.lynnjeans.KeyBridgeTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.samekeys.SameKeysTests
         GENERATE_INFOPLIST_FILE: YES
         CODE_SIGN_STYLE: Manual
         CODE_SIGN_IDENTITY: "-"

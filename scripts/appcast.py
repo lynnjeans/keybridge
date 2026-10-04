@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Adds a release to KeyBridge's Sparkle appcast (KB-101).
+"""Adds a release to SameKeys's Sparkle appcast (KB-101).
 
     scripts/appcast.py --appcast site/appcast.xml --version 1.0.0 --build 5 \\
-        --url https://github.com/lynnjeans/keybridge/releases/download/v1.0.0/KeyBridge-1.0.0.dmg \\
+        --url https://github.com/lynnjeans/keybridge/releases/download/v1.0.0/SameKeys-1.0.0.dmg \\
         --length 4194304 --signature <edSignature from sign_update> \\
         --notes release-notes/1.0.0 [--critical]
 
@@ -49,9 +49,9 @@ def load(path):
         return tree, channel
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = "KeyBridge"
-    ET.SubElement(channel, "link").text = "https://lynnjeans.github.io/keybridge/"
-    ET.SubElement(channel, "description").text = "KeyBridge updates"
+    ET.SubElement(channel, "title").text = "SameKeys"
+    ET.SubElement(channel, "link").text = "https://samekeys.com/"
+    ET.SubElement(channel, "description").text = "SameKeys updates"
     ET.SubElement(channel, "language").text = "en"
     return ET.ElementTree(rss), channel
 
@@ -83,7 +83,7 @@ def main():
              "raise CURRENT_PROJECT_VERSION in project.yml")
 
     item = ET.Element("item")
-    ET.SubElement(item, "title").text = f"KeyBridge {args.version}"
+    ET.SubElement(item, "title").text = f"SameKeys {args.version}"
     ET.SubElement(item, "pubDate").text = email.utils.formatdate(usegmt=True)
     ET.SubElement(item, sparkle("version")).text = str(args.build)
     ET.SubElement(item, sparkle("shortVersionString")).text = args.version
@@ -110,7 +110,7 @@ def main():
     ET.indent(tree, space="  ")
     args.appcast.parent.mkdir(parents=True, exist_ok=True)
     tree.write(args.appcast, encoding="utf-8", xml_declaration=True)
-    print(f"Added KeyBridge {args.version} ({args.build}) to {args.appcast}")
+    print(f"Added SameKeys {args.version} ({args.build}) to {args.appcast}")
 
 
 if __name__ == "__main__":

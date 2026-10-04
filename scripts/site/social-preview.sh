@@ -14,7 +14,7 @@ icon=$root/scripts/site/icon.png
 trap 'rm -f $icon' EXIT
 
 [[ -x $chrome ]] || { print -u2 "Google Chrome is needed: $chrome"; exit 1 }
-"$ictool" $root/KeyBridge/Resources/AppIcon.icon --export-image --output-file $icon \
+"$ictool" $root/SameKeys/Resources/AppIcon.icon --export-image --output-file $icon \
     --platform macOS --rendition Default --width 512 --height 512 --scale 1 >/dev/null
 
 mkdir -p $out

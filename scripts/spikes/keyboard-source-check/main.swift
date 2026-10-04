@@ -1,4 +1,4 @@
-// Runs KeyBridge's own KeyboardSource (KB-021) on real key presses, outside
+// Runs SameKeys's own KeyboardSource (KB-021) on real key presses, outside
 // the app: a listen-only event tap that prints the keyboard each time it
 // changes. Nothing is changed or posted, and no key codes are printed.
 //
@@ -7,7 +7,7 @@
 // made while one is held must follow its keyboard (KB-020, KB-243). Clicks
 // and scrolls are counted by sender too.
 //
-//   swiftc -O KeyBridge/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
+//   swiftc -O SameKeys/Engine/KeyboardSource.swift scripts/spikes/keyboard-source-check/main.swift -o /tmp/keyboard-source-check
 //   /tmp/keyboard-source-check          # type on each keyboard in turn; ends on TERM or after 10 minutes
 
 import CoreGraphics

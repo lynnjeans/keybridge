@@ -94,7 +94,7 @@ Requires Xcode 16 or later — the full install, not just the Command Line Tools
 ```bash
 git clone https://github.com/lynnjeans/keybridge.git
 cd keybridge
-open KeyBridge.xcodeproj
+open SameKeys.xcodeproj
 ```
 
 The Xcode project is generated from [`project.yml`](project.yml) by
@@ -129,20 +129,20 @@ have to re-grant permissions after every build.
 ### Localization
 
 Every string the UI shows lives in
-[`KeyBridge/Resources/Localizable.xcstrings`](KeyBridge/Resources/Localizable.xcstrings),
+[`SameKeys/Resources/Localizable.xcstrings`](SameKeys/Resources/Localizable.xcstrings),
 KeyBridge's String Catalog, with English as the source language. Write UI text as
 string literals in SwiftUI (`Text("…")`) or as `String(localized: "…")` where a `String`
 is needed; building in Xcode adds new strings to the catalog and lists missing
 translations. A command-line build only extracts them, so sync the catalog afterwards:
 
 ```bash
-xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build build
+xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -derivedDataPath build build
 scripts/sync-strings.sh
 ```
 
 ### App icon
 
-[`KeyBridge/Resources/AppIcon.icon`](KeyBridge/Resources/AppIcon.icon) is an Icon Composer
+[`SameKeys/Resources/AppIcon.icon`](SameKeys/Resources/AppIcon.icon) is an Icon Composer
 document: three SVG layers (bridge, keycaps, legends) on a blue gradient. macOS 26 draws it in
 Liquid Glass; the build derives the flat icon macOS 14 and 15 show. The layers are plain SVG, so
 they can be edited by hand; render every appearance without opening Icon Composer with its
@@ -150,7 +150,7 @@ they can be edited by hand; render every appearance without opening Icon Compose
 
 ```bash
 "$(xcode-select -p)/../Applications/Icon Composer.app/Contents/Executables/ictool" \
-  KeyBridge/Resources/AppIcon.icon --export-image --output-file /tmp/icon.png \
+  SameKeys/Resources/AppIcon.icon --export-image --output-file /tmp/icon.png \
   --platform macOS --rendition Dark --width 512 --height 512 --scale 1
 ```
 
@@ -180,7 +180,7 @@ The screenshots come from the Debug build, with a fresh settings folder and an e
 clipboard history, so nothing of yours shows up in them. Retake them all after the UI changes:
 
 ```bash
-xcodebuild -project KeyBridge.xcodeproj -scheme KeyBridge -derivedDataPath build build
+xcodebuild -project SameKeys.xcodeproj -scheme SameKeys -derivedDataPath build build
 scripts/site/screenshots.sh
 ```
 

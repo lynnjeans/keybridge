@@ -1,10 +1,10 @@
-// Prints KeyBridge's on-screen windows as "id layer width height name", one
+// Prints SameKeys's on-screen windows as "id layer width height name", one
 // per line, for scripts/site/screenshots.sh to pick one to capture.
 import CoreGraphics
 
 let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
     as? [[String: Any]] ?? []
-for window in list where window[kCGWindowOwnerName as String] as? String == "KeyBridge" {
+for window in list where window[kCGWindowOwnerName as String] as? String == "SameKeys" {
     let id = window[kCGWindowNumber as String] as? Int ?? 0
     let layer = window[kCGWindowLayer as String] as? Int ?? 0
     let bounds = window[kCGWindowBounds as String] as? [String: Double] ?? [:]

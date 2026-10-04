@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# bootstrap-github.sh — create the KeyBridge GitHub project: repository,
+# bootstrap-github.sh — create the SameKeys GitHub project: repository,
 # labels, milestones and the full v1.0 backlog as issues.
 #
 # Prerequisites:
@@ -117,7 +117,7 @@ ${desc}
 ## Acceptance criteria
 ${ac}
 ---
-<sub>From the KeyBridge v1.0 development plan · ${ms}</sub>
+<sub>From the SameKeys v1.0 development plan · ${ms}</sub>
 EOF
 )" >/dev/null
   echo "    · ${id} ${title}"
@@ -391,4 +391,4 @@ echo "    Issues:     https://github.com/${REPO}/issues"
 echo "    Milestones: https://github.com/${REPO}/milestones"
 echo
 echo "Next: create a Project board and add the issues —"
-echo "    gh project create --owner @me --title 'KeyBridge v1.0'"
+echo "    gh project create --owner @me --title 'SameKeys v1.0'"
