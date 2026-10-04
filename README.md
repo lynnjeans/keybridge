@@ -1,5 +1,9 @@
 # KeyBridge
 
+[![Latest release](https://img.shields.io/github/v/release/lynnjeans/keybridge)](https://github.com/lynnjeans/keybridge/releases/latest)
+[![License: GPL-3.0](https://img.shields.io/github/license/lynnjeans/keybridge)](LICENSE)
+![macOS 14 or later](https://img.shields.io/badge/macOS-14%2B-blue?logo=apple)
+
 **A Mac shortcut bridge for Windows users.**
 
 KeyBridge lets people who just moved from Windows to macOS keep their muscle memory:
