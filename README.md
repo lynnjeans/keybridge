@@ -32,12 +32,11 @@ macOS is missing, or does differently, a lot of what Windows users do by reflex:
 | Windows habit | On macOS |
 |---|---|
 | `Ctrl+C` / `Ctrl+V` | `⌘C` / `⌘V` |
-| `Home` / `End` | `⌘←` / `⌘→` |
-| `Delete` removes a file | does nothing in Finder (`⌘⌫`) |
-| `F2` renames | `Enter` renames, `Enter` doesn't open |
-| Mouse side buttons | not mapped at all |
-| `Ctrl` + scroll zooms a page | zooms the whole screen, or nothing |
 | `Win+V` clipboard history | doesn't exist |
+| `Ctrl` + scroll zooms a page | zooms the whole screen, or nothing |
+| Mouse side buttons go back / forward | do nothing |
+| Mouse wheel and touchpad each scroll their own way | one setting flips both |
+| `Delete`, `F2` and right-click › New in File Explorer | `Delete` does nothing in Finder, `Enter` renames, and there is no New Document |
 
 Today the fixes are scattered across separate apps: a key remapper for the keyboard, another
 tool for the mouse buttons and wheel, a clipboard manager, a window snapper, a Finder add-on.
