@@ -255,11 +255,19 @@ Debug builds read these environment variables at launch. Pass them with `open --
 - **Finder's right-click menu cannot be driven from the shell** (KB-220, macOS 26.6). `AXShowMenu`
   on an item's text field times out (-25204); on the list view it opens the background menu, but
   its items are not in Finder's AX tree while it tracks, so the extension's entries can be neither
-  read nor pressed. Check the menu by hand. The app side can be tested alone: `open -g
-  'keybridge://finder/favorite?folder=/some/folder'` (or `/new`, `/terminal`) is what the extension
-  sends. The extension logs `items menu: N selected, M folders` under the subsystem
-  `io.github.lynnjeans.KeyBridge.Finder`; after a rebuild, `pkill -x KeyBridgeFinder` so Finder
-  starts the new one, and `pluginkit -m -v | grep -i keybridge` shows which build is registered.
+  read nor pressed. Check the menu by hand. Since KB-254 the app carries out a
+  `keybridge://finder/…` URL only when the Apple event comes from code signed as
+  `io.github.lynnjeans.KeyBridge.Finder` by KeyBridge's own team, so `open -g 'keybridge://…'` from
+  a shell is refused (`Ignored 1 keybridge:// request(s) from …` under `finderMenu`). To test the app
+  side alone, build a tiny sandboxed app that calls `NSWorkspace.open(_:withApplicationAt:)` and
+  sign it with `codesign -s "Apple Development" -i io.github.lynnjeans.KeyBridge.Finder
+  --entitlements <app-sandbox only>`; launch it with `open`, and keep it alive a few seconds after
+  sending, since the check reads the sender's signature while it runs. Name the build under test
+  explicitly (`withApplicationAt`, or `open -a <app> <url>`): otherwise Launch Services hands the
+  URL to the copy in Applications, starting it if need be. The extension logs `items menu: N
+  selected, M folders` under the subsystem `io.github.lynnjeans.KeyBridge.Finder`; after a rebuild,
+  `pkill -x KeyBridgeFinder` so Finder starts the new one, and `pluginkit -m -v | grep -i keybridge`
+  shows which build is registered.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
   result for its touches, ends the callback there and then: no log line, no crash, and the rest

@@ -151,8 +151,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Choices from the Finder extension's menu arrive as keybridge:// URLs
-    /// (KB-210).
+    /// (KB-210). Any app can open one, so only the extension's are carried
+    /// out (KB-254).
     func application(_ application: NSApplication, open urls: [URL]) {
+        let event = NSAppleEventManager.shared().currentAppleEvent
+        guard FinderMenuSender.isFinderExtension(event) else {
+            Logger.finderMenu.error(
+                "Ignored \(urls.count, privacy: .public) keybridge:// request(s) from \(FinderMenuSender.describe(event), privacy: .public)"
+            )
+            return
+        }
         for url in urls {
             FinderMenuHandler.handle(url) { [quickSwitch] in quickSwitch.locations.setFavorite($0, true) }
         }

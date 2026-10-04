@@ -46,10 +46,14 @@ final class QuickSwitch {
         let inFinder = NSWorkspace.shared.frontmostApplication?.bundleIdentifier == BuiltInRules.finderID
         let entries = locations.entries(finderWindows: FinderFolder.windowPaths()) { path in
             var isDirectory: ObjCBool = false
+            // An app or a Keynote document is a directory on disk, but opening
+            // it would launch it (KB-254).
             return FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) && isDirectory.boolValue
+                && !NSWorkspace.shared.isFilePackage(atPath: path)
         }
         panel.show(entries) { [locations] path in
             if inFinder {
+                guard !NSWorkspace.shared.isFilePackage(atPath: path) else { return }
                 NSWorkspace.shared.open(URL(fileURLWithPath: path, isDirectory: true))
                 locations.record(path)
             } else {

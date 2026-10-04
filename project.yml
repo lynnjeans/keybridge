@@ -184,6 +184,7 @@ targets:
       - path: KeyBridge/App/LogArchive.swift
       - path: KeyBridge/FinderMenu/NewDocument.swift
       - path: KeyBridge/FinderMenu/FinderMenuHandler.swift
+      - path: KeyBridge/FinderMenu/FinderMenuSender.swift
       - path: KeyBridge/Updates/InstallLocation.swift
     settings:
       base:

@@ -143,6 +143,10 @@ In a Finder window with a scratch folder of test files:
 - [ ] While renaming, and in Finder's search field: Enter, Backspace and Ctrl+V behave as in any
       text field (Ctrl+V pastes text, Backspace deletes a character).
 - [ ] In a file Open/Save dialog of another app, these Finder keys do not apply.
+- [ ] Right-click the folder's background → New › Text Document creates "New Text Document.txt"
+      and starts renaming it; Open in Terminal opens Terminal there; Add to KeyBridge Favorites
+      puts the folder in the ⌃⇧G list. With KeyBridge quit, New › launches it and still works.
+- [ ] In Terminal, `open 'keybridge://finder/terminal?folder=/tmp'` → nothing opens (KB-254).
 
 ## 7. Shortcuts: Windows & Apps, Browser, System
 
