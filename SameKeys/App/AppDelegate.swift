@@ -19,7 +19,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// own (KB-243).
     let keyboardSource = KeyboardSource()
     lazy var dispatcher = Dispatcher(
-        frontmostBundleID: { [frontmost] in frontmost.bundleID },
+        // While one of SameKeys's own panels has the keyboard (recent
+        // locations, clipboard history, the path box), keys are typed into
+        // it, not into the app behind: rules for that app (Finder's Return
+        // opens) must not turn them into something else (KB-268). Rules for
+        // every app, such as Ctrl+V pasting, still apply.
+        frontmostBundleID: { [frontmost] in
+            NSApp.keyWindow != nil ? Bundle.main.bundleIdentifier : frontmost.bundleID
+        },
         isEditingText: FocusedElement.isEditingText,
         isInFileDialog: FileDialog.isFocused,
         fileDialog: { [quickSwitch] in quickSwitch.perform($0) },
