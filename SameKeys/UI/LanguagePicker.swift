@@ -73,18 +73,9 @@ struct LanguagePicker: View {
             .onChange(of: choice) { _, language in language.apply() }
 
             if choice != launched {
-                Button("Restart to Switch Language") { Self.relaunch() }
+                Button("Restart to Switch Language") { Relaunch.now() }
                     .controlSize(.small)
             }
-        }
-    }
-
-    /// Opens a new copy of SameKeys and quits this one.
-    private static func relaunch() {
-        let configuration = NSWorkspace.OpenConfiguration()
-        configuration.createsNewApplicationInstance = true
-        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, _ in
-            DispatchQueue.main.async { NSApplication.shared.terminate(nil) }
         }
     }
 }

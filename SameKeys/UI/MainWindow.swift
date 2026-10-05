@@ -46,6 +46,7 @@ struct MainWindow: View {
                     SupportCard()
                     UpdatesCard(updates: updates)
                     LegalCard()
+                    SettingsBackupCard()
                     DiagnosticsCard(recorder: recorder) {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard,

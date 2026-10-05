@@ -1765,6 +1765,64 @@
         }
       }
     },
+    "All of SameKeys's settings are replaced by the ones in “%@”. Your current settings are saved first, in Application Support › SameKeys › Backups. SameKeys then restarts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Einstellungen von SameKeys werden durch die in „%@“ ersetzt. Deine aktuellen Einstellungen werden vorher unter Application Support › SameKeys › Backups gesichert. Danach startet SameKeys neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los ajustes de SameKeys se reemplazarán por los de “%@”. Tus ajustes actuales se guardan antes en Application Support › SameKeys › Backups. Después, SameKeys se reinicia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les réglages de SameKeys sont remplacés par ceux de « %@ ». Vos réglages actuels sont d’abord enregistrés dans Application Support › SameKeys › Backups. SameKeys redémarre ensuite."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys のすべての設定が「%@」の内容に置き換わります。現在の設定は先に Application Support › SameKeys › Backups に保存されます。その後 SameKeys が再起動します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys의 모든 설정이 ‘%@’의 내용으로 바뀝니다. 현재 설정은 먼저 Application Support › SameKeys › Backups에 저장됩니다. 그런 다음 SameKeys가 재시작됩니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie ustawienia SameKeys zostaną zastąpione tymi z „%@”. Bieżące ustawienia zostaną najpierw zapisane w Application Support › SameKeys › Backups. Następnie SameKeys uruchomi się ponownie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos os ajustes do SameKeys serão substituídos pelos de “%@”. Seus ajustes atuais são salvos antes em Application Support › SameKeys › Backups. Depois, o SameKeys reinicia."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 的全部设置会被替换为「%@」里的设置。替换前，当前设置会先保存到 Application Support › SameKeys › Backups。之后 SameKeys 会重新启动。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 的所有設定會被取代為「%@」中的設定。取代前，目前的設定會先儲存到 Application Support › SameKeys › Backups。之後 SameKeys 會重新啟動。"
+          }
+        }
+      }
+    },
     "Also pressed with fn instead of Ctrl" : {
       "localizations" : {
         "de" : {
@@ -7334,6 +7392,64 @@
         }
       }
     },
+    "Export Settings…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen exportieren …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar ajustes…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter les réglages…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を書き出す…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 내보내기…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eksportuj ustawienia…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar Ajustes…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出设置…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯出設定…"
+          }
+        }
+      }
+    },
     "Exporting…" : {
       "localizations" : {
         "de" : {
@@ -9650,6 +9766,122 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "影像"
+          }
+        }
+      }
+    },
+    "Import Settings…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen importieren …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar ajustes…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer des réglages…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を読み込む…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 가져오기…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importuj ustawienia…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar Ajustes…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入设置…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯入設定…"
+          }
+        }
+      }
+    },
+    "Import and Restart" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importieren und neu starten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar y reiniciar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer et redémarrer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込んで再起動"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가져오고 재시작"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importuj i uruchom ponownie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar e Reiniciar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入并重新启动"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯入並重新啟動"
           }
         }
       }
@@ -18644,6 +18876,64 @@
         }
       }
     },
+    "Replace your settings with this backup?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen durch dieses Backup ersetzen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Reemplazar tus ajustes por esta copia de seguridad?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacer vos réglages par cette sauvegarde ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定をこのバックアップに置き換えますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정을 이 백업으로 바꾸시겠습니까?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastąpić ustawienia tą kopią zapasową?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir seus ajustes por este backup?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用这份备份替换当前设置？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要以這份備份取代目前的設定嗎？"
+          }
+        }
+      }
+    },
     "Reset zoom" : {
       "localizations" : {
         "de" : {
@@ -20500,6 +20790,64 @@
         }
       }
     },
+    "Save your shortcuts and settings to a file, to restore them later or on another Mac. What you copied is not included." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichere deine Kurzbefehle und Einstellungen in einer Datei, um sie später oder auf einem anderen Mac wiederherzustellen. Kopierte Inhalte sind nicht enthalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda tus atajos y ajustes en un archivo para restaurarlos más tarde o en otro Mac. Lo que copiaste no se incluye."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos raccourcis et réglages dans un fichier, pour les restaurer plus tard ou sur un autre Mac. Ce que vous avez copié n’est pas inclus."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットと設定をファイルに保存し、あとで、または別の Mac で復元できます。コピーした内容は含まれません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키와 설정을 파일로 저장해 나중에 또는 다른 Mac에서 복원할 수 있습니다. 복사한 내용은 포함되지 않습니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisz skróty i ustawienia w pliku, aby przywrócić je później lub na innym Macu. Skopiowane treści nie są dołączane."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salve seus atalhos e ajustes em um arquivo para restaurá-los depois ou em outro Mac. O que você copiou não é incluído."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把快捷键和设置保存到一个文件里，以后或在另一台 Mac 上还原。不包含你拷贝过的内容。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把快速鍵和設定儲存到一個檔案，日後或在另一台 Mac 上還原。不包含你拷貝過的內容。"
+          }
+        }
+      }
+    },
     "Screenshot of an area to clipboard" : {
       "localizations" : {
         "de" : {
@@ -21830,6 +22178,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在「捲動」頁面設定"
+          }
+        }
+      }
+    },
+    "Settings Backup" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen sichern"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia de seguridad de los ajustes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarde des réglages"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定のバックアップ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 백업"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopia zapasowa ustawień"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup dos Ajustes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置备份"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定備份"
           }
         }
       }
@@ -23812,6 +24218,64 @@
         }
       }
     },
+    "This backup was made by a newer version of SameKeys. Update SameKeys, then import it again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Backup stammt von einer neueren Version von SameKeys. Aktualisiere SameKeys und importiere es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta copia la hizo una versión más reciente de SameKeys. Actualiza SameKeys e impórtala de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette sauvegarde a été faite par une version plus récente de SameKeys. Mettez SameKeys à jour, puis importez-la à nouveau."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このバックアップは新しいバージョンの SameKeys で作成されました。SameKeys をアップデートしてから、もう一度読み込んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 백업은 더 새로운 버전의 SameKeys에서 만들어졌습니다. SameKeys를 업데이트한 다음 다시 가져오세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta kopia została utworzona przez nowszą wersję SameKeys. Zaktualizuj SameKeys i zaimportuj ją ponownie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este backup foi feito por uma versão mais recente do SameKeys. Atualize o SameKeys e importe-o novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这份备份来自更新版本的 SameKeys。请先更新 SameKeys，再重新导入。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這份備份來自較新版本的 SameKeys。請先更新 SameKeys，再重新匯入。"
+          }
+        }
+      }
+    },
     "This file is missing from the app. The license and notices are also at %@." : {
       "localizations" : {
         "de" : {
@@ -23866,6 +24330,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App 中缺少這個檔案。授權和聲明也可以在 %@ 查看。"
+          }
+        }
+      }
+    },
+    "This file is not a SameKeys settings backup." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Datei ist kein SameKeys-Einstellungsbackup."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este archivo no es una copia de seguridad de ajustes de SameKeys."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier n’est pas une sauvegarde de réglages SameKeys."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイルは SameKeys の設定バックアップではありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 파일은 SameKeys 설정 백업이 아닙니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ten plik nie jest kopią zapasową ustawień SameKeys."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este arquivo não é um backup de ajustes do SameKeys."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个文件不是 SameKeys 的设置备份。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這個檔案不是 SameKeys 的設定備份。"
           }
         }
       }
