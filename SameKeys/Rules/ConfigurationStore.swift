@@ -19,7 +19,7 @@ struct ConfigurationStore: Sendable {
     static let migrations: [Int: Migration] = [:]
 
     static var defaultFileURL: URL {
-        URL.keyBridgeSupport.appending(path: "config.json")
+        URL.sameKeysSupport.appending(path: "config.json")
     }
 
     /// What `load()` found.

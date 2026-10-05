@@ -24,28 +24,28 @@ enum NewDocument: String, CaseIterable, Sendable {
     /// The item in the New submenu.
     var menuTitle: String {
         switch self {
-        case .text: String(localized: "Text Document", bundle: .keyBridge)
-        case .markdown: String(localized: "Markdown Document", bundle: .keyBridge)
-        case .word: String(localized: "Word Document", bundle: .keyBridge)
-        case .excel: String(localized: "Excel Workbook", bundle: .keyBridge)
-        case .powerPoint: String(localized: "PowerPoint Presentation", bundle: .keyBridge)
-        case .pages: String(localized: "Pages Document", bundle: .keyBridge)
-        case .numbers: String(localized: "Numbers Spreadsheet", bundle: .keyBridge)
-        case .keynote: String(localized: "Keynote Presentation", bundle: .keyBridge)
+        case .text: String(localized: "Text Document", bundle: .sameKeys)
+        case .markdown: String(localized: "Markdown Document", bundle: .sameKeys)
+        case .word: String(localized: "Word Document", bundle: .sameKeys)
+        case .excel: String(localized: "Excel Workbook", bundle: .sameKeys)
+        case .powerPoint: String(localized: "PowerPoint Presentation", bundle: .sameKeys)
+        case .pages: String(localized: "Pages Document", bundle: .sameKeys)
+        case .numbers: String(localized: "Numbers Spreadsheet", bundle: .sameKeys)
+        case .keynote: String(localized: "Keynote Presentation", bundle: .sameKeys)
         }
     }
 
     /// A new file's name without its extension, as Windows names them.
     var baseName: String {
         switch self {
-        case .text: String(localized: "New Text Document", bundle: .keyBridge)
-        case .markdown: String(localized: "New Markdown Document", bundle: .keyBridge)
-        case .word: String(localized: "New Word Document", bundle: .keyBridge)
-        case .excel: String(localized: "New Excel Workbook", bundle: .keyBridge)
-        case .powerPoint: String(localized: "New PowerPoint Presentation", bundle: .keyBridge)
-        case .pages: String(localized: "New Pages Document", bundle: .keyBridge)
-        case .numbers: String(localized: "New Numbers Spreadsheet", bundle: .keyBridge)
-        case .keynote: String(localized: "New Keynote Presentation", bundle: .keyBridge)
+        case .text: String(localized: "New Text Document", bundle: .sameKeys)
+        case .markdown: String(localized: "New Markdown Document", bundle: .sameKeys)
+        case .word: String(localized: "New Word Document", bundle: .sameKeys)
+        case .excel: String(localized: "New Excel Workbook", bundle: .sameKeys)
+        case .powerPoint: String(localized: "New PowerPoint Presentation", bundle: .sameKeys)
+        case .pages: String(localized: "New Pages Document", bundle: .sameKeys)
+        case .numbers: String(localized: "New Numbers Spreadsheet", bundle: .sameKeys)
+        case .keynote: String(localized: "New Keynote Presentation", bundle: .sameKeys)
         }
     }
 
@@ -135,10 +135,10 @@ enum NewDocument: String, CaseIterable, Sendable {
 /// The Finder menu's other titles. They live here rather than in the
 /// extension so they are extracted into the app's string catalog with the rest.
 enum FinderMenuTitle {
-    static var new: String { String(localized: "New", bundle: .keyBridge) }
-    static var openInTerminal: String { String(localized: "Open in Terminal", bundle: .keyBridge) }
-    static var copyPath: String { String(localized: "Copy Path", bundle: .keyBridge) }
-    static var addFavorite: String { String(localized: "Add to SameKeys Favorites", bundle: .keyBridge) }
+    static var new: String { String(localized: "New", bundle: .sameKeys) }
+    static var openInTerminal: String { String(localized: "Open in Terminal", bundle: .sameKeys) }
+    static var copyPath: String { String(localized: "Copy Path", bundle: .sameKeys) }
+    static var addFavorite: String { String(localized: "Add to SameKeys Favorites", bundle: .sameKeys) }
 }
 
 /// The text Copy Path puts on the clipboard (KB-212): one POSIX path per
@@ -209,7 +209,7 @@ enum FinderMenuRequest: Equatable, Sendable {
 extension Bundle {
     /// SameKeys.app's bundle, which holds the strings, also when this code
     /// runs in the Finder extension inside it (Contents/PlugIns/….appex).
-    static let keyBridge: Bundle = {
+    static let sameKeys: Bundle = {
         let main = Bundle.main
         guard main.bundleURL.pathExtension == "appex" else { return main }
         let app = main.bundleURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()

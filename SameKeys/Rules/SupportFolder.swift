@@ -3,7 +3,7 @@ import Foundation
 extension URL {
     /// `~/Library/Application Support/SameKeys/`, where the configuration and
     /// the clipboard history live.
-    static var keyBridgeSupport: URL {
+    static var sameKeysSupport: URL {
         #if DEBUG
         // A fresh folder gives a first launch's settings and an example
         // clipboard history, for the website's screenshots (KB-105).

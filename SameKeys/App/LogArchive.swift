@@ -20,7 +20,7 @@ final class LogArchive: @unchecked Sendable {
     private var copiedUntil: Date?
     private var isFull = false
 
-    init(folder: URL = URL.keyBridgeSupport.appending(path: "Logs"), launch: Date = .now) {
+    init(folder: URL = URL.sameKeysSupport.appending(path: "Logs"), launch: Date = .now) {
         self.folder = folder
         currentFile = folder.appending(path: "SameKeys \(Self.fileStamp(launch)).log")
     }
