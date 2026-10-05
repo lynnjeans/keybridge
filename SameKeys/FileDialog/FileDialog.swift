@@ -37,27 +37,36 @@ enum FileDialog {
     /// same open dialog is still in front with its Go to Folder sheet gone,
     /// so it cannot reach anything else.
     static func open(_ path: String, jumped: (@MainActor (String) -> Void)? = nil) {
+        guard let pid = NSWorkspace.shared.frontmostApplication?.processIdentifier else { return }
         jump(to: path) { path in
             jumped?(path)
-            pressOpen(attempts: 20)
+            pressOpen(in: pid, attempts: 30)
         }
     }
 
-    private static func pressOpen(attempts: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            guard let app = NSWorkspace.shared.frontmostApplication,
-                  let panel = panel(timeout: timeout),
-                  string(of: panel, kAXIdentifierAttribute) == "open-panel" else {
-                Logger.fileDialog.notice("No open dialog in front; the file is not opened")
+    /// Checks every 30 ms, for up to a second: right after Go to Folder
+    /// closes, a sandboxed app's dialog is briefly not found at all.
+    private static func pressOpen(in pid: pid_t, attempts: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+            guard NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else {
+                Logger.fileDialog.notice("The dialog's app left the front; Open not pressed")
                 return
             }
-            guard goToField(in: panel) == nil else {
-                if attempts > 1 { pressOpen(attempts: attempts - 1) }
+            guard let panel = panel(timeout: timeout), goToField(in: panel) == nil else {
+                if attempts > 1 {
+                    pressOpen(in: pid, attempts: attempts - 1)
+                } else {
+                    Logger.fileDialog.notice("The open dialog did not come back; Open not pressed")
+                }
+                return
+            }
+            guard string(of: panel, kAXIdentifierAttribute) == "open-panel" else {
+                Logger.fileDialog.notice("Not an open dialog; Open not pressed")
                 return
             }
             // The list takes a moment to select the file after the sheet goes.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                guard NSWorkspace.shared.frontmostApplication?.processIdentifier == app.processIdentifier else { return }
+                guard NSWorkspace.shared.frontmostApplication?.processIdentifier == pid else { return }
                 press(KeyCombo([], .returnKey))
                 Logger.fileDialog.info("Pressed Open in a dialog")
             }
