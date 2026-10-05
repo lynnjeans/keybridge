@@ -59,7 +59,7 @@ rewrites them and shows up as an unrelated diff.
   is remembered across launches (`engineEnabled` in the app's user defaults); to reset it:
 
   ```bash
-  defaults delete io.github.lynnjeans.SameKeys engineEnabled
+  defaults delete com.samekeys.SameKeys engineEnabled
   ```
 
 - Opening SameKeys again while it runs (double-click in Finder, or Spotlight) opens the main
@@ -72,9 +72,9 @@ rewrites them and shows up as an unrelated diff.
   grants and the fact that the guide has been seen, then relaunch:
 
   ```bash
-  tccutil reset Accessibility io.github.lynnjeans.SameKeys
-  tccutil reset ListenEvent io.github.lynnjeans.SameKeys
-  defaults delete io.github.lynnjeans.SameKeys onboardingCompleted
+  tccutil reset Accessibility com.samekeys.SameKeys
+  tccutil reset ListenEvent com.samekeys.SameKeys
+  defaults delete com.samekeys.SameKeys onboardingCompleted
   ```
 
   `tccutil reset` kills the running app, and `defaults` writes are cached per process, so quit
@@ -101,7 +101,7 @@ rewrites them and shows up as an unrelated diff.
   nothing — no alert, no row — so the pane stays at "No Items" however often the button is
   pressed. Seen in a process that had read `denied` while Accessibility was still missing and
   kept that value after Accessibility was granted — likely the same in-process staleness as
-  revocation below. After `tccutil reset ListenEvent io.github.lynnjeans.SameKeys` and a
+  revocation below. After `tccutil reset ListenEvent com.samekeys.SameKeys` and a
   relaunch, the fresh process read `granted` straight away, with no request, because
   Accessibility was granted — and the guide skipped itself. The launch log line
   `inputMonitoring: denied` rather than `notDetermined` gives the state away. Tracked in #125.
@@ -184,7 +184,7 @@ rewrites them and shows up as an unrelated diff.
   nothing and reports no error. Always use the full path:
 
   ```bash
-  /usr/bin/log show --predicate 'subsystem == "io.github.lynnjeans.SameKeys"' --last 10m --style compact
+  /usr/bin/log show --predicate 'subsystem == "com.samekeys.SameKeys"' --last 10m --style compact
   ```
 
 - Filter by `processID == <pid>` to separate one launch from the previous one, or pass
@@ -256,17 +256,17 @@ Debug builds read these environment variables at launch. Pass them with `open --
   on an item's text field times out (-25204); on the list view it opens the background menu, but
   its items are not in Finder's AX tree while it tracks, so the extension's entries can be neither
   read nor pressed. Check the menu by hand. Since KB-254 the app carries out a
-  `keybridge://finder/…` URL only when the Apple event comes from code signed as
-  `io.github.lynnjeans.SameKeys.Finder` by SameKeys's own team, so `open -g 'keybridge://…'` from
-  a shell is refused (`Ignored 1 keybridge:// request(s) from …` under `finderMenu`). To test the app
+  `samekeys://finder/…` URL only when the Apple event comes from code signed as
+  `com.samekeys.SameKeys.Finder` by SameKeys's own team, so `open -g 'samekeys://…'` from
+  a shell is refused (`Ignored 1 samekeys:// request(s) from …` under `finderMenu`). To test the app
   side alone, build a tiny sandboxed app that calls `NSWorkspace.open(_:withApplicationAt:)` and
-  sign it with `codesign -s "Apple Development" -i io.github.lynnjeans.SameKeys.Finder
+  sign it with `codesign -s "Apple Development" -i com.samekeys.SameKeys.Finder
   --entitlements <app-sandbox only>`; launch it with `open`, and keep it alive a few seconds after
   sending, since the check reads the sender's signature while it runs. Name the build under test
   explicitly (`withApplicationAt`, or `open -a <app> <url>`): otherwise Launch Services hands the
   URL to the copy in Applications, starting it if need be. The extension logs `items menu: N
-  selected, M folders` under the subsystem `io.github.lynnjeans.SameKeys.Finder`; after a rebuild,
-  `pkill -x SameKeysFinder` so Finder starts the new one, and `pluginkit -m -v | grep -i keybridge`
+  selected, M folders` under the subsystem `com.samekeys.SameKeys.Finder`; after a rebuild,
+  `pkill -x SameKeysFinder` so Finder starts the new one, and `pluginkit -m -v | grep -i samekeys`
   shows which build is registered.
 
 - **Do not touch `NSEvent` inside the tap callback.** `NSEvent(cgEvent:)`, and asking the
@@ -535,7 +535,7 @@ Sparkle can be tried end to end on one Mac, without publishing anything (KB-101)
 3. Serve it: `python3 -m http.server 8765 --bind 127.0.0.1` in `/tmp/kb-feed`.
 4. Copy the current build somewhere writable, quit the running SameKeys, and open the copy
    with `--env KB_DEBUG_APPCAST=http://127.0.0.1:8765/appcast.xml`.
-   `defaults delete io.github.lynnjeans.SameKeys SULastCheckTime` first makes the scheduled
+   `defaults delete com.samekeys.SameKeys SULastCheckTime` first makes the scheduled
    check run straight after launch; `SUAutomaticallyUpdate -bool YES` tries automatic install.
 
 Things to know:
@@ -550,7 +550,7 @@ Things to know:
   `SUUpdateGroupIdentifier`, `SUSkippedVersion`), or a release installed later inherits them.
 - Launching a copy from another folder registers **its** Finder extension. Afterwards remove
   the test builds, `pluginkit -a` the extension of the build you use, and `pkill -x
-  SameKeysFinder`; `pluginkit -m -v -i io.github.lynnjeans.SameKeys.Finder` shows which copy
+  SameKeysFinder`; `pluginkit -m -v -i com.samekeys.SameKeys.Finder` shows which copy
   Finder loads.
 - A menu item chosen through Accessibility is not a user action, so macOS may refuse to
   activate SameKeys for the update window; whether it takes the keyboard needs a real click.

@@ -8,7 +8,7 @@
   const status = document.querySelector("[data-release-status]");
   if (!button || !status) return;
   try {
-    const response = await fetch("https://api.github.com/repos/lynnjeans/keybridge/releases/latest", {
+    const response = await fetch("https://api.github.com/repos/lynnjeans/samekeys/releases/latest", {
       headers: { Accept: "application/vnd.github+json" },
     });
     if (response.status === 404) {
@@ -40,7 +40,7 @@
   };
   const close = { en: "Close", "zh-Hans": "关闭", ja: "閉じる" };
   const current = document.documentElement.lang;
-  const key = "keybridge.languageOffer";
+  const key = "samekeys.languageOffer";
   let dismissed = false;
   try { dismissed = localStorage.getItem(key) === "dismissed"; } catch {}
   if (dismissed) return;

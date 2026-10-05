@@ -2,7 +2,7 @@
 """Adds a release to SameKeys's Sparkle appcast (KB-101).
 
     scripts/appcast.py --appcast site/appcast.xml --version 1.0.0 --build 5 \\
-        --url https://github.com/lynnjeans/keybridge/releases/download/v1.0.0/SameKeys-1.0.0.dmg \\
+        --url https://github.com/lynnjeans/samekeys/releases/download/v1.0.0/SameKeys-1.0.0.dmg \\
         --length 4194304 --signature <edSignature from sign_update> \\
         --notes release-notes/1.0.0 [--critical]
 

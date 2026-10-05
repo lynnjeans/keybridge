@@ -32,7 +32,7 @@ dmg=dist/SameKeys-$version.dmg
 notes=release-notes/$version
 appcast=site/appcast.xml
 tag=v$version
-url=https://github.com/lynnjeans/keybridge/releases/download/$tag/SameKeys-$version.dmg
+url=https://github.com/lynnjeans/samekeys/releases/download/$tag/SameKeys-$version.dmg
 
 step "Checking SameKeys $version ($build)"
 [[ -z $(git status --porcelain) ]] || fail "the working tree has uncommitted changes"

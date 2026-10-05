@@ -1,7 +1,7 @@
 # SameKeys
 
-[![Latest release](https://img.shields.io/github/v/release/lynnjeans/keybridge)](https://github.com/lynnjeans/keybridge/releases/latest)
-[![License: GPL-3.0](https://img.shields.io/github/license/lynnjeans/keybridge)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/lynnjeans/samekeys)](https://github.com/lynnjeans/samekeys/releases/latest)
+[![License: GPL-3.0](https://img.shields.io/github/license/lynnjeans/samekeys)](LICENSE)
 ![macOS 14 or later](https://img.shields.io/badge/macOS-14%2B-blue?logo=apple)
 
 **A Mac shortcut bridge for Windows users.**
@@ -13,11 +13,11 @@ Windows-style clipboard history.
 
 Website: **[samekeys.com](https://samekeys.com/)** (English, 简体中文, 日本語)
 
-> [Download the latest SameKeys](https://github.com/lynnjeans/keybridge/releases/latest)
+> [Download the latest SameKeys](https://github.com/lynnjeans/samekeys/releases/latest)
 > or install it with Homebrew:
 >
 > ```bash
-> brew install --cask lynnjeans/tap/keybridge
+> brew install --cask lynnjeans/tap/samekeys
 > ```
 >
 > Open the disk image and double-click SameKeys: it installs itself in Applications and
@@ -92,8 +92,8 @@ notarized, via GitHub Releases and Homebrew Cask.
 Requires Xcode 16 or later — the full install, not just the Command Line Tools.
 
 ```bash
-git clone https://github.com/lynnjeans/keybridge.git
-cd keybridge
+git clone https://github.com/lynnjeans/samekeys.git
+cd samekeys
 open SameKeys.xcodeproj
 ```
 

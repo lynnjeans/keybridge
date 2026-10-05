@@ -15,7 +15,7 @@
 
 set -euo pipefail
 
-REPO_NAME="keybridge"
+REPO_NAME="samekeys"
 VISIBILITY="private"   # switch to "public" when the project opens up
 
 # ---------------------------------------------------------------- preflight --

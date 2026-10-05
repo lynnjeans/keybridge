@@ -47,9 +47,9 @@ Before starting:
 ## 1. Install and first run
 
 Start from a clean slate: quit SameKeys, then
-`tccutil reset Accessibility io.github.lynnjeans.SameKeys`,
-`tccutil reset ListenEvent io.github.lynnjeans.SameKeys`,
-`defaults delete io.github.lynnjeans.SameKeys` and
+`tccutil reset Accessibility com.samekeys.SameKeys`,
+`tccutil reset ListenEvent com.samekeys.SameKeys`,
+`defaults delete com.samekeys.SameKeys` and
 `rm -rf ~/Library/Application\ Support/SameKeys`.
 
 - [ ] Install the release build (DMG or `brew install --cask`) and open it → it opens without
@@ -146,7 +146,7 @@ In a Finder window with a scratch folder of test files:
 - [ ] Right-click the folder's background → New › Text Document creates "New Text Document.txt"
       and starts renaming it; Open in Terminal opens Terminal there; Add to SameKeys Favorites
       puts the folder in the ⌃⇧G list. With SameKeys quit, New › launches it and still works.
-- [ ] In Terminal, `open 'keybridge://finder/terminal?folder=/tmp'` → nothing opens (KB-254).
+- [ ] In Terminal, `open 'samekeys://finder/terminal?folder=/tmp'` → nothing opens (KB-254).
 
 ## 7. Shortcuts: Windows & Apps, Browser, System
 
@@ -299,5 +299,5 @@ Applications):
       Updates… says SameKeys is up to date.
 - [ ] Opened straight from the DMG → About › Updates asks to move SameKeys to Applications,
       and Check for Updates… says the same instead of checking.
-- [ ] Delete SameKeys from Applications (or `brew uninstall --cask keybridge`) → the keyboard
+- [ ] Delete SameKeys from Applications (or `brew uninstall --cask samekeys`) → the keyboard
       and mouse behave as on a plain Mac.

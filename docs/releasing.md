@@ -34,10 +34,10 @@ How a release is built and published.
    scripts/update-cask.sh
    ```
 
-   It checks that the release serves the same DMG, then writes `Casks/keybridge.rb` in
+   It checks that the release serves the same DMG, then writes `Casks/samekeys.rb` in
    [lynnjeans/homebrew-tap](https://github.com/lynnjeans/homebrew-tap).
 7. **Check.** The website's download button fetches the new DMG, and
-   `brew install --cask lynnjeans/tap/keybridge` installs it. On a copy of the previous
+   `brew install --cask lynnjeans/tap/samekeys` installs it. On a copy of the previous
    version, Check for Updates… offers the new one.
 
 ## Signing secrets

@@ -5,7 +5,7 @@ import SwiftUI
 /// Notices"): the copyright, that there is no warranty, and where the license
 /// and the source code are.
 struct LegalCard: View {
-    static let sourceURL = URL(string: "https://github.com/lynnjeans/keybridge")!
+    static let sourceURL = URL(string: "https://github.com/lynnjeans/samekeys")!
 
     /// The bundled file open in the viewer.
     @State private var showing: BundledText?

@@ -2,7 +2,7 @@
 
 These documents define **what** we are building and **why**. They are the basis for
 development; they do not track progress. Progress lives in
-[GitHub Issues](https://github.com/lynnjeans/keybridge/issues).
+[GitHub Issues](https://github.com/lynnjeans/samekeys/issues).
 
 ## Language convention
 
@@ -84,7 +84,7 @@ modifier+scroll zooms the page.**
 ## Progress
 
 Each milestone's completion is shown on the
-[milestones page](https://github.com/lynnjeans/keybridge/milestones).
+[milestones page](https://github.com/lynnjeans/samekeys/milestones).
 
 ## Testing
 

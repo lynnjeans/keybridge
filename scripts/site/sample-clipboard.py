@@ -23,19 +23,19 @@ PNG = "public.png"
 TEXTS = {
     "en": [
         ("com.apple.mail", "Meeting moved to Thursday, 3 pm — same room."),
-        ("com.apple.Safari", "https://github.com/lynnjeans/keybridge"),
+        ("com.apple.Safari", "https://github.com/lynnjeans/samekeys"),
         ("com.apple.Notes", "Flight KL 1234 · seat 14A · confirmation QX7P2L"),
         ("com.apple.TextEdit", "Thanks for the quick reply! I'll send the draft tonight."),
     ],
     "zh-Hans": [
         ("com.apple.mail", "会议改到周四下午 3 点，地点不变。"),
-        ("com.apple.Safari", "https://github.com/lynnjeans/keybridge"),
+        ("com.apple.Safari", "https://github.com/lynnjeans/samekeys"),
         ("com.apple.Notes", "航班 CA 1234 · 座位 14A · 预订号 QX7P2L"),
         ("com.apple.TextEdit", "谢谢你这么快回复！今晚把初稿发给你。"),
     ],
     "ja": [
         ("com.apple.mail", "会議は木曜日の15時に変更になりました。場所は同じです。"),
-        ("com.apple.Safari", "https://github.com/lynnjeans/keybridge"),
+        ("com.apple.Safari", "https://github.com/lynnjeans/samekeys"),
         ("com.apple.Notes", "JL 1234 便 · 座席 14A · 予約番号 QX7P2L"),
         ("com.apple.TextEdit", "早速のご返信ありがとうございます。今夜ドラフトをお送りします。"),
     ],

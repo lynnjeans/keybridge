@@ -14,7 +14,7 @@
 
 set -euo pipefail
 
-REPO_NAME="keybridge"
+REPO_NAME="samekeys"
 
 command -v gh >/dev/null 2>&1 || {
   echo "error: gh is not installed.  Run: brew install gh" >&2; exit 1; }
