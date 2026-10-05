@@ -121,6 +121,7 @@ p { margin: 0; }
 .hero { padding: clamp(56px, 10vw, 110px) 0 0; text-align: center; overflow: hidden; }
 .eyebrow { color: var(--accent); font-weight: 600; font-size: 0.95rem; margin-bottom: 14px; }
 .hero h1 { max-width: 15em; margin-inline: auto; }
+.subhead { font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 600; letter-spacing: -0.01em; margin-top: 14px; }
 .lede { color: var(--text-2); font-size: clamp(1.1rem, 2.2vw, 1.3rem); max-width: 34em; margin: 22px auto 0; }
 
 .actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 22px; margin-top: 34px; }

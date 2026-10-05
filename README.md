@@ -4,7 +4,9 @@
 [![License: GPL-3.0](https://img.shields.io/github/license/lynnjeans/samekeys)](LICENSE)
 ![macOS 14 or later](https://img.shields.io/badge/macOS-14%2B-blue?logo=apple)
 
-**A Mac shortcut bridge for Windows users.**
+**New Mac. Same Keys.**
+
+Your Windows shortcuts, on your Mac.
 
 SameKeys lets people who just moved from Windows to macOS keep their muscle memory:
 `Ctrl+C` still copies, `Home`/`End` still jump to line start/end, mouse side buttons still
