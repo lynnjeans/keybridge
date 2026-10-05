@@ -818,8 +818,8 @@ private struct AboutCard: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                // Why SameKeys exists, in its author's words (KB-250).
-                Text("When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. With SameKeys, we get the Mac's efficiency and keep as many of our old habits as we can.")
+                // What SameKeys is for (SK-272, replacing the author's note of KB-250).
+                Text("Moving from Windows to Mac can take time. Many familiar shortcuts and controls work differently.\nSameKeys brings your Windows habits to Mac, so you can keep working the way you know.")
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

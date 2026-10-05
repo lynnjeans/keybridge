@@ -12438,6 +12438,64 @@
         }
       }
     },
+    "Moving from Windows to Mac can take time. Many familiar shortcuts and controls work differently.\nSameKeys brings your Windows habits to Mac, so you can keep working the way you know." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Umstieg von Windows auf den Mac braucht Zeit. Viele vertraute Kurzbefehle und Bedienelemente funktionieren anders.\nSameKeys bringt deine Windows-Gewohnheiten auf den Mac, damit du so weiterarbeiten kannst, wie du es kennst."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasar de Windows a Mac puede llevar tiempo. Muchos atajos y controles conocidos funcionan de otra manera.\nSameKeys lleva tus costumbres de Windows al Mac para que sigas trabajando como sabes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer de Windows au Mac peut prendre du temps. Beaucoup de raccourcis et de commandes familiers fonctionnent autrement.\nSameKeys apporte vos habitudes de Windows sur le Mac, pour que vous continuiez à travailler comme vous en avez l’habitude."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows から Mac への乗り換えには時間がかかります。使い慣れたショートカットや操作の多くが違うからです。\nSameKeys は Windows の習慣を Mac に持ち込み、慣れたやり方のまま作業を続けられるようにします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows에서 Mac으로 옮기면 적응하는 데 시간이 걸립니다. 익숙한 단축키와 조작 방식이 많이 다르기 때문입니다.\nSameKeys는 Windows에서의 습관을 Mac으로 가져와, 익숙한 방식 그대로 계속 작업할 수 있게 해 줍니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przejście z Windows na Maca może zająć trochę czasu. Wiele znajomych skrótów i elementów sterowania działa inaczej.\nSameKeys przenosi nawyki z Windows na Maca, dzięki czemu możesz dalej pracować tak, jak lubisz."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mudar do Windows para o Mac pode levar tempo. Muitos atalhos e controles conhecidos funcionam de outro jeito.\nO SameKeys leva seus hábitos do Windows para o Mac, para você continuar trabalhando do jeito que conhece."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 Windows 换到 Mac，需要一段时间适应：许多熟悉的快捷键和操作方式都不一样了。\nSameKeys 把你在 Windows 上的习惯带到 Mac 上，让你照自己熟悉的方式继续工作。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從 Windows 換到 Mac，需要一段時間適應：許多熟悉的快速鍵和操作方式都不一樣了。\nSameKeys 把你在 Windows 上的習慣帶到 Mac 上，讓你用自己熟悉的方式繼續工作。"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "de" : {
@@ -25322,64 +25380,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "滾輪"
-          }
-        }
-      }
-    },
-    "When I moved from Windows to the Mac, years of habits would not go away: Ctrl+C, the mouse side buttons, Ctrl+scroll to zoom, Win+V… On the Mac, each was either on another key or not there at all. With SameKeys, we get the Mac's efficiency and keep as many of our old habits as we can." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Als ich von Windows auf den Mac wechselte, wurde ich jahrelange Gewohnheiten nicht los: Strg+C, die Maus-Seitentasten, Strg+Scrollen zum Zoomen, Win+V … Auf dem Mac lag jede davon auf einer anderen Taste oder fehlte ganz. Mit SameKeys haben wir die Effizienz des Mac und behalten so viele alte Gewohnheiten wie möglich."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuando pasé de Windows al Mac, años de costumbres no se iban: Ctrl+C, los botones laterales del ratón, Ctrl+rueda para hacer zoom, Win+V… En el Mac, cada una estaba en otra tecla o no existía. Con SameKeys disfrutamos de la eficiencia del Mac y conservamos todas las costumbres que podemos."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quand je suis passé de Windows au Mac, des années d’habitudes ne voulaient pas partir : Ctrl+C, les boutons latéraux de la souris, Ctrl+molette pour zoomer, Win+V… Sur le Mac, chacune était sur une autre touche ou n’existait pas. Avec SameKeys, on profite de l’efficacité du Mac tout en gardant autant que possible ses anciennes habitudes."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Windows から Mac に乗り換えたとき、長年の習慣はすぐには抜けませんでした。Ctrl+C、マウスのサイドボタン、Ctrl+スクロールでの拡大、Win+V……Mac では別のキーになっているか、そもそもありません。SameKeys があれば、Mac の効率の良さを味わいながら、これまでの操作習慣をできるだけそのまま保てます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Windows에서 Mac으로 옮겼을 때 오랜 습관이 쉽게 사라지지 않았습니다. Ctrl+C, 마우스 사이드 버튼, Ctrl+스크롤 확대, Win+V… Mac에서는 다른 키에 있거나 아예 없었습니다. SameKeys가 있으면 Mac의 효율을 누리면서 예전 습관을 최대한 유지할 수 있습니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gdy przeszedłem z Windows na Maca, lata nawyków nie chciały zniknąć: Ctrl+C, boczne przyciski myszy, Ctrl+kółko do powiększania, Win+V… Na Macu każdy z nich był pod innym klawiszem albo nie istniał. Z SameKeys korzystamy z wydajności Maca i zachowujemy jak najwięcej dawnych nawyków."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quando passei do Windows para o Mac, anos de hábitos não iam embora: Ctrl+C, os botões laterais do mouse, Ctrl+roda para zoom, Win+V… No Mac, cada um estava em outra tecla ou nem existia. Com o SameKeys, aproveitamos a eficiência do Mac e mantemos o máximo possível dos nossos hábitos."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我从 Windows 换到 Mac 时，多年的习惯一时改不掉：Ctrl+C、鼠标侧键、Ctrl+滚轮缩放、Win+V……到了 Mac 上，不是换了键，就是根本没有。有了 SameKeys，我们既可以享受 Mac 的高效，又可以尽可能多地保留原来的使用习惯。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我從 Windows 換到 Mac 時，多年的習慣一時改不掉：Ctrl+C、滑鼠側鍵、Ctrl+滾輪縮放、Win+V……到了 Mac 上，不是換了鍵，就是根本沒有。有了 SameKeys，我們既可以享受 Mac 的高效，又可以盡可能多地保留原來的使用習慣。"
           }
         }
       }
