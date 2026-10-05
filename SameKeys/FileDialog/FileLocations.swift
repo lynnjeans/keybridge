@@ -13,7 +13,7 @@ import Observation
 final class FileLocations {
     /// One row of the list.
     struct Location: Identifiable, Hashable, Sendable {
-        enum Kind: Sendable { case pasted, favorite, finderWindow, recent }
+        enum Kind: Sendable { case pastedFolder, pastedFile, favorite, finderWindow, recent }
         let path: String
         let kind: Kind
         var id: String { path }
@@ -115,17 +115,17 @@ final class FileLocations {
 
     // MARK: - Pure rules, for the tests
 
-    /// The folder a path typed or pasted into the list's search field leads
-    /// to (KB-268): the folder itself, or the folder a file is in. Only text
-    /// that starts like a path (`/` or `~`, after the trimming the path box
-    /// does) counts, so a folder's name is still a search; nil when nothing
-    /// exists there.
-    static func pastedFolder(_ text: String, fileManager: FileManager = .default) -> String? {
+    /// What a path typed or pasted into the list's search field leads to
+    /// (KB-268): a folder to go to, or a file to open. Only text that starts
+    /// like a path (`/` or `~`, after the trimming the path box does) counts,
+    /// so a folder's name is still a search; nil when nothing exists there.
+    /// An app or another package is a file: opening it is what its path asks.
+    static func pasted(_ text: String, fileManager: FileManager = .default) -> Location? {
         let cleaned = PathBoxResolver.clean(text)
         guard cleaned.hasPrefix("/") || cleaned.hasPrefix("~") else { return nil }
         switch PathBoxResolver.resolve(cleaned, fileManager: fileManager) {
-        case .folder(let url): return url.path
-        case .file(let url): return url.deletingLastPathComponent().path
+        case .folder(let url): return Location(path: url.path, kind: .pastedFolder)
+        case .file(let url): return Location(path: url.path, kind: .pastedFile)
         case nil: return nil
         }
     }

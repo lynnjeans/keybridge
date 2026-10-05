@@ -24,6 +24,46 @@ enum FileDialog {
         panel(timeout: 0.05) != nil
     }
 
+    /// Whether the dialog in front is a save dialog, as opposed to an open
+    /// one; nil without a dialog.
+    static func isSaveDialog() -> Bool? {
+        panel(timeout: timeout).map { string(of: $0, kAXIdentifierAttribute) == "save-panel" }
+    }
+
+    /// Takes an open dialog to a file and opens it (KB-268): Go to Folder
+    /// with a file's path selects the file, as measured on macOS 26.6, and
+    /// one more Return presses Open, the dialog's default button. Never in a
+    /// save dialog, where it would be Save. Return goes out only while the
+    /// same open dialog is still in front with its Go to Folder sheet gone,
+    /// so it cannot reach anything else.
+    static func open(_ path: String, jumped: (@MainActor (String) -> Void)? = nil) {
+        jump(to: path) { path in
+            jumped?(path)
+            pressOpen(attempts: 20)
+        }
+    }
+
+    private static func pressOpen(attempts: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            guard let app = NSWorkspace.shared.frontmostApplication,
+                  let panel = panel(timeout: timeout),
+                  string(of: panel, kAXIdentifierAttribute) == "open-panel" else {
+                Logger.fileDialog.notice("No open dialog in front; the file is not opened")
+                return
+            }
+            guard goToField(in: panel) == nil else {
+                if attempts > 1 { pressOpen(attempts: attempts - 1) }
+                return
+            }
+            // The list takes a moment to select the file after the sheet goes.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                guard NSWorkspace.shared.frontmostApplication?.processIdentifier == app.processIdentifier else { return }
+                press(KeyCombo([], .returnKey))
+                Logger.fileDialog.info("Pressed Open in a dialog")
+            }
+        }
+    }
+
     /// Takes the dialog in front to `path`. `jumped` hears about it once
     /// Return has gone out.
     static func jump(to path: String, jumped: (@MainActor (String) -> Void)? = nil) {

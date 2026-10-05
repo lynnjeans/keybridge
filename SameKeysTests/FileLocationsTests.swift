@@ -97,7 +97,7 @@ import Testing
 
     // MARK: - A pasted path (KB-268)
 
-    @Test func aPastedPathLeadsToItsFolder() throws {
+    @Test func aPastedFolderIsGoneToAndAPastedFileOpened() throws {
         let files = FileManager.default
         let folder = files.temporaryDirectory.appending(path: "FileLocationsTests-\(UUID().uuidString)")
         try files.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -105,17 +105,19 @@ import Testing
         let file = folder.appending(path: "notes.txt")
         try Data().write(to: file)
         let path = folder.path(percentEncoded: false)
-        let expected = URL(fileURLWithPath: path).path
+        let folderPath = URL(fileURLWithPath: path).path
+        let filePath = file.path(percentEncoded: false)
 
-        #expect(FileLocations.pastedFolder(path) == expected)
-        #expect(FileLocations.pastedFolder("  \"\(path)\"\n") == expected, "Quotes and spaces as Copy as path leaves them")
-        #expect(FileLocations.pastedFolder(file.path(percentEncoded: false)) == expected, "A file: the folder it is in")
-        #expect(FileLocations.pastedFolder(path + "/missing") == nil)
+        #expect(FileLocations.pasted(path) == .init(path: folderPath, kind: .pastedFolder))
+        #expect(FileLocations.pasted("  \"\(path)\"\n") == .init(path: folderPath, kind: .pastedFolder),
+                "Quotes and spaces as Copy as path leaves them")
+        #expect(FileLocations.pasted(filePath) == .init(path: URL(fileURLWithPath: filePath).path, kind: .pastedFile))
+        #expect(FileLocations.pasted(path + "/missing") == nil)
     }
 
     @Test func aTildePathCountsAndANameDoesNot() {
-        #expect(FileLocations.pastedFolder("~") == FileManager.default.homeDirectoryForCurrentUser.path)
-        #expect(FileLocations.pastedFolder("Documents") == nil, "A name is a search, not a path")
-        #expect(FileLocations.pastedFolder("") == nil)
+        #expect(FileLocations.pasted("~")?.path == FileManager.default.homeDirectoryForCurrentUser.path)
+        #expect(FileLocations.pasted("Documents") == nil, "A name is a search, not a path")
+        #expect(FileLocations.pasted("") == nil)
     }
 }

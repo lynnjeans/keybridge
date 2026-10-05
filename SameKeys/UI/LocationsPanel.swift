@@ -14,16 +14,20 @@ final class LocationsPanelController {
         self.locations = locations
     }
 
-    /// `choose` is told the folder picked; the panel is closed by then.
-    func show(_ entries: [FileLocations.Location], choose: @escaping @MainActor (String) -> Void) {
+    /// `choose` is told the row picked; the panel is closed by then.
+    /// `opensFiles` names a pasted file's row: Open File, or, in a save
+    /// dialog, which must not be pressed for the person, Go to File.
+    func show(_ entries: [FileLocations.Location], opensFiles: Bool,
+              choose: @escaping @MainActor (FileLocations.Location) -> Void) {
         let panel = self.panel ?? makePanel()
         self.panel = panel
         panel.contentView = NSHostingView(rootView: LocationsPanelView(
             entries: entries,
             locations: locations,
-            choose: { [weak self] path in
+            opensFiles: opensFiles,
+            choose: { [weak self] location in
                 self?.close()
-                choose(path)
+                choose(location)
             },
             close: { [weak self] in self?.close() }
         ))
@@ -116,14 +120,16 @@ private final class LocationsKeyablePanel: NSPanel {
 
 /// Search on top, then favorites, Finder's open folders and recent ones;
 /// arrows move, Return chooses, ⌘D adds or removes a favorite, Esc closes.
-/// A path pasted into the search field comes first, as Go to Folder (KB-268).
+/// A pasted path replaces the list with one row: Go to Folder, or Open File
+/// (KB-268).
 private struct LocationsPanelView: View {
     static let width: CGFloat = 440
     static let height: CGFloat = 400
 
     let entries: [FileLocations.Location]
     let locations: FileLocations
-    let choose: (String) -> Void
+    let opensFiles: Bool
+    let choose: (FileLocations.Location) -> Void
     let close: () -> Void
     @State private var query = ""
     @State private var selection = 0
@@ -131,9 +137,7 @@ private struct LocationsPanelView: View {
     private var shown: [FileLocations.Location] {
         let query = query.trimmingCharacters(in: .whitespaces)
         guard !query.isEmpty else { return entries }
-        if let folder = FileLocations.pastedFolder(query) {
-            return [FileLocations.Location(path: folder, kind: .pasted)]
-        }
+        if let pasted = FileLocations.pasted(query) { return [pasted] }
         return entries.filter { $0.path.localizedCaseInsensitiveContains(query) }
     }
 
@@ -161,20 +165,21 @@ private struct LocationsPanelView: View {
                         LazyVStack(alignment: .leading, spacing: 2) {
                             ForEach(Array(shown.enumerated()), id: \.element.id) { index, location in
                                 if index == 0 || shown[index - 1].kind != location.kind {
-                                    Text(Self.heading(location.kind))
+                                    Text(heading(location.kind))
                                         .font(.caption.weight(.semibold))
                                         .foregroundStyle(.secondary)
                                         .padding(.horizontal, 8)
                                         .padding(.top, index == 0 ? 2 : 8)
                                 }
-                                LocationRow(path: location.path, isFavorite: locations.isFavorite(location.path)) {
+                                LocationRow(path: location.path, isFavorite: locations.isFavorite(location.path),
+                                            canBeFavorite: location.kind != .pastedFile) {
                                     locations.setFavorite(location.path, $0)
                                 }
                                 .padding(.horizontal, 8)
                                 .background(index == selection ? Color.accentColor.opacity(0.25) : .clear,
                                             in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                                 .contentShape(.rect)
-                                .onTapGesture { choose(location.path) }
+                                .onTapGesture { choose(location) }
                                 .id(location.id)
                             }
                         }
@@ -198,7 +203,7 @@ private struct LocationsPanelView: View {
             return .handled
         }
         .onKeyPress(.return) {
-            if shown.indices.contains(selection) { choose(shown[selection].path) }
+            if shown.indices.contains(selection) { choose(shown[selection]) }
             return .handled
         }
         .onKeyPress(.escape) {
@@ -206,16 +211,18 @@ private struct LocationsPanelView: View {
             return .handled
         }
         .onKeyPress(characters: ["d"], phases: .down) { press in
-            guard press.modifiers == .command, shown.indices.contains(selection) else { return .ignored }
+            guard press.modifiers == .command, shown.indices.contains(selection),
+                  shown[selection].kind != .pastedFile else { return .ignored }
             let path = shown[selection].path
             locations.setFavorite(path, !locations.isFavorite(path))
             return .handled
         }
     }
 
-    private static func heading(_ kind: FileLocations.Location.Kind) -> String {
+    private func heading(_ kind: FileLocations.Location.Kind) -> String {
         switch kind {
-        case .pasted: String(localized: "Go to Folder")
+        case .pastedFolder: String(localized: "Go to Folder")
+        case .pastedFile: opensFiles ? String(localized: "Open File") : String(localized: "Go to File")
         case .favorite: String(localized: "Favorites")
         case .finderWindow: String(localized: "Open in Finder")
         case .recent: String(localized: "Recent")
@@ -227,6 +234,7 @@ private struct LocationsPanelView: View {
 struct LocationRow: View {
     let path: String
     let isFavorite: Bool
+    var canBeFavorite = true
     let setFavorite: (Bool) -> Void
     @State private var isHovered = false
 
@@ -245,7 +253,7 @@ struct LocationRow: View {
                     .truncationMode(.middle)
             }
             Spacer(minLength: 8)
-            if isHovered || isFavorite {
+            if canBeFavorite && (isHovered || isFavorite) {
                 Button {
                     setFavorite(!isFavorite)
                 } label: {
