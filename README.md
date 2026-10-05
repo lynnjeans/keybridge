@@ -145,10 +145,17 @@ scripts/sync-strings.sh
 ### App icon
 
 [`SameKeys/Resources/AppIcon.icon`](SameKeys/Resources/AppIcon.icon) is an Icon Composer
-document: three SVG layers (bridge, keycaps, legends) on a blue gradient. macOS 26 draws it in
-Liquid Glass; the build derives the flat icon macOS 14 and 15 show. The layers are plain SVG, so
-they can be edited by hand; render every appearance without opening Icon Composer with its
-`ictool`:
+document: three SVG layers (an ∞ joining the two loops, keycaps, legends) on a blue gradient.
+macOS 26 draws it in Liquid Glass; the build derives the flat icon macOS 14 and 15 show. The
+layers, the menu bar icon ([`SameKeys/Resources/MenuBarIcon.svg`](SameKeys/Resources/MenuBarIcon.svg))
+and the website's favicon are written by one script, so they always match; change the drawing
+there and run it again:
+
+```bash
+scripts/icons/infinity.py
+```
+
+Render every appearance without opening Icon Composer with its `ictool`:
 
 ```bash
 "$(xcode-select -p)/../Applications/Icon Composer.app/Contents/Executables/ictool" \
@@ -156,9 +163,7 @@ they can be edited by hand; render every appearance without opening Icon Compose
   --platform macOS --rendition Dark --width 512 --height 512 --scale 1
 ```
 
-Renditions: `Default`, `Dark`, `ClearLight`, `ClearDark`, `TintedLight`, `TintedDark`. The
-website's [`site/favicon.svg`](site/favicon.svg) is the same artwork, flattened: redo it after
-changing a layer.
+Renditions: `Default`, `Dark`, `ClearLight`, `ClearDark`, `TintedLight`, `TintedDark`.
 
 ## Project docs
 

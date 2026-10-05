@@ -26370,60 +26370,60 @@
         }
       }
     },
-    "Windows → Mac Shortcut Bridge" : {
+    "Windows shortcuts on Mac" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac Kurzbefehl-Brücke"
+            "value" : "Windows-Kurzbefehle auf dem Mac"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac, puente de atajos"
+            "value" : "Atajos de Windows en el Mac"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac, le pont des raccourcis"
+            "value" : "Les raccourcis Windows sur Mac"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac ショートカットブリッジ"
+            "value" : "Mac で Windows のショートカット"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac 단축키 브리지"
+            "value" : "Mac에서 쓰는 Windows 단축키"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac, most skrótów"
+            "value" : "Skróty z Windows na Macu"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac, a ponte de atalhos"
+            "value" : "Atalhos do Windows no Mac"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac 快捷键桥"
+            "value" : "Mac 上的 Windows 快捷键"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows → Mac 快速鍵橋"
+            "value" : "Mac 上的 Windows 快速鍵"
           }
         }
       }

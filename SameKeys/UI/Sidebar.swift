@@ -107,7 +107,7 @@ private struct Brand: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text("SameKeys")
                     .font(.headline)
-                Text("Windows → Mac Shortcut Bridge")
+                Text("Windows shortcuts on Mac")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

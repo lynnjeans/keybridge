@@ -154,6 +154,7 @@
 		AD4402B1FC06D4C3F2ED2DF2 /* KeyboardChoicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C350E627196F266E0AEFFC50 /* KeyboardChoicesTests.swift */; };
 		AE584E2C46D4ADA1F923B948 /* PermissionMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE62B73907C4AFAF015B0652 /* PermissionMonitorTests.swift */; };
 		AF07DB88F7A6C0FA084B53D5 /* FinderMenuCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E58C2444C9DDDE400F50F7 /* FinderMenuCard.swift */; };
+		AF3F09BE1180BA5A650FD57E /* MenuBarIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = FD0858F75DC5B0A08F881733 /* MenuBarIcon.svg */; };
 		AFB923B6B2083505F1DE2321 /* TapBreaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165C09F473014FA56E86362 /* TapBreaker.swift */; };
 		B0A67078A1BA18A5613530A5 /* FinderPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BA451AA5F19D2D76D3166 /* FinderPage.swift */; };
 		B1448B97717CD64CA9B3B86F /* LoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5F8BDF17AF0A62F6E09723 /* LoginItem.swift */; };
@@ -410,6 +411,7 @@
 		F9FFAAC8AE621D88488E1314 /* ClipboardPrivacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPrivacy.swift; sourceTree = "<group>"; };
 		FA4573A6C2E0E36F31588C8D /* RuleMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatcherTests.swift; sourceTree = "<group>"; };
 		FA61E6E979C53BEFC3994698 /* DockWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockWindow.swift; sourceTree = "<group>"; };
+		FD0858F75DC5B0A08F881733 /* MenuBarIcon.svg */ = {isa = PBXFileReference; path = MenuBarIcon.svg; sourceTree = "<group>"; };
 		FE2D49F5C39C01C2E71FF657 /* UpdatesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesCard.swift; sourceTree = "<group>"; };
 		FE62B73907C4AFAF015B0652 /* PermissionMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionMonitorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -647,6 +649,7 @@
 			children = (
 				0D687FD8D4FA82B5795BA682 /* AppIcon.icon */,
 				D66D91A149FA608DDC0735E1 /* Localizable.xcstrings */,
+				FD0858F75DC5B0A08F881733 /* MenuBarIcon.svg */,
 				4BF5A7032A2E7E48FB6334E6 /* Templates */,
 			);
 			path = Resources;
@@ -850,6 +853,7 @@
 				53C121C8ED5B08AE91093A62 /* AppIcon.icon in Resources */,
 				E43FFC8AA3C1C347E71800E3 /* LICENSE in Resources */,
 				10F1C26DB0CC7615E7A84976 /* Localizable.xcstrings in Resources */,
+				AF3F09BE1180BA5A650FD57E /* MenuBarIcon.svg in Resources */,
 				A76E704B1115077C3C10C071 /* THIRD_PARTY_NOTICES.md in Resources */,
 				F5BE4EAC02CA182DCA328BB4 /* Templates in Resources */,
 			);

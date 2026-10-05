@@ -19,6 +19,11 @@ trap 'rm -rf $work' EXIT
 
 [[ -d $app ]] || { print -u2 "Build the Debug app first: $app"; exit 1 }
 swiftc -O $root/scripts/site/windows.swift -o $work/windows
+# macOS keeps an app's icon by its path and shows that copy in the app's own
+# windows; after the icon changes, the Debug build would still show the old
+# one. Registering it again refreshes it (SK-273).
+touch $app $app/Contents/Info.plist
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f $app
 
 quit_samekeys() {
     # Not `quit app`: that Apple event can wait on an Automation prompt.
@@ -47,7 +52,8 @@ capture() {
     fi
 
     local layer=0
-    [[ $what == clipboard ]] && layer=3
+    # Just above modal panels (NSWindow.Level.sameKeysPanel, KB-268).
+    [[ $what == clipboard ]] && layer=9
     local id=$($work/windows | awk -v layer=$layer '$2 == layer { print $1; exit }')
     [[ -n $id ]] || { print -u2 "No $what window for $language $appearance"; exit 1 }
     mkdir -p ${file:h}
