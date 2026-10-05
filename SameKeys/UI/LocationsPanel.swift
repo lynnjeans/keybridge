@@ -116,6 +116,7 @@ private final class LocationsKeyablePanel: NSPanel {
 
 /// Search on top, then favorites, Finder's open folders and recent ones;
 /// arrows move, Return chooses, ⌘D adds or removes a favorite, Esc closes.
+/// A path pasted into the search field comes first, as Go to Folder (KB-268).
 private struct LocationsPanelView: View {
     static let width: CGFloat = 440
     static let height: CGFloat = 400
@@ -130,6 +131,9 @@ private struct LocationsPanelView: View {
     private var shown: [FileLocations.Location] {
         let query = query.trimmingCharacters(in: .whitespaces)
         guard !query.isEmpty else { return entries }
+        if let folder = FileLocations.pastedFolder(query) {
+            return [FileLocations.Location(path: folder, kind: .pasted)]
+        }
         return entries.filter { $0.path.localizedCaseInsensitiveContains(query) }
     }
 
@@ -137,7 +141,7 @@ private struct LocationsPanelView: View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
                 Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
-                TextField("Search folders…", text: $query)
+                TextField("Search folders, or paste a path…", text: $query)
                     .textFieldStyle(.plain)
             }
             .padding(.horizontal, 14)
@@ -211,6 +215,7 @@ private struct LocationsPanelView: View {
 
     private static func heading(_ kind: FileLocations.Location.Kind) -> String {
         switch kind {
+        case .pasted: String(localized: "Go to Folder")
         case .favorite: String(localized: "Favorites")
         case .finderWindow: String(localized: "Open in Finder")
         case .recent: String(localized: "Recent")

@@ -13,7 +13,7 @@ import Observation
 final class FileLocations {
     /// One row of the list.
     struct Location: Identifiable, Hashable, Sendable {
-        enum Kind: Sendable { case favorite, finderWindow, recent }
+        enum Kind: Sendable { case pasted, favorite, finderWindow, recent }
         let path: String
         let kind: Kind
         var id: String { path }
@@ -114,6 +114,21 @@ final class FileLocations {
     }
 
     // MARK: - Pure rules, for the tests
+
+    /// The folder a path typed or pasted into the list's search field leads
+    /// to (KB-268): the folder itself, or the folder a file is in. Only text
+    /// that starts like a path (`/` or `~`, after the trimming the path box
+    /// does) counts, so a folder's name is still a search; nil when nothing
+    /// exists there.
+    static func pastedFolder(_ text: String, fileManager: FileManager = .default) -> String? {
+        let cleaned = PathBoxResolver.clean(text)
+        guard cleaned.hasPrefix("/") || cleaned.hasPrefix("~") else { return nil }
+        switch PathBoxResolver.resolve(cleaned, fileManager: fileManager) {
+        case .folder(let url): return url.path
+        case .file(let url): return url.deletingLastPathComponent().path
+        case nil: return nil
+        }
+    }
 
     /// The longest history kept.
     static var capacity: Int { limits.upperBound }

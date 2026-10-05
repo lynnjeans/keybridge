@@ -9074,6 +9074,64 @@
         }
       }
     },
+    "Go to Folder" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gehe zum Ordner"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ir a la carpeta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aller au dossier"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダへ移動"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "폴더로 이동"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idź do folderu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ir para a Pasta"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往文件夹"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往檔案夾"
+          }
+        }
+      }
+    },
     "Go to Path" : {
       "localizations" : {
         "de" : {
@@ -20790,60 +20848,60 @@
         }
       }
     },
-    "Search folders…" : {
+    "Search folders, or paste a path…" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordner durchsuchen …"
+            "value" : "Ordner suchen oder Pfad einfügen …"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buscar carpetas…"
+            "value" : "Buscar carpetas o pegar una ruta…"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rechercher des dossiers…"
+            "value" : "Rechercher des dossiers ou coller un chemin…"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フォルダを検索…"
+            "value" : "フォルダを検索、またはパスをペースト…"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "폴더 검색…"
+            "value" : "폴더 검색 또는 경로 붙여넣기…"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Szukaj folderów…"
+            "value" : "Szukaj folderów lub wklej ścieżkę…"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buscar pastas…"
+            "value" : "Buscar pastas ou colar um caminho…"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜索文件夹…"
+            "value" : "搜索文件夹，或粘贴路径…"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜尋檔案夾…"
+            "value" : "搜尋檔案夾，或貼上路徑…"
           }
         }
       }
