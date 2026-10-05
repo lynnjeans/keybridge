@@ -10524,876 +10524,6 @@
         }
       }
     },
-    "SameKeys" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys"
-          }
-        }
-      }
-    },
-    "SameKeys %@ Is Available…" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ ist verfügbar …"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ está disponible…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ est disponible…"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ が利用可能です…"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 사용 가능…"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dostępny jest SameKeys %@…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys %@ Está Disponível…"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 现已推出…"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 現已推出…"
-          }
-        }
-      }
-    },
-    "SameKeys %@ is available." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ ist verfügbar."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ está disponible."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ est disponible."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ が利用可能です。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@을(를) 사용할 수 있습니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dostępny jest SameKeys %@."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys %@ está disponível."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 现已推出。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 現已推出。"
-          }
-        }
-      }
-    },
-    "SameKeys %@ is ready to install. It installs the next time SameKeys quits." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ ist bereit. Es wird installiert, wenn SameKeys das nächste Mal beendet wird."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ está listo para instalarse. Se instalará la próxima vez que salgas de SameKeys."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ est prêt à être installé. Il s’installera la prochaine fois que SameKeys sera quitté."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ のインストール準備ができました。次に SameKeys を終了したときにインストールされます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@을(를) 설치할 준비가 되었습니다. 다음에 SameKeys를 종료할 때 설치됩니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ jest gotowy do instalacji. Zainstaluje się przy następnym zamknięciu SameKeys."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys %@ está pronto para ser instalado. Ele será instalado na próxima vez que o SameKeys for encerrado."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 已下载，下次退出 SameKeys 时会自动安装。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys %@ 已下載，下次結束 SameKeys 時會自動安裝。"
-          }
-        }
-      }
-    },
-    "SameKeys can update itself there, and keeps working after you eject the disk image or clean up Downloads." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dort kann sich SameKeys selbst aktualisieren und läuft weiter, auch wenn du das Image auswirfst oder „Downloads“ aufräumst."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allí SameKeys puede actualizarse solo y sigue funcionando aunque expulses la imagen de disco o limpies Descargas."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Là, SameKeys peut se mettre à jour, et il continue de marcher après l’éjection de l’image disque ou le ménage dans Téléchargements."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "そこに置くと SameKeys は自動でアップデートでき、ディスクイメージを取り出したり「ダウンロード」フォルダを整理したりした後も使い続けられます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "그곳에서 SameKeys가 스스로 업데이트할 수 있고, 디스크 이미지를 추출하거나 다운로드 폴더를 정리해도 계속 작동합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tam SameKeys może się sam uaktualniać i działa dalej po wysunięciu obrazu dysku lub posprzątaniu Pobranych rzeczy."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lá o SameKeys pode se atualizar e continua funcionando depois que você ejeta a imagem de disco ou limpa Downloads."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "放在那里，SameKeys 才能自动更新，推出磁盘映像或清理“下载”文件夹后也能继续使用。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "放在那裡，SameKeys 才能自動更新，退出磁碟映像檔或清理「下載項目」檔案夾後也能繼續使用。"
-          }
-        }
-      }
-    },
-    "SameKeys cannot be updated from the folder it was downloaded to. Move it to the Applications folder and open it from there." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys kann im Download-Ordner nicht aktualisiert werden. Bewege es in den Ordner „Programme“ und öffne es von dort."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys no puede actualizarse desde la carpeta donde se descargó. Muévelo a la carpeta Aplicaciones y ábrelo desde allí."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys ne peut pas être mis à jour depuis le dossier où il a été téléchargé. Déplacez-le dans le dossier Applications et ouvrez-le depuis là."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ダウンロードしたフォルダに置いたままでは SameKeys をアップデートできません。「アプリケーション」フォルダに移動して、そこから開いてください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys는 다운로드된 폴더에서는 업데이트할 수 없습니다. 응용 프로그램 폴더로 옮긴 다음 거기서 여십시오."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys nie może się uaktualnić w folderze, do którego go pobrano. Przenieś go do katalogu Aplikacje i otwórz go stamtąd."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys não pode ser atualizado a partir da pasta em que foi baixado. Mova-o para a pasta Aplicativos e abra-o de lá."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 留在下载时所在的文件夹里无法更新。请把它移到“应用程序”文件夹，再从那里打开。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 留在下載時所在的檔案夾裡無法更新。請把它移到「應用程式」檔案夾，再從那裡打開。"
-          }
-        }
-      }
-    },
-    "SameKeys could not be installed" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys konnte nicht installiert werden"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se ha podido instalar SameKeys"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Impossible d’installer SameKeys"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys をインストールできませんでした"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys를 설치할 수 없음"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie można zainstalować SameKeys"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível instalar o SameKeys"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法安装 SameKeys"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法安裝 SameKeys"
-          }
-        }
-      }
-    },
-    "SameKeys could not start" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys konnte nicht starten"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys no ha podido iniciarse"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys n’a pas pu démarrer"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys を開始できませんでした"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys를 시작할 수 없음"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie udało się uruchomić SameKeys"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível iniciar o SameKeys"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 未能启动"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 無法啟動"
-          }
-        }
-      }
-    },
-    "SameKeys is free and open source, and it will stay that way. If it saves you some frustration, a sponsorship keeps the work going — never required, always appreciated." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys ist kostenlos und Open Source und bleibt es. Wenn es dir Ärger erspart, hält ein Sponsoring die Arbeit am Laufen – nie Pflicht, immer willkommen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys es gratuito y de código abierto, y seguirá siéndolo. Si te ahorra algún disgusto, un patrocinio ayuda a seguir adelante: nunca obligatorio, siempre agradecido."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys est gratuit et open source, et le restera. S’il vous épargne quelques agacements, un parrainage fait avancer le travail — jamais obligatoire, toujours apprécié."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys は無料でオープンソース、これからもそのままです。役に立っているなら、スポンサーが開発を支えます。必須ではありません。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys는 무료 오픈 소스이며 앞으로도 그럴 것입니다. 번거로움을 덜어 주었다면 후원이 작업을 이어 가게 합니다. 필수는 아니지만 언제나 감사합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys jest darmowy i otwarty, i tak zostanie. Jeśli oszczędza Ci nerwów, sponsorowanie pozwala dalej go rozwijać — nigdy nie jest wymagane, zawsze mile widziane."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys é gratuito e de código aberto, e vai continuar assim. Se ele poupa você de alguma frustração, um patrocínio mantém o trabalho andando — nunca obrigatório, sempre bem-vindo."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 永远免费、开源。如果它帮你省下了一些烦躁，一份赞助能让它继续做下去——不必勉强，心意已领。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 永遠免費、開源。如果它幫你省下了一些煩惱，一份贊助能讓它繼續做下去——不必勉強，心意已領。"
-          }
-        }
-      }
-    },
-    "SameKeys is free software: you can redistribute it and change it under the terms of the GNU General Public License, version 3. It comes with ABSOLUTELY NO WARRANTY." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys ist freie Software: Du kannst sie unter den Bedingungen der GNU General Public License, Version 3, weitergeben und ändern. Sie wird OHNE JEDE GEWÄHRLEISTUNG bereitgestellt."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys es software libre: puedes redistribuirlo y modificarlo según los términos de la Licencia Pública General de GNU, versión 3. Se ofrece SIN NINGUNA GARANTÍA."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys est un logiciel libre : vous pouvez le redistribuer et le modifier selon les termes de la GNU General Public License, version 3. Il est fourni SANS AUCUNE GARANTIE."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys はフリーソフトウェアです。GNU 一般公衆利用許諾書 第 3 版の条件のもとで、再配布や改変ができます。本ソフトウェアには一切の保証がありません。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys는 자유 소프트웨어입니다. GNU 일반 공중 사용 허가서 버전 3의 조건에 따라 재배포하고 수정할 수 있습니다. 어떠한 보증도 제공하지 않습니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys to wolne oprogramowanie: możesz je rozpowszechniać i zmieniać na warunkach Powszechnej Licencji Publicznej GNU, wersja 3. Jest dostarczane BEZ ŻADNEJ GWARANCJI."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys é software livre: você pode redistribuí-lo e modificá-lo nos termos da Licença Pública Geral GNU, versão 3. Ele é fornecido SEM NENHUMA GARANTIA."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 是自由软件：你可以按照 GNU 通用公共许可证第 3 版的条款再发布和修改它。本软件不提供任何担保。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 是自由軟體：你可以依照 GNU 通用公共授權條款第 3 版的條款再散布和修改它。本軟體不提供任何擔保。"
-          }
-        }
-      }
-    },
-    "SameKeys is ready" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys ist bereit"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys está listo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys est prêt"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys の準備ができました"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 준비 완료"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys jest gotowy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys está pronto"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 已就绪"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 已就緒"
-          }
-        }
-      }
-    },
-    "SameKeys is running from its disk image, where it cannot be updated. Drag it to the Applications folder and open it from there." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys läuft aus seinem Image, wo es nicht aktualisiert werden kann. Zieh es in den Ordner „Programme“ und öffne es von dort."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys se está ejecutando desde su imagen de disco, donde no puede actualizarse. Arrástralo a la carpeta Aplicaciones y ábrelo desde allí."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys s’exécute depuis son image disque, où il ne peut pas être mis à jour. Faites-le glisser dans le dossier Applications et ouvrez-le depuis là."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys はディスクイメージから実行されているため、アップデートできません。「アプリケーション」フォルダにドラッグして、そこから開いてください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys가 디스크 이미지에서 실행 중이어서 업데이트할 수 없습니다. 응용 프로그램 폴더로 드래그한 다음 거기서 여십시오."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys działa z obrazu dysku, gdzie nie można go uaktualnić. Przeciągnij go do katalogu Aplikacje i otwórz go stamtąd."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys está sendo executado a partir da imagem de disco, onde não pode ser atualizado. Arraste-o para a pasta Aplicativos e abra-o de lá."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 正在从磁盘映像运行，这样无法更新。请把它拖到“应用程序”文件夹，再从那里打开。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 正在從磁碟映像檔執行，這樣無法更新。請把它拖到「應用程式」檔案夾，再從那裡打開。"
-          }
-        }
-      }
-    },
-    "SameKeys lives in the menu bar. Open it from there whenever you want to change what a key does." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys wohnt in der Menüleiste. Öffne es dort, wann immer du ändern willst, was eine Taste tut."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys vive en la barra de menús. Ábrelo desde ahí cuando quieras cambiar lo que hace una tecla."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys vit dans la barre des menus. Ouvrez-le depuis là quand vous voulez changer l’effet d’une touche."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys はメニューバーにあります。キーの動作を変えたいときは、いつでもそこから開けます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys는 메뉴 막대에 있습니다. 키 동작을 바꾸고 싶을 때 언제든 거기서 여십시오."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys mieszka na pasku menu. Otwieraj go stamtąd, gdy chcesz zmienić działanie klawisza."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys fica na barra de menus. Abra-o por lá sempre que quiser mudar o que uma tecla faz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 常驻在菜单栏。想改按键行为时，随时从那里打开。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 常駐在選單列。想改按鍵行為時，隨時從那裡打開。"
-          }
-        }
-      }
-    },
-    "SameKeys needs permissions" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys braucht Berechtigungen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys necesita permisos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys a besoin d’autorisations"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys には許可が必要です"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys에 권한이 필요함"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys potrzebuje uprawnień"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys precisa de permissões"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 需要授权"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 需要權限"
-          }
-        }
-      }
-    },
-    "SameKeys starts when you log in, so your shortcuts work right after a restart." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys startet bei der Anmeldung, damit deine Kurzbefehle gleich nach einem Neustart gehen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys se abre al iniciar sesión, para que tus atajos funcionen nada más reiniciar."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys démarre à l’ouverture de session, pour que vos raccourcis marchent dès un redémarrage."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ログイン時に SameKeys が起動するので、再起動後すぐにショートカットが使えます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "로그인할 때 SameKeys가 시작되므로 재시동 직후에도 단축키가 작동합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys uruchamia się po zalogowaniu, więc skróty działają zaraz po restarcie."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O SameKeys abre quando você inicia a sessão, para que seus atalhos funcionem logo após reiniciar."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登录后 SameKeys 自动启动，重启后快捷键马上可用。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登入後 SameKeys 自動啟動，重新開機後快速鍵馬上可用。"
-          }
-        }
-      }
-    },
     "Keyboard paused by Secure Input" : {
       "localizations" : {
         "de" : {
@@ -15802,122 +14932,6 @@
         }
       }
     },
-    "Open SameKeys at login" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys bei der Anmeldung öffnen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir SameKeys al iniciar sesión"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvrir SameKeys à l’ouverture de session"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ログイン時に SameKeys を開く"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "로그인 시 SameKeys 열기"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otwieraj SameKeys po zalogowaniu"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir o SameKeys ao iniciar sessão"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登录时打开 SameKeys"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登入時打開 SameKeys"
-          }
-        }
-      }
-    },
-    "Open SameKeys…" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys öffnen …"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir SameKeys…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvrir SameKeys…"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys を開く…"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 열기…"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otwórz SameKeys…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir o SameKeys…"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开 SameKeys…"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打開 SameKeys…"
-          }
-        }
-      }
-    },
     "Open Keyboard Settings" : {
       "localizations" : {
         "de" : {
@@ -16088,6 +15102,122 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打開登入項目設定"
+          }
+        }
+      }
+    },
+    "Open SameKeys at login" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys bei der Anmeldung öffnen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir SameKeys al iniciar sesión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir SameKeys à l’ouverture de session"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に SameKeys を開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인 시 SameKeys 열기"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwieraj SameKeys po zalogowaniu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir o SameKeys ao iniciar sessão"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时打开 SameKeys"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入時打開 SameKeys"
+          }
+        }
+      }
+    },
+    "Open SameKeys…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys öffnen …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir SameKeys…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir SameKeys…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys を開く…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 열기…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz SameKeys…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir o SameKeys…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 SameKeys…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開 SameKeys…"
           }
         }
       }
@@ -20268,6 +19398,876 @@
         }
       }
     },
+    "SameKeys" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys"
+          }
+        }
+      }
+    },
+    "SameKeys %@ Is Available…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ ist verfügbar …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ está disponible…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ est disponible…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ が利用可能です…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 사용 가능…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dostępny jest SameKeys %@…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys %@ Está Disponível…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 现已推出…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 現已推出…"
+          }
+        }
+      }
+    },
+    "SameKeys %@ is available." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ ist verfügbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ está disponible."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ est disponible."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ が利用可能です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@을(를) 사용할 수 있습니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dostępny jest SameKeys %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys %@ está disponível."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 现已推出。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 現已推出。"
+          }
+        }
+      }
+    },
+    "SameKeys %@ is ready to install. It installs the next time SameKeys quits." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ ist bereit. Es wird installiert, wenn SameKeys das nächste Mal beendet wird."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ está listo para instalarse. Se instalará la próxima vez que salgas de SameKeys."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ est prêt à être installé. Il s’installera la prochaine fois que SameKeys sera quitté."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ のインストール準備ができました。次に SameKeys を終了したときにインストールされます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@을(를) 설치할 준비가 되었습니다. 다음에 SameKeys를 종료할 때 설치됩니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ jest gotowy do instalacji. Zainstaluje się przy następnym zamknięciu SameKeys."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys %@ está pronto para ser instalado. Ele será instalado na próxima vez que o SameKeys for encerrado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 已下载，下次退出 SameKeys 时会自动安装。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys %@ 已下載，下次結束 SameKeys 時會自動安裝。"
+          }
+        }
+      }
+    },
+    "SameKeys can update itself there, and keeps working after you eject the disk image or clean up Downloads." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dort kann sich SameKeys selbst aktualisieren und läuft weiter, auch wenn du das Image auswirfst oder „Downloads“ aufräumst."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allí SameKeys puede actualizarse solo y sigue funcionando aunque expulses la imagen de disco o limpies Descargas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Là, SameKeys peut se mettre à jour, et il continue de marcher après l’éjection de l’image disque ou le ménage dans Téléchargements."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そこに置くと SameKeys は自動でアップデートでき、ディスクイメージを取り出したり「ダウンロード」フォルダを整理したりした後も使い続けられます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그곳에서 SameKeys가 스스로 업데이트할 수 있고, 디스크 이미지를 추출하거나 다운로드 폴더를 정리해도 계속 작동합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tam SameKeys może się sam uaktualniać i działa dalej po wysunięciu obrazu dysku lub posprzątaniu Pobranych rzeczy."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lá o SameKeys pode se atualizar e continua funcionando depois que você ejeta a imagem de disco ou limpa Downloads."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放在那里，SameKeys 才能自动更新，推出磁盘映像或清理“下载”文件夹后也能继续使用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放在那裡，SameKeys 才能自動更新，退出磁碟映像檔或清理「下載項目」檔案夾後也能繼續使用。"
+          }
+        }
+      }
+    },
+    "SameKeys cannot be updated from the folder it was downloaded to. Move it to the Applications folder and open it from there." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys kann im Download-Ordner nicht aktualisiert werden. Bewege es in den Ordner „Programme“ und öffne es von dort."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys no puede actualizarse desde la carpeta donde se descargó. Muévelo a la carpeta Aplicaciones y ábrelo desde allí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys ne peut pas être mis à jour depuis le dossier où il a été téléchargé. Déplacez-le dans le dossier Applications et ouvrez-le depuis là."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロードしたフォルダに置いたままでは SameKeys をアップデートできません。「アプリケーション」フォルダに移動して、そこから開いてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys는 다운로드된 폴더에서는 업데이트할 수 없습니다. 응용 프로그램 폴더로 옮긴 다음 거기서 여십시오."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys nie może się uaktualnić w folderze, do którego go pobrano. Przenieś go do katalogu Aplikacje i otwórz go stamtąd."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys não pode ser atualizado a partir da pasta em que foi baixado. Mova-o para a pasta Aplicativos e abra-o de lá."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 留在下载时所在的文件夹里无法更新。请把它移到“应用程序”文件夹，再从那里打开。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 留在下載時所在的檔案夾裡無法更新。請把它移到「應用程式」檔案夾，再從那裡打開。"
+          }
+        }
+      }
+    },
+    "SameKeys could not be installed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys konnte nicht installiert werden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido instalar SameKeys"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible d’installer SameKeys"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys をインストールできませんでした"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys를 설치할 수 없음"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można zainstalować SameKeys"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível instalar o SameKeys"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法安装 SameKeys"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法安裝 SameKeys"
+          }
+        }
+      }
+    },
+    "SameKeys could not start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys konnte nicht starten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys no ha podido iniciarse"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys n’a pas pu démarrer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys を開始できませんでした"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys를 시작할 수 없음"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się uruchomić SameKeys"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível iniciar o SameKeys"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 未能启动"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 無法啟動"
+          }
+        }
+      }
+    },
+    "SameKeys is free and open source, and it will stay that way. If it saves you some frustration, a sponsorship keeps the work going — never required, always appreciated." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys ist kostenlos und Open Source und bleibt es. Wenn es dir Ärger erspart, hält ein Sponsoring die Arbeit am Laufen – nie Pflicht, immer willkommen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys es gratuito y de código abierto, y seguirá siéndolo. Si te ahorra algún disgusto, un patrocinio ayuda a seguir adelante: nunca obligatorio, siempre agradecido."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys est gratuit et open source, et le restera. S’il vous épargne quelques agacements, un parrainage fait avancer le travail — jamais obligatoire, toujours apprécié."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys は無料でオープンソース、これからもそのままです。役に立っているなら、スポンサーが開発を支えます。必須ではありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys는 무료 오픈 소스이며 앞으로도 그럴 것입니다. 번거로움을 덜어 주었다면 후원이 작업을 이어 가게 합니다. 필수는 아니지만 언제나 감사합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys jest darmowy i otwarty, i tak zostanie. Jeśli oszczędza Ci nerwów, sponsorowanie pozwala dalej go rozwijać — nigdy nie jest wymagane, zawsze mile widziane."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys é gratuito e de código aberto, e vai continuar assim. Se ele poupa você de alguma frustração, um patrocínio mantém o trabalho andando — nunca obrigatório, sempre bem-vindo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 永远免费、开源。如果它帮你省下了一些烦躁，一份赞助能让它继续做下去——不必勉强，心意已领。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 永遠免費、開源。如果它幫你省下了一些煩惱，一份贊助能讓它繼續做下去——不必勉強，心意已領。"
+          }
+        }
+      }
+    },
+    "SameKeys is free software: you can redistribute it and change it under the terms of the GNU General Public License, version 3. It comes with ABSOLUTELY NO WARRANTY." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys ist freie Software: Du kannst sie unter den Bedingungen der GNU General Public License, Version 3, weitergeben und ändern. Sie wird OHNE JEDE GEWÄHRLEISTUNG bereitgestellt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys es software libre: puedes redistribuirlo y modificarlo según los términos de la Licencia Pública General de GNU, versión 3. Se ofrece SIN NINGUNA GARANTÍA."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys est un logiciel libre : vous pouvez le redistribuer et le modifier selon les termes de la GNU General Public License, version 3. Il est fourni SANS AUCUNE GARANTIE."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys はフリーソフトウェアです。GNU 一般公衆利用許諾書 第 3 版の条件のもとで、再配布や改変ができます。本ソフトウェアには一切の保証がありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys는 자유 소프트웨어입니다. GNU 일반 공중 사용 허가서 버전 3의 조건에 따라 재배포하고 수정할 수 있습니다. 어떠한 보증도 제공하지 않습니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys to wolne oprogramowanie: możesz je rozpowszechniać i zmieniać na warunkach Powszechnej Licencji Publicznej GNU, wersja 3. Jest dostarczane BEZ ŻADNEJ GWARANCJI."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys é software livre: você pode redistribuí-lo e modificá-lo nos termos da Licença Pública Geral GNU, versão 3. Ele é fornecido SEM NENHUMA GARANTIA."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 是自由软件：你可以按照 GNU 通用公共许可证第 3 版的条款再发布和修改它。本软件不提供任何担保。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 是自由軟體：你可以依照 GNU 通用公共授權條款第 3 版的條款再散布和修改它。本軟體不提供任何擔保。"
+          }
+        }
+      }
+    },
+    "SameKeys is ready" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys ist bereit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys está listo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys est prêt"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys の準備ができました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 준비 완료"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys jest gotowy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys está pronto"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 已就绪"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 已就緒"
+          }
+        }
+      }
+    },
+    "SameKeys is running from its disk image, where it cannot be updated. Drag it to the Applications folder and open it from there." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys läuft aus seinem Image, wo es nicht aktualisiert werden kann. Zieh es in den Ordner „Programme“ und öffne es von dort."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys se está ejecutando desde su imagen de disco, donde no puede actualizarse. Arrástralo a la carpeta Aplicaciones y ábrelo desde allí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys s’exécute depuis son image disque, où il ne peut pas être mis à jour. Faites-le glisser dans le dossier Applications et ouvrez-le depuis là."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys はディスクイメージから実行されているため、アップデートできません。「アプリケーション」フォルダにドラッグして、そこから開いてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys가 디스크 이미지에서 실행 중이어서 업데이트할 수 없습니다. 응용 프로그램 폴더로 드래그한 다음 거기서 여십시오."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys działa z obrazu dysku, gdzie nie można go uaktualnić. Przeciągnij go do katalogu Aplikacje i otwórz go stamtąd."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys está sendo executado a partir da imagem de disco, onde não pode ser atualizado. Arraste-o para a pasta Aplicativos e abra-o de lá."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 正在从磁盘映像运行，这样无法更新。请把它拖到“应用程序”文件夹，再从那里打开。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 正在從磁碟映像檔執行，這樣無法更新。請把它拖到「應用程式」檔案夾，再從那裡打開。"
+          }
+        }
+      }
+    },
+    "SameKeys lives in the menu bar. Open it from there whenever you want to change what a key does." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys wohnt in der Menüleiste. Öffne es dort, wann immer du ändern willst, was eine Taste tut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys vive en la barra de menús. Ábrelo desde ahí cuando quieras cambiar lo que hace una tecla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys vit dans la barre des menus. Ouvrez-le depuis là quand vous voulez changer l’effet d’une touche."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys はメニューバーにあります。キーの動作を変えたいときは、いつでもそこから開けます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys는 메뉴 막대에 있습니다. 키 동작을 바꾸고 싶을 때 언제든 거기서 여십시오."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys mieszka na pasku menu. Otwieraj go stamtąd, gdy chcesz zmienić działanie klawisza."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys fica na barra de menus. Abra-o por lá sempre que quiser mudar o que uma tecla faz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 常驻在菜单栏。想改按键行为时，随时从那里打开。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 常駐在選單列。想改按鍵行為時，隨時從那裡打開。"
+          }
+        }
+      }
+    },
+    "SameKeys needs permissions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys braucht Berechtigungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys necesita permisos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys a besoin d’autorisations"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys には許可が必要です"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys에 권한이 필요함"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys potrzebuje uprawnień"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys precisa de permissões"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 需要授权"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 需要權限"
+          }
+        }
+      }
+    },
+    "SameKeys starts when you log in, so your shortcuts work right after a restart." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys startet bei der Anmeldung, damit deine Kurzbefehle gleich nach einem Neustart gehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys se abre al iniciar sesión, para que tus atajos funcionen nada más reiniciar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys démarre à l’ouverture de session, pour que vos raccourcis marchent dès un redémarrage."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に SameKeys が起動するので、再起動後すぐにショートカットが使えます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인할 때 SameKeys가 시작되므로 재시동 직후에도 단축키가 작동합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys uruchamia się po zalogowaniu, więc skróty działają zaraz po restarcie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O SameKeys abre quando você inicia a sessão, para que seus atalhos funcionem logo após reiniciar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后 SameKeys 自动启动，重启后快捷键马上可用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入後 SameKeys 自動啟動，重新開機後快速鍵馬上可用。"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "de" : {
@@ -21370,64 +21370,6 @@
         }
       }
     },
-    "Set Up SameKeys" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys einrichten"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configurar SameKeys"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configurer SameKeys"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys を設定"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SameKeys 설정"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konfiguruj SameKeys"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configurar o SameKeys"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置 SameKeys"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "設定 SameKeys"
-          }
-        }
-      }
-    },
     "Set Up Later" : {
       "localizations" : {
         "de" : {
@@ -21540,6 +21482,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定權限…"
+          }
+        }
+      }
+    },
+    "Set Up SameKeys" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys einrichten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurar SameKeys"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurer SameKeys"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys を設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SameKeys 설정"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfiguruj SameKeys"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurar o SameKeys"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置 SameKeys"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定 SameKeys"
           }
         }
       }
