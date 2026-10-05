@@ -20790,60 +20790,60 @@
         }
       }
     },
-    "Save your shortcuts and settings to a file, to restore them later or on another Mac. What you copied is not included." : {
+    "Save your shortcuts and settings to a file, to restore them later or on another Mac. What you copied is not included. Before each import, your current settings are saved automatically: to undo an import, import that backup." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speichere deine Kurzbefehle und Einstellungen in einer Datei, um sie später oder auf einem anderen Mac wiederherzustellen. Kopierte Inhalte sind nicht enthalten."
+            "value" : "Speichere deine Kurzbefehle und Einstellungen in einer Datei, um sie später oder auf einem anderen Mac wiederherzustellen. Kopierte Inhalte sind nicht enthalten. Vor jedem Import werden deine aktuellen Einstellungen automatisch gesichert: Um einen Import rückgängig zu machen, importiere dieses Backup."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guarda tus atajos y ajustes en un archivo para restaurarlos más tarde o en otro Mac. Lo que copiaste no se incluye."
+            "value" : "Guarda tus atajos y ajustes en un archivo para restaurarlos más tarde o en otro Mac. Lo que copiaste no se incluye. Antes de cada importación, tus ajustes actuales se guardan automáticamente: para deshacer una importación, importa esa copia."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrez vos raccourcis et réglages dans un fichier, pour les restaurer plus tard ou sur un autre Mac. Ce que vous avez copié n’est pas inclus."
+            "value" : "Enregistrez vos raccourcis et réglages dans un fichier, pour les restaurer plus tard ou sur un autre Mac. Ce que vous avez copié n’est pas inclus. Avant chaque importation, vos réglages actuels sont sauvegardés automatiquement : pour annuler une importation, importez cette sauvegarde."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ショートカットと設定をファイルに保存し、あとで、または別の Mac で復元できます。コピーした内容は含まれません。"
+            "value" : "ショートカットと設定をファイルに保存し、あとで、または別の Mac で復元できます。コピーした内容は含まれません。読み込むたびに、その前の設定が自動でバックアップされます。読み込みを取り消すには、そのバックアップを読み込んでください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "단축키와 설정을 파일로 저장해 나중에 또는 다른 Mac에서 복원할 수 있습니다. 복사한 내용은 포함되지 않습니다."
+            "value" : "단축키와 설정을 파일로 저장해 나중에 또는 다른 Mac에서 복원할 수 있습니다. 복사한 내용은 포함되지 않습니다. 가져오기 전에는 항상 현재 설정이 자동으로 백업됩니다. 가져오기를 되돌리려면 그 백업을 가져오세요."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapisz skróty i ustawienia w pliku, aby przywrócić je później lub na innym Macu. Skopiowane treści nie są dołączane."
+            "value" : "Zapisz skróty i ustawienia w pliku, aby przywrócić je później lub na innym Macu. Skopiowane treści nie są dołączane. Przed każdym importem bieżące ustawienia są zapisywane automatycznie: aby cofnąć import, zaimportuj tę kopię."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salve seus atalhos e ajustes em um arquivo para restaurá-los depois ou em outro Mac. O que você copiou não é incluído."
+            "value" : "Salve seus atalhos e ajustes em um arquivo para restaurá-los depois ou em outro Mac. O que você copiou não é incluído. Antes de cada importação, seus ajustes atuais são salvos automaticamente: para desfazer uma importação, importe esse backup."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "把快捷键和设置保存到一个文件里，以后或在另一台 Mac 上还原。不包含你拷贝过的内容。"
+            "value" : "把快捷键和设置保存到一个文件里，以后或在另一台 Mac 上还原。不包含你拷贝过的内容。每次导入前，当前设置都会自动备份；想撤销导入，导入那份备份即可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "把快速鍵和設定儲存到一個檔案，日後或在另一台 Mac 上還原。不包含你拷貝過的內容。"
+            "value" : "把快速鍵和設定儲存到一個檔案，日後或在另一台 Mac 上還原。不包含你拷貝過的內容。每次匯入前，目前的設定都會自動備份；想復原匯入，匯入那份備份即可。"
           }
         }
       }
@@ -22240,6 +22240,64 @@
         }
       }
     },
+    "Settings imported" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen importiert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes importados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages importés"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を読み込みました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정을 가져왔습니다"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaimportowano ustawienia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes importados"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置已导入"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定已匯入"
+          }
+        }
+      }
+    },
     "Shift+scroll scrolls sideways in most apps; with Shift it no longer does." : {
       "localizations" : {
         "de" : {
@@ -22352,6 +22410,122 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快速鍵"
+          }
+        }
+      }
+    },
+    "Show Backup" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup zeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar copia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher la sauvegarde"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップを表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "백업 보기"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokaż kopię"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar Backup"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示备份"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示備份"
+          }
+        }
+      }
+    },
+    "Show Backups" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backups zeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar copias"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les sauvegardes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップを表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "백업 보기"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokaż kopie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar Backups"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示备份"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示備份"
           }
         }
       }
@@ -26366,6 +26540,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Word 文件"
+          }
+        }
+      }
+    },
+    "Your previous settings were saved as “%@”. To go back to them, import that file with Import Settings… on the About page." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine bisherigen Einstellungen wurden als „%@“ gesichert. Um zu ihnen zurückzukehren, importiere diese Datei mit „Einstellungen importieren …“ auf der Seite „Über“."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus ajustes anteriores se guardaron como “%@”. Para volver a ellos, importa ese archivo con Importar ajustes… en la página Acerca de."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos réglages précédents ont été enregistrés sous « %@ ». Pour y revenir, importez ce fichier avec Importer des réglages… dans la page À propos."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以前の設定は「%@」として保存されました。元に戻すには、「情報」ページの「設定を読み込む…」でこのファイルを読み込んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이전 설정이 ‘%@’(으)로 저장되었습니다. 되돌리려면 정보 페이지의 ‘설정 가져오기…’로 이 파일을 가져오세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poprzednie ustawienia zapisano jako „%@”. Aby do nich wrócić, zaimportuj ten plik przyciskiem Importuj ustawienia… na stronie Informacje."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seus ajustes anteriores foram salvos como “%@”. Para voltar a eles, importe esse arquivo com Importar Ajustes… na página Sobre."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原来的设置已备份为「%@」。想恢复原来的设置，在「关于」页面用「导入设置…」导入这个文件即可。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原本的設定已備份為「%@」。想恢復原本的設定，在「關於」頁面用「匯入設定…」匯入這個檔案即可。"
           }
         }
       }

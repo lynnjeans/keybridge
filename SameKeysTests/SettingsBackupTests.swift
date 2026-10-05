@@ -93,4 +93,14 @@ import Testing
             try SettingsBackup.read(backup(version: 1, schema: Configuration.currentVersion + 1))
         }
     }
+
+    @Test func theNewestBackupIsTheLatestByName() throws {
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        #expect(SettingsBackup.newestBackup(in: folder) == nil)
+        for name in ["Before import 2026-10-05 221233.json", "Before import 2026-10-06 080000.json", "notes.txt"] {
+            try Data().write(to: folder.appending(path: name))
+        }
+        #expect(SettingsBackup.newestBackup(in: folder)?.lastPathComponent == "Before import 2026-10-06 080000.json")
+    }
 }

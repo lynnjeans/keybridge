@@ -96,6 +96,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         engine.update()
         updates.start()
+        SettingsImportNotice.showIfNeeded()
 
         #if DEBUG
         if engine.isActive {

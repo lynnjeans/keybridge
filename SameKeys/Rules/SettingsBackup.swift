@@ -154,6 +154,18 @@ enum SettingsBackup {
         URL.sameKeysSupport.appending(path: "Backups")
     }
 
+    /// Where the backup made before an import is noted for the notice after
+    /// the restart (SK-271); removed once the notice is shown.
+    static let importNoticeKey = "settingsBackup.importedOver"
+
+    /// The newest backup in `folder`: the names start with the date and time,
+    /// so the last in name order.
+    static func newestBackup(in folder: URL = automaticBackupFolder) -> URL? {
+        let files = (try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? []
+        return files.filter { $0.pathExtension == "json" }
+            .max { $0.lastPathComponent < $1.lastPathComponent }
+    }
+
     /// A file name with the date and time, the same shape for exports and the
     /// automatic backups, so they sort by when they were made.
     static func fileName(_ prefix: String, date: Date = .now) -> String {
