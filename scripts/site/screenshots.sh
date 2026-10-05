@@ -69,6 +69,9 @@ for language in en zh-Hans ja; do
 done
 
 quit_samekeys
+# Forget the Debug build again, so that Spotlight and "open SameKeys" find
+# only the copy in Applications (it has the same bundle ID).
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u $app
 # The Debug build registered its own Finder extension; hand it back.
 installed=/Applications/SameKeys.app
 if [[ -d $installed ]]; then
