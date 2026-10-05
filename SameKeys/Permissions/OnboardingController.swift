@@ -98,13 +98,25 @@ final class OnboardingController {
     /// a reinstall, or a rebuild of an app the user has already trusted —
     /// has nothing to guide, so it is quietly marked done instead.
     ///
+    /// After the first run it comes back only when both permissions are
+    /// gone (SK-269): a new signature, a reset, a migrated Mac. Then SameKeys
+    /// would do nothing at all, and the menu bar alone is easy to miss. One
+    /// missing may have been turned off on purpose; the menu bar says so.
+    ///
     /// The caller opens the window itself rather than going through
     /// `open()`, because at launch there is not yet a view listening for the
     /// notification.
     func shouldOpenAtLaunch() -> Bool {
         guard !hasConsideredLaunch else { return false }
         hasConsideredLaunch = true
-        guard !hasCompleted else { return false }
+        if hasCompleted {
+            guard Step.allCases.compactMap(\.permission).allSatisfy({ permissions.status(of: $0) != .granted })
+            else { return false }
+            Logger.permissions.notice("Both permissions are gone since setup: opening the guide again")
+            loginItem.refresh()
+            opensAtLogin = loginItem.isEnabled
+            return true
+        }
         guard step != .ready else {
             Logger.permissions.notice("Onboarding skipped: every permission is already granted")
             complete()

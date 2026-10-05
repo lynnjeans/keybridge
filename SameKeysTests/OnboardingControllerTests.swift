@@ -127,14 +127,25 @@ import Testing
         #expect(record.urls.isEmpty)
     }
 
-    @Test func doesNotComeBackOnceCompleted() {
+    @Test func doesNotComeBackOnceCompletedWithOnePermissionMissing() {
         let (first, _) = makeController()
         #expect(first.shouldOpenAtLaunch())
         first.complete()
         #expect(first.hasCompleted)
 
+        fake.accessibility = true
         let (second, _) = makeController()
-        #expect(!second.shouldOpenAtLaunch(), "Still unauthorized, but the user has been through the guide")
+        #expect(!second.shouldOpenAtLaunch(), "Input Monitoring may have been turned off on purpose")
+    }
+
+    /// SK-269: a new signature or a reset leaves SameKeys with nothing, and
+    /// the menu bar alone is easy to miss.
+    @Test func comesBackOnceCompletedWhenBothPermissionsAreGone() {
+        defaults.set(true, forKey: OnboardingController.completedKey)
+        let (controller, _) = makeController()
+        #expect(controller.shouldOpenAtLaunch())
+        #expect(controller.step == .accessibility)
+        #expect(!controller.shouldOpenAtLaunch(), "Still once per run")
     }
 
     @Test func aFirstRunWithEverythingGrantedIsSilentlyDone() {
