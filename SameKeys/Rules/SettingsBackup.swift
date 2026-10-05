@@ -25,7 +25,7 @@ enum SettingsBackup {
         "clipboard.enabled", "clipboard.hotKey", "clipboard.limit", "clipboard.excludedApps",
         "pathBox.enabled", "pathBox.hotKey",
         "fileDialog.favorites", "fileDialog.recentLimit",
-        "AppleLanguages", "SUEnableAutomaticChecks",
+        "AppleLanguages", "SUEnableAutomaticChecks", "menuBar.showsIcon",
     ]
     static let dataKeys: Set<String> = ["clipboard.hotKey", "pathBox.hotKey"]
 

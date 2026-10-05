@@ -9,11 +9,19 @@ import SwiftUI
 /// As the one view that lives as long as the app, it also opens the main
 /// window and the first-run guide when asked through `.openMainWindow` and
 /// `.openOnboarding`.
+///
+/// Show in Menu Bar (SK-274) hides the item, not this view: SwiftUI opens
+/// windows only for a view that is there, and taking the menu bar extra out
+/// of the scene would also stop SwiftUI passing on a reopen of the app.
 struct MenuBarIcon: View {
     let isActive: Bool
     var hasUpdate = false
     let onboarding: OnboardingController
     @Environment(\.openWindow) private var openWindow
+    @AppStorage(Self.showsKey) private var showsIcon = true
+
+    /// Where the Show in Menu Bar switch is kept.
+    static let showsKey = "menuBar.showsIcon"
 
     var body: some View {
         Image(nsImage: Self.images[isActive ? 1 : 0][hasUpdate ? 1 : 0])
@@ -22,7 +30,10 @@ struct MenuBarIcon: View {
             // runs before SwiftUI has installed any of this.
             .onAppear {
                 if onboarding.shouldOpenAtLaunch() { open(WindowID.onboarding) }
+                // The item's window is in place once this view is.
+                DispatchQueue.main.async { Self.setItemVisible(showsIcon) }
             }
+            .onChange(of: showsIcon) { _, shows in Self.setItemVisible(shows) }
             .onReceive(NotificationCenter.default.publisher(for: .openMainWindow)) { _ in
                 open(WindowID.main)
             }
@@ -34,6 +45,19 @@ struct MenuBarIcon: View {
     private func open(_ id: String) {
         openWindow(id: id)
         WindowID.bringToFront(id)
+    }
+
+    /// Shows or hides the menu bar item SwiftUI made for this view. SwiftUI
+    /// has no handle on it, so it is found through the window that holds it,
+    /// guarded so that a later macOS without that path changes nothing.
+    @MainActor
+    private static func setItemVisible(_ visible: Bool) {
+        let key = "statusItem"
+        for window in NSApp.windows where String(describing: type(of: window)) == "NSStatusBarWindow" {
+            guard window.responds(to: Selector((key))),
+                  let item = window.value(forKey: key) as? NSStatusItem else { continue }
+            item.isVisible = visible
+        }
     }
 
     // Menu bar icons are template images: macOS colors them to match the menu

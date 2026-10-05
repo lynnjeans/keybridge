@@ -9422,6 +9422,64 @@
         }
       }
     },
+    "Hidden. SameKeys keeps working; to come back here, open SameKeys again from Applications or Spotlight." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgeblendet. SameKeys arbeitet weiter; um hierher zurückzukehren, öffne SameKeys erneut aus „Programme“ oder mit Spotlight."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oculto. SameKeys sigue funcionando; para volver aquí, abre SameKeys de nuevo desde Aplicaciones o Spotlight."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masqué. SameKeys continue de fonctionner ; pour revenir ici, rouvrez SameKeys depuis Applications ou Spotlight."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "非表示です。SameKeys は動作し続けます。ここに戻るには、アプリケーションフォルダか Spotlight から SameKeys をもう一度開いてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "숨겨짐. SameKeys는 계속 작동합니다. 여기로 돌아오려면 응용 프로그램이나 Spotlight에서 SameKeys를 다시 여세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukryte. SameKeys nadal działa; aby tu wrócić, otwórz SameKeys ponownie z folderu Aplikacje lub przez Spotlight."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oculto. O SameKeys continua funcionando; para voltar aqui, abra o SameKeys de novo em Aplicativos ou pelo Spotlight."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已隐藏。SameKeys 照常工作；要回到这里，请从「应用程序」或聚焦搜索再次打开 SameKeys。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已隱藏。SameKeys 照常運作；要回到這裡，請從「應用程式」或 Spotlight 再次打開 SameKeys。"
+          }
+        }
+      }
+    },
     "History (%lld)" : {
       "localizations" : {
         "de" : {
@@ -22762,6 +22820,64 @@
         }
       }
     },
+    "Show in Menu Bar" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In der Menüleiste anzeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar en la barra de menús"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher dans la barre des menus"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーに表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메뉴 막대에 표시"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokaż na pasku menu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar na Barra de Menus"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单栏显示"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在選單列顯示"
+          }
+        }
+      }
+    },
     "Shows or hides the clipboard history, as its own shortcut does. Does nothing while the history is off." : {
       "localizations" : {
         "de" : {
@@ -24388,6 +24504,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "滾輪、縮放和按鈕。滾輪設定只作用於滑鼠，觸控式軌跡板不受影響。"
+          }
+        }
+      }
+    },
+    "The ∞ in the menu bar shows whether SameKeys is on and opens its menu." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ∞ in der Menüleiste zeigt, ob SameKeys aktiv ist, und öffnet sein Menü."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El ∞ de la barra de menús indica si SameKeys está activo y abre su menú."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le ∞ de la barre des menus indique si SameKeys est actif et ouvre son menu."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーの ∞ で SameKeys がオンかどうかがわかり、クリックするとメニューが開きます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메뉴 막대의 ∞는 SameKeys가 켜져 있는지 보여 주고, 클릭하면 메뉴가 열립니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "∞ na pasku menu pokazuje, czy SameKeys działa, i otwiera jego menu."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O ∞ na barra de menus mostra se o SameKeys está ativo e abre seu menu."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "菜单栏里的 ∞ 显示 SameKeys 是否开启，点按可打开它的菜单。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選單列中的 ∞ 顯示 SameKeys 是否開啟，按一下可打開它的選單。"
           }
         }
       }

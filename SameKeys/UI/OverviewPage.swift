@@ -57,6 +57,7 @@ struct OverviewPage: View {
         }
 
         LoginItemCard(loginItem: loginItem)
+        MenuBarIconCard()
 
         ForEach(Array(notices.enumerated()), id: \.offset) { _, notice in
             Label {
@@ -147,6 +148,34 @@ private struct PermissionsSummary: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 3)
                     .background(.green.opacity(0.14), in: Capsule())
+            }
+        }
+    }
+}
+
+/// Whether SameKeys shows its icon in the menu bar (SK-274). Hidden, it keeps
+/// working, and opening it again brings this window back.
+private struct MenuBarIconCard: View {
+    @AppStorage(MenuBarIcon.showsKey) private var showsIcon = true
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "menubar.rectangle", tint: .indigo, size: 34)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Show in Menu Bar")
+                        .font(.headline)
+                    Text(showsIcon
+                         ? "The ∞ in the menu bar shows whether SameKeys is on and opens its menu."
+                         : "Hidden. SameKeys keeps working; to come back here, open SameKeys again from Applications or Spotlight.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Toggle("Show in Menu Bar", isOn: $showsIcon)
+                    .toggleStyle(.switch)
+                    .labelsHidden()
             }
         }
     }
