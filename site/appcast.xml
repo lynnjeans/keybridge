@@ -6,6 +6,26 @@
     <description>SameKeys updates</description>
     <language>en</language>
     <item>
+      <title>SameKeys 1.4</title>
+      <pubDate>Tue, 06 Oct 2026 21:25:55 GMT</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Ctrl+Delete&lt;/b&gt;: deletes the word after the insertion point, as on Windows.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Shortcut groups&lt;/b&gt;: the System group is now part of Apps &amp;amp; System, where Ctrl+Alt+Delete for Force Quit lives.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Ctrl+Delete&lt;/b&gt;：删除光标后面的一个词，和 Windows 一样。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;快捷键分组&lt;/b&gt;：「系统」分组并入「应用与系统」，Ctrl+Alt+Delete 强制退出现在在那里。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Ctrl+Delete&lt;/b&gt;：Windows と同じように、カーソルの後ろの単語を削除します。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;ショートカットのグループ&lt;/b&gt;：「システム」グループを「アプリとシステム」に統合しました。Ctrl+Alt+Delete の強制終了はそちらにあります。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.4/SameKeys-1.4.dmg" length="5190828" type="application/octet-stream" sparkle:edSignature="2uwA0nZdn3mbUAH+TMGsK4YRvcVW6rgwC+xs27Oy6w0fzWgWU9t9TTrNJzdIvThLyZ6BNIClmmp3zjKl1YPGBQ==" />
+    </item>
+    <item>
       <title>SameKeys 1.3</title>
       <pubDate>Tue, 06 Oct 2026 09:15:21 GMT</pubDate>
       <sparkle:version>4</sparkle:version>
@@ -44,32 +64,6 @@
   &lt;li&gt;&lt;b&gt;パスを貼り付け&lt;/b&gt;：⌘L のパスボックスはなくなりました。Finder と開く・保存ダイアログで Ctrl+Shift+G を押してパスを貼り付けます。&lt;/li&gt;
 &lt;/ul&gt;</description>
       <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.2/SameKeys-1.2.dmg" length="5180016" type="application/octet-stream" sparkle:edSignature="zdcaKISO5KtBPvSCMOOkAdowM4ryR+1rUT8IiBRuQWdemUCq86bQp7Gs232NBSK3DIUT2iEtSyPWXmxVEAWqCg==" />
-    </item>
-    <item>
-      <title>SameKeys 1.1</title>
-      <pubDate>Mon, 05 Oct 2026 22:37:51 GMT</pubDate>
-      <sparkle:version>2</sparkle:version>
-      <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
-      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description xml:lang="en">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;Paste a path&lt;/b&gt;: paste a path into Recent Locations (Ctrl+Shift+G) to go to a folder or open a file.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Settings Backup&lt;/b&gt;: export your settings from the About page and import them on another Mac; SameKeys backs up the current settings before an import.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Hide the menu bar icon&lt;/b&gt;: turn off Show in Menu Bar on the Overview page and SameKeys keeps working; open it again from Applications or Spotlight to get its window back.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;A new icon&lt;/b&gt;: the app and the menu bar now show the new ∞ icon.&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="zh-Hans">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;粘贴路径&lt;/b&gt;：Ctrl+Shift+G 的「最近位置」里可以直接粘贴路径，文件夹就跳过去，文件就直接打开。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;设置备份&lt;/b&gt;：在「关于」页把设置导出成文件，换台 Mac 再导入；导入前会先自动备份当前设置。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;隐藏菜单栏图标&lt;/b&gt;：在「概览」里关掉「在菜单栏显示」，SameKeys 照常工作；从「应用程序」或聚焦搜索再打开它就能回到窗口。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;新图标&lt;/b&gt;：App 和菜单栏换成了新的 ∞ 图标。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="ja">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;パスを貼り付け&lt;/b&gt;：「最近の場所」（Ctrl+Shift+G）にパスを貼り付けると、フォルダならそこへ移動し、ファイルならそのまま開きます。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;設定のバックアップ&lt;/b&gt;：「情報」ページで設定をファイルに書き出し、別の Mac で読み込めます。読み込む前に現在の設定を自動でバックアップします。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;メニューバーアイコンを隠す&lt;/b&gt;：「概要」で「メニューバーに表示」をオフにしても SameKeys はそのまま動作します。「アプリケーション」や Spotlight からもう一度開くとウインドウが戻ります。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;新しいアイコン&lt;/b&gt;：App とメニューバーが新しい ∞ アイコンになりました。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.1/SameKeys-1.1.dmg" length="5200394" type="application/octet-stream" sparkle:edSignature="sQO3OtfUcCvVG3m5EwdYHN/UProa7Id4yl8QLnCt/DkZRc7Obmxq9WdvtEuaOX+Mc9ikbXZ58e94JSYKEoYZCw==" />
     </item>
   </channel>
 </rss>
