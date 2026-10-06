@@ -6,6 +6,29 @@
     <description>SameKeys updates</description>
     <language>en</language>
     <item>
+      <title>SameKeys 1.2</title>
+      <pubDate>Tue, 06 Oct 2026 08:27:54 GMT</pubDate>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>1.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Switch input source&lt;/b&gt;: a new system function that switches between ABC and the other input source you use (Chinese, Japanese, Korean, Russian and more) directly, like Caps Lock, with no switcher on screen. Give it to Shift tapped alone, or any other key, in Custom Rules.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Win+Space&lt;/b&gt;: with the Windows Key group on, Win+Space switches the input source, as on Windows.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Paste a path&lt;/b&gt;: the ⌘L path box is gone; paste a path with Ctrl+Shift+G, in Finder and in open and save dialogs.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;切换输入法&lt;/b&gt;：「系统功能」新增「切换输入法」，像大写锁定键一样在 ABC 和你常用的其他输入法（中文、日文、韩文、俄文等）之间直接切换，不弹提示。可以在「自定义规则」里把它设给单按 Shift 或其他键。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Win+空格&lt;/b&gt;：打开「Windows 键」分组后，Win+空格切换输入法，和 Windows 一样。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;粘贴路径&lt;/b&gt;：去掉了 ⌘L 路径框，在访达和打开/存储对话框里统一用 Ctrl+Shift+G 粘贴路径。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;入力ソースを切り替え&lt;/b&gt;：新しいシステム機能で、Caps Lock のように ABC といつも使う入力ソース（日本語、中国語、韓国語、ロシア語など）を直接切り替えます。切り替えの表示は出ません。「カスタムルール」で Shift の単独押しなど、好きなキーに割り当てられます。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Win+スペース&lt;/b&gt;：「Windows キー」グループをオンにすると、Windows と同じように Win+スペースで入力ソースを切り替えます。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;パスを貼り付け&lt;/b&gt;：⌘L のパスボックスはなくなりました。Finder と開く・保存ダイアログで Ctrl+Shift+G を押してパスを貼り付けます。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.2/SameKeys-1.2.dmg" length="5180016" type="application/octet-stream" sparkle:edSignature="zdcaKISO5KtBPvSCMOOkAdowM4ryR+1rUT8IiBRuQWdemUCq86bQp7Gs232NBSK3DIUT2iEtSyPWXmxVEAWqCg==" />
+    </item>
+    <item>
       <title>SameKeys 1.1</title>
       <pubDate>Mon, 05 Oct 2026 22:37:51 GMT</pubDate>
       <sparkle:version>2</sparkle:version>
