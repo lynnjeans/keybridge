@@ -247,6 +247,23 @@ extension Configuration: Codable {
         ctrlClickSelects = try container.decodeIfPresent(Bool.self, forKey: .ctrlClickSelects) ?? false
         modifierLayout = try container.decodeIfPresent(ModifierLayout.self, forKey: .modifierLayout) ?? .pcKeyboard
         keyboards = try container.decodeIfPresent([KeyboardSettings].self, forKey: .keyboards) ?? []
+        foldSystemGroup()
+    }
+
+    /// The System group, Force Quit alone, went into Apps & System (SK-285).
+    /// A file that switched it off keeps Force Quit off, as that entry's own
+    /// switch; the group's ID is dropped. Done on reading rather than as a
+    /// migration, since the file's layout is unchanged.
+    private mutating func foldSystemGroup() {
+        guard disabledGroups.remove("system") != nil else { return }
+        if let index = overrides.firstIndex(where: { if case .modified(let rule) = $0 { rule.id == "sys.forceQuit" } else { false } }),
+           case .modified(var rule) = overrides[index] {
+            rule.isEnabled = false
+            overrides[index] = .modified(rule: rule)
+        } else if var forceQuit = BuiltInRules.all.first(where: { $0.id == "sys.forceQuit" }) {
+            forceQuit.isEnabled = false
+            overrides.append(.modified(rule: forceQuit))
+        }
     }
 
     func encode(to encoder: Encoder) throws {

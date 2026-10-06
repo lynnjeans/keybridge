@@ -128,6 +128,7 @@
 		90EDBE7EA83D2726C10EFA3B /* DockClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC12EBF136433446415F3FBC /* DockClick.swift */; };
 		928774D0EC055C9A477A4BC3 /* FinderMenuSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E76B2127DD1445B99B8A52 /* FinderMenuSender.swift */; };
 		92D9C30F01048410A58934A9 /* SameKeysFinder.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7844657A77E7B38844CCC14 /* SameKeysFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		92D9D4EC9CAF77D3E58DA932 /* SystemGroupFoldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835892224FFF1B43406E6F83 /* SystemGroupFoldTests.swift */; };
 		94AD36E7ABC54E0B889007C9 /* InputSourceSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F610FFF1240D830B05D3A4 /* InputSourceSwitcherTests.swift */; };
 		95BEBD50D0BCFF47736FC013 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9056B1D6B2C2873B53B207AD /* GlobalHotKey.swift */; };
 		9704C007CD698F6B4E054827 /* WindowElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69CE5E1DB45710F63F71645 /* WindowElement.swift */; };
@@ -326,6 +327,7 @@
 		8004F0A3F0291D5FADFDA3ED /* InstallLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallLocationTests.swift; sourceTree = "<group>"; };
 		801766E58280B8C431923D11 /* ClipboardHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHistory.swift; sourceTree = "<group>"; };
 		80F9CF40444D192FE78F977B /* CtrlClickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlClickTests.swift; sourceTree = "<group>"; };
+		835892224FFF1B43406E6F83 /* SystemGroupFoldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemGroupFoldTests.swift; sourceTree = "<group>"; };
 		83DCEC9AC9D07D6A8B10B2A0 /* PanelFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelFocus.swift; sourceTree = "<group>"; };
 		8661E1BC1650CD7612B9CFB8 /* SupportFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFolder.swift; sourceTree = "<group>"; };
 		87A099BE32F4A33DD0D72F65 /* DownstreamProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownstreamProbe.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 				60C7C341BB75A2F896F8F57C /* SecureInputMonitorTests.swift */,
 				EBD5BFE97929823FB47633DC /* SettingsBackupTests.swift */,
 				564E5CD1A3C3352F1EA4397B /* SystemActionTests.swift */,
+				835892224FFF1B43406E6F83 /* SystemGroupFoldTests.swift */,
 				A5ACFC730D1EE1A8AC7AB9B5 /* WheelDirectionTests.swift */,
 				BD1ED261F0DB64B4941237E7 /* WindowActionTests.swift */,
 				6C70C55196822B2EC71F76DA /* WindowGeometryTests.swift */,
@@ -1086,6 +1089,7 @@
 				29185B35D5C9B4FD690560B1 /* SyntheticEvent.swift in Sources */,
 				CB1B1669F93F6853E862E3D1 /* SystemAction.swift in Sources */,
 				D67A7AE93CD9673BDA978998 /* SystemActionTests.swift in Sources */,
+				92D9D4EC9CAF77D3E58DA932 /* SystemGroupFoldTests.swift in Sources */,
 				F147039FFFB6BFFB586BBB09 /* TapBreaker.swift in Sources */,
 				B16AB8FE88C2102836EC6C29 /* WheelDirection.swift in Sources */,
 				FD6DEA7B50B8534C3B5707C9 /* WheelDirectionTests.swift in Sources */,

@@ -125,6 +125,9 @@ enum BuiltInRules {
             rule("win.screenshot", KeyCombo(.f13), KeyCombo([.control, .shift, .command], .three)),
             Rule(id: "win.taskManager", trigger: .key(combo: KeyCombo([.control, .shift], .escape)),
                  action: .openApplication(bundleID: "com.apple.ActivityMonitor")),
+            // Once a group of its own, "system" (SK-285); the ID stays, so a
+            // change to it keeps applying.
+            rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
         .init(id: "browser", rules: [
             outsideTerminals("browser.newTab", KeyCombo([.control], .t), KeyCombo([.command], .t)),
@@ -138,9 +141,6 @@ enum BuiltInRules {
             outsideTerminals("browser.zoomIn", KeyCombo([.control], .equal), KeyCombo([.command], .equal)),
             outsideTerminals("browser.zoomOut", KeyCombo([.control], .minus), KeyCombo([.command], .minus)),
             outsideTerminals("browser.zoomReset", KeyCombo([.control], .zero), KeyCombo([.command], .zero)),
-        ]),
-        .init(id: "system", rules: [
-            rule("sys.forceQuit", KeyCombo([.control, .option], .forwardDelete), KeyCombo([.option, .command], .escape)),
         ]),
         // Win+←/→/↑ on Windows. The trigger is ⌥, not ⌘, because these are
         // arrow keys pressed by feel: on a Mac keyboard ⌥ sits where the Win

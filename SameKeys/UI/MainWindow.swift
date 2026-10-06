@@ -540,7 +540,7 @@ struct GroupCard: View {
                 if isExpanded {
                     Divider().padding(.top, 12)
                     entryList
-                    if group.id == "system" {
+                    if group.id == "windows" {
                         Divider()
                         FunctionKeysRow()
                     }
@@ -683,7 +683,6 @@ enum RuleNames {
         case "dialogs": String(localized: "Open & Save Dialogs")
         case "windows": String(localized: "Apps & System")
         case "browser": String(localized: "Browser")
-        case "system": String(localized: "System")
         case "winKey": String(localized: "Windows Key")
         case "mouse": String(localized: "Mouse")
         case "scroll": String(localized: "Scroll")
@@ -713,7 +712,6 @@ enum RuleNames {
         case "dialogs": "folder.badge.gearshape"
         case "windows": "macwindow.on.rectangle"
         case "browser": "globe"
-        case "system": "gearshape.fill"
         case "winKey": "command"
         case "mouse": "computermouse.fill"
         case "scroll": "arrow.up.and.down"
@@ -730,7 +728,6 @@ enum RuleNames {
         case "dialogs": .brown
         case "windows": .purple
         case "browser": .green
-        case "system": .gray
         case "winKey": .pink
         case "mouse": .orange
         case "scroll": .cyan
