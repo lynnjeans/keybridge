@@ -146,6 +146,8 @@ p { margin: 0; }
 .button.secondary { background: none; color: var(--accent); box-shadow: inset 0 0 0 1px var(--line); }
 .button.secondary:hover { background: var(--bg-alt); }
 .button svg { width: 1em; height: 1em; fill: currentColor; }
+/* Sponsoring is a red heart wherever it appears, as in the app (SK-283). */
+.button svg.heart, svg.heart { fill: #e5484d; }
 
 /* Sections */
 
@@ -255,3 +257,5 @@ pre {
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .site-footer a { color: var(--text-2); }
 .site-footer a:hover { color: var(--text); }
+.site-footer .sponsor-link { display: inline-flex; align-items: center; gap: 5px; }
+.site-footer .sponsor-link svg { width: 0.95em; height: 0.95em; }
