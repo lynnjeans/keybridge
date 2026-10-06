@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SameKeys Workflow</title>
+<meta name="description" content="How SameKeys work goes from a request to a published release.">
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #e3e3e0;
+    --accent: #2f6fde;
+    --accent-soft: #e8effc;
+    --you: #b4540a;
+    --you-soft: #fdf0e3;
+    --warn: #9a6700;
+    --warn-soft: #fff6d6;
+    --code-bg: #f0f0ed;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161617;
+      --surface: #1f1f21;
+      --text: #ececee;
+      --muted: #a1a1a6;
+      --line: #333336;
+      --accent: #6a9df5;
+      --accent-soft: #1d2a42;
+      --you: #f0a35e;
+      --you-soft: #3a2614;
+      --warn: #e3b341;
+      --warn-soft: #3a3115;
+      --code-bg: #2a2a2d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161617;
+    --surface: #1f1f21;
+    --text: #ececee;
+    --muted: #a1a1a6;
+    --line: #333336;
+    --accent: #6a9df5;
+    --accent-soft: #1d2a42;
+    --you: #f0a35e;
+    --you-soft: #3a2614;
+    --warn: #e3b341;
+    --warn-soft: #3a3115;
+    --code-bg: #2a2a2d;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .lede { color: var(--muted); margin: 0 0 32px; max-width: 62ch; }
+  h2 { font-size: 1.25rem; margin: 48px 0 6px; }
+  h2 + p { color: var(--muted); margin: 0 0 18px; }
+  code {
+    font: 0.88em ui-monospace, "SF Mono", Menlo, monospace;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+  }
+  a { color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 999px;
+    vertical-align: 2px;
+    white-space: nowrap;
+  }
+  .tag.you { background: var(--you-soft); color: var(--you); }
+  .tag.claude { background: var(--accent-soft); color: var(--accent); }
+
+  ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
+  ol.steps > li {
+    counter-increment: step;
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px 14px 56px;
+    margin: 0 0 10px;
+  }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: grid;
+    place-items: center;
+  }
+  ol.steps > li.gate::before { background: var(--you-soft); color: var(--you); }
+  .step-title { font-weight: 600; }
+  ol.steps p, ol.steps ul { margin: 4px 0 0; }
+  ol.steps ul { padding-left: 18px; }
+  ol.steps li li { margin: 2px 0; }
+
+  .note {
+    background: var(--warn-soft);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 16px 0 0;
+  }
+  .note strong { color: var(--warn); }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 0; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
+
+  @media (max-width: 520px) {
+    main { padding-top: 32px; }
+    h1 { font-size: 1.6rem; }
+    ol.steps > li { padding-left: 48px; }
+    ol.steps > li::before { left: 12px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>From a request to a release</h1>
+  <p class="lede">How work on SameKeys moves from an idea to an update on every installed copy, as
+    done for 1.1, 1.2 and 1.3. Each change is one ticket; a release gathers whatever is merged.</p>
+
+  <div class="legend">
+    <span><span class="tag you">Maintainer</span> decides or does it by hand</span>
+    <span><span class="tag claude">Claude Code</span> does it, then reports</span>
+  </div>
+
+  <h2>1. One ticket, from request to merge</h2>
+  <p>Repeated for every change. Numbers count up: <code>SK-</code> followed by the next free number.</p>
+  <ol class="steps">
+    <li class="gate">
+      <div class="step-title">Request <span class="tag you">Maintainer</span></div>
+      <p>A feature, a fix, or feedback on something already built, such as “the rule editor is too wide”.</p>
+    </li>
+    <li>
+      <div class="step-title">Proposal <span class="tag claude">Claude Code</span></div>
+      <p>The options and a recommendation. Choices that belong to the maintainer, such as where an
+        option lives in the UI, which email address to publish, or whether something becomes a
+        preset, are asked before any code is written.</p>
+    </li>
+    <li class="gate">
+      <div class="step-title">Go-ahead <span class="tag you">Maintainer</span></div>
+    </li>
+    <li>
+      <div class="step-title">Ticket <span class="tag claude">Claude Code</span></div>
+      <p>A GitHub issue titled <code>SK-xxx …</code> with an estimate, a description and an
+        acceptance checklist.</p>
+    </li>
+    <li>
+      <div class="step-title">Branch and build <span class="tag claude">Claude Code</span></div>
+      <p>On <code>sk-xxx-short-name</code>, everything the change touches goes in together:</p>
+      <ul>
+        <li>code and unit tests</li>
+        <li>new strings in all ten languages (<code>scripts/sync-strings.sh</code>, no stale or untranslated entries)</li>
+        <li>the website, <code>docs/</code> and the release checklist where they describe the change</li>
+        <li><code>project.yml</code>, then <code>xcodegen generate</code>, when files move</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Verify <span class="tag claude">Claude Code</span></div>
+      <ul>
+        <li>The full test suite.</li>
+        <li>A signed test build, versioned like <code>1.2-sk280</code> (<code>ALLOW_DIRTY=1 scripts/release.sh</code>),
+          installed in <code>/Applications</code> so permissions and settings carry over.</li>
+        <li>Checks on the real app: keys sent through System Events, screenshots of the windows
+          involved, the app's log.</li>
+        <li>The Debug build is deleted afterwards, so Spotlight cannot start a second copy.</li>
+      </ul>
+    </li>
+    <li class="gate">
+      <div class="step-title">Hand check <span class="tag you">Maintainer</span></div>
+      <p>What a script cannot reach: a real key on a real keyboard (a Shift tap cannot be sent
+        from the shell), pages behind a GitHub sign-in, mail arriving in an inbox.</p>
+    </li>
+    <li>
+      <div class="step-title">Commit and pull request <span class="tag claude">Claude Code</span></div>
+      <p>The commit says what changed and why; the pull request says what was checked and how.
+        Done items in the issue are ticked.</p>
+    </li>
+    <li class="gate">
+      <div class="step-title">Merge <span class="tag you">Maintainer</span> says so, <span class="tag claude">Claude Code</span> merges</div>
+      <p>Squash merge into <code>main</code> (the repository allows no merge commits). The issue
+        closes and the branch is deleted.</p>
+    </li>
+  </ol>
+
+  <h2>2. A release</h2>
+  <p>Whenever the maintainer asks for one. Releases are numbered 1.1, 1.2, 1.3…; the build number only ever goes up by one.</p>
+  <ol class="steps">
+    <li class="gate">
+      <div class="step-title">“Release it” <span class="tag you">Maintainer</span></div>
+    </li>
+    <li>
+      <div class="step-title">Version <span class="tag claude">Claude Code</span></div>
+      <p>A release ticket, then <code>MARKETING_VERSION</code> and <code>CURRENT_PROJECT_VERSION</code>
+        raised in <code>project.yml</code> and the Xcode project.</p>
+    </li>
+    <li>
+      <div class="step-title">Release notes <span class="tag claude">Claude Code</span></div>
+      <p><code>release-notes/&lt;version&gt;/</code> in English, Simplified Chinese and Japanese:
+        one short line per area, no introduction, checked against the defaults rather than the
+        maintainer's own settings. They appear in the update window and on the GitHub release.</p>
+    </li>
+    <li class="gate">
+      <div class="step-title">Notes approved <span class="tag you">Maintainer</span></div>
+      <p>The Chinese version is shown for review; nothing is built until it is approved.</p>
+    </li>
+    <li>
+      <div class="step-title">Merge and build <span class="tag claude">Claude Code</span></div>
+      <p>The version pull request is merged, then on a clean <code>main</code>:</p>
+      <p><code>NOTARY_PROFILE=keybridge-notary scripts/release.sh</code></p>
+      <p>A Release build, signed with Developer ID, the app and the DMG each notarized and stapled.
+        Then <code>stapler validate</code> and <code>spctl</code> confirm Gatekeeper accepts it.</p>
+    </li>
+    <li class="gate">
+      <div class="step-title">Publish <span class="tag you">Maintainer</span></div>
+      <p>In the maintainer's own terminal: <code>scripts/publish-release.sh</code>. It shows what
+        is about to go out and waits for <code>y</code>, typed by hand. It uploads the DMG to a
+        GitHub release and adds the version to <code>site/appcast.xml</code>, the feed every
+        installed copy checks.</p>
+    </li>
+    <li>
+      <div class="step-title">Homebrew and checks <span class="tag claude">Claude Code</span></div>
+      <ul>
+        <li><code>scripts/update-cask.sh</code> points <code>lynnjeans/tap/samekeys</code> at the new DMG.</li>
+        <li>The live feed on samekeys.com and <code>brew info</code> both show the new version.</li>
+        <li>On the maintainer's Mac, Check for Updates installs it; then the installed version,
+          the process start time, both permissions, the rules loaded and the event tap are
+          confirmed from the log.</li>
+        <li>The release ticket is ticked and closed.</li>
+      </ul>
+    </li>
+  </ol>
+  <div class="note">
+    <strong>Skipped lately.</strong> <a href="releasing.md">releasing.md</a> asks for a full pass
+    of <a href="release-checklist.md">release-checklist.md</a> on the release build before
+    every release. 1.1, 1.2 and 1.3 went out without one; each change was checked on its own
+    instead.
+  </div>
+
+  <h2>Ground rules</h2>
+  <p>What holds at every step.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Rule</th><th>Why</th></tr>
+      <tr><td>Merging, publishing and changing the maintainer's settings wait for a yes.</td>
+        <td>They are hard to take back, and a release reaches every installed copy.</td></tr>
+      <tr><td>The <code>y</code> at publishing is typed by the maintainer, never scripted.</td>
+        <td>That prompt is the last look at what is about to ship.</td></tr>
+      <tr><td>Everything in the repository is in English; the app ships in ten languages.</td>
+        <td>An international project; see <a href="README.md">README.md</a>.</td></tr>
+      <tr><td>Test builds carry the ticket in their version, such as <code>1.3-sk282</code>, and a build number no higher than the release.</td>
+        <td>Easy to tell apart in a log, and Check for Updates still offers the next release.</td></tr>
+      <tr><td>Contact addresses are on samekeys.com, never personal.</td>
+        <td>Forwarding can change without a release.</td></tr>
+    </table>
+  </div>
+
+  <footer>Related: <a href="releasing.md">releasing.md</a> (signing secrets and the release steps in detail) ·
+    <a href="release-checklist.md">release-checklist.md</a> · <a href="testing-notes.md">testing-notes.md</a></footer>
+</main>
+</body>
+</html>

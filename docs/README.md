@@ -32,6 +32,8 @@ its String Catalog — that is product content, not project language.
 
 | File | Purpose |
 |---|---|
+| [workflow.html](workflow.html) | How a change goes from a request to a merged ticket, and a release to every installed copy |
+| [releasing.md](releasing.md) | Building, signing, publishing and the signing secrets |
 | [release-checklist.md](release-checklist.md) | The manual regression pass to run before every release |
 | [testing-notes.md](testing-notes.md) | How to verify behaviour on a real Mac, debug switches, and the traps that give wrong results |
 
