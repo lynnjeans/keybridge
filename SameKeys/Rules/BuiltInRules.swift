@@ -25,7 +25,8 @@ enum BuiltInRules {
 
     static let preset = Preset(id: "windows-standard", groups: [
         // A PC keyboard's Win key arrives as ⌘, so these also take over ⌘Tab,
-        // ⌘V, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac keyboard.
+        // ⌘V, ⌘Space, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped alone, on a Mac
+        // keyboard.
         // Off until the user asks. First in the list, so it is the first group
         // the Shortcuts page shows, and first to match: where another group's
         // rule of the same scope has the same trigger, this one wins (KB-266).
@@ -53,6 +54,11 @@ enum BuiltInRules {
             // shortcut keeps working.
             Rule(id: "winKey.showDesktop", trigger: .key(combo: KeyCombo([.command], .d)),
                  action: .systemAction(.showDesktop)),
+            // Windows 10 and 11 switch the input language or method with
+            // Win+Space, whatever the language (SK-278). It takes ⌘Space,
+            // Spotlight's shortcut, which is why the group is off by default.
+            Rule(id: "winKey.inputSource", trigger: .key(combo: KeyCombo([.command], .space)),
+                 action: .systemAction(.inputSource)),
             rule("winKey.emoji", KeyCombo([.command], .period), KeyCombo([.control, .command], .space)),
             rule("winKey.screenshotArea", KeyCombo([.shift, .command], .s), KeyCombo([.control, .shift, .command], .four)),
         ], isEnabledByDefault: false),

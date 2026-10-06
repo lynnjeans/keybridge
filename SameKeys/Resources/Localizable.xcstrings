@@ -25674,118 +25674,118 @@
         }
       }
     },
-    "Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab. While the clipboard history is on, ⌘V opens it instead of pasting." : {
+    "Win is ⌘, so these shortcuts take ⌘Tab, ⌘Space, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab. While the clipboard history is on, ⌘V opens it instead of pasting." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win ist ⌘, diese Kurzbefehle belegen also ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. und ⌘⇧S, und ⌘ allein öffnet Apps. ⌘Tab öffnet dann Mission Control; Apps wechselst du mit ⌥Tab. Ist der Zwischenablage-Verlauf an, öffnet ⌘V ihn statt einzufügen."
+            "value" : "Win ist ⌘, diese Kurzbefehle belegen also ⌘Tab, ⌘Leertaste, ⌘L, ⌘E, ⌘D, ⌘. und ⌘⇧S, und ⌘ allein öffnet Apps. ⌘Tab öffnet dann Mission Control; Apps wechselst du mit ⌥Tab. Ist der Zwischenablage-Verlauf an, öffnet ⌘V ihn statt einzufügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win es ⌘, así que estos atajos ocupan ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. y ⌘⇧S, y pulsar ⌘ solo abre Apps. ⌘Tab abre entonces Mission Control; cambia de app con ⌥Tab. Mientras el historial del portapapeles está activado, ⌘V lo abre en lugar de pegar."
+            "value" : "Win es ⌘, así que estos atajos ocupan ⌘Tab, ⌘Espacio, ⌘L, ⌘E, ⌘D, ⌘. y ⌘⇧S, y pulsar ⌘ solo abre Apps. ⌘Tab abre entonces Mission Control; cambia de app con ⌥Tab. Mientras el historial del portapapeles está activado, ⌘V lo abre en lugar de pegar."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win est ⌘, ces raccourcis prennent donc ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. et ⌘⇧S, et ⌘ seul ouvre Apps. ⌘Tab ouvre alors Mission Control ; changez d’app avec ⌥Tab. Tant que l’historique du presse-papiers est activé, ⌘V l’ouvre au lieu de coller."
+            "value" : "Win est ⌘, ces raccourcis prennent donc ⌘Tab, ⌘Espace, ⌘L, ⌘E, ⌘D, ⌘. et ⌘⇧S, et ⌘ seul ouvre Apps. ⌘Tab ouvre alors Mission Control ; changez d’app avec ⌥Tab. Tant que l’historique du presse-papiers est activé, ⌘V l’ouvre au lieu de coller."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win は ⌘ のため、これらのショートカットは ⌘Tab、⌘L、⌘E、⌘D、⌘.、⌘⇧S を使い、⌘ を単独で押すと「アプリ」が開きます。⌘Tab は Mission Control を開くようになり、アプリの切り替えは ⌥Tab で行います。クリップボード履歴がオンのときは、⌘V でペーストせずに履歴を開きます。"
+            "value" : "Win は ⌘ のため、これらのショートカットは ⌘Tab、⌘スペース、⌘L、⌘E、⌘D、⌘.、⌘⇧S を使い、⌘ を単独で押すと「アプリ」が開きます。⌘Tab は Mission Control を開くようになり、アプリの切り替えは ⌥Tab で行います。クリップボード履歴がオンのときは、⌘V でペーストせずに履歴を開きます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win이 ⌘이므로 이 단축키들은 ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S를 차지하고, ⌘만 누르면 앱이 열립니다. 이때 ⌘Tab은 Mission Control을 열며, 앱 전환은 ⌥Tab으로 합니다. 클립보드 기록이 켜져 있으면 ⌘V는 붙여넣는 대신 기록을 엽니다."
+            "value" : "Win이 ⌘이므로 이 단축키들은 ⌘Tab, ⌘스페이스, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S를 차지하고, ⌘만 누르면 앱이 열립니다. 이때 ⌘Tab은 Mission Control을 열며, 앱 전환은 ⌥Tab으로 합니다. 클립보드 기록이 켜져 있으면 ⌘V는 붙여넣는 대신 기록을 엽니다."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win to ⌘, więc te skróty zajmują ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. i ⌘⇧S, a samo stuknięcie ⌘ otwiera Aplikacje. ⌘Tab otwiera wtedy Mission Control; aplikacje przełączasz ⌥Tab. Gdy historia schowka jest włączona, ⌘V otwiera ją zamiast wklejać."
+            "value" : "Win to ⌘, więc te skróty zajmują ⌘Tab, ⌘Spacja, ⌘L, ⌘E, ⌘D, ⌘. i ⌘⇧S, a samo stuknięcie ⌘ otwiera Aplikacje. ⌘Tab otwiera wtedy Mission Control; aplikacje przełączasz ⌥Tab. Gdy historia schowka jest włączona, ⌘V otwiera ją zamiast wklejać."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win é ⌘, então estes atalhos ocupam ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. e ⌘⇧S, e tocar só em ⌘ abre Apps. ⌘Tab passa a abrir o Mission Control; alterne apps com ⌥Tab. Enquanto o histórico da área de transferência está ativado, ⌘V o abre em vez de colar."
+            "value" : "Win é ⌘, então estes atalhos ocupam ⌘Tab, ⌘Espaço, ⌘L, ⌘E, ⌘D, ⌘. e ⌘⇧S, e tocar só em ⌘ abre Apps. ⌘Tab passa a abrir o Mission Control; alterne apps com ⌥Tab. Enquanto o histórico da área de transferência está ativado, ⌘V o abre em vez de colar."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 映射为 ⌘，所以这些快捷键会占用 ⌘Tab、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 会打开“应用程序”。之后 ⌘Tab 打开调度中心，切换 App 请用 ⌥Tab。剪贴板历史开启时，⌘V 会打开它而不是粘贴。"
+            "value" : "Win 映射为 ⌘，所以这些快捷键会占用 ⌘Tab、⌘空格、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，单按一下 ⌘ 会打开“应用程序”。之后 ⌘Tab 打开调度中心，切换 App 请用 ⌥Tab。剪贴板历史开启时，⌘V 会打开它而不是粘贴。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 對應為 ⌘，所以這些快速鍵會佔用 ⌘Tab、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，單按一下 ⌘ 會打開「App」。之後 ⌘Tab 打開指揮中心，切換 App 請用 ⌥Tab。剪貼簿歷史開啟時，⌘V 會打開它而不是貼上。"
+            "value" : "Win 對應為 ⌘，所以這些快速鍵會佔用 ⌘Tab、⌘空白鍵、⌘L、⌘E、⌘D、⌘. 和 ⌘⇧S，單按一下 ⌘ 會打開「App」。之後 ⌘Tab 打開指揮中心，切換 App 請用 ⌥Tab。剪貼簿歷史開啟時，⌘V 會打開它而不是貼上。"
           }
         }
       }
     },
-    "Win is ⌥, so these shortcuts take ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts)." : {
+    "Win is ⌥, so these shortcuts take ⌥Tab, ⌥Space, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts)." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win ist ⌥, diese Kurzbefehle belegen also ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. und ⌥⇧S, und ⌥ allein öffnet Apps. ⌥ plus Buchstabe tippt auf dem Mac Zeichen (é, ¬, ∂; auf manchen Layouts @)."
+            "value" : "Win ist ⌥, diese Kurzbefehle belegen also ⌥Tab, ⌥Leertaste, ⌥L, ⌥E, ⌥D, ⌥. und ⌥⇧S, und ⌥ allein öffnet Apps. ⌥ plus Buchstabe tippt auf dem Mac Zeichen (é, ¬, ∂; auf manchen Layouts @)."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win es ⌥, así que estos atajos ocupan ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. y ⌥⇧S, y pulsar ⌥ solo abre Apps. ⌥ y una letra escriben caracteres en Mac (é, ¬, ∂; @ en algunas distribuciones)."
+            "value" : "Win es ⌥, así que estos atajos ocupan ⌥Tab, ⌥Espacio, ⌥L, ⌥E, ⌥D, ⌥. y ⌥⇧S, y pulsar ⌥ solo abre Apps. ⌥ y una letra escriben caracteres en Mac (é, ¬, ∂; @ en algunas distribuciones)."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win est ⌥, ces raccourcis prennent donc ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. et ⌥⇧S, et ⌥ seul ouvre Apps. ⌥ et une lettre saisissent des caractères sur Mac (é, ¬, ∂ ; @ sur certaines dispositions)."
+            "value" : "Win est ⌥, ces raccourcis prennent donc ⌥Tab, ⌥Espace, ⌥L, ⌥E, ⌥D, ⌥. et ⌥⇧S, et ⌥ seul ouvre Apps. ⌥ et une lettre saisissent des caractères sur Mac (é, ¬, ∂ ; @ sur certaines dispositions)."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win は ⌥ のため、これらのショートカットは ⌥Tab、⌥L、⌥E、⌥D、⌥.、⌥⇧S を使い、⌥ を単独で押すと「アプリ」が開きます。Mac では ⌥ と文字キーで文字を入力します（é、¬、∂、一部の配列では @）。"
+            "value" : "Win は ⌥ のため、これらのショートカットは ⌥Tab、⌥スペース、⌥L、⌥E、⌥D、⌥.、⌥⇧S を使い、⌥ を単独で押すと「アプリ」が開きます。Mac では ⌥ と文字キーで文字を入力します（é、¬、∂、一部の配列では @）。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win이 ⌥이므로 이 단축키들은 ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥., ⌥⇧S를 차지하고, ⌥만 누르면 앱이 열립니다. Mac에서 ⌥+글자는 문자를 입력합니다(é, ¬, ∂, 일부 자판에서는 @)."
+            "value" : "Win이 ⌥이므로 이 단축키들은 ⌥Tab, ⌥스페이스, ⌥L, ⌥E, ⌥D, ⌥., ⌥⇧S를 차지하고, ⌥만 누르면 앱이 열립니다. Mac에서 ⌥+글자는 문자를 입력합니다(é, ¬, ∂, 일부 자판에서는 @)."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win to ⌥, więc te skróty zajmują ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. i ⌥⇧S, a samo stuknięcie ⌥ otwiera Aplikacje. ⌥ z literą wpisuje na Macu znaki (é, ¬, ∂; na niektórych układach @)."
+            "value" : "Win to ⌥, więc te skróty zajmują ⌥Tab, ⌥Spacja, ⌥L, ⌥E, ⌥D, ⌥. i ⌥⇧S, a samo stuknięcie ⌥ otwiera Aplikacje. ⌥ z literą wpisuje na Macu znaki (é, ¬, ∂; na niektórych układach @)."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win é ⌥, então estes atalhos ocupam ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. e ⌥⇧S, e tocar só em ⌥ abre Apps. ⌥ e uma letra digitam caracteres no Mac (é, ¬, ∂; @ em alguns layouts)."
+            "value" : "Win é ⌥, então estes atalhos ocupam ⌥Tab, ⌥Espaço, ⌥L, ⌥E, ⌥D, ⌥. e ⌥⇧S, e tocar só em ⌥ abre Apps. ⌥ e uma letra digitam caracteres no Mac (é, ¬, ∂; @ em alguns layouts)."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 映射为 ⌥，所以这些快捷键会占用 ⌥Tab、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S，单按一下 ⌥ 会打开“应用程序”。⌥ 加字母在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @）。"
+            "value" : "Win 映射为 ⌥，所以这些快捷键会占用 ⌥Tab、⌥空格、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S，单按一下 ⌥ 会打开“应用程序”。⌥ 加字母在 Mac 上用来输入字符（é、¬、∂，某些布局下是 @）。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Win 對應為 ⌥，所以這些快速鍵會佔用 ⌥Tab、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S，單按一下 ⌥ 會打開「App」。⌥ 加字母在 Mac 上用來輸入字元（é、¬、∂，某些鍵盤配置下是 @）。"
+            "value" : "Win 對應為 ⌥，所以這些快速鍵會佔用 ⌥Tab、⌥空白鍵、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S，單按一下 ⌥ 會打開「App」。⌥ 加字母在 Mac 上用來輸入字元（é、¬、∂，某些鍵盤配置下是 @）。"
           }
         }
       }
@@ -26196,118 +26196,118 @@
         }
       }
     },
-    "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), ⌘V the clipboard history while it is on, and ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too." : {
+    "Windows key shortcuts are on with Win as ⌘: ⌘Tab opens Mission Control (switch apps with ⌥Tab), ⌘V the clipboard history while it is on, and ⌘Space, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and ⌘ tapped on its own, are taken too." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows-Tasten-Kurzbefehle sind an, Win ist ⌘: ⌘Tab öffnet Mission Control (Apps wechseln mit ⌥Tab), ⌘V den Zwischenablage-Verlauf, solange er an ist, und ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S und ⌘ allein sind ebenfalls belegt."
+            "value" : "Windows-Tasten-Kurzbefehle sind an, Win ist ⌘: ⌘Tab öffnet Mission Control (Apps wechseln mit ⌥Tab), ⌘V den Zwischenablage-Verlauf, solange er an ist, und ⌘Leertaste, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S und ⌘ allein sind ebenfalls belegt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los atajos de la tecla Windows están activados con Win como ⌘: ⌘Tab abre Mission Control (cambia de app con ⌥Tab), ⌘V el historial del portapapeles mientras esté activado, y ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S y ⌘ solo también quedan ocupados."
+            "value" : "Los atajos de la tecla Windows están activados con Win como ⌘: ⌘Tab abre Mission Control (cambia de app con ⌥Tab), ⌘V el historial del portapapeles mientras esté activado, y ⌘Espacio, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S y ⌘ solo también quedan ocupados."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les raccourcis de la touche Windows sont activés, avec Win sur ⌘ : ⌘Tab ouvre Mission Control (changez d’app avec ⌥Tab), ⌘V l’historique du presse-papiers s’il est activé, et ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S et ⌘ seul sont pris aussi."
+            "value" : "Les raccourcis de la touche Windows sont activés, avec Win sur ⌘ : ⌘Tab ouvre Mission Control (changez d’app avec ⌥Tab), ⌘V l’historique du presse-papiers s’il est activé, et ⌘Espace, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S et ⌘ seul sont pris aussi."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンで Win は ⌘ です：⌘Tab で Mission Control が開き（アプリの切り替えは ⌥Tab）、クリップボード履歴がオンなら ⌘V で履歴が開き、⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
+            "value" : "Windows キーのショートカットがオンで Win は ⌘ です：⌘Tab で Mission Control が開き（アプリの切り替えは ⌥Tab）、クリップボード履歴がオンなら ⌘V で履歴が開き、⌘スペース、⌘L、⌘E、⌘D、⌘.、⌘⇧S と ⌘ の単独押しも使われます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 키 단축키가 켜져 있으며 Win은 ⌘입니다: ⌘Tab은 Mission Control을 열고(앱 전환은 ⌥Tab), 클립보드 기록이 켜져 있으면 ⌘V는 기록을 열며, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S와 ⌘ 단독 입력도 차지됩니다."
+            "value" : "Windows 키 단축키가 켜져 있으며 Win은 ⌘입니다: ⌘Tab은 Mission Control을 열고(앱 전환은 ⌥Tab), 클립보드 기록이 켜져 있으면 ⌘V는 기록을 열며, ⌘스페이스, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S와 ⌘ 단독 입력도 차지됩니다."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skróty klawisza Windows są włączone, Win to ⌘: ⌘Tab otwiera Mission Control (aplikacje przełączasz ⌥Tab), ⌘V historię schowka, gdy jest włączona, a ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S i samo ⌘ też są zajęte."
+            "value" : "Skróty klawisza Windows są włączone, Win to ⌘: ⌘Tab otwiera Mission Control (aplikacje przełączasz ⌥Tab), ⌘V historię schowka, gdy jest włączona, a ⌘Spacja, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S i samo ⌘ też są zajęte."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os atalhos da tecla Windows estão ativados com Win como ⌘: ⌘Tab abre o Mission Control (alterne apps com ⌥Tab), ⌘V o histórico da área de transferência enquanto ativado, e ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S e ⌘ sozinho também ficam ocupados."
+            "value" : "Os atalhos da tecla Windows estão ativados com Win como ⌘: ⌘Tab abre o Mission Control (alterne apps com ⌥Tab), ⌘V o histórico da área de transferência enquanto ativado, e ⌘Espaço, ⌘L, ⌘E, ⌘D, ⌘., ⌘⇧S e ⌘ sozinho também ficam ocupados."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，Win 为 ⌘：⌘Tab 打开调度中心（切换 App 用 ⌥Tab），⌘V 在剪贴板历史开启时打开它，⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
+            "value" : "Windows 键快捷键已开启，Win 为 ⌘：⌘Tab 打开调度中心（切换 App 用 ⌥Tab），⌘V 在剪贴板历史开启时打开它，⌘空格、⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及单按 ⌘ 也会被占用。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 鍵快速鍵已開啟，Win 為 ⌘：⌘Tab 打開指揮中心（切換 App 用 ⌥Tab），⌘V 在剪貼簿歷史開啟時打開它，⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及單按 ⌘ 也會被佔用。"
+            "value" : "Windows 鍵快速鍵已開啟，Win 為 ⌘：⌘Tab 打開指揮中心（切換 App 用 ⌥Tab），⌘V 在剪貼簿歷史開啟時打開它，⌘空白鍵、⌘L、⌘E、⌘D、⌘.、⌘⇧S 以及單按 ⌘ 也會被佔用。"
           }
         }
       }
     },
-    "Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps." : {
+    "Windows key shortcuts are on with Win as ⌥: ⌥Tab opens Mission Control, ⌥Space, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S no longer type characters, and ⌥ tapped on its own opens Apps." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows-Tasten-Kurzbefehle sind an, Win ist ⌥: ⌥Tab öffnet Mission Control, ⌥L, ⌥E, ⌥D, ⌥. und ⌥⇧S tippen keine Zeichen mehr, und ⌥ allein öffnet Apps."
+            "value" : "Windows-Tasten-Kurzbefehle sind an, Win ist ⌥: ⌥Tab öffnet Mission Control, ⌥Leertaste, ⌥L, ⌥E, ⌥D, ⌥. und ⌥⇧S tippen keine Zeichen mehr, und ⌥ allein öffnet Apps."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los atajos de la tecla Windows están activados con Win como ⌥: ⌥Tab abre Mission Control, ⌥L, ⌥E, ⌥D, ⌥. y ⌥⇧S ya no escriben caracteres, y ⌥ solo abre Apps."
+            "value" : "Los atajos de la tecla Windows están activados con Win como ⌥: ⌥Tab abre Mission Control, ⌥Espacio, ⌥L, ⌥E, ⌥D, ⌥. y ⌥⇧S ya no escriben caracteres, y ⌥ solo abre Apps."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les raccourcis de la touche Windows sont activés, avec Win sur ⌥ : ⌥Tab ouvre Mission Control, ⌥L, ⌥E, ⌥D, ⌥. et ⌥⇧S ne saisissent plus de caractères, et ⌥ seul ouvre Apps."
+            "value" : "Les raccourcis de la touche Windows sont activés, avec Win sur ⌥ : ⌥Tab ouvre Mission Control, ⌥Espace, ⌥L, ⌥E, ⌥D, ⌥. et ⌥⇧S ne saisissent plus de caractères, et ⌥ seul ouvre Apps."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows キーのショートカットがオンで Win は ⌥ です：⌥Tab で Mission Control が開き、⌥L、⌥E、⌥D、⌥.、⌥⇧S では文字を入力できず、⌥ を単独で押すと「アプリ」が開きます。"
+            "value" : "Windows キーのショートカットがオンで Win は ⌥ です：⌥Tab で Mission Control が開き、⌥スペース、⌥L、⌥E、⌥D、⌥.、⌥⇧S では文字を入力できず、⌥ を単独で押すと「アプリ」が開きます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 키 단축키가 켜져 있으며 Win은 ⌥입니다: ⌥Tab은 Mission Control을 열고, ⌥L, ⌥E, ⌥D, ⌥., ⌥⇧S는 더 이상 문자를 입력하지 않으며, ⌥만 누르면 앱이 열립니다."
+            "value" : "Windows 키 단축키가 켜져 있으며 Win은 ⌥입니다: ⌥Tab은 Mission Control을 열고, ⌥스페이스, ⌥L, ⌥E, ⌥D, ⌥., ⌥⇧S는 더 이상 문자를 입력하지 않으며, ⌥만 누르면 앱이 열립니다."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skróty klawisza Windows są włączone, Win to ⌥: ⌥Tab otwiera Mission Control, ⌥L, ⌥E, ⌥D, ⌥. i ⌥⇧S nie wpisują już znaków, a samo ⌥ otwiera Aplikacje."
+            "value" : "Skróty klawisza Windows są włączone, Win to ⌥: ⌥Tab otwiera Mission Control, ⌥Spacja, ⌥L, ⌥E, ⌥D, ⌥. i ⌥⇧S nie wpisują już znaków, a samo ⌥ otwiera Aplikacje."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os atalhos da tecla Windows estão ativados com Win como ⌥: ⌥Tab abre o Mission Control, ⌥L, ⌥E, ⌥D, ⌥. e ⌥⇧S não digitam mais caracteres, e ⌥ sozinho abre Apps."
+            "value" : "Os atalhos da tecla Windows estão ativados com Win como ⌥: ⌥Tab abre o Mission Control, ⌥Espaço, ⌥L, ⌥E, ⌥D, ⌥. e ⌥⇧S não digitam mais caracteres, e ⌥ sozinho abre Apps."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 键快捷键已开启，Win 为 ⌥：⌥Tab 打开调度中心，⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再输入字符，单按 ⌥ 会打开“应用程序”。"
+            "value" : "Windows 键快捷键已开启，Win 为 ⌥：⌥Tab 打开调度中心，⌥空格、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再输入字符，单按 ⌥ 会打开“应用程序”。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Windows 鍵快速鍵已開啟，Win 為 ⌥：⌥Tab 打開指揮中心，⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再輸入字元，單按 ⌥ 會打開「App」。"
+            "value" : "Windows 鍵快速鍵已開啟，Win 為 ⌥：⌥Tab 打開指揮中心，⌥空白鍵、⌥L、⌥E、⌥D、⌥. 和 ⌥⇧S 不再輸入字元，單按 ⌥ 會打開「App」。"
           }
         }
       }
