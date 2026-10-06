@@ -42,7 +42,6 @@ struct SameKeysApp: App {
                 secureInput: appDelegate.secureInput,
                 otherRemappers: appDelegate.otherRemappers,
                 clipboard: appDelegate.clipboard,
-                pathBox: appDelegate.pathBox,
                 quickSwitch: appDelegate.quickSwitch,
                 updates: appDelegate.updates,
                 loginItem: appDelegate.loginItem,

@@ -175,8 +175,8 @@ targets:
       - path: SameKeys/Window/WindowElement.swift
       - path: SameKeys/Permissions
       - path: SameKeys/Clipboard
-      - path: SameKeys/PathBox/PathBoxResolver.swift
-      - path: SameKeys/PathBox/FinderFolderPicker.swift
+      - path: SameKeys/FileDialog/PastedPath.swift
+      - path: SameKeys/FileDialog/FinderFolderPicker.swift
       - path: SameKeys/App/EngineController.swift
       - path: SameKeys/App/LoginItem.swift
       - path: SameKeys/App/DiagnosticReport.swift

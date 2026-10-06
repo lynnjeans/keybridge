@@ -15,9 +15,9 @@ import Foundation
 ///   and column view lists every column from the disk down.
 ///
 /// So a folder counts only if it carries the window's title, and where more
-/// than one folder could be meant the answer is nil: a box that opens empty
-/// costs a keystroke, one that opens on the wrong folder sends the person
-/// somewhere they did not ask to go.
+/// than one folder could be meant the answer is nil: no jump costs a
+/// keystroke, a jump to the wrong folder sends the person somewhere they did
+/// not ask to go.
 enum FinderFolderPicker {
     /// One segment of the path bar: the name Finder shows, and where it
     /// points, nil when that is not a file path (Network's `nwnode:` segments).
@@ -35,7 +35,7 @@ enum FinderFolderPicker {
     ///   - names: the names a folder may be shown under. The path bar's own
     ///     text is Finder's, but an item's parent has only a path, and
     ///     SameKeys may run in another language than Finder — a mismatch
-    ///     only leaves the box empty.
+    ///     only leaves the answer nil.
     ///   - isFolder: whether a path is a folder that exists.
     static func folder(
         title: String,
@@ -48,7 +48,7 @@ enum FinderFolderPicker {
         guard !title.isEmpty else { return nil }
         // The deepest segment with the window's name; anything below it is
         // the selection. The one case this gets wrong is a selected folder
-        // named like the folder it is in (`Foo/Foo`): the box then opens one
+        // named like the folder it is in (`Foo/Foo`): the answer is then one
         // level too deep, which is rare and still next to where they are.
         if let path = crumbs.last(where: { comparable($0.name) == title && $0.path != nil })?.path, isFolder(path) {
             return path

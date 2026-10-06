@@ -32,7 +32,7 @@ enum Page: String, CaseIterable, Identifiable, Sendable {
         case .shortcuts: String(localized: "Switch whole preset groups on and off, or expand them to fine-tune each entry.")
         case .mouse: String(localized: "The wheel, zoom and buttons. The wheel settings are for the mouse only; the trackpad is left alone.")
         case .clipboard: String(localized: "Bring up your copy history at any time, like Win+V on Windows.")
-        case .finder: String(localized: "Right-click menu, a path box, and open and save dialogs that jump to where Finder is.")
+        case .finder: String(localized: "The right-click menu, and open and save dialogs that jump to where Finder is.")
         case .devices: String(localized: "Each keyboard and mouse can be set up on its own.")
         case .customRules: String(localized: "Create any “combination → combination” mapping of your own.")
         case .about: String(localized: "Version and updates, and diagnostics to export when something goes wrong. Open source under GPL-3.0, and free.")

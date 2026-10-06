@@ -1,10 +1,10 @@
 import Foundation
 import Testing
 
-/// What pasted text resolves to for the paste-a-path box (KB-213).
-@Suite struct PathBoxTests {
+/// What pasted text resolves to (KB-213, KB-268).
+@Suite struct PastedPathTests {
     private let files = FileManager.default
-    private let folder = FileManager.default.temporaryDirectory.appending(path: "PathBoxTests-\(UUID().uuidString)")
+    private let folder = FileManager.default.temporaryDirectory.appending(path: "PastedPathTests-\(UUID().uuidString)")
 
     private func withFixture(_ body: (URL) throws -> Void) rethrows {
         try? files.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -19,7 +19,7 @@ import Testing
             // the expected value is built the same way rather than reusing
             // `folder`, whose URL was made before the directory existed.
             let expected = URL(fileURLWithPath: folder.path(percentEncoded: false))
-            #expect(PathBoxResolver.resolve(folder.path(percentEncoded: false)) == .folder(expected))
+            #expect(PastedPath.resolve(folder.path(percentEncoded: false)) == .folder(expected))
         }
     }
 
@@ -27,31 +27,31 @@ import Testing
         try withFixture { folder in
             let file = folder.appending(path: "a.txt")
             try Data().write(to: file)
-            #expect(PathBoxResolver.resolve(file.path(percentEncoded: false)) == .file(file))
+            #expect(PastedPath.resolve(file.path(percentEncoded: false)) == .file(file))
         }
     }
 
     @Test func aMissingPathResolvesToNil() {
-        #expect(PathBoxResolver.resolve("/definitely/not/a/real/path/\(UUID().uuidString)") == nil)
+        #expect(PastedPath.resolve("/definitely/not/a/real/path/\(UUID().uuidString)") == nil)
     }
 
     @Test func emptyOrBlankInputResolvesToNil() {
-        #expect(PathBoxResolver.resolve("") == nil)
-        #expect(PathBoxResolver.resolve("   \n\t  ") == nil)
+        #expect(PastedPath.resolve("") == nil)
+        #expect(PastedPath.resolve("   \n\t  ") == nil)
     }
 
     @Test func surroundingWhitespaceAndQuotesAreStripped() {
         withFixture { folder in
             let path = folder.path(percentEncoded: false)
             let expected = URL(fileURLWithPath: path)
-            #expect(PathBoxResolver.resolve("  \(path)  \n") == .folder(expected))
-            #expect(PathBoxResolver.resolve("\"\(path)\"") == .folder(expected))
+            #expect(PastedPath.resolve("  \(path)  \n") == .folder(expected))
+            #expect(PastedPath.resolve("\"\(path)\"") == .folder(expected))
         }
     }
 
     @Test func tildeExpandsToTheHomeDirectory() {
         let home = files.homeDirectoryForCurrentUser
-        #expect(PathBoxResolver.resolve("~") == .folder(URL(fileURLWithPath: home.path(percentEncoded: false))))
+        #expect(PastedPath.resolve("~") == .folder(URL(fileURLWithPath: home.path(percentEncoded: false))))
     }
 
     @Test func aBundleResolvesToAFileSoItIsRevealedRatherThanLaunched() throws {
@@ -61,7 +61,7 @@ import Testing
             let bundle = folder.appending(path: "Example.app")
             try files.createDirectory(at: bundle, withIntermediateDirectories: true)
             let path = bundle.path(percentEncoded: false)
-            #expect(PathBoxResolver.resolve(path) == .file(URL(fileURLWithPath: path)))
+            #expect(PastedPath.resolve(path) == .file(URL(fileURLWithPath: path)))
         }
     }
 
@@ -70,13 +70,13 @@ import Testing
             // SameKeys's own Copy Path writes one path per line.
             let path = folder.path(percentEncoded: false)
             let pasted = "\(path)\n/definitely/not/a/real/path\n"
-            #expect(PathBoxResolver.resolve(pasted) == .folder(URL(fileURLWithPath: path)))
+            #expect(PastedPath.resolve(pasted) == .folder(URL(fileURLWithPath: path)))
         }
     }
 
     @Test func aSingleQuoteIsLeftAlone() {
         // Not a matched pair, so it is part of the path, not a wrapper — and
         // a lone quote can never be a real path anyway.
-        #expect(PathBoxResolver.clean("\"/tmp") == "\"/tmp")
+        #expect(PastedPath.clean("\"/tmp") == "\"/tmp")
     }
 }

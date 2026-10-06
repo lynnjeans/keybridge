@@ -210,7 +210,7 @@ Debug builds read these environment variables at launch. Pass them with `open --
 | `KB_DEBUG_SYSACTION` | Two seconds after launch, triggers the named system function as a rule would (KB-051): `missionControl`, `applicationWindows`, `showDesktop`, `apps`, `spaceLeft`, `spaceRight`, `spotlight`. Launch again with the same name to toggle it back. Check with `screencapture -x -m` |
 | `KB_DEBUG_DOCKTEST` | Two seconds after launch, finds the frontmost app's Dock icon and runs the lookup a click there would (KB-204); logs `docktest … target=window` or `none`, then `none` for a point off the icon. Nothing is minimized. Needs an unlocked screen: while locked, the frontmost app is `loginwindow` |
 | `KB_DEBUG_DIALOGJUMP` | Three seconds after launch, carries out the file dialog action it names — `finderFolder` (the default, as ⌃G: jumps the dialog in front to Finder's folder, KB-217) or `recentLocations` (as ⌃⇧G: shows the recent locations list over the dialog or Finder, KB-219) — and logs `dialogjump front=… dialog=true|false finder=… recent=…` in the `fileDialog` category. Open a dialog first and keep it in front (e.g. launch TextEdit, which opens with one); `where popup` in its AX tree then shows the new folder |
-| `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `pathBox` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
+| `KB_DEBUG_FINDERPATH` | Two seconds after launch, logs what each Finder window comes to (KB-214): `finderpath title=… lastCrumb=… crumbs=… items=… path=… ms=…` in the `fileDialog` category, `path=none` where the path box opens empty (Recents, a search, AirDrop, an empty folder with the path bar hidden). Finder need not be in front; nothing is changed |
 | `KB_DEBUG_SNAP` | Three seconds after launch, runs each snap (left half, right half, fill) on the frontmost window two seconds apart, puts it back, then minimizes it (KB-201); logs `snaptest <position> wanted=… landed=…` in the `window` category. Launch SameKeys first, then bring the app to test to the front |
 | `KB_DEBUG_APPCAST` | Checks for updates against the appcast at this URL instead of the website (KB-101). Without it, debug builds never check: their build number is 1, so they would replace themselves with the latest release. See [Testing updates](#testing-updates) |
 | `KB_DEBUG_WINDOWTEST` | Three seconds after launch, shrinks the frontmost window into the top-left quarter of its screen's usable area (KB-200), logs `windowtest … was=… wanted=… landed=…` in the `window` category, and puts the window back two seconds later. Launch SameKeys first and bring the app to test to the front within those three seconds |
@@ -318,7 +318,7 @@ screenshotted in each language:
 
 | Variable | Effect |
 |---|---|
-| `KB_DEBUG_SHOW` | `main`, `onboarding`, `clipboard` (the history panel) or `pathbox` (the path box, filled in as ⌘L would fill it — open Finder on a folder first) opens a second after launch |
+| `KB_DEBUG_SHOW` | `main`, `onboarding` or `clipboard` (the history panel) opens a second after launch |
 | `KB_DEBUG_PAGE` | The main window shows this page: `overview`, `shortcuts`, `mouse`, `scroll`, `clipboard`, `customRules`, `about` |
 | `KB_DEBUG_EXPAND_ALL` | Every group on the Shortcuts page starts expanded |
 | `KB_DEBUG_RULE_EDITOR` | With `KB_DEBUG_PAGE=customRules` the editor opens on a new rule for side button 4; with `mouse`, on the Back button |
@@ -351,7 +351,7 @@ About › Export Diagnostics… saves a text file for a user to attach to a prob
 macOS and Mac model, permissions, whether the engine runs, Secure Input, other remappers, a summary
 of the settings, the settings each connected keyboard actually runs with and where they come from
 (its own, a PC keyboard's defaults, or general), settings kept outside the configuration file
-(path box, recent folders, Finder extension, updates, natural scrolling), the configuration file in
+(recent folders, Finder extension, updates, natural scrolling), the configuration file in
 full, the last recording, SameKeys's log since launch and the logs of earlier launches. The
 clipboard history appears only as a count, and the home folder is written as `~`.
 

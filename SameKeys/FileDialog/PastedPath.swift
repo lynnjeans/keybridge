@@ -1,19 +1,19 @@
 import Foundation
 
-/// What a path pasted into the path box (KB-213) resolves to.
-enum PathBoxTarget: Equatable {
+/// What a pasted path resolves to.
+enum PastedPathTarget: Equatable {
     /// Navigate straight here.
     case folder(URL)
     /// Navigate to the containing folder and select this.
     case file(URL)
 }
 
-/// Turns what was pasted or typed into the box into something Finder can be
-/// sent to. Pure, and touches the file system only through `FileManager`, so
+/// Turns a path pasted or typed into the recent locations list (KB-268)
+/// into something Finder or a dialog can be sent to. Pure, and touches the file system only through `FileManager`, so
 /// it is testable without a real Finder.
-enum PathBoxResolver {
+enum PastedPath {
     /// Nil for empty input, or a path nothing exists at.
-    static func resolve(_ text: String, fileManager: FileManager = .default) -> PathBoxTarget? {
+    static func resolve(_ text: String, fileManager: FileManager = .default) -> PastedPathTarget? {
         let trimmed = clean(text)
         guard !trimmed.isEmpty else { return nil }
         let path = (trimmed as NSString).expandingTildeInPath

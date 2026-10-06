@@ -12,7 +12,7 @@ final class FrontmostApplication {
 
     /// Told whenever the frontmost application changes, for features that
     /// have to act on the change rather than read the value per event: the
-    /// path box holds its system hot key only while Finder is in front.
+    /// recent folders take in Finder's own as Finder leaves the front.
     var onChange: (@MainActor (String?) -> Void)?
 
     // Kept for the app's lifetime, so the observer is never removed.

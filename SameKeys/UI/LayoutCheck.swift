@@ -8,8 +8,8 @@ import Foundation
 ///     open SameKeys.app --env KB_DEBUG_SHOW=main --env KB_DEBUG_PAGE=shortcuts \
 ///         --args -AppleLanguages '(ja)'
 ///
-/// - `KB_DEBUG_SHOW`: `main`, `onboarding`, `clipboard` (the history panel)
-///   or `pathbox` (the path box, as ⌘L over Finder would open it).
+/// - `KB_DEBUG_SHOW`: `main`, `onboarding` or `clipboard` (the history
+///   panel).
 /// - `KB_DEBUG_PAGE`: a `Page` raw value, shown in the main window.
 /// - `KB_DEBUG_EXPAND_ALL`: every Shortcuts group starts expanded.
 /// - `KB_DEBUG_RULE_EDITOR`: the Custom Rules page opens the editor on a
@@ -67,7 +67,7 @@ enum LayoutCheck {
         }
     }
 
-    static func showRequestedWindow(clipboardPanel: ClipboardPanelController, pathBox: PathBoxController) {
+    static func showRequestedWindow(clipboardPanel: ClipboardPanelController) {
         switch environment["KB_DEBUG_APPEARANCE"] {
         case "light": NSApp.appearance = NSAppearance(named: .aqua)
         case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
@@ -81,7 +81,6 @@ enum LayoutCheck {
             case "main": NotificationCenter.default.post(name: .openMainWindow, object: nil)
             case "onboarding": NotificationCenter.default.post(name: .openOnboarding, object: nil)
             case "clipboard": clipboardPanel.show()
-            case "pathbox": pathBox.showPanel?()
             default: break
             }
         }
