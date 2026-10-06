@@ -1,11 +1,12 @@
 # Publishes site/ to GitHub Pages, at https://samekeys.com/,
-# whenever it changes on main. The site is plain HTML: nothing is built.
+# whenever it changes on main. The site is plain HTML: nothing is built, but
+# scripts/site/seo.py adds FAQ structured data and sitemap dates on the way.
 name: Website
 
 on:
   push:
     branches: [main]
-    paths: ["site/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "scripts/site/seo.py", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +27,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # seo.py dates each page by its last commit
+      - run: python3 scripts/site/seo.py site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
