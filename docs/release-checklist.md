@@ -164,7 +164,8 @@ In a Finder window with a scratch folder of test files:
 - [ ] The group is off after a fresh install. Switching it on asks for confirmation first.
 - [ ] **[PC keyboard]** Win+L → the screen locks. Win+E → Finder. Win+D → shows the desktop.
       Win+. → the emoji picker. Win+Shift+S → an area screenshot to the clipboard.
-- [ ] With the group on, the Overview notes that ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S are taken on a Mac
+      Win+Space → ABC and the other input source swap, with no switcher on screen.
+- [ ] With the group on, the Overview notes that ⌘Space, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S are taken on a Mac
       keyboard too. Switch it off → ⌘L selects the Safari address bar again.
 
 ## 9. The Ctrl key choice (fn | Ctrl | Both)

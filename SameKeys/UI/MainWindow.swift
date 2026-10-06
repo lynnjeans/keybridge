@@ -215,9 +215,9 @@ private struct ShortcutsPage: View {
             } message: {
                 switch rules.modifierLayout {
                 case .pcKeyboard:
-                    Text("Win is ⌘, so these shortcuts take ⌘Tab, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab. While the clipboard history is on, ⌘V opens it instead of pasting.")
+                    Text("Win is ⌘, so these shortcuts take ⌘Tab, ⌘Space, ⌘L, ⌘E, ⌘D, ⌘. and ⌘⇧S, and tapping ⌘ on its own opens Apps. ⌘Tab then opens Mission Control; switch apps with ⌥Tab. While the clipboard history is on, ⌘V opens it instead of pasting.")
                 case .macPosition:
-                    Text("Win is ⌥, so these shortcuts take ⌥Tab, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts).")
+                    Text("Win is ⌥, so these shortcuts take ⌥Tab, ⌥Space, ⌥L, ⌥E, ⌥D, ⌥. and ⌥⇧S, and tapping ⌥ on its own opens Apps. ⌥ and a letter types characters on a Mac (é, ¬, ∂; @ on some layouts).")
                 }
             }
 
@@ -768,6 +768,7 @@ enum RuleNames {
         "winKey.clipboard": String(localized: "Clipboard history"),
         "winKey.lock": String(localized: "Lock screen"), "winKey.explorer": String(localized: "File Explorer (Finder)"),
         "winKey.showDesktop": String(localized: "Show desktop"), "winKey.emoji": String(localized: "Emoji & symbols"),
+        "winKey.inputSource": String(localized: "Switch input source"),
         "winKey.screenshotArea": String(localized: "Screenshot of an area to clipboard"),
         "mouse.back": String(localized: "Back"), "mouse.forward": String(localized: "Forward"),
         "scroll.zoomIn": String(localized: "Zoom in"), "scroll.zoomOut": String(localized: "Zoom out"),

@@ -28,6 +28,8 @@ import Testing
         #expect(controller.modifierLayout == .pcKeyboard)
         #expect(trigger("winKey.lock", in: controller.effectiveRules) == key([.command], .l))
         #expect(trigger("winKey.start", in: controller.effectiveRules) == key([], .command))
+        #expect(trigger("winKey.inputSource", in: controller.effectiveRules) == key([.command], .space))
+        #expect(controller.effectiveRules.first { $0.id == "winKey.inputSource" }?.action == .systemAction(.inputSource))
         #expect(trigger("win.quit", in: controller.effectiveRules) == key([.option], .f4))
     }
 
@@ -37,6 +39,7 @@ import Testing
         let rules = controller.effectiveRules
         #expect(trigger("winKey.lock", in: rules) == key([.option], .l))
         #expect(trigger("winKey.screenshotArea", in: rules) == key([.shift, .option], .s))
+        #expect(trigger("winKey.inputSource", in: rules) == key([.option], .space), "Win+Space (SK-278)")
         #expect(trigger("winKey.start", in: rules) == key([], .option), "Win alone is ⌥ alone")
         #expect(trigger("win.quit", in: rules) == key([.command], .f4))
         #expect(trigger("sys.forceQuit", in: rules) == key([.control, .command], .forwardDelete))
