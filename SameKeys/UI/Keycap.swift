@@ -122,6 +122,8 @@ struct MappingView: View {
             FileDialogActionLabel(action: action)
         case .clipboardHistory:
             ClipboardHistoryLabel()
+        case .switchInputSource:
+            InputSourceLabel()
         }
     }
 

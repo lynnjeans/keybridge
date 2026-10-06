@@ -66,6 +66,7 @@
 		4C36FAE2BD3814381F05A2C0 /* ClipboardPrivacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFAAC8AE621D88488E1314 /* ClipboardPrivacy.swift */; };
 		4D79B3D09011F22C93418DA7 /* ControlKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506993A2E4DFC59F4D397A8 /* ControlKeyTests.swift */; };
 		4DFCCC9196FB162E1D974532 /* FileDialogAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D931ADCD48420B49591A4656 /* FileDialogAction.swift */; };
+		4FB40EAF315983FFCFB3A6AF /* InputSourceSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA845B23BAA8159DED50C0B /* InputSourceSwitcher.swift */; };
 		5016CA0D8A10908931BA2389 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3AFE2012508A3114D4048 /* Dispatcher.swift */; };
 		50668DE43C1FEBA125EE3476 /* InstallLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C76BAEE0ACA75B87178746 /* InstallLocation.swift */; };
 		509285B06BD449DF465629B2 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88773A43AA2B3D211F9278C6 /* OnboardingController.swift */; };
@@ -115,6 +116,7 @@
 		84B0F9890EC571DDFFF3CA5D /* SupportFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8661E1BC1650CD7612B9CFB8 /* SupportFolder.swift */; };
 		88273ACB4DCD66F0BB2D6638 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2011BE42B6B7BC8B938DA0 /* KeyCodeLabelTests.swift */; };
 		89409268F52F2BB12E58BD52 /* FileDialogAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D931ADCD48420B49591A4656 /* FileDialogAction.swift */; };
+		8A3A00BB69A28E77ED242BBF /* InputSourceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */; };
 		8AD03F8D451CC96BC0E3249B /* CtrlClickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F9CF40444D192FE78F977B /* CtrlClickTests.swift */; };
 		8BFA79732995CECBD474AFF5 /* DiagnosticRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664DAEF22C12EFC863CC65B8 /* DiagnosticRecorder.swift */; };
 		8C40BCC9BD209530421D5F13 /* DockClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC12EBF136433446415F3FBC /* DockClick.swift */; };
@@ -126,6 +128,7 @@
 		90EDBE7EA83D2726C10EFA3B /* DockClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC12EBF136433446415F3FBC /* DockClick.swift */; };
 		928774D0EC055C9A477A4BC3 /* FinderMenuSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E76B2127DD1445B99B8A52 /* FinderMenuSender.swift */; };
 		92D9C30F01048410A58934A9 /* SameKeysFinder.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7844657A77E7B38844CCC14 /* SameKeysFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		94AD36E7ABC54E0B889007C9 /* InputSourceSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F610FFF1240D830B05D3A4 /* InputSourceSwitcherTests.swift */; };
 		95BEBD50D0BCFF47736FC013 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9056B1D6B2C2873B53B207AD /* GlobalHotKey.swift */; };
 		9704C007CD698F6B4E054827 /* WindowElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69CE5E1DB45710F63F71645 /* WindowElement.swift */; };
 		9734D8BCBE6B9A1BBFD07D3C /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9056B1D6B2C2873B53B207AD /* GlobalHotKey.swift */; };
@@ -196,6 +199,7 @@
 		DE3450B8D8F727D1D539FE14 /* ScrollStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6EB69003D2C66DC8C85C1F /* ScrollStepper.swift */; };
 		DE4F52C237318B83873A9A68 /* ModifierTapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FA5A5BB32F19908D21426F /* ModifierTapTests.swift */; };
 		DEEA688653C3FA4DBF32BCF5 /* FinderRecentFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA1E17BB86CCBB1E0DA5F8 /* FinderRecentFolders.swift */; };
+		DF7771D6897F226A4C970580 /* InputSourceSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA845B23BAA8159DED50C0B /* InputSourceSwitcher.swift */; };
 		DFC33DE93FE99FFAA79EF837 /* ScrollStepperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CE0D7492068AF95993412C /* ScrollStepperTests.swift */; };
 		E03D9CBD73ECB8C7EE303A62 /* MergeEdgeCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F17D121C419D6EA88BF6A7 /* MergeEdgeCaseTests.swift */; };
 		E0D36ADE37B7CF74589FFF1A /* ClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801766E58280B8C431923D11 /* ClipboardHistory.swift */; };
@@ -276,6 +280,7 @@
 		3DA70BFD5B42EC76D3F78C9A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		402DE3C018FC41A42FF37271 /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
 		408853C20209088A7A98B32E /* PastedPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastedPath.swift; sourceTree = "<group>"; };
+		42F610FFF1240D830B05D3A4 /* InputSourceSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceSwitcherTests.swift; sourceTree = "<group>"; };
 		48630A35ED60631D6F264AAB /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		4B3E1C8757B603B3FECB65F6 /* DiagnosticReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticReportTests.swift; sourceTree = "<group>"; };
 		4B97207BA12F1BAE87AD0BF4 /* Relaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relaunch.swift; sourceTree = "<group>"; };
@@ -337,6 +342,7 @@
 		991D48EF1CE9227D45C2C37A /* WheelDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDirection.swift; sourceTree = "<group>"; };
 		9A47015A7322EEF4F895A9C5 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		9B5E118D3330376A2D14E8DC /* ModifierLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierLayoutTests.swift; sourceTree = "<group>"; };
+		9FA845B23BAA8159DED50C0B /* InputSourceSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceSwitcher.swift; sourceTree = "<group>"; };
 		9FC935F689F0AA8051FEE5F6 /* MousePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MousePage.swift; sourceTree = "<group>"; };
 		9FCA8478942067A690128F59 /* WindowAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAction.swift; sourceTree = "<group>"; };
 		A19A1E4BA6E88B44330E79C7 /* RuleEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditor.swift; sourceTree = "<group>"; };
@@ -399,6 +405,7 @@
 		E428FF70D3D6610C31BD1836 /* CustomRulesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRulesPage.swift; sourceTree = "<group>"; };
 		E68E61C753ED365A52F440D4 /* QuickSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSwitch.swift; sourceTree = "<group>"; };
 		EBD5BFE97929823FB47633DC /* SettingsBackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBackupTests.swift; sourceTree = "<group>"; };
+		EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceAction.swift; sourceTree = "<group>"; };
 		F1C5FB9573425A0CC1E8ADCF /* ClipboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPage.swift; sourceTree = "<group>"; };
 		F3C4DC7C1271CB669DEC0C4A /* KeyRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRecording.swift; sourceTree = "<group>"; };
 		F51D896F5F79A50578202B02 /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
@@ -521,6 +528,7 @@
 				6D6299C7B5B6C1C9E52D8111 /* FileDialogActionPicker.swift */,
 				B1E58C2444C9DDDE400F50F7 /* FinderMenuCard.swift */,
 				7F8BA451AA5F19D2D76D3166 /* FinderPage.swift */,
+				EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */,
 				96E84C6BF6E89F3E0FF74A6E /* KeyboardChoices.swift */,
 				0C027F534A6C9F0449C3E4CB /* KeyboardRows.swift */,
 				BC6EA2746C5203B32CCB7185 /* Keycap.swift */,
@@ -609,6 +617,7 @@
 				7C8110BE2931E99D53D37DDB /* FinderFolderTests.swift */,
 				282F5EF254C6BB37725F96A5 /* FinderMenuSenderTests.swift */,
 				8801414BA2F755428088DD6B /* FinderMenuTests.swift */,
+				42F610FFF1240D830B05D3A4 /* InputSourceSwitcherTests.swift */,
 				8004F0A3F0291D5FADFDA3ED /* InstallLocationTests.swift */,
 				C350E627196F266E0AEFFC50 /* KeyboardChoicesTests.swift */,
 				6881B8B7CF44B26DB518078E /* KeyboardListTests.swift */,
@@ -665,6 +674,7 @@
 				6FB5D58E6FB3FD582BB0173C /* EventTapSelfTest.swift */,
 				50249C29F25567DFB45AC5D6 /* EventTrigger.swift */,
 				248086A77D3448F606B1DA1F /* FocusedElement.swift */,
+				9FA845B23BAA8159DED50C0B /* InputSourceSwitcher.swift */,
 				7E2CA79B5E99D67C43B7EEE7 /* KeyboardList.swift */,
 				C95F79A7C29533C667074CED /* KeyboardSource.swift */,
 				E2F12E001EEABB665CBFC3C2 /* ModifierTap.swift */,
@@ -897,6 +907,8 @@
 				33EC5974475466E390BC2340 /* FocusedElement.swift in Sources */,
 				F18391EE2B30467361B4CC7D /* FrontmostApplication.swift in Sources */,
 				95BEBD50D0BCFF47736FC013 /* GlobalHotKey.swift in Sources */,
+				8A3A00BB69A28E77ED242BBF /* InputSourceAction.swift in Sources */,
+				DF7771D6897F226A4C970580 /* InputSourceSwitcher.swift in Sources */,
 				D15BA97C07083160D48D0EAC /* InstallLocation.swift in Sources */,
 				F81AF2FDB8A225AE11D612F3 /* KeyCodeLabel.swift in Sources */,
 				EB5011D25408F21B34F47125 /* KeyCombo.swift in Sources */,
@@ -1014,6 +1026,8 @@
 				794108597BB520A230511672 /* FinderMenuTests.swift in Sources */,
 				DEEA688653C3FA4DBF32BCF5 /* FinderRecentFolders.swift in Sources */,
 				9734D8BCBE6B9A1BBFD07D3C /* GlobalHotKey.swift in Sources */,
+				4FB40EAF315983FFCFB3A6AF /* InputSourceSwitcher.swift in Sources */,
+				94AD36E7ABC54E0B889007C9 /* InputSourceSwitcherTests.swift in Sources */,
 				50668DE43C1FEBA125EE3476 /* InstallLocation.swift in Sources */,
 				1BF8430C0970EE49EEB6AD0F /* InstallLocationTests.swift in Sources */,
 				56401159DB02BAEC34644CCF /* KeyCodeLabel.swift in Sources */,

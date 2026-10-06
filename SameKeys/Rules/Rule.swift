@@ -51,4 +51,8 @@ enum Action: Codable, Hashable, Sendable {
     /// Shows or hides SameKeys's clipboard history, as its own shortcut
     /// does (KB-245). Only matches while the history is on.
     case clipboardHistory
+    /// Switches between a keyboard layout such as ABC and an input method
+    /// such as Pinyin, without the system's input source switcher on
+    /// screen (SK-277).
+    case switchInputSource
 }

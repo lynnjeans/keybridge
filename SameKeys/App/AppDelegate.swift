@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
     lazy var quickSwitch = QuickSwitch(locations: FileLocations())
     let frontmost = FrontmostApplication()
+    let inputSources = InputSourceSwitcher()
     let keyboards = KeyboardList()
     let dockClick = DockClick(lookUp: DockWindow.target(forClickAt:), minimize: DockWindow.minimize)
     /// Which keyboard a key came from, for keyboards with settings of their
@@ -30,6 +31,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         fileDialog: { [quickSwitch] in quickSwitch.perform($0) },
         isClipboardHistoryOn: { [weak self] in self?.clipboard.isEnabled ?? false },
         toggleClipboardHistory: { [weak self] in self?.clipboardPanel.toggle() },
+        switchInputSource: { [inputSources] in inputSources.toggle() },
         keyboard: { [keyboardSource] in keyboardSource.keyboard(of: $0) }
     )
     /// The preset, the user's changes to it, and the rules that result. It

@@ -101,6 +101,9 @@ final class Dispatcher {
     /// Whether the clipboard history is on, and showing or hiding it.
     private let isClipboardHistoryOn: @MainActor () -> Bool
     private let toggleClipboardHistory: @MainActor () -> Void
+    /// Selects the other input source. Injected so tests leave this Mac's
+    /// input source alone.
+    private let switchInputSource: @MainActor () -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
@@ -113,6 +116,7 @@ final class Dispatcher {
         fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in },
         isClipboardHistoryOn: @escaping @MainActor () -> Bool = { false },
         toggleClipboardHistory: @escaping @MainActor () -> Void = {},
+        switchInputSource: @escaping @MainActor () -> Void = {},
         now: @escaping @MainActor () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
         isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() },
         keyboard: @escaping @MainActor (CGEvent) -> Keyboard? = { _ in nil }
@@ -126,6 +130,7 @@ final class Dispatcher {
         self.fileDialog = fileDialog
         self.isClipboardHistoryOn = isClipboardHistoryOn
         self.toggleClipboardHistory = toggleClipboardHistory
+        self.switchInputSource = switchInputSource
         self.post = post
         self.openApplication = openApplication
         self.systemShortcuts = systemShortcuts
@@ -342,6 +347,8 @@ final class Dispatcher {
             act(on: action)
         case .clipboardHistory:
             showClipboardHistory()
+        case .switchInputSource:
+            switchInputSource()
         }
     }
 
@@ -439,6 +446,11 @@ final class Dispatcher {
         case .clipboardHistory:
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             showClipboardHistory()
+            return .consume
+        case .switchInputSource:
+            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
+            // Out of the tap callback, as the clipboard history is.
+            DispatchQueue.main.async { [self] in switchInputSource() }
             return .consume
         }
     }
