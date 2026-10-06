@@ -6,6 +6,23 @@
     <description>SameKeys updates</description>
     <language>en</language>
     <item>
+      <title>SameKeys 1.3</title>
+      <pubDate>Tue, 06 Oct 2026 09:15:21 GMT</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>1.3</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description xml:lang="en">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Feedback&lt;/b&gt;: a new Feedback card on the About page reports a problem on GitHub or by email to hello@samekeys.com, with your versions filled in.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="zh-Hans">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;反馈&lt;/b&gt;：「关于」页新增「反馈」，可以在 GitHub 上报告问题，也可以发邮件到 hello@samekeys.com，版本号会自动填好。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <description xml:lang="ja">&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;フィードバック&lt;/b&gt;：「情報」ページに「フィードバック」を追加しました。GitHub やメール（hello@samekeys.com）で問題を報告でき、バージョンは自動で入力されます。&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.3/SameKeys-1.3.dmg" length="5189735" type="application/octet-stream" sparkle:edSignature="JZOWp1m9BgyIK96ql2BTPMoyH87k0UBlCQ7o0v3vJMmDUXHRLP3HLueJyAa0/2b8EnRbGdZPuGBq5jNBtuutDA==" />
+    </item>
+    <item>
       <title>SameKeys 1.2</title>
       <pubDate>Tue, 06 Oct 2026 08:27:54 GMT</pubDate>
       <sparkle:version>3</sparkle:version>
@@ -53,44 +70,6 @@
   &lt;li&gt;&lt;b&gt;新しいアイコン&lt;/b&gt;：App とメニューバーが新しい ∞ アイコンになりました。&lt;/li&gt;
 &lt;/ul&gt;</description>
       <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.1/SameKeys-1.1.dmg" length="5200394" type="application/octet-stream" sparkle:edSignature="sQO3OtfUcCvVG3m5EwdYHN/UProa7Id4yl8QLnCt/DkZRc7Obmxq9WdvtEuaOX+Mc9ikbXZ58e94JSYKEoYZCw==" />
-    </item>
-    <item>
-      <title>SameKeys 1.0</title>
-      <pubDate>Mon, 05 Oct 2026 06:21:58 GMT</pubDate>
-      <sparkle:version>1</sparkle:version>
-      <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
-      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description xml:lang="en">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;Windows shortcuts&lt;/b&gt;: your Windows habits, as they are, on the Mac. For example, Ctrl+C/V/Z copy, paste and undo, Home/End jump to the start and end of the line, and Alt+Tab switches apps.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Each keyboard its own way&lt;/b&gt;: a MacBook's keyboard and a PC keyboard can each press Ctrl, Win and Alt with their own keys.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Mouse&lt;/b&gt;: the wheel can scroll the Windows way without touching the trackpad, the side buttons go back and forward, and fn or Ctrl+scroll zooms pages.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Clipboard history&lt;/b&gt;: ⌥V shows what you copied recently; with the Windows Key group on, so does Win+V on a PC keyboard.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Finder&lt;/b&gt;: Delete deletes, F2 renames, Ctrl+X/V move files, and the right-click menu creates a new document, copies a path or opens Terminal.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Windows&lt;/b&gt;: ⌥+arrows snaps the front window to half the screen or fills it, like Win+arrows.&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Opening or saving a file&lt;/b&gt;: Ctrl+G jumps to the folder open in Finder, and Ctrl+Shift+G lists recent and favorite folders.&lt;/li&gt;
-  &lt;li&gt;Ten languages, Open at Login, and automatic updates.&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="zh-Hans">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;Windows 快捷键&lt;/b&gt;：把 Windows 的习惯原样挪到 Mac 上，例如 Ctrl+C/V/Z 复制、粘贴、撤销，Home/End 跳到行首行尾，Alt+Tab 切换应用。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;每把键盘各自设置&lt;/b&gt;：MacBook 键盘和外接 PC 键盘可以分别选择用哪个键按 Ctrl、Win 和 Alt。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;鼠标&lt;/b&gt;：滚轮方向可以和 Windows 一样，且不影响触控板；侧键前进后退；fn 或 Ctrl+滚轮缩放网页。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;剪贴板历史&lt;/b&gt;：⌥V 显示最近拷贝过的内容；打开「Windows 键」分组后，PC 键盘上按 Win+V 也行。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;访达&lt;/b&gt;：Delete 删除、F2 重命名、Ctrl+X/V 移动文件，右键菜单可以新建文档、拷贝路径或在终端中打开。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;窗口&lt;/b&gt;：⌥+方向键把最前面的窗口吸附到半屏或铺满屏幕，就像 Win+方向键。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;打开或保存文件时&lt;/b&gt;：Ctrl+G 跳到访达里正打开的文件夹，Ctrl+Shift+G 列出最近和收藏的文件夹。&lt;/li&gt;
-  &lt;li&gt;支持 10 种语言，可随登录启动，自动保持最新。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <description xml:lang="ja">&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;Windows のショートカット&lt;/b&gt;：Windows の習慣をそのまま Mac で。たとえば Ctrl+C/V/Z でコピー・ペースト・取り消し、Home/End で行頭・行末へ、Alt+Tab でアプリを切り替え。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;キーボードごとの設定&lt;/b&gt;：MacBook のキーボードと外付けの PC キーボードで、Ctrl・Win・Alt に使うキーをそれぞれ選べます。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;マウス&lt;/b&gt;：ホイールの向きをトラックパッドに影響させずに Windows と同じにでき、サイドボタンで戻る・進む、fn か Ctrl+スクロールでページを拡大・縮小。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;クリップボード履歴&lt;/b&gt;：⌥V で最近コピーした内容を表示。「Windows キー」グループをオンにすると、PC キーボードの Win+V でも開けます。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Finder&lt;/b&gt;：Delete で削除、F2 で名前変更、Ctrl+X/V でファイルを移動。右クリックメニューから新規書類の作成、パスのコピー、ターミナルで開くことができます。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;ウインドウ&lt;/b&gt;：⌥+矢印キーで最前面のウインドウを画面の半分に寄せたり、画面いっぱいに広げたり。Win+矢印キーと同じです。&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;ファイルを開く・保存するとき&lt;/b&gt;：Ctrl+G で Finder で開いているフォルダへ、Ctrl+Shift+G で最近使ったフォルダとよく使うフォルダを一覧表示。&lt;/li&gt;
-  &lt;li&gt;10 言語に対応し、ログイン時に起動でき、自動でアップデートされます。&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/lynnjeans/samekeys/releases/download/v1.0/SameKeys-1.0.dmg" length="5080607" type="application/octet-stream" sparkle:edSignature="OFpsntfSnfJO83aWHR2LmCmXB0cW25wcdp+SRVKtzl6FsZ1Au8x1wfYgwIJVHiVXVWohHpSVUIkQzmsXn3IxDA==" />
     </item>
   </channel>
 </rss>
