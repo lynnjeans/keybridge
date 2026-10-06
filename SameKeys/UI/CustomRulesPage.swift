@@ -132,7 +132,7 @@ struct CustomRuleEditor: View {
     @State private var name: String
     @State private var trigger: Trigger?
     @State private var result: Result
-    @State private var systemAction: SystemAction = .missionControl
+    @State private var systemFunction: SystemFunction = .system(.missionControl)
     @State private var windowAction: WindowAction = .leftHalf
     @State private var fileDialogAction: FileDialogAction = .finderFolder
     @State private var combo: KeyCombo?
@@ -145,7 +145,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app, system, window, fileDialog, clipboard }
+    enum Result: Hashable { case keys, app, system, window, fileDialog }
     enum Where: Hashable { case everywhere, only, except }
 
     /// - Parameter trigger: for a new rule, what it is pressed with, such as
@@ -163,7 +163,7 @@ struct CustomRuleEditor: View {
             _combo = State(initialValue: nil)
         case .systemAction(let function)?:
             _result = State(initialValue: .system)
-            _systemAction = State(initialValue: function)
+            _systemFunction = State(initialValue: .system(function))
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .windowAction(let snap)?:
@@ -177,7 +177,8 @@ struct CustomRuleEditor: View {
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .clipboardHistory?:
-            _result = State(initialValue: .clipboard)
+            _result = State(initialValue: .system)
+            _systemFunction = State(initialValue: .clipboardHistory)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -227,7 +228,6 @@ struct CustomRuleEditor: View {
                     Text("System function").tag(Result.system)
                     Text("Window").tag(Result.window)
                     Text("File dialog").tag(Result.fileDialog)
-                    Text("Clipboard history").tag(Result.clipboard)
                 }
                 .pickerStyle(.segmented)
                 // At its full width: the sheet grows to fit it in a longer
@@ -246,13 +246,11 @@ struct CustomRuleEditor: View {
                             toggleRecording(.action)
                         }
                     } else if result == .system {
-                        SystemActionPicker(selection: $systemAction)
+                        SystemActionPicker(selection: $systemFunction)
                     } else if result == .window {
                         WindowActionPicker(selection: $windowAction)
                     } else if result == .fileDialog {
                         FileDialogActionPicker(selection: $fileDialogAction)
-                    } else if result == .clipboard {
-                        ClipboardHistoryNote()
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -343,13 +341,11 @@ struct CustomRuleEditor: View {
             guard let app else { return nil }
             action = .openApplication(bundleID: app)
         case .system:
-            action = .systemAction(systemAction)
+            action = systemFunction.action
         case .window:
             action = .windowAction(windowAction)
         case .fileDialog:
             action = .fileDialog(fileDialogAction)
-        case .clipboard:
-            action = .clipboardHistory
         }
         let applications: ApplicationFilter
         switch where_ {

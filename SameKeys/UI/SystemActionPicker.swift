@@ -43,10 +43,50 @@ struct SystemActionLabel: View {
     }
 }
 
+/// What the System function result can do: one of macOS's functions, or
+/// SameKeys's clipboard history, which is Win+V's system function on Windows.
+/// A choice in the editors only; the rule keeps its own action for each.
+enum SystemFunction: Hashable {
+    case system(SystemAction)
+    case clipboardHistory
+
+    static let all = SystemAction.allCases.map(SystemFunction.system) + [.clipboardHistory]
+
+    /// Nil for an action the System function result does not cover.
+    init?(_ action: Action) {
+        switch action {
+        case .systemAction(let function): self = .system(function)
+        case .clipboardHistory: self = .clipboardHistory
+        default: return nil
+        }
+    }
+
+    var action: Action {
+        switch self {
+        case .system(let function): .systemAction(function)
+        case .clipboardHistory: .clipboardHistory
+        }
+    }
+
+    var name: String {
+        switch self {
+        case .system(let function): function.name
+        case .clipboardHistory: String(localized: "Clipboard history")
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .system(let function): function.symbol
+        case .clipboardHistory: "list.clipboard"
+        }
+    }
+}
+
 /// Chooses a system function, and says what triggering it does on this Mac:
 /// which shortcut SameKeys will press, or that System Settings has none.
 struct SystemActionPicker: View {
-    @Binding var selection: SystemAction
+    @Binding var selection: SystemFunction
     /// Read when the editor opens; System Settings may change meanwhile, but
     /// the shortcut is read again whenever the rule fires.
     @State private var hotKeys = SymbolicHotKeys.current()
@@ -54,8 +94,8 @@ struct SystemActionPicker: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Picker("System function", selection: $selection) {
-                ForEach(SystemAction.allCases, id: \.self) { action in
-                    Label(action.name, systemImage: action.symbol).tag(action)
+                ForEach(SystemFunction.all, id: \.self) { function in
+                    Label(function.name, systemImage: function.symbol).tag(function)
                 }
             }
             .labelsHidden()
@@ -64,20 +104,25 @@ struct SystemActionPicker: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+                // Wrapped rather than widening the editor to its length.
+                .frame(maxWidth: 420, alignment: .leading)
         }
         .onAppear { hotKeys = SymbolicHotKeys.current() }
     }
 
     @ViewBuilder private var status: some View {
-        if selection == .inputSource {
+        switch selection {
+        case .clipboardHistory:
+            Text("Shows or hides the clipboard history, as its own shortcut does. Does nothing while the history is off.")
+        case .system(.inputSource):
             Text("Switches between ABC and the input method you used last, such as Pinyin, like Caps Lock does, without the input source switcher on screen.")
-        } else {
-            shortcutStatus
+        case .system(let function):
+            shortcutStatus(function)
         }
     }
 
-    @ViewBuilder private var shortcutStatus: some View {
-        switch hotKeys.shortcut(for: selection) {
+    @ViewBuilder private func shortcutStatus(_ function: SystemAction) -> some View {
+        switch hotKeys.shortcut(for: function) {
         case .combo(let combo):
             HStack(spacing: 6) {
                 Text("Presses your shortcut for it:")
@@ -85,7 +130,7 @@ struct SystemActionPicker: View {
             }
         case let missing:
             VStack(alignment: .leading, spacing: 6) {
-                if selection.fallbackApplication != nil {
+                if function.fallbackApplication != nil {
                     Text(missing == .off
                          ? "Its shortcut is switched off in System Settings, so SameKeys opens it directly."
                          : "It has no shortcut in System Settings, so SameKeys opens it directly.")
