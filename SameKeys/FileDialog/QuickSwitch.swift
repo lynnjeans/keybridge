@@ -40,7 +40,7 @@ final class QuickSwitch {
     }
 
     /// Over a dialog, the chosen folder is jumped to; over Finder, it is
-    /// opened, as the path box opens one. A pasted file (KB-268) is opened:
+    /// opened. A pasted path (KB-268) is a folder to go to, and a file opened:
     /// by its app over Finder, by the dialog's Open button over an open
     /// dialog; a save dialog only goes to it and selects it.
     private func showList() {

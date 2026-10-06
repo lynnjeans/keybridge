@@ -6,7 +6,7 @@ import Observation
 ///
 /// Recent folders are SameKeys's own history, fed from two places: Finder's
 /// Go › Recent Folders, which Finder keeps as you browse but only ten deep,
-/// and every folder SameKeys itself took a dialog, the path box or Finder
+/// and every folder SameKeys itself took a dialog or Finder
 /// to. Keeping a copy lets the list be longer than Finder's ten.
 @MainActor
 @Observable
@@ -117,13 +117,13 @@ final class FileLocations {
 
     /// What a path typed or pasted into the list's search field leads to
     /// (KB-268): a folder to go to, or a file to open. Only text that starts
-    /// like a path (`/` or `~`, after the trimming the path box does) counts,
+    /// like a path (`/` or `~`, after `PastedPath.clean`) counts,
     /// so a folder's name is still a search; nil when nothing exists there.
     /// An app or another package is a file: opening it is what its path asks.
     static func pasted(_ text: String, fileManager: FileManager = .default) -> Location? {
-        let cleaned = PathBoxResolver.clean(text)
+        let cleaned = PastedPath.clean(text)
         guard cleaned.hasPrefix("/") || cleaned.hasPrefix("~") else { return nil }
-        switch PathBoxResolver.resolve(cleaned, fileManager: fileManager) {
+        switch PastedPath.resolve(cleaned, fileManager: fileManager) {
         case .folder(let url): return Location(path: url.path, kind: .pastedFolder)
         case .file(let url): return Location(path: url.path, kind: .pastedFile)
         case nil: return nil

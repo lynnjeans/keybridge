@@ -4,8 +4,8 @@ import OSLog
 extension NSWindow {
     /// Puts the insertion point in the window's first editable text field,
     /// with its text selected and scrolled to the end, for the floating
-    /// panels (the path box and the clipboard history) that are typed into
-    /// the moment they open.
+    /// panels (the clipboard history, the recent locations) that are typed
+    /// into the moment they open.
     ///
     /// SwiftUI's `@FocusState` set from `onAppear` never reaches the field
     /// in a non-activating panel — the panel stays its own first responder —

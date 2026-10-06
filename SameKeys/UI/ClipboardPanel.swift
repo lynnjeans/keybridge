@@ -56,7 +56,7 @@ final class ClipboardPanelController {
 
     private func makePanel() -> NSPanel {
         // The content rect is the panel below its title bar, which says
-        // which app opened it, as the path box's does.
+        // which app opened it.
         let panel = KeyablePanel(
             contentRect: NSRect(x: 0, y: 0, width: ClipboardPanelView.width, height: ClipboardPanelView.height),
             styleMask: [.titled, .nonactivatingPanel, .fullSizeContentView],

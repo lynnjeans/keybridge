@@ -62,64 +62,6 @@
         }
       }
     },
-    "%@ also uses this shortcut; the path box takes it in Finder." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "„%@“ nutzt diesen Kurzbefehl auch; im Finder hat das Pfadfeld Vorrang."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“%@” también usa este atajo; en el Finder tiene prioridad el cuadro de ruta."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "« %@ » utilise aussi ce raccourci ; dans le Finder, la zone de chemin a la priorité."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "「%@」もこのショートカットを使っています。Finder ではパスボックスが優先されます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "‘%@’도 이 단축키를 사용합니다. Finder에서는 경로 상자가 우선합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "„%@” też używa tego skrótu; w Finderze pierwszeństwo ma pole ścieżki."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“%@” também usa este atalho; no Finder, a caixa de caminho tem prioridade."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“%@”也使用这个快捷键，在 Finder 里路径框会优先占用它。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "「%@」也使用這個快速鍵，在 Finder 中路徑框會優先佔用它。"
-          }
-        }
-      }
-    },
     "%@ can change keys, mouse buttons and scrolling before SameKeys sees them, so some shortcuts may do nothing or the wrong thing. Quit them while you use SameKeys, or turn off their settings that overlap." : {
       "localizations" : {
         "de" : {
@@ -9306,64 +9248,6 @@
         }
       }
     },
-    "Go to Path" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gehe zum Pfad"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ir a la ruta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aller au chemin"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "パスへ移動"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "경로로 이동"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Przejdź do ścieżki"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ir para o Caminho"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "前往路径"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "前往路徑"
-          }
-        }
-      }
-    },
     "Granted" : {
       "localizations" : {
         "de" : {
@@ -10002,60 +9886,60 @@
         }
       }
     },
-    "In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The same entries are on the Shortcuts page." : {
+    "In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The list also takes a pasted path, in Finder too. The same entries are on the Shortcuts page." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spring im Öffnen- oder Sichern-Dialog jeder App zu dem Ordner, den der Finder zeigt, oder wähle einen Favoriten oder letzten Ordner, wie mit Listary unter Windows. Dieselben Einträge stehen auf der Seite „Kurzbefehle“."
+            "value" : "Spring im Öffnen- oder Sichern-Dialog jeder App zu dem Ordner, den der Finder zeigt, oder wähle einen Favoriten oder letzten Ordner, wie mit Listary unter Windows. Die Liste nimmt auch einen eingefügten Pfad an, auch im Finder. Dieselben Einträge stehen auf der Seite „Kurzbefehle“."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En el diálogo de abrir o guardar de cualquier app, salta a la carpeta que muestra el Finder, o elige una carpeta favorita o reciente, como Listary en Windows. Las mismas entradas están en la página Atajos."
+            "value" : "En el diálogo de abrir o guardar de cualquier app, salta a la carpeta que muestra el Finder, o elige una carpeta favorita o reciente, como Listary en Windows. La lista también acepta una ruta pegada, también en el Finder. Las mismas entradas están en la página Atajos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dans le dialogue Ouvrir ou Enregistrer de n’importe quelle app, allez au dossier affiché par le Finder, ou choisissez un dossier favori ou récent, comme Listary sous Windows. Les mêmes entrées sont sur la page Raccourcis."
+            "value" : "Dans le dialogue Ouvrir ou Enregistrer de n’importe quelle app, allez au dossier affiché par le Finder, ou choisissez un dossier favori ou récent, comme Listary sous Windows. La liste accepte aussi un chemin collé, Finder compris. Les mêmes entrées sont sur la page Raccourcis."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "どのアプリの開く・保存ダイアログでも、Finder が表示しているフォルダへ移動したり、よく使う項目や最近使ったフォルダから選んだりできます。Windows の Listary と同じです。同じ項目は「ショートカット」ページにもあります。"
+            "value" : "どのアプリの開く・保存ダイアログでも、Finder が表示しているフォルダへ移動したり、よく使う項目や最近使ったフォルダから選んだりできます。Windows の Listary と同じです。リストにはパスを貼り付けることもでき、Finder でも使えます。同じ項目は「ショートカット」ページにもあります。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "모든 앱의 열기 또는 저장 대화상자에서 Finder가 보여 주는 폴더로 바로 이동하거나, Windows의 Listary처럼 즐겨찾기나 최근 폴더를 고를 수 있습니다. 같은 항목이 단축키 페이지에도 있습니다."
+            "value" : "모든 앱의 열기 또는 저장 대화상자에서 Finder가 보여 주는 폴더로 바로 이동하거나, Windows의 Listary처럼 즐겨찾기나 최근 폴더를 고를 수 있습니다. 목록에 경로를 붙여 넣을 수도 있으며, Finder에서도 됩니다. 같은 항목이 단축키 페이지에도 있습니다."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "W oknie otwierania lub zapisu dowolnej aplikacji przejdź do folderu, który pokazuje Finder, albo wybierz ulubiony lub ostatni folder, jak w Listary w Windows. Te same wpisy są na stronie Skróty."
+            "value" : "W oknie otwierania lub zapisu dowolnej aplikacji przejdź do folderu, który pokazuje Finder, albo wybierz ulubiony lub ostatni folder, jak w Listary w Windows. Do listy można też wkleić ścieżkę, także w Finderze. Te same wpisy są na stronie Skróty."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No diálogo de abrir ou salvar de qualquer app, vá para a pasta que o Finder está mostrando, ou escolha uma pasta favorita ou recente, como o Listary no Windows. As mesmas entradas estão na página Atalhos."
+            "value" : "No diálogo de abrir ou salvar de qualquer app, vá para a pasta que o Finder está mostrando, ou escolha uma pasta favorita ou recente, como o Listary no Windows. A lista também aceita um caminho colado, inclusive no Finder. As mesmas entradas estão na página Atalhos."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在任何 App 的打开或存储对话框中，跳到访达正在显示的文件夹，或从收藏和最近的文件夹中挑一个，类似 Windows 上的 Listary。这些条目也在「快捷键」页。"
+            "value" : "在任何 App 的打开或存储对话框中，跳到访达正在显示的文件夹，或从收藏和最近的文件夹中挑一个，类似 Windows 上的 Listary。列表里也可以直接粘贴路径，在访达中也行。这些条目也在「快捷键」页。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在任何 App 的打開或儲存對話框中，跳到 Finder 正在顯示的檔案夾，或從喜好項目和最近的檔案夾中挑一個，類似 Windows 上的 Listary。這些項目也在「快速鍵」頁面。"
+            "value" : "在任何 App 的打開或儲存對話框中，跳到 Finder 正在顯示的檔案夾，或從喜好項目和最近的檔案夾中挑一個，類似 Windows 上的 Listary。清單裡也可以直接貼上路徑，在 Finder 中也行。這些項目也在「快速鍵」頁面。"
           }
         }
       }
@@ -15222,64 +15106,6 @@
         }
       }
     },
-    "Only while Finder is in front: paste or type a path, Return to jump. Click to record a different shortcut." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nur wenn der Finder vorne ist: Pfad einfügen oder tippen, Return springt hin. Klicken, um einen anderen Kurzbefehl aufzunehmen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Solo con el Finder en primer plano: pega o escribe una ruta y pulsa Retorno para ir. Haz clic para grabar otro atajo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seulement quand le Finder est au premier plan : collez ou tapez un chemin, Retour pour y aller. Cliquez pour enregistrer un autre raccourci."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finder が最前面にあるときだけ使えます。パスを貼り付けまたは入力し、Return でジャンプします。クリックして別のショートカットを記録できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finder가 앞에 있을 때만: 경로를 붙여넣거나 입력하고 Return으로 이동합니다. 클릭하여 다른 단축키를 기록합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tylko gdy Finder jest na pierwszym planie: wklej lub wpisz ścieżkę, Return przenosi. Kliknij, aby nagrać inny skrót."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Somente com o Finder em primeiro plano: cole ou digite um caminho e pressione Return para ir. Clique para gravar outro atalho."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅当 Finder 在前台时可用：粘贴或输入路径，回车跳转。点击可录制其他快捷键。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "僅當 Finder 在前景時可用：貼上或輸入路徑，按 Return 前往。按一下可錄製其他快速鍵。"
-          }
-        }
-      }
-    },
     "Open" : {
       "localizations" : {
         "de" : {
@@ -16610,122 +16436,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "貼上"
-          }
-        }
-      }
-    },
-    "Paste a path in Finder" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pfad im Finder einfügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pegar una ruta en el Finder"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Coller un chemin dans le Finder"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finder でパスを貼り付け"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finder에서 경로 붙여넣기"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wklej ścieżkę w Finderze"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Colar um caminho no Finder"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Finder 中粘贴路径"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Finder 中貼上路徑"
-          }
-        }
-      }
-    },
-    "Paste or type a path…" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pfad einfügen oder tippen …"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pega o escribe una ruta…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Collez ou tapez un chemin…"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "パスを貼り付けまたは入力…"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "경로를 붙여넣거나 입력…"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wklej lub wpisz ścieżkę…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cole ou digite um caminho…"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "粘贴或输入路径…"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "貼上或輸入路徑…"
           }
         }
       }
@@ -19858,64 +19568,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在檔案夾的空白處按右鍵，即可在此新增文件或在終端機中打開，和 Windows 一樣。"
-          }
-        }
-      }
-    },
-    "Right-click menu, a path box, and open and save dialogs that jump to where Finder is." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kontextmenü, ein Pfadfeld und Öffnen- und Sichern-Dialoge, die dorthin springen, wo der Finder ist."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menú contextual, un cuadro de ruta y diálogos de abrir y guardar que saltan a donde está el Finder."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menu contextuel, zone de chemin, et dialogues Ouvrir et Enregistrer qui sautent là où est le Finder."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "右クリックメニュー、パスボックス、そして Finder の場所へ移動できる開く・保存ダイアログ。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "오른쪽 클릭 메뉴, 경로 상자, 그리고 Finder가 있는 곳으로 바로 가는 열기 및 저장 대화상자."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menu podręczne, pole ścieżki i okna otwierania i zapisu, które przechodzą tam, gdzie jest Finder."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menu de contexto, uma caixa de caminho e diálogos de abrir e salvar que pulam para onde o Finder está."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "右键菜单、路径框，以及能跳到访达当前位置的打开与存储对话框。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "右鍵選單、路徑框，以及能跳到 Finder 目前位置的打開與儲存對話框。"
           }
         }
       }
@@ -24388,6 +24040,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "預設已是原始狀態"
+          }
+        }
+      }
+    },
+    "The right-click menu, and open and save dialogs that jump to where Finder is." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Kontextmenü und Öffnen- und Sichern-Dialoge, die dorthin springen, wo der Finder ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El menú contextual y diálogos de abrir y guardar que saltan a donde está el Finder."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le menu contextuel, et des dialogues Ouvrir et Enregistrer qui sautent là où est le Finder."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右クリックメニューと、Finder の場所へ移動できる開く・保存ダイアログ。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오른쪽 클릭 메뉴, 그리고 Finder가 있는 곳으로 바로 가는 열기 및 저장 대화상자."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu podręczne oraz okna otwierania i zapisu, które przechodzą tam, gdzie jest Finder."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O menu de contexto e diálogos de abrir e salvar que pulam para onde o Finder está."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右键菜单，以及能跳到访达当前位置的打开与存储对话框。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右鍵選單，以及能跳到 Finder 目前位置的打開與儲存對話框。"
           }
         }
       }

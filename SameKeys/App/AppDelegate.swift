@@ -9,8 +9,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let otherRemappers = OtherRemapperMonitor()
     lazy var clipboard = ClipboardController()
     lazy var clipboardPanel = ClipboardPanelController(clipboard: clipboard)
-    lazy var pathBox = PathBoxController()
-    lazy var pathBoxPanel = PathBoxPanelController()
     lazy var quickSwitch = QuickSwitch(locations: FileLocations())
     let frontmost = FrontmostApplication()
     let keyboards = KeyboardList()
@@ -20,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let keyboardSource = KeyboardSource()
     lazy var dispatcher = Dispatcher(
         // While one of SameKeys's own panels has the keyboard (recent
-        // locations, clipboard history, the path box), keys are typed into
+        // locations, clipboard history), keys are typed into
         // it, not into the app behind: rules for that app (Finder's Return
         // opens) must not turn them into something else (KB-268). Rules for
         // every app, such as Ctrl+V pasting, still apply.
@@ -75,17 +73,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         keyboards.onChange = { [rules] in rules.setConnectedKeyboards($0) }
         keyboards.start()
         clipboard.togglePanel = { [clipboardPanel] in clipboardPanel.toggle() }
-        pathBox.showPanel = { [pathBoxPanel] in pathBoxPanel.show(startingAt: FinderFolder.currentPath()) }
-        // A system hot key never reaches the app in front, so the path box
-        // takes ⌘L only while Finder is there.
-        pathBox.setFrontmostApplication(frontmost.bundleID)
-        frontmost.onChange = { [pathBox, quickSwitch] bundleID in
+        // The path box (KB-213) went in SK-276; its settings go with it.
+        for key in ["pathBox.enabled", "pathBox.hotKey"] { UserDefaults.standard.removeObject(forKey: key) }
+        var isFinderFront = frontmost.bundleID == BuiltInRules.finderID
+        frontmost.onChange = { [quickSwitch] bundleID in
             // Finder's recent folders are taken in as Finder leaves the
             // front, so the history keeps roughly the order things happened.
-            if pathBox.isFinderFront, bundleID != BuiltInRules.finderID { quickSwitch.mergeFinderRecents() }
-            pathBox.setFrontmostApplication(bundleID)
+            let isFinder = bundleID == BuiltInRules.finderID
+            if isFinderFront, !isFinder { quickSwitch.mergeFinderRecents() }
+            isFinderFront = isFinder
         }
-        pathBoxPanel.visited = { [quickSwitch] in quickSwitch.locations.record($0) }
         dispatcher.leftMouse = { [dockClick] event, type in
             let now = ProcessInfo.processInfo.systemUptime
             if type == .leftMouseDown {
@@ -102,7 +99,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if engine.isActive {
             EventTapSelfTest.runIfRequested(dispatcher: dispatcher)
         }
-        LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel, pathBox: pathBox)
+        LayoutCheck.showRequestedWindow(clipboardPanel: clipboardPanel)
         DockWindow.selfTest()
         WindowElement.selfTest()
         WindowElement.snapSelfTest()
@@ -122,7 +119,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 let report = await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                             otherRemappers: otherRemappers, clipboard: clipboard,
                                                             loginItem: loginItem, keyboards: keyboards,
-                                                            pathBox: pathBox, locations: quickSwitch.locations,
+                                                            locations: quickSwitch.locations,
                                                             updates: updates, recorder: recorder, logArchive: logArchive)
                 try? report.text.write(toFile: path, atomically: true, encoding: .utf8)
             }

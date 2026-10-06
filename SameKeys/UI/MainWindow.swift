@@ -10,7 +10,6 @@ struct MainWindow: View {
     let secureInput: SecureInputMonitor
     let otherRemappers: OtherRemapperMonitor
     let clipboard: ClipboardController
-    let pathBox: PathBoxController
     let quickSwitch: QuickSwitch
     let updates: UpdateController
     let loginItem: LoginItem
@@ -37,7 +36,7 @@ struct MainWindow: View {
                 case .clipboard:
                     ClipboardPage(clipboard: clipboard, rules: rules)
                 case .finder:
-                    FinderPage(rules: rules, pathBox: pathBox, locations: quickSwitch.locations,
+                    FinderPage(rules: rules, locations: quickSwitch.locations,
                                clearHistory: quickSwitch.clearHistory)
                 case .customRules:
                     CustomRulesPage(rules: rules)
@@ -51,7 +50,7 @@ struct MainWindow: View {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard,
                                                  loginItem: loginItem, keyboards: keyboards,
-                                                 pathBox: pathBox, locations: quickSwitch.locations,
+                                                 locations: quickSwitch.locations,
                                                  updates: updates, recorder: recorder, logArchive: logArchive)
                     }
                 default:

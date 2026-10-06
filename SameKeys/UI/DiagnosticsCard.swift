@@ -75,7 +75,6 @@ extension DiagnosticReport {
         clipboard: ClipboardController,
         loginItem: LoginItem,
         keyboards: KeyboardList,
-        pathBox: PathBoxController,
         locations: FileLocations,
         updates: UpdateController,
         recorder: DiagnosticRecorder,
@@ -143,14 +142,11 @@ extension DiagnosticReport {
             }
         let keyboardSection = Section(title: "Keyboards in effect", lines: keyboardLines)
 
-        let pathBoxState = (pathBox.isEnabled ? "on, " : "off, ") + pathBox.hotKey.caps(.mac).joined()
-            + (pathBox.hotKeyProblem.map { " (\($0))" } ?? "")
         let lastCheck = updates.lastCheck.map { timestamp($0) } ?? "never"
         let updateState = "checks automatically \(updates.checksAutomatically ? "yes" : "no"), "
             + "downloads automatically \(updates.downloadsAutomatically ? "yes" : "no"), last check \(lastCheck)"
         let naturalScrolling = UserDefaults.standard.object(forKey: "com.apple.swipescrolldirection") as? Bool ?? true
         let other = Section(title: "Other settings", lines: [
-            ("Path box (Finder)", pathBoxState),
             ("Recent folders listed", String(locations.recentLimit)),
             ("Finder extension", FIFinderSyncController.isExtensionEnabled ? "enabled" : "not enabled"),
             ("Updates", updateState),

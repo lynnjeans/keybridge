@@ -23,11 +23,10 @@ enum SettingsBackup {
     /// go into the file as JSON so it stays readable.
     static let preferenceKeys = [
         "clipboard.enabled", "clipboard.hotKey", "clipboard.limit", "clipboard.excludedApps",
-        "pathBox.enabled", "pathBox.hotKey",
         "fileDialog.favorites", "fileDialog.recentLimit",
         "AppleLanguages", "SUEnableAutomaticChecks", "menuBar.showsIcon",
     ]
-    static let dataKeys: Set<String> = ["clipboard.hotKey", "pathBox.hotKey"]
+    static let dataKeys: Set<String> = ["clipboard.hotKey"]
 
     enum BackupError: LocalizedError, Equatable {
         case notABackup

@@ -43,7 +43,7 @@ import Testing
         try writeConfiguration(Configuration())
         let defaults = freshDefaults()
         defaults.set(10, forKey: "clipboard.limit")
-        defaults.set(true, forKey: "pathBox.enabled")
+        defaults.set(false, forKey: "menuBar.showsIcon")
 
         let contents = try SettingsBackup.read(data)
         #expect(contents.appVersion == "1.0 (1)")
@@ -56,9 +56,21 @@ import Testing
                 == KeyCombo([.option], .v))
         #expect(defaults.stringArray(forKey: "fileDialog.favorites") == ["/Users/me/Projects"])
         #expect(defaults.stringArray(forKey: "AppleLanguages") == ["ja"])
-        #expect(defaults.object(forKey: "pathBox.enabled") == nil, "Not in the backup: back to its default")
+        #expect(defaults.object(forKey: "menuBar.showsIcon") == nil, "Not in the backup: back to its default")
         #expect(defaults.object(forKey: "fileDialog.history") == nil, "Recent folders are not carried over")
         #expect(defaults.object(forKey: "onboardingCompleted") == nil, "Setup belongs to this Mac")
+    }
+
+    /// 1.0 and 1.1 backups carry the path box's settings, gone in SK-276.
+    @Test func aBackupWithThePathBoxImportsWithoutIt() throws {
+        let hotKey = try JSONSerialization.jsonObject(with: JSONEncoder().encode(KeyCombo([.command], .l)))
+        let data = try JSONSerialization.data(withJSONObject: [
+            "format": SettingsBackup.format, "version": 1, "app": "1.1 (2)",
+            "configuration": JSONSerialization.jsonObject(with: JSONEncoder().encode(Configuration())),
+            "preferences": ["pathBox.enabled": false, "pathBox.hotKey": hotKey, "clipboard.limit": 30],
+        ])
+        let contents = try SettingsBackup.read(data)
+        #expect(contents.preferences.keys.sorted() == ["clipboard.limit"])
     }
 
     @Test func noConfigurationFileIsBackedUpAsTheDefaults() throws {

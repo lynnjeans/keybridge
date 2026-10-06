@@ -1,11 +1,10 @@
 import SwiftUI
 
-/// Finder and the files around it (KB-218): the right-click menu, the path
-/// box, and jumping open and save dialogs to where Finder is — what a
+/// Finder and the files around it (KB-218): the right-click menu, and
+/// jumping open and save dialogs to where Finder is — what a
 /// Windows user reaches for in Explorer and in Listary.
 struct FinderPage: View {
     let rules: RulesController
-    let pathBox: PathBoxController
     let locations: FileLocations
     /// Empties the recent folders, telling Finder's list apart from new ones.
     let clearHistory: () -> Void
@@ -14,7 +13,6 @@ struct FinderPage: View {
 
     var body: some View {
         FinderMenuCard()
-        PathBoxCard(pathBox: pathBox, rules: rules)
         Card {
             VStack(spacing: 0) {
                 HStack(spacing: 12) {
@@ -22,7 +20,7 @@ struct FinderPage: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Open & Save Dialogs")
                             .font(.headline)
-                        Text("In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The same entries are on the Shortcuts page.")
+                        Text("In any app's open or save dialog, jump to the folder Finder is showing, or pick a favorite or recent folder, like Listary on Windows. The list also takes a pasted path, in Finder too. The same entries are on the Shortcuts page.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
@@ -127,83 +125,5 @@ private extension String {
     /// A folder URL's path ends in a slash; paths here are kept without one.
     var trimmingSlash: String {
         count > 1 && hasSuffix("/") ? String(dropLast()) : self
-    }
-}
-
-/// The shortcut that shows the paste-a-path box over Finder (KB-213).
-private struct PathBoxCard: View {
-    let pathBox: PathBoxController
-    let rules: RulesController
-    @State private var recorder = KeyRecorder()
-    @State private var isRecording = false
-
-    var body: some View {
-        Card {
-            HStack(alignment: .top, spacing: 12) {
-                IconTile(symbol: "signpost.right.fill", tint: .teal, size: 30)
-                VStack(alignment: .leading, spacing: 8) {
-                    AdaptiveRow(spacing: 14) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Paste a path in Finder")
-                                .font(.headline)
-                            Text("Only while Finder is in front: paste or type a path, Return to jump. Click to record a different shortcut.")
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        HStack(spacing: 12) {
-                            RecorderField(isRecording: isRecording, prompt: "Press a shortcut…",
-                                          liveModifiers: recorder.modifiers, style: .mac) {
-                                KeyComboView(combo: pathBox.hotKey, style: .mac)
-                            } action: {
-                                isRecording ? stop() : start()
-                            }
-                            Toggle("Paste a path in Finder", isOn: Binding(
-                                get: { pathBox.isEnabled },
-                                set: { pathBox.isEnabled = $0 }
-                            ))
-                            .toggleStyle(.switch)
-                            .labelsHidden()
-                        }
-                    }
-                    if let problem = pathBox.hotKeyProblem {
-                        Label(problem, systemImage: "exclamationmark.triangle.fill")
-                            .font(.callout)
-                            .foregroundStyle(.orange)
-                    } else if let conflict {
-                        Label("\(conflict) also uses this shortcut; the path box takes it in Finder.",
-                              systemImage: "exclamationmark.triangle.fill")
-                            .font(.callout)
-                            .foregroundStyle(.orange)
-                    }
-                }
-            }
-        }
-        .onDisappear { if isRecording { stop() } }
-    }
-
-    /// A SameKeys rule with the same trigger, which the box would shadow
-    /// while Finder is in front.
-    private var conflict: String? {
-        rules.effectiveRules.first { $0.isEnabled && $0.trigger == .key(combo: pathBox.hotKey) }
-            .map { $0.name ?? RuleNames.name(of: $0) }
-    }
-
-    private func start() {
-        isRecording = true
-        pathBox.suspendHotKey()
-        // A hot key needs a key besides the modifiers; Win alone cannot be one.
-        recorder.start(rules: rules, accepting: {
-            if case .key(let combo) = $0 { !combo.isModifierAlone } else { false }
-        }) { trigger in
-            if case .key(let combo)? = trigger { pathBox.setHotKey(combo) }
-            stop()
-        }
-    }
-
-    private func stop() {
-        recorder.stop()
-        isRecording = false
-        pathBox.resumeHotKey()
     }
 }

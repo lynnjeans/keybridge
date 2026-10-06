@@ -2,17 +2,17 @@ import AppKit
 import ApplicationServices
 import OSLog
 
-/// Where Finder is (KB-214): the folder its frontmost window is showing, so
-/// the path box can open on it the way clicking Windows' address bar shows
-/// where you are.
+/// Where Finder is (KB-214): the folder each of its windows is showing, for
+/// open and save dialogs to jump to (KB-217) and the recent locations list
+/// to offer first (KB-219).
 ///
 /// Read through Accessibility, which SameKeys already holds; asking Finder
 /// over AppleScript would be exact but needs the Automation permission, a
-/// second prompt the path box was built to avoid. Finder leaves the window's
+/// second prompt. Finder leaves the window's
 /// `AXDocument` empty, so the answer is pieced together from the window's
 /// title, its path bar and the items in view — `FinderFolderPicker` explains
 /// the rules. Depends on the shape of Finder's window as of macOS 26; if a
-/// later Finder changes it, the box opens empty, which is what it did before.
+/// later Finder changes it, no folder is found, as if Finder showed none.
 @MainActor
 enum FinderFolder {
     /// What was read from one window, and what it came to.
@@ -22,23 +22,6 @@ enum FinderFolder {
         var itemPaths: [String] = []
         var path: String?
         var elements = 0
-    }
-
-    /// The path the box opens on. Nil when Finder is not the app in front,
-    /// when the desktop rather than a window has the focus, and when the
-    /// window has no single folder behind it — Recents, a search, AirDrop.
-    static func currentPath() -> String? {
-        guard let finder = NSWorkspace.shared.frontmostApplication,
-              finder.bundleIdentifier == BuiltInRules.finderID else { return nil }
-        let app = AXUIElementCreateApplication(finder.processIdentifier)
-        AXUIElementSetMessagingTimeout(app, timeout)
-        guard let window = element(of: app, kAXFocusedWindowAttribute) else { return nil }
-        let start = Date()
-        let reading = read(window)
-        Logger.pathBox.info(
-            "finderfolder path=\(reading?.path ?? "none", privacy: .private) elements=\(reading?.elements ?? 0, privacy: .public) ms=\(Int(Date().timeIntervalSince(start) * 1000), privacy: .public)"
-        )
-        return reading?.path
     }
 
     /// The folder of Finder's front window, whether or not Finder is the app
@@ -205,13 +188,13 @@ enum FinderFolder {
     // MARK: - Accessibility helpers
 
     /// Finder's items and path bar carry file-reference URLs
-    /// (`file:///.file/id=…`); only a real path helps the box. Nil for
+    /// (`file:///.file/id=…`); only a real path helps. Nil for
     /// anything else, such as Network's `nwnode:` URLs.
     private static func filePath(_ value: CFTypeRef?) -> String? {
         guard let value, CFGetTypeID(value) == CFURLGetTypeID() else { return nil }
         guard let path = (value as! NSURL).filePathURL?.path(percentEncoded: false) else { return nil }
-        // A folder's URL ends in a slash; the box shows a path the way Copy
-        // Path and a shell write one.
+        // A folder's URL ends in a slash; a path is kept the way Copy Path and
+        // a shell write one.
         return path.count > 1 && path.hasSuffix("/") ? String(path.dropLast()) : path
     }
 
@@ -252,7 +235,7 @@ enum FinderFolder {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             guard let finder = NSRunningApplication
                 .runningApplications(withBundleIdentifier: BuiltInRules.finderID).first else {
-                Logger.pathBox.notice("finderpath Finder is not running")
+                Logger.fileDialog.notice("finderpath Finder is not running")
                 return
             }
             let app = AXUIElementCreateApplication(finder.processIdentifier)
@@ -262,7 +245,7 @@ enum FinderFolder {
                 let start = Date()
                 guard let reading = read(window) else { continue }
                 let ms = Int(Date().timeIntervalSince(start) * 1000)
-                Logger.pathBox.notice(
+                Logger.fileDialog.notice(
                     "finderpath title=\(reading.title, privacy: .public) lastCrumb=\(reading.crumbs.last?.path ?? "none", privacy: .public) crumbs=\(reading.crumbs.count, privacy: .public) items=\(reading.itemPaths.count, privacy: .public) path=\(reading.path ?? "none", privacy: .public) elements=\(reading.elements, privacy: .public) ms=\(ms, privacy: .public)"
                 )
             }
