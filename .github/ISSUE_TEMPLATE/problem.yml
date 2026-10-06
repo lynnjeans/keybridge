@@ -1,0 +1,44 @@
+name: Problem report
+description: Something in SameKeys does not work as it should.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Write in whatever language you are comfortable with.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+      placeholder: |
+        1. In Safari, pressed Ctrl+C on selected text
+        2. Expected it to copy
+        3. Nothing was copied
+    validations:
+      required: true
+  - type: input
+    id: keyboard
+    attributes:
+      label: Keyboard and mouse
+      description: The Mac's own keyboard, or the make and model of an external one.
+      placeholder: MacBook keyboard / Logitech MX Keys / …
+  - type: input
+    id: app-version
+    attributes:
+      label: SameKeys version
+      description: About › the version under the name, such as 1.2 (3).
+    validations:
+      required: true
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      placeholder: 26.6.2 (25G83)
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: |
+        Optional, and often what solves it: About › Export Diagnostics…, then drag the file here.
+        It holds settings and the log, never what you copied. For a shortcut that misbehaves only now and then, click Start Recording under Record Shortcuts first, press it until it goes wrong, then export.

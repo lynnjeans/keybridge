@@ -1,0 +1,17 @@
+name: A Windows habit SameKeys is missing
+description: A shortcut, mouse or Finder habit from Windows you would like on the Mac.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: habit
+    attributes:
+      label: On Windows
+      description: What you press or click on Windows, and what it does there.
+      placeholder: Win+Shift+S takes a screenshot of an area
+    validations:
+      required: true
+  - type: textarea
+    id: mac
+    attributes:
+      label: On the Mac today
+      description: What happens now, or what you do instead.

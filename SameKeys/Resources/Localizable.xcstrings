@@ -7624,6 +7624,64 @@
         }
       }
     },
+    "Feedback" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentarios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "피드백"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opinie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反馈"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "意見回饋"
+          }
+        }
+      }
+    },
     "File" : {
       "localizations" : {
         "de" : {
@@ -18760,6 +18818,64 @@
         }
       }
     },
+    "Report on GitHub" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf GitHub melden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informar en GitHub"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaler sur GitHub"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub で報告"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub에서 보고"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgłoś na GitHubie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relatar no GitHub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub 上反馈"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub 上回報"
+          }
+        }
+      }
+    },
     "Reset zoom" : {
       "localizations" : {
         "de" : {
@@ -21660,6 +21776,64 @@
         }
       }
     },
+    "Send Email" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-Mail senden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar correo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer un e-mail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールを送信"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이메일 보내기"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyślij e-mail"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar e-mail"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送邮件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳送郵件"
+          }
+        }
+      }
+    },
     "Set Up Later" : {
       "localizations" : {
         "de" : {
@@ -22758,6 +22932,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "貼齊右半邊"
+          }
+        }
+      }
+    },
+    "Something not working, or a Windows habit you miss? Report it on GitHub or by email. For a problem, attach the diagnostics below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funktioniert etwas nicht, oder fehlt dir eine Gewohnheit aus Windows? Melde es auf GitHub oder per E-Mail. Hänge bei einem Problem die Diagnose unten an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Algo no funciona o echas de menos una costumbre de Windows? Cuéntalo en GitHub o por correo. Si es un problema, adjunta el diagnóstico de abajo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quelque chose ne marche pas, ou une habitude de Windows vous manque ? Signalez-le sur GitHub ou par e-mail. Pour un problème, joignez le diagnostic ci-dessous."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "うまく動かないことや、Windows で慣れていた操作で足りないものはありますか？GitHub かメールでお知らせください。不具合の場合は、下の診断情報を添付してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "작동하지 않는 것이 있거나 아쉬운 Windows 습관이 있나요? GitHub나 이메일로 알려 주세요. 문제라면 아래의 진단을 첨부해 주세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coś nie działa albo brakuje ci nawyku z Windows? Zgłoś to na GitHubie lub e-mailem. Przy problemie dołącz diagnostykę z sekcji poniżej."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algo não funciona ou sente falta de um hábito do Windows? Conte no GitHub ou por e-mail. Se for um problema, anexe o diagnóstico abaixo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有功能不正常，或者缺了某个 Windows 上的习惯？可以在 GitHub 上反馈，也可以发邮件。如果是问题，请附上下面的诊断信息。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有功能不正常，或者缺了某個 Windows 上的習慣？可以在 GitHub 上回報，也可以寄郵件。如果是問題，請附上下面的診斷資訊。"
           }
         }
       }

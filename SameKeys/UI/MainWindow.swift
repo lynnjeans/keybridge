@@ -46,6 +46,7 @@ struct MainWindow: View {
                     UpdatesCard(updates: updates)
                     LegalCard()
                     SettingsBackupCard()
+                    FeedbackCard()
                     DiagnosticsCard(recorder: recorder) {
                         await DiagnosticReport.collect(engine: engine, rules: rules, secureInput: secureInput,
                                                  otherRemappers: otherRemappers, clipboard: clipboard,
@@ -847,6 +848,39 @@ private struct SupportCard: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     Button("Sponsor on GitHub") { openURL(Self.sponsorURL) }
+                }
+            }
+        }
+    }
+}
+
+/// About › ways to report a problem or ask for something (SK-280), just
+/// above the diagnostics to attach. Only links: nothing is sent until the
+/// person sends it themselves.
+private struct FeedbackCard: View {
+    @Environment(\.openURL) private var openURL
+
+    var body: some View {
+        Card {
+            HStack(spacing: 14) {
+                IconTile(symbol: "envelope.fill", tint: .blue, size: 34)
+                AdaptiveRow {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Feedback")
+                            .font(.headline)
+                        Text("Something not working, or a Windows habit you miss? Report it on GitHub or by email. For a problem, attach the diagnostics below.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    HStack(spacing: 8) {
+                        Button("Report on GitHub") {
+                            openURL(FeedbackLinks.issue(app: FeedbackLinks.appVersion, system: DiagnosticReport.systemVersion))
+                        }
+                        Button("Send Email") {
+                            openURL(FeedbackLinks.mail(app: FeedbackLinks.appVersion, system: DiagnosticReport.systemVersion))
+                        }
+                    }
                 }
             }
         }
