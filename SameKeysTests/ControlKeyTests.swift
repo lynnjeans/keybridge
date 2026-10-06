@@ -58,6 +58,14 @@ import Testing
                 == .key(combo: KeyCombo([.control], .delete)), "Shown with Ctrl")
     }
 
+    /// Ctrl+Delete deletes the next word (SK-284), on Ctrl in every mode.
+    @Test func deleteNextWordKeepsCtrl() {
+        let deleteNextWord = Action.key(combo: KeyCombo([.option], .forwardDelete))
+        for key in ControlKey.allCases {
+            #expect(match(key, KeyCombo([.control], .forwardDelete)) == deleteNextWord, "\(key)")
+        }
+    }
+
     @Test func otherRulesAreUntouched() {
         let untouched = rules.filter {
             if case .key(let combo) = $0.trigger { !combo.modifiers.contains(.control) } else { true }

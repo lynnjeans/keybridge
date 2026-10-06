@@ -754,6 +754,7 @@ enum RuleNames {
         "nav.wordLeft": String(localized: "Previous word"), "nav.wordRight": String(localized: "Next word"),
         "nav.selectWordLeft": String(localized: "Select previous word"), "nav.selectWordRight": String(localized: "Select next word"),
         "nav.deleteWord": String(localized: "Delete previous word"),
+        "nav.deleteWordForward": String(localized: "Delete next word"),
         "finder.trash": String(localized: "Move to Trash"), "finder.trashCtrlD": String(localized: "Move to Trash"), "finder.rename": String(localized: "Rename"), "finder.open": String(localized: "Open"),
         "dialog.finderFolder": String(localized: "Go to Finder's folder"),
         "dialog.recentLocations": String(localized: "Recent and favorite folders"),

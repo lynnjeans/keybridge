@@ -89,6 +89,9 @@ enum BuiltInRules {
             outsideTerminals("nav.selectWordLeft", KeyCombo([.control, .shift], .leftArrow), KeyCombo([.shift, .option], .leftArrow)),
             outsideTerminals("nav.selectWordRight", KeyCombo([.control, .shift], .rightArrow), KeyCombo([.shift, .option], .rightArrow)),
             outsideTerminals("nav.deleteWord", KeyCombo([.control], .delete), KeyCombo([.option], .delete)),
+            // Its twin, the word after the insertion point (SK-284). ⌦ reports
+            // fn by itself, so this stays on Ctrl in every Ctrl key mode.
+            outsideTerminals("nav.deleteWordForward", KeyCombo([.control], .forwardDelete), KeyCombo([.option], .forwardDelete)),
         ]),
         // Only in Finder, and never while renaming or searching: there Enter,
         // Backspace and Ctrl+V have to do what they do in any text field.
