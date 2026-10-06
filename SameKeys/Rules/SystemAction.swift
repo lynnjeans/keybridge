@@ -17,6 +17,11 @@ enum SystemAction: String, Codable, CaseIterable, Sendable {
     case spaceLeft
     case spaceRight
     case spotlight
+    /// Select the previous input source, done by SameKeys itself rather
+    /// than with its shortcut (SK-277): between a keyboard layout such as
+    /// ABC and an input method such as Pinyin, as Caps Lock does, without
+    /// the system's input source switcher on screen.
+    case inputSource
 
     /// The function's entry in `com.apple.symbolichotkeys`.
     var hotKeyID: Int {
@@ -28,6 +33,7 @@ enum SystemAction: String, Codable, CaseIterable, Sendable {
         case .spaceLeft: 79
         case .spaceRight: 81
         case .spotlight: 64
+        case .inputSource: 60
         }
     }
 
@@ -42,6 +48,7 @@ enum SystemAction: String, Codable, CaseIterable, Sendable {
         case .spaceLeft: KeyCombo([.control], .leftArrow)
         case .spaceRight: KeyCombo([.control], .rightArrow)
         case .spotlight: KeyCombo([.command], .space)
+        case .inputSource: KeyCombo([.control], .space)
         }
     }
 

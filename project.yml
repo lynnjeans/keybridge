@@ -156,6 +156,7 @@ targets:
       - path: SameKeys/Engine/RuleMatcher.swift
       - path: SameKeys/Engine/EventTrigger.swift
       - path: SameKeys/Engine/Dispatcher.swift
+      - path: SameKeys/Engine/InputSourceSwitcher.swift
       - path: SameKeys/Engine/DispatchTrace.swift
       - path: SameKeys/Engine/SyntheticEvent.swift
       - path: SameKeys/Engine/ScrollStepper.swift

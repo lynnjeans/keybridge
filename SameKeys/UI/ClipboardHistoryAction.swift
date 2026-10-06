@@ -9,14 +9,3 @@ struct ClipboardHistoryLabel: View {
             .foregroundStyle(.secondary)
     }
 }
-
-/// What the result does, under the editor's choice of result: there is
-/// nothing more to choose.
-struct ClipboardHistoryNote: View {
-    var body: some View {
-        Text("Shows or hides the clipboard history, as its own shortcut does. Does nothing while the history is off.")
-            .font(.callout)
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-}

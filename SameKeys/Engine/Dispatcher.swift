@@ -101,6 +101,9 @@ final class Dispatcher {
     /// Whether the clipboard history is on, and showing or hiding it.
     private let isClipboardHistoryOn: @MainActor () -> Bool
     private let toggleClipboardHistory: @MainActor () -> Void
+    /// Selects the other input source. Injected so tests leave this Mac's
+    /// input source alone.
+    private let switchInputSource: @MainActor () -> Void
 
     init(
         frontmostBundleID: @escaping @MainActor () -> String?,
@@ -113,6 +116,7 @@ final class Dispatcher {
         fileDialog: @escaping @MainActor (FileDialogAction) -> Void = { _ in },
         isClipboardHistoryOn: @escaping @MainActor () -> Bool = { false },
         toggleClipboardHistory: @escaping @MainActor () -> Void = {},
+        switchInputSource: @escaping @MainActor () -> Void = {},
         now: @escaping @MainActor () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
         isSecureInputOn: @escaping @MainActor () -> Bool = { IsSecureEventInputEnabled() },
         keyboard: @escaping @MainActor (CGEvent) -> Keyboard? = { _ in nil }
@@ -126,6 +130,7 @@ final class Dispatcher {
         self.fileDialog = fileDialog
         self.isClipboardHistoryOn = isClipboardHistoryOn
         self.toggleClipboardHistory = toggleClipboardHistory
+        self.switchInputSource = switchInputSource
         self.post = post
         self.openApplication = openApplication
         self.systemShortcuts = systemShortcuts
@@ -346,13 +351,15 @@ final class Dispatcher {
     }
 
     /// Posts the user's shortcut for a system function, or opens the app that
-    /// does the same when it has none. Nothing else is posted for a function
+    /// does the same when it has none; switches the input source directly. Nothing else is posted for a function
     /// switched off with no app to stand in; the rule editor says so.
     ///
     /// The shortcut is read after the tap callback returns, since reading
     /// another app's preferences can take a moment.
     private func trigger(_ function: SystemAction) {
         DispatchQueue.main.async { [self] in
+            // Done by SameKeys itself, so the system's switcher stays away.
+            if function == .inputSource { return switchInputSource() }
             switch systemShortcuts().shortcut(for: function) {
             case .combo(let combo):
                 for down in [true, false] {

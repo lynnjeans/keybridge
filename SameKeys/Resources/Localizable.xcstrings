@@ -23348,6 +23348,64 @@
         }
       }
     },
+    "Switch input source" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eingabequelle wechseln"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar fuente de entrada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changer de source de saisie"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入力ソースを切り替え"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "입력 소스 전환"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przełącz źródło wprowadzania"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternar fonte de entrada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换输入法"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切換輸入法"
+          }
+        }
+      }
+    },
     "Switch whole preset groups on and off, or expand them to fine-tune each entry." : {
       "localizations" : {
         "de" : {
@@ -23402,6 +23460,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "整組開關預設，或展開後逐項調整。"
+          }
+        }
+      }
+    },
+    "Switches between ABC and the input method you used last, such as Pinyin, like Caps Lock does, without the input source switcher on screen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wechselt wie die Feststelltaste zwischen ABC und der zuletzt benutzten Eingabemethode, etwa Pinyin, ohne dass die Auswahl der Eingabequellen erscheint."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia entre ABC y el método de entrada que usaste por última vez, como Pinyin, igual que Bloq Mayús, sin mostrar el selector de fuentes de entrada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passe d’ABC à la dernière méthode de saisie utilisée, comme Pinyin, et inversement, comme le fait Verr. Maj, sans afficher le sélecteur de sources de saisie."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caps Lock と同じように、ABC と最後に使った入力方法（ピンインなど）を切り替えます。入力ソースの切り替え表示は出ません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caps Lock처럼 ABC와 마지막으로 사용한 입력기(예: 병음) 사이를 전환합니다. 입력 소스 전환 화면은 나타나지 않습니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przełącza między ABC a ostatnio używaną metodą wprowadzania, np. Pinyin, jak Caps Lock, bez wyświetlania przełącznika źródeł wprowadzania."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterna entre ABC e o método de entrada usado por último, como Pinyin, como o Caps Lock faz, sem mostrar o seletor de fontes de entrada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "像大写锁定键一样，在 ABC 和上次用的输入法（例如拼音）之间切换，不会弹出输入法切换提示。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "像大寫鎖定鍵一樣，在 ABC 和上次用的輸入法（例如拼音）之間切換，不會彈出輸入法切換提示。"
           }
         }
       }
