@@ -145,7 +145,7 @@ struct CustomRuleEditor: View {
     @State private var confirmingDelete = false
 
     enum Side { case trigger, action }
-    enum Result: Hashable { case keys, app, system, window, fileDialog, clipboard, inputSource }
+    enum Result: Hashable { case keys, app, system, window, fileDialog, clipboard }
     enum Where: Hashable { case everywhere, only, except }
 
     /// - Parameter trigger: for a new rule, what it is pressed with, such as
@@ -178,10 +178,6 @@ struct CustomRuleEditor: View {
             _app = State(initialValue: nil)
         case .clipboardHistory?:
             _result = State(initialValue: .clipboard)
-            _combo = State(initialValue: nil)
-            _app = State(initialValue: nil)
-        case .switchInputSource?:
-            _result = State(initialValue: .inputSource)
             _combo = State(initialValue: nil)
             _app = State(initialValue: nil)
         case .key(let combo)?:
@@ -232,7 +228,6 @@ struct CustomRuleEditor: View {
                     Text("Window").tag(Result.window)
                     Text("File dialog").tag(Result.fileDialog)
                     Text("Clipboard history").tag(Result.clipboard)
-                    Text("Input source").tag(Result.inputSource)
                 }
                 .pickerStyle(.segmented)
                 // At its full width: the sheet grows to fit it in a longer
@@ -258,8 +253,6 @@ struct CustomRuleEditor: View {
                         FileDialogActionPicker(selection: $fileDialogAction)
                     } else if result == .clipboard {
                         ClipboardHistoryNote()
-                    } else if result == .inputSource {
-                        InputSourceNote()
                     } else {
                         HStack {
                             if let app { AppLabel(bundleID: app) }
@@ -357,8 +350,6 @@ struct CustomRuleEditor: View {
             action = .fileDialog(fileDialogAction)
         case .clipboard:
             action = .clipboardHistory
-        case .inputSource:
-            action = .switchInputSource
         }
         let applications: ApplicationFilter
         switch where_ {

@@ -13,6 +13,7 @@ extension SystemAction {
         case .spaceLeft: String(localized: "Move left a space")
         case .spaceRight: String(localized: "Move right a space")
         case .spotlight: String(localized: "Spotlight")
+        case .inputSource: String(localized: "Switch input source")
         }
     }
 
@@ -25,6 +26,7 @@ extension SystemAction {
         case .spaceLeft: "arrow.left.square"
         case .spaceRight: "arrow.right.square"
         case .spotlight: "magnifyingglass"
+        case .inputSource: "globe"
         }
     }
 }
@@ -67,6 +69,14 @@ struct SystemActionPicker: View {
     }
 
     @ViewBuilder private var status: some View {
+        if selection == .inputSource {
+            Text("Switches between ABC and the input method you used last, such as Pinyin, like Caps Lock does, without the input source switcher on screen.")
+        } else {
+            shortcutStatus
+        }
+    }
+
+    @ViewBuilder private var shortcutStatus: some View {
         switch hotKeys.shortcut(for: selection) {
         case .combo(let combo):
             HStack(spacing: 6) {

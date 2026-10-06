@@ -347,19 +347,19 @@ final class Dispatcher {
             act(on: action)
         case .clipboardHistory:
             showClipboardHistory()
-        case .switchInputSource:
-            switchInputSource()
         }
     }
 
     /// Posts the user's shortcut for a system function, or opens the app that
-    /// does the same when it has none. Nothing else is posted for a function
+    /// does the same when it has none; switches the input source directly. Nothing else is posted for a function
     /// switched off with no app to stand in; the rule editor says so.
     ///
     /// The shortcut is read after the tap callback returns, since reading
     /// another app's preferences can take a moment.
     private func trigger(_ function: SystemAction) {
         DispatchQueue.main.async { [self] in
+            // Done by SameKeys itself, so the system's switcher stays away.
+            if function == .inputSource { return switchInputSource() }
             switch systemShortcuts().shortcut(for: function) {
             case .combo(let combo):
                 for down in [true, false] {
@@ -446,11 +446,6 @@ final class Dispatcher {
         case .clipboardHistory:
             heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
             showClipboardHistory()
-            return .consume
-        case .switchInputSource:
-            heldKeys[key] = HeldKey(ruleID: rule.id, output: nil)
-            // Out of the tap callback, as the clipboard history is.
-            DispatchQueue.main.async { [self] in switchInputSource() }
             return .consume
         }
     }

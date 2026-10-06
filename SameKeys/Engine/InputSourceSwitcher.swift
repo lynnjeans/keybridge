@@ -3,7 +3,8 @@ import Foundation
 import OSLog
 
 /// Switches between a keyboard layout and an input method, as Caps Lock does
-/// between ABC and Pinyin (SK-277), for the Switch Input Source action.
+/// between ABC and Pinyin (SK-277), for the Switch input source system
+/// function.
 ///
 /// Posting ⌃Space, the system's Select the previous input source, does the
 /// same but shows the system's input source switcher every time; selecting

@@ -16,7 +16,7 @@ struct RuleEditor: View {
     enum Side { case trigger, action }
 
     /// A mouse button's result: keys, an app, or a system function (KB-051).
-    enum ResultKind: Hashable { case keys, app, system, window, fileDialog, clipboard, inputSource }
+    enum ResultKind: Hashable { case keys, app, system, window, fileDialog, clipboard }
 
     /// The keys to go back to when the result is switched from a system
     /// function to a shortcut.
@@ -159,7 +159,6 @@ struct RuleEditor: View {
                 case .windowAction(let snap): WindowActionLabel(snap: snap)
                 case .fileDialog(let action): FileDialogActionLabel(action: action)
                 case .clipboardHistory: ClipboardHistoryLabel()
-                case .switchInputSource: InputSourceLabel()
                 }
                 Text(RuleNames.name(of: draft))
                     .foregroundStyle(.secondary)
@@ -173,7 +172,6 @@ struct RuleEditor: View {
                     Text("Window").tag(ResultKind.window)
                     Text("File dialog").tag(ResultKind.fileDialog)
                     Text("Clipboard history").tag(ResultKind.clipboard)
-                    Text("Input source").tag(ResultKind.inputSource)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -210,8 +208,6 @@ struct RuleEditor: View {
                     ))
                 case .clipboardHistory:
                     ClipboardHistoryNote()
-                case .switchInputSource:
-                    InputSourceNote()
                 }
             }
         }
@@ -227,7 +223,6 @@ struct RuleEditor: View {
                 case .windowAction: .window
                 case .fileDialog: .fileDialog
                 case .clipboardHistory: .clipboard
-                case .switchInputSource: .inputSource
                 }
             },
             set: { kind in
@@ -248,8 +243,6 @@ struct RuleEditor: View {
                     draft.action = .fileDialog(.finderFolder)
                 case .clipboard:
                     draft.action = .clipboardHistory
-                case .inputSource:
-                    draft.action = .switchInputSource
                 }
             }
         )

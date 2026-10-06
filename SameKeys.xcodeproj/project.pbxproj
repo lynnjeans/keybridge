@@ -116,7 +116,6 @@
 		84B0F9890EC571DDFFF3CA5D /* SupportFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8661E1BC1650CD7612B9CFB8 /* SupportFolder.swift */; };
 		88273ACB4DCD66F0BB2D6638 /* KeyCodeLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2011BE42B6B7BC8B938DA0 /* KeyCodeLabelTests.swift */; };
 		89409268F52F2BB12E58BD52 /* FileDialogAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D931ADCD48420B49591A4656 /* FileDialogAction.swift */; };
-		8A3A00BB69A28E77ED242BBF /* InputSourceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */; };
 		8AD03F8D451CC96BC0E3249B /* CtrlClickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F9CF40444D192FE78F977B /* CtrlClickTests.swift */; };
 		8BFA79732995CECBD474AFF5 /* DiagnosticRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664DAEF22C12EFC863CC65B8 /* DiagnosticRecorder.swift */; };
 		8C40BCC9BD209530421D5F13 /* DockClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC12EBF136433446415F3FBC /* DockClick.swift */; };
@@ -405,7 +404,6 @@
 		E428FF70D3D6610C31BD1836 /* CustomRulesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRulesPage.swift; sourceTree = "<group>"; };
 		E68E61C753ED365A52F440D4 /* QuickSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSwitch.swift; sourceTree = "<group>"; };
 		EBD5BFE97929823FB47633DC /* SettingsBackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBackupTests.swift; sourceTree = "<group>"; };
-		EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceAction.swift; sourceTree = "<group>"; };
 		F1C5FB9573425A0CC1E8ADCF /* ClipboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPage.swift; sourceTree = "<group>"; };
 		F3C4DC7C1271CB669DEC0C4A /* KeyRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRecording.swift; sourceTree = "<group>"; };
 		F51D896F5F79A50578202B02 /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
@@ -528,7 +526,6 @@
 				6D6299C7B5B6C1C9E52D8111 /* FileDialogActionPicker.swift */,
 				B1E58C2444C9DDDE400F50F7 /* FinderMenuCard.swift */,
 				7F8BA451AA5F19D2D76D3166 /* FinderPage.swift */,
-				EF0CF4B2EC11CF826802882B /* InputSourceAction.swift */,
 				96E84C6BF6E89F3E0FF74A6E /* KeyboardChoices.swift */,
 				0C027F534A6C9F0449C3E4CB /* KeyboardRows.swift */,
 				BC6EA2746C5203B32CCB7185 /* Keycap.swift */,
@@ -907,7 +904,6 @@
 				33EC5974475466E390BC2340 /* FocusedElement.swift in Sources */,
 				F18391EE2B30467361B4CC7D /* FrontmostApplication.swift in Sources */,
 				95BEBD50D0BCFF47736FC013 /* GlobalHotKey.swift in Sources */,
-				8A3A00BB69A28E77ED242BBF /* InputSourceAction.swift in Sources */,
 				DF7771D6897F226A4C970580 /* InputSourceSwitcher.swift in Sources */,
 				D15BA97C07083160D48D0EAC /* InstallLocation.swift in Sources */,
 				F81AF2FDB8A225AE11D612F3 /* KeyCodeLabel.swift in Sources */,

@@ -88,7 +88,6 @@ struct DispatchTrace: Sendable {
         case .windowAction(let position): "window \(position.rawValue)"
         case .fileDialog(let action): "file dialog \(action.rawValue)"
         case .clipboardHistory: "clipboard history"
-        case .switchInputSource: "switch input source"
         }
     }
 }
