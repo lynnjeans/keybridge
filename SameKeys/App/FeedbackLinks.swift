@@ -1,8 +1,8 @@
 import Foundation
 
-/// Where About › Feedback sends people (SK-280): a new GitHub issue, or a
-/// new mail to SameKeys's own address. Both start with the versions filled
-/// in, the first thing anyone needs to answer a report.
+/// Where About › Feedback sends people (SK-280): the repository's problem
+/// report form, or a new mail to SameKeys's own address. Both start with
+/// the versions filled in, the first thing anyone needs to answer a report.
 enum FeedbackLinks {
     /// On samekeys.com and forwarded by Cloudflare Email Routing, so the
     /// inbox behind it can change without a release.
@@ -14,9 +14,16 @@ enum FeedbackLinks {
         "\n\n—\nSameKeys \(app)\nmacOS \(system)\n"
     }
 
+    /// The form in .github/ISSUE_TEMPLATE/problem.yml, its version fields
+    /// filled in through the query: GitHub fills a form field from the
+    /// parameter named like its id.
     static func issue(app: String, system: String) -> URL {
         var components = URLComponents(url: newIssue, resolvingAgainstBaseURL: false)!
-        components.queryItems = [URLQueryItem(name: "body", value: versions(app: app, system: system))]
+        components.queryItems = [
+            URLQueryItem(name: "template", value: "problem.yml"),
+            URLQueryItem(name: "app-version", value: app),
+            URLQueryItem(name: "macos-version", value: system),
+        ]
         return components.url!
     }
 

@@ -14,11 +14,22 @@ import Testing
         #expect(!url.absoluteString.contains(" "), "Spaces are escaped, or mail apps drop the rest")
     }
 
-    @Test func theIssueStartsWithTheVersions() throws {
+    @Test func theIssueIsTheProblemFormWithTheVersions() throws {
         let url = FeedbackLinks.issue(app: "1.2 (3)", system: "26.6.2 (25G83)")
-        #expect(url.absoluteString.hasPrefix("https://github.com/lynnjeans/samekeys/issues/new?body="))
-        let body = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "body" }?.value
-        #expect(body?.hasSuffix("macOS 26.6.2 (25G83)\n") == true)
+        #expect(url.absoluteString.hasPrefix("https://github.com/lynnjeans/samekeys/issues/new?"))
+        let items = Dictionary(uniqueKeysWithValues: (URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? [])
+            .map { ($0.name, $0.value ?? "") })
+        #expect(items == ["template": "problem.yml", "app-version": "1.2 (3)", "macos-version": "26.6.2 (25G83)"])
+    }
+
+    /// The query names the form and its fields; renaming either there
+    /// would quietly leave the versions out.
+    @Test func theFormHasTheFieldsTheLinkFills() throws {
+        let form = URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            .appending(path: ".github/ISSUE_TEMPLATE/problem.yml")
+        let text = try String(contentsOf: form, encoding: .utf8)
+        #expect(text.contains("id: app-version"))
+        #expect(text.contains("id: macos-version"))
     }
 
     @Test func theAddressIsOnTheAppsOwnDomain() {
