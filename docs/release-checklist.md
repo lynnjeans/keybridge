@@ -148,7 +148,7 @@ In a Finder window with a scratch folder of test files:
       puts the folder in the ⌃⇧G list. With SameKeys quit, New › launches it and still works.
 - [ ] In Terminal, `open 'samekeys://finder/terminal?folder=/tmp'` → nothing opens (KB-254).
 
-## 7. Shortcuts: Windows & Apps, Browser, System
+## 7. Shortcuts: Apps & System, Browser
 
 - [ ] Alt+Tab → switches apps (the ⌘Tab switcher). Alt+F4 → quits the front app (test with
       TextEdit).
