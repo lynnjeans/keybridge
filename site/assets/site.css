@@ -223,6 +223,7 @@ kbd {
 .permission { background: var(--card); border-radius: var(--radius); padding: 26px; border: 1px solid var(--line); }
 .alt .permission { border: 0; }
 .permission p { color: var(--text-2); margin-top: 8px; }
+.permission p strong { color: var(--text); }
 .promise { margin-top: 28px; text-align: center; font-size: 1.1rem; }
 .promise strong { color: var(--text); }
 
