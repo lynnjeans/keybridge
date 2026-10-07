@@ -200,7 +200,26 @@ kbd {
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
 .feature { background: var(--card); border-radius: var(--radius); padding: 26px; }
 .alt .feature { box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); }
-.feature .icon { font-size: 1.6rem; line-height: 1; margin-bottom: 14px; }
+.feature .icon {
+  /* A white Lucide glyph on a colored tile, as in the app's sidebar and System Settings. */
+  width: 44px; height: 44px; margin-bottom: 16px; border-radius: 11px;
+  display: grid; place-items: center; color: #fff;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--tint) 82%, #fff), var(--tint));
+}
+.feature .icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tint-blue { --tint: #007aff; }
+.tint-brown { --tint: #a2845e; }
+.tint-cyan { --tint: #32ade6; }
+.tint-gray { --tint: #8e8e93; }
+.tint-green { --tint: #34c759; }
+.tint-indigo { --tint: #5856d6; }
+.tint-mint { --tint: #00c7be; }
+.tint-orange { --tint: #ff9500; }
+.tint-pink { --tint: #ff2d55; }
+.tint-purple { --tint: #af52de; }
+.tint-red { --tint: #ff3b30; }
+.tint-slate { --tint: #63738c; }
+.tint-yellow { --tint: #ffcc00; }
 .feature p { color: var(--text-2); margin-top: 8px; font-size: 0.97rem; }
 
 /* Clipboard */

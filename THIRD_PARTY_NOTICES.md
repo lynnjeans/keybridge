@@ -31,6 +31,11 @@ artwork made with the font.
 
 ---
 
+The feature icons on the website (`site/assets/icons.svg`) are from
+[Lucide](https://lucide.dev), Copyright © Lucide Contributors, licensed under the
+[ISC License](https://github.com/lucide-icons/lucide/blob/main/LICENSE), which permits use with
+the copyright notice kept; it is kept at the top of the file.
+
 ## Projects studied as references
 
 SameKeys was designed after studying how the projects below approach the same problems.
