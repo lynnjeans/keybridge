@@ -15,7 +15,7 @@
   --key-bg: #ffffff;
   --key-line: #c7c7cc;
   --key-shadow: #b8b8bf;
-  --ok: #1d8a3a;
+  --ok: #1a7f37;
   --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.06);
   --radius: 18px;
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
@@ -223,7 +223,8 @@ kbd {
 .permission { background: var(--card); border-radius: var(--radius); padding: 26px; border: 1px solid var(--line); }
 .alt .permission { border: 0; }
 .permission p { color: var(--text-2); margin-top: 8px; }
-.permission p strong { color: var(--text); }
+.permission .private { color: var(--ok); }
+.private .glyph { width: 1em; height: 1em; margin-right: 0.3em; vertical-align: -0.12em; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .promise { margin-top: 28px; text-align: center; font-size: 1.1rem; }
 .promise strong { color: var(--text); }
 
